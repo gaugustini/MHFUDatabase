@@ -2,6 +2,15 @@ package com.gaugustini.mhfudatabase.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.gaugustini.mhfudatabase.data.database.dao.ArmorDao
+import com.gaugustini.mhfudatabase.data.database.dao.DecorationDao
+import com.gaugustini.mhfudatabase.data.database.dao.ItemDao
+import com.gaugustini.mhfudatabase.data.database.dao.LocationDao
+import com.gaugustini.mhfudatabase.data.database.dao.MonsterDao
+import com.gaugustini.mhfudatabase.data.database.dao.QuestDao
+import com.gaugustini.mhfudatabase.data.database.dao.SearchDao
+import com.gaugustini.mhfudatabase.data.database.dao.SkillDao
+import com.gaugustini.mhfudatabase.data.database.dao.WeaponDao
 import com.gaugustini.mhfudatabase.data.database.entity.ArmorEntity
 import com.gaugustini.mhfudatabase.data.database.entity.ArmorRecipeEntity
 import com.gaugustini.mhfudatabase.data.database.entity.ArmorSetEntity
@@ -63,4 +72,24 @@ import com.gaugustini.mhfudatabase.data.database.entity.WeaponTextEntity
     version = 1,
     exportSchema = true,
 )
-abstract class AppDatabase : RoomDatabase()
+abstract class AppDatabase : RoomDatabase() {
+
+    abstract fun searchDao(): SearchDao
+
+    abstract fun armorDao(): ArmorDao
+
+    abstract fun skillDao(): SkillDao
+
+    abstract fun itemDao(): ItemDao
+
+    abstract fun decorationDao(): DecorationDao
+
+    abstract fun monsterDao(): MonsterDao
+
+    abstract fun locationDao(): LocationDao
+
+    abstract fun questDao(): QuestDao
+
+    abstract fun weaponDao(): WeaponDao
+
+}
