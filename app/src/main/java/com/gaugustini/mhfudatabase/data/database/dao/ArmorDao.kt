@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import com.gaugustini.mhfudatabase.data.enums.HunterType
 import com.gaugustini.mhfudatabase.data.model.Armor
+import com.gaugustini.mhfudatabase.data.model.ArmorSet
 import com.gaugustini.mhfudatabase.data.model.ItemQuantity
 import com.gaugustini.mhfudatabase.data.model.SkillTreePoints
 
@@ -16,6 +17,7 @@ interface ArmorDao {
         """
         SELECT
             armor.id                AS id,
+            armor.armor_set_id      AS armorSetId,
             armor_text.name         AS name,
             armor_text.description  AS description,
             armor.armor_type        AS type,
@@ -30,25 +32,34 @@ interface ArmorDao {
             armor.water_res         AS water,
             armor.thunder_res       AS thunder,
             armor.ice_res           AS ice,
-            armor.dragon_res        AS dragon,
-            armor_set.id            AS armorSetId,
-            armor_set_text.name     AS armorSetName,
-            armor_set.rarity        AS armorSetRarity,
-            armor_set.rank          AS armorSetRank,
-            armor_set.hunter_type   AS armorSetHunterType
+            armor.dragon_res        AS dragon
         FROM armor
         JOIN armor_text
             ON armor.id = armor_text.armor_id
-        JOIN armor_set
-            ON armor.armor_set_id = armor_set.id
-        JOIN armor_set_text
-            ON armor.armor_set_id = armor_set_text.armor_set_id
         WHERE
-            armor_set.hunter_type IN ('BOTH', :hunterType) AND
+            armor.hunter_type IN ('BOTH', :hunterType) AND
             armor_text.language = :language
         """
     )
-    suspend fun getArmorList(hunterType: HunterType, language: String): List<Armor>
+    suspend fun getArmorsByHunterType(hunterType: HunterType, language: String): List<Armor>
+
+    @Query(
+        """
+        SELECT
+            armor_set.id            AS id,
+            armor_set_text.name     AS name,
+            armor_set.rarity        AS rarity,
+            armor_set.rank          AS `rank`,
+            armor_set.hunter_type   AS hunterType
+        FROM armor_set
+        JOIN armor_set_text
+            ON armor_set.id = armor_set_text.armor_set_id
+        WHERE
+            armor_set.hunter_type IN ('BOTH', :hunterType) AND
+            armor_set_text.language = :language
+        """
+    )
+    suspend fun getArmorSetsByHunterType(hunterType: HunterType, language: String): List<ArmorSet>
 
     // Detail
 
@@ -56,6 +67,7 @@ interface ArmorDao {
         """
         SELECT
             armor.id                AS id,
+            armor.armor_set_id      AS armorSetId,
             armor_text.name         AS name,
             armor_text.description  AS description,
             armor.armor_type        AS type,
@@ -70,19 +82,10 @@ interface ArmorDao {
             armor.water_res         AS water,
             armor.thunder_res       AS thunder,
             armor.ice_res           AS ice,
-            armor.dragon_res        AS dragon,
-            armor_set.id            AS armorSetId,
-            armor_set_text.name     AS armorSetName,
-            armor_set.rarity        AS armorSetRarity,
-            armor_set.rank          AS armorSetRank,
-            armor_set.hunter_type   AS armorSetHunterType
+            armor.dragon_res        AS dragon
         FROM armor
         JOIN armor_text
             ON armor.id = armor_text.armor_id
-        JOIN armor_set
-            ON armor.armor_set_id = armor_set.id
-        JOIN armor_set_text
-            ON armor.armor_set_id = armor_set_text.armor_set_id
         WHERE
             armor.id = :id AND
             armor_text.language = :language
@@ -93,7 +96,26 @@ interface ArmorDao {
     @Query(
         """
         SELECT
+            armor_set.id            AS id,
+            armor_set_text.name     AS name,
+            armor_set.rarity        AS rarity,
+            armor_set.rank          AS `rank`,
+            armor_set.hunter_type   AS hunterType
+        FROM armor_set
+        JOIN armor_set_text
+            ON armor_set.id = armor_set_text.armor_set_id
+        WHERE
+            armor_set.id = :id AND
+            armor_set_text.language = :language
+        """
+    )
+    suspend fun getArmorSet(id: Int, language: String): ArmorSet
+
+    @Query(
+        """
+        SELECT
             armor.id                AS id,
+            armor.armor_set_id      AS armorSetId,
             armor_text.name         AS name,
             armor_text.description  AS description,
             armor.armor_type        AS type,
@@ -108,19 +130,10 @@ interface ArmorDao {
             armor.water_res         AS water,
             armor.thunder_res       AS thunder,
             armor.ice_res           AS ice,
-            armor.dragon_res        AS dragon,
-            armor_set.id            AS armorSetId,
-            armor_set_text.name     AS armorSetName,
-            armor_set.rarity        AS armorSetRarity,
-            armor_set.rank          AS armorSetRank,
-            armor_set.hunter_type   AS armorSetHunterType
+            armor.dragon_res        AS dragon
         FROM armor
         JOIN armor_text
             ON armor.id = armor_text.armor_id
-        JOIN armor_set
-            ON armor.armor_set_id = armor_set.id
-        JOIN armor_set_text
-            ON armor.armor_set_id = armor_set_text.armor_set_id
         WHERE
             armor.armor_set_id = :id AND
             armor_text.language = :language

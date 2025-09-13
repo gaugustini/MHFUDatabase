@@ -3,10 +3,10 @@ package com.gaugustini.mhfudatabase.data.model
 import com.gaugustini.mhfudatabase.data.enums.ArmorType
 import com.gaugustini.mhfudatabase.data.enums.Gender
 import com.gaugustini.mhfudatabase.data.enums.HunterType
-import com.gaugustini.mhfudatabase.data.enums.Rank
 
 data class Armor(
     val id: Int,
+    val armorSetId: Int,
     val name: String,
     val description: String,
     val type: ArmorType,
@@ -22,11 +22,6 @@ data class Armor(
     val thunder: Int,
     val ice: Int,
     val dragon: Int,
-    val armorSetId: Int,
-    val armorSetName: String,
-    val armorSetRarity: Int,
-    val armorSetRank: Rank,
-    val armorSetHunterType: HunterType,
 )
 
 data class ArmorDetails(
