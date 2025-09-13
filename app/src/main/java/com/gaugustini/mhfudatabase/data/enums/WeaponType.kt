@@ -13,7 +13,7 @@ enum class WeaponType {
     HEAVY_BOWGUN,
     BOW;
 
-    val pairGroup: List<String>
+    val pairGroup: List<WeaponType>
         get() = when (this) {
             GREAT_SWORD, LONG_SWORD -> listOf(GREAT_SWORD, LONG_SWORD)
             SWORD_AND_SHIELD, DUAL_BLADES -> listOf(SWORD_AND_SHIELD, DUAL_BLADES)
@@ -22,7 +22,7 @@ enum class WeaponType {
             LIGHT_BOWGUN -> listOf(LIGHT_BOWGUN)
             HEAVY_BOWGUN -> listOf(HEAVY_BOWGUN)
             BOW -> listOf(BOW)
-        }.map { it.name }
+        }
 
     companion object {
 
