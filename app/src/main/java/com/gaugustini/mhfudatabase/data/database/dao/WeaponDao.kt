@@ -2,6 +2,7 @@ package com.gaugustini.mhfudatabase.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query
+import com.gaugustini.mhfudatabase.data.enums.WeaponType
 import com.gaugustini.mhfudatabase.data.model.AmmoBow
 import com.gaugustini.mhfudatabase.data.model.AmmoBowgun
 import com.gaugustini.mhfudatabase.data.model.ItemQuantity
@@ -47,7 +48,7 @@ interface WeaponDao {
             weapon_text.language = :language
         """
     )
-    suspend fun getWeaponsFromWeaponTypes(type: List<String>, language: String): List<Weapon>
+    suspend fun getWeaponsByWeaponTypes(type: List<WeaponType>, language: String): List<Weapon>
 
     @Query(
         """
@@ -59,7 +60,7 @@ interface WeaponDao {
             weapon_parent.weapon_id IN (:idList)
         """
     )
-    suspend fun getWeaponRelationFromWeapons(idList: List<Int>): List<WeaponRelation>
+    suspend fun getWeaponRelationsForWeapons(idList: List<Int>): List<WeaponRelation>
 
     // Detail
 
@@ -121,7 +122,7 @@ interface WeaponDao {
             weapon_ammo_bow.weapon_id = :id
         """
     )
-    suspend fun getAmmoBowFromWeapon(id: Int): AmmoBow?
+    suspend fun getAmmoBowForWeapon(id: Int): AmmoBow?
 
     @Query(
         """
@@ -150,7 +151,7 @@ interface WeaponDao {
             weapon_ammo_bowgun.weapon_id = :id
         """
     )
-    suspend fun getAmmoBowgunFromWeapon(id: Int): AmmoBowgun?
+    suspend fun getAmmoBowgunForWeapon(id: Int): AmmoBowgun?
 
     @Query(
         """
@@ -171,6 +172,6 @@ interface WeaponDao {
             item_text.language = :language
         """
     )
-    suspend fun getItemsFromWeapon(id: Int, recipe: String, language: String): List<ItemQuantity>
+    suspend fun getItemsForWeapon(id: Int, recipe: String, language: String): List<ItemQuantity>
 
 }

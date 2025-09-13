@@ -93,6 +93,6 @@ interface QuestDao {
             monster_text.language = :language
         """
     )
-    suspend fun getMonstersFromQuest(id: Int, language: String): List<Monster>
+    suspend fun getMonstersForQuest(id: Int, language: String): List<Monster>
 
 }

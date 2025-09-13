@@ -60,6 +60,6 @@ interface SkillDao {
             skill_text.language = :language
         """
     )
-    suspend fun getSkillsFromSkillTree(id: Int, language: String): List<Skill>
+    suspend fun getSkillsForSkillTree(id: Int, language: String): List<Skill>
 
 }

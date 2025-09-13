@@ -74,7 +74,7 @@ interface DecorationDao {
             skill_tree_text.language = :language
         """
     )
-    suspend fun getSkillsFromDecoration(id: Int, language: String): List<SkillTreePoints>
+    suspend fun getSkillsForDecoration(id: Int, language: String): List<SkillTreePoints>
 
     @Query(
         """
@@ -95,6 +95,6 @@ interface DecorationDao {
             item_text.language = :language
         """
     )
-    suspend fun getItemsFromDecoration(id: Int, variant: Int, language: String): List<ItemQuantity>
+    suspend fun getItemsForDecoration(id: Int, variant: Int, language: String): List<ItemQuantity>
 
 }

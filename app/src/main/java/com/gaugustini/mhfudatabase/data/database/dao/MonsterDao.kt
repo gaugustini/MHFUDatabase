@@ -78,7 +78,7 @@ interface MonsterDao {
             hitzone_text.language = :language
         """
     )
-    suspend fun getHitzonesFromMonster(id: Int, language: String): List<Hitzone>
+    suspend fun getHitzonesForMonster(id: Int, language: String): List<Hitzone>
 
     @Query(
         """
@@ -94,7 +94,7 @@ interface MonsterDao {
             monster_status.monster_id = :id
         """
     )
-    suspend fun getAilmentStatusFromMonster(id: Int): List<AilmentStatus>
+    suspend fun getAilmentStatusForMonster(id: Int): List<AilmentStatus>
 
     @Query(
         """
@@ -111,7 +111,7 @@ interface MonsterDao {
             monster_item.monster_id = :id
         """
     )
-    suspend fun getItemUsagesFromMonster(id: Int): List<ItemUsage>
+    suspend fun getItemUsagesForMonster(id: Int): List<ItemUsage>
 
     @Query(
         """
@@ -137,6 +137,6 @@ interface MonsterDao {
             reward_condition_text.language = :language
         """
     )
-    suspend fun getRewardsFromMonster(id: Int, language: String): List<MonsterReward>
+    suspend fun getRewardsForMonster(id: Int, language: String): List<MonsterReward>
 
 }

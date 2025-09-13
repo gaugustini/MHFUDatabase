@@ -63,6 +63,6 @@ interface LocationDao {
             location_item.area, location_item.gather_type, item_text.name
         """
     )
-    suspend fun getItemsFromLocation(id: Int, language: String): List<ItemLocation>
+    suspend fun getItemsForLocation(id: Int, language: String): List<ItemLocation>
 
 }

@@ -139,7 +139,7 @@ interface ArmorDao {
             armor_text.language = :language
         """
     )
-    suspend fun getArmorsFromArmorSet(id: Int, language: String): List<Armor>
+    suspend fun getArmorsForArmorSet(id: Int, language: String): List<Armor>
 
     @Query(
         """
@@ -155,7 +155,7 @@ interface ArmorDao {
             skill_tree_text.language = :language
         """
     )
-    suspend fun getSkillsFromArmor(id: Int, language: String): List<SkillTreePoints>
+    suspend fun getSkillsForArmor(id: Int, language: String): List<SkillTreePoints>
 
     @Query(
         """
@@ -175,6 +175,6 @@ interface ArmorDao {
             item_text.language = :language
         """
     )
-    suspend fun getItemsFromArmor(id: Int, language: String): List<ItemQuantity>
+    suspend fun getItemsForArmor(id: Int, language: String): List<ItemQuantity>
 
 }
