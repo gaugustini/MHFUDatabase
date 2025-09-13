@@ -99,13 +99,13 @@ interface MonsterDao {
     @Query(
         """
         SELECT
-            monster_item.state              AS monsterState,
-            monster_item.pitfall_duration   AS pitfallTrapDuration,
-            monster_item.shock_duration     AS shockTrapDuration,
-            monster_item.flash_duration     AS flashBombDuration,
-            monster_item.sonic_duration     AS sonicBombDuration,
-            monster_item.dung_bomb          AS canUseDungBomb,
-            monster_item.meat               AS canUseMeat
+            monster_item.state          AS monsterState,
+            monster_item.pitfall_trap   AS canUsePitfallTrap,
+            monster_item.shock_trap     AS canUseShockTrap,
+            monster_item.flash_bomb     AS canUseFlashBomb,
+            monster_item.sonic_bomb     AS canUseSonicBomb,
+            monster_item.dung_bomb      AS canUseDungBomb,
+            monster_item.meat           AS canUseMeat
         FROM monster_item
         WHERE
             monster_item.monster_id = :id

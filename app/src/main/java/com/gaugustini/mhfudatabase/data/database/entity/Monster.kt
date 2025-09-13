@@ -129,10 +129,10 @@ data class MonsterStatusEntity(
 data class MonsterItemEntity(
     @ColumnInfo(name = "monster_id") val monsterId: Int,
     @ColumnInfo(name = "state") val state: String,
-    @ColumnInfo(name = "pitfall_duration") val pitfallDuration: Int?,
-    @ColumnInfo(name = "shock_duration") val shockDuration: Int?,
-    @ColumnInfo(name = "flash_duration") val flashDuration: Int?,
-    @ColumnInfo(name = "sonic_duration") val sonicDuration: Int?,
+    @ColumnInfo(name = "pitfall_trap") val pitfallTrap: Boolean,
+    @ColumnInfo(name = "shock_trap") val shockTrap: Boolean,
+    @ColumnInfo(name = "flash_bomb") val flashBomb: Boolean,
+    @ColumnInfo(name = "sonic_bomb") val sonicBomb: Boolean,
     @ColumnInfo(name = "dung_bomb") val dungBomb: Boolean,
     @ColumnInfo(name = "meat") val meat: Boolean,
 )
