@@ -83,7 +83,7 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 @Composable
-fun MHFUDatabaseTheme(
+fun Theme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
