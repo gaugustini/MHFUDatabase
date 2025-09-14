@@ -13,4 +13,6 @@
     <string name="screen_skill_tree_list">Skills</string>
     <string name="screen_weapon_list">Weapons</string>
 
+    <string name="empty_content">No content available.</string>
+
 </resources>
