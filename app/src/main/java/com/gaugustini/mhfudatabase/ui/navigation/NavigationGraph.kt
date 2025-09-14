@@ -17,6 +17,7 @@ import androidx.navigation.navArgument
 fun NavigationGraph(
     navController: NavHostController,
     navigationActions: NavigationActions,
+    openDrawer: () -> Unit,
     modifier: Modifier = Modifier,
     startDestination: String = Destinations.ARMOR_SET_LIST,
 ) {

@@ -1,11 +1,20 @@
 package com.gaugustini.mhfudatabase.ui
 
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.gaugustini.mhfudatabase.ui.components.Drawer
+import com.gaugustini.mhfudatabase.ui.navigation.Destinations
 import com.gaugustini.mhfudatabase.ui.navigation.NavigationActions
 import com.gaugustini.mhfudatabase.ui.navigation.NavigationGraph
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import kotlinx.coroutines.launch
 
 @Composable
 fun MHFUDatabase() {
@@ -13,9 +22,36 @@ fun MHFUDatabase() {
         val navController = rememberNavController()
         val navigationActions = remember(navController) { NavigationActions(navController) }
 
-        NavigationGraph(
-            navController = navController,
-            navigationActions = navigationActions,
-        )
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry?.destination?.route ?: Destinations.ARMOR_SET_LIST
+
+        val coroutineScope = rememberCoroutineScope()
+        val drawerState = rememberDrawerState(DrawerValue.Closed)
+
+        ModalNavigationDrawer(
+            drawerState = drawerState,
+            drawerContent = {
+                Drawer(
+                    drawerState = drawerState,
+                    currentRoute = currentRoute,
+                    closeDrawer = { coroutineScope.launch { drawerState.close() } },
+                    navigateToArmorSetList = navigationActions.navigateToArmorSetList,
+                    navigateToDecorationList = navigationActions.navigateToDecorationList,
+                    navigateToItemList = navigationActions.navigateToItemList,
+                    navigateToItemCombinationList = navigationActions.navigateToItemCombinationList,
+                    navigateToLocationList = navigationActions.navigateToLocationList,
+                    navigateToMonsterList = navigationActions.navigateToMonsterList,
+                    navigateToQuestList = navigationActions.navigateToQuestList,
+                    navigateToSkillTreeList = navigationActions.navigateToSkillTreeList,
+                    navigateToWeaponList = navigationActions.navigateToWeaponTypeList,
+                )
+            },
+        ) {
+            NavigationGraph(
+                navController = navController,
+                navigationActions = navigationActions,
+                openDrawer = { coroutineScope.launch { drawerState.open() } },
+            )
+        }
     }
 }

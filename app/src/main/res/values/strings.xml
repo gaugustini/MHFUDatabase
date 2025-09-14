@@ -2,4 +2,15 @@
     <string name="app_name">MHFU Database</string>
     <string name="app_name_launcher">MHFUDB</string>
 
+    <!-- Screen Title: Main Routes -->
+    <string name="screen_armor_set_list">Armor Sets</string>
+    <string name="screen_decoration_list">Decorations</string>
+    <string name="screen_item_list">Items</string>
+    <string name="screen_item_combination_list">Item Combination</string>
+    <string name="screen_location_list">Locations</string>
+    <string name="screen_monster_list">Monsters</string>
+    <string name="screen_quest_list">Quests</string>
+    <string name="screen_skill_tree_list">Skills</string>
+    <string name="screen_weapon_list">Weapons</string>
+
 </resources>
