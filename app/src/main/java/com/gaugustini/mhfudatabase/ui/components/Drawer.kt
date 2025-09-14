@@ -22,7 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.ui.navigation.Destinations
-import com.gaugustini.mhfudatabase.ui.theme.Dimensions
+import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 
 data class DrawerItem(
@@ -121,7 +121,7 @@ fun Drawer(
                         Image(
                             painter = painterResource(item.icon),
                             contentDescription = null,
-                            modifier = Modifier.size(Dimensions.Size.small),
+                            modifier = Modifier.size(Dimension.Size.small),
                         )
                     },
                     selected = currentRoute == item.route,

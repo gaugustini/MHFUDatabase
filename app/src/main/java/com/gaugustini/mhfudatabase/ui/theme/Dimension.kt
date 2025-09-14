@@ -2,7 +2,7 @@ package com.gaugustini.mhfudatabase.ui.theme
 
 import androidx.compose.ui.unit.dp
 
-object Dimensions {
+object Dimension {
 
     object Size {
         val tiny = 16.dp
