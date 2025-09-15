@@ -1,6 +1,7 @@
 package com.gaugustini.mhfudatabase.ui.components
 
 import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -10,10 +11,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.data.enums.WeaponType
 import com.gaugustini.mhfudatabase.ui.components.icons.WeaponIcon
@@ -28,11 +31,13 @@ fun ListItemLayout(
     leadingContent: @Composable (() -> Unit)? = null,
     trailingContent: @Composable (() -> Unit)? = null,
     contentPadding: PaddingValues = PaddingValues(Dimension.Spacing.large),
+    backgroundColor: Color = MaterialTheme.colorScheme.surface,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
+            .background(backgroundColor)
             .padding(contentPadding)
     ) {
         if (leadingContent != null) {
@@ -58,7 +63,7 @@ fun ListItemLayout(
 @Preview(showBackground = true)
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun GenericListItemPreview() {
+fun ListItemLayoutPreview() {
     Theme {
         ListItemLayout(
             leadingContent = {
@@ -69,13 +74,26 @@ fun GenericListItemPreview() {
                 )
             },
             headlineContent = {
-                Text(text = "Headline")
+                Text(
+                    text = "Headline",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
             },
             supportingContent = {
-                Text(text = "Supporting content")
+                Text(
+                    text = "Supporting content",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurface,
+
+                    )
             },
             trailingContent = {
-                Text(text = "Trailing content")
+                Text(
+                    text = "Trailing content",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             },
         )
     }

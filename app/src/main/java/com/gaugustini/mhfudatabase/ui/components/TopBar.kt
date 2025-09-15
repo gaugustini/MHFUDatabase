@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
@@ -38,7 +39,8 @@ fun TopBar(
         title = {
             Text(
                 text = title,
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
+                color = MaterialTheme.colorScheme.primary,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -53,6 +55,7 @@ fun TopBar(
                         NavigationType.BACK -> Icons.AutoMirrored.Filled.ArrowBack
                     },
                     contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(Dimension.Size.extraSmall)
                 )
             }
@@ -65,6 +68,7 @@ fun TopBar(
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(Dimension.Size.extraSmall)
                 )
             }
