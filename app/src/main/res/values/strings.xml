@@ -13,6 +13,214 @@
     <string name="screen_skill_tree_list">Skills</string>
     <string name="screen_weapon_list">Weapons</string>
 
-    <string name="empty_content">No content available.</string>
+    <!-- Screen Title: Detail Routes -->
+    <string name="screen_armor_detail">Armor Detail</string>
+    <string name="screen_decoration_detail">Decoration Detail</string>
+    <string name="screen_item_detail">Item Detail</string>
+    <string name="screen_item_combination_detail">Item Combination Detail</string>
+    <string name="screen_location_detail">Location Detail</string>
+    <string name="screen_monster_detail">Monster Detail</string>
+    <string name="screen_quest_detail">Quest Detail</string>
+    <string name="screen_skill_tree_detail">Skill Detail</string>
+    <string name="screen_weapon_detail">Weapon Detail</string>
+
+    <!-- Screen Title: Weapon Graph -->
+    <string name="screen_weapon_great_sword">Great Sword</string>
+    <string name="screen_weapon_long_sword">Long Sword</string>
+    <string name="screen_weapon_sword_and_shield">Sword and Shield</string>
+    <string name="screen_weapon_dual_blades">Dual Blades</string>
+    <string name="screen_weapon_hammer">Hammer</string>
+    <string name="screen_weapon_hunting_horn">Hunting Horn</string>
+    <string name="screen_weapon_lance">Lance</string>
+    <string name="screen_weapon_gunlance">Gunlance</string>
+    <string name="screen_weapon_light_bowgun">Light Bowgun</string>
+    <string name="screen_weapon_heavy_bowgun">Heavy Bowgun</string>
+    <string name="screen_weapon_bow">Bow</string>
+
+    <string name="empty_content">Nothing to show here!</string>
+
+    <!-- Tab Title: Armor Set List -->
+    <string name="tab_armor_blademaster">BLADEMASTER</string>
+    <string name="tab_armor_gunner">GUNNER</string>
+
+    <!-- Tab Title: Armor Detail -->
+    <string name="tab_armor_detail">DETAIL</string>
+    <string name="tab_armor_set_detail">ARMOR SET DETAIL</string>
+
+    <!-- Tab Title: Location Detail -->
+    <string name="tab_location_low_rank">LOW RANK</string>
+    <string name="tab_location_high_rank">HIGH RANK</string>
+    <string name="tab_location_g_rank">G RANK</string>
+    <string name="tab_location_treasure">TREASURE</string>
+
+    <!-- Tab Title: Monster List -->
+    <string name="tab_monster_large">LARGE</string>
+    <string name="tab_monster_small">SMALL</string>
+
+    <!-- Tab Title: Monster Detail -->
+    <string name="tab_monster_detail_summary">SUMMARY</string>
+    <string name="tab_monster_detail_damage">DAMAGE</string>
+    <string name="tab_monster_detail_low_rank">LOW RANK</string>
+    <string name="tab_monster_detail_high_rank">HIGH RANK</string>
+    <string name="tab_monster_detail_g_rank">G RANK</string>
+
+    <!-- Tab Title: Quest List -->
+    <string name="tab_quest_village">VILLAGE</string>
+    <string name="tab_quest_guild">GUILD</string>
+
+    <!-- Tab Title: Weapon Detail -->
+    <string name="tab_weapon_detail_summary">SUMMARY</string>
+    <string name="tab_weapon_detail_paths">PATHS</string>
+
+    <!-- List Header -->
+    <string name="list_armors">Armor Pieces</string>
+    <string name="list_skills">Skills</string>
+    <string name="list_recipe">Required Materials</string>
+    <string name="list_recipe_a">Required Materials (A)</string>
+    <string name="list_recipe_b">Required Materials (B)</string>
+    <string name="list_recipe_create">Required Materials (Create)</string>
+    <string name="list_recipe_upgrade">Required Materials (Upgrade)</string>
+
+    <!-- Search -->
+    <string name="search_hint">Search</string>
+    <string name="search_error_message">Something wrong happened!</string>
+    <string name="search_armor_both">Armor</string>
+    <string name="search_armor_blade">Armor (Blade)</string>
+    <string name="search_armor_gunner">Armor (Gunner)</string>
+    <string name="search_decoration">Decoration</string>
+    <string name="search_item">Item</string>
+    <string name="search_location">Location</string>
+    <string name="search_monster">Monster</string>
+    <string name="search_quest">Quest</string>
+    <string name="search_skill_tree">Skill Tree</string>
+    <string name="search_skill">Skill</string>
+    <string name="search_weapon">Weapon</string>
+
+    <!-- Armor -->
+    <string name="armor_rarity">Rarity %1$d</string>
+    <string name="armor_defense">Defense</string>
+    <string name="armor_number_of_slots">Slots</string>
+    <string name="armor_fire_resistance">Fire Resistance</string>
+    <string name="armor_water_resistance">Water Resistance</string>
+    <string name="armor_thunder_resistance">Thunder Resistance</string>
+    <string name="armor_ice_resistance">Ice Resistance</string>
+    <string name="armor_dragon_resistance">Dragon Resistance</string>
+
+    <!-- Decoration -->
+    <string name="decoration_rarity">Rarity %1$d</string>
+    <string name="decoration_buy_price">Buy Price</string>
+    <string name="decoration_sell_price">Sell Price</string>
+    <string name="decoration_required_slots">Required Slots</string>
+
+    <!-- Item -->
+    <string name="item_rarity">Rarity %1$d</string>
+    <string name="item_carry_max">Carry Max</string>
+    <string name="item_buy_price">Buy Price</string>
+    <string name="item_sell_price">Sell Price</string>
+
+    <!-- Location -->
+    <string name="location_secret_area">Secret Area</string>
+    <string name="location_base_camp">Base Camp</string>
+    <string name="location_area">Area %1$d</string>
+    <string name="location_gather_collect">Gather</string>
+    <string name="location_gather_mine">Mining</string>
+    <string name="location_gather_bug">Bugnet</string>
+    <string name="location_gather_fish">Fishing</string>
+
+    <!-- Monster -->
+    <string name="monster_state_normal">Normal</string>
+    <string name="monster_state_enraged">Enraged</string>
+    <string name="monster_physical_damage">Physical</string>
+    <string name="monster_elemental_damage">Elemental</string>
+    <string name="monster_ailment_status">Status</string>
+    <string name="monster_ailment_initial">Initial</string>
+    <string name="monster_ailment_increase">Increase</string>
+    <string name="monster_ailment_max">Max</string>
+    <string name="monster_ailment_duration">Duration</string>
+    <string name="monster_ailment_damage">Damage</string>
+
+    <!-- Quest -->
+    <string name="quest_type_key">Key</string>
+    <string name="quest_type_urgent">Urgent</string>
+    <string name="quest_village_stars">Village %1$d Stars</string>
+    <string name="quest_guild_stars">Guild %1$d Stars</string>
+    <string name="quest_reward">Reward</string>
+    <string name="quest_fee">Fee</string>
+    <string name="quest_time_limit">Time Limit</string>
+    <string name="quest_location">Location</string>
+    <string name="quest_monsters">Monsters</string>
+    <string name="quest_description">Description</string>
+    <string name="quest_client">Client: %1$s</string>
+
+    <!-- Weapon -->
+    <string name="weapon_great_sword">Great Sword</string>
+    <string name="weapon_long_sword">Long Sword</string>
+    <string name="weapon_sword_and_shield">Sword and Shield</string>
+    <string name="weapon_dual_blades">Dual Blades</string>
+    <string name="weapon_hammer">Hammer</string>
+    <string name="weapon_hunting_horn">Hunting Horn</string>
+    <string name="weapon_lance">Lance</string>
+    <string name="weapon_gunlance">Gunlance</string>
+    <string name="weapon_light_bowgun">Light Bowgun</string>
+    <string name="weapon_heavy_bowgun">Heavy Bowgun</string>
+    <string name="weapon_bow">Bow</string>
+    <string name="weapon_rarity">Rarity %1$d</string>
+    <string name="weapon_attack">Attack</string>
+    <string name="weapon_max_attack">Max Attack</string>
+    <string name="weapon_affinity">Affinity</string>
+    <string name="weapon_slots">Slots</string>
+    <string name="weapon_defense">Defense</string>
+    <string name="weapon_element">Element</string>
+    <string name="weapon_element_add">Add</string>
+    <string name="weapon_sharpness">Sharpness</string>
+    <string name="weapon_song_notes">Notes</string>
+    <string name="weapon_shelling">Shelling</string>
+    <string name="weapon_shelling_normal">Normal Lv %1$d</string>
+    <string name="weapon_shelling_long">Long Lv %1$d</string>
+    <string name="weapon_shelling_spread">Spread Lv %1$d</string>
+    <string name="weapon_reload_detail">Reload: %1$s</string>
+    <string name="weapon_reload_speed">Reload Speed</string>
+    <string name="weapon_reload_speed_very_slow">Very Slow</string>
+    <string name="weapon_reload_speed_slow">Slow</string>
+    <string name="weapon_reload_speed_normal">Normal</string>
+    <string name="weapon_reload_speed_fast">Fast</string>
+    <string name="weapon_reload_speed_very_fast">Very Fast</string>
+    <string name="weapon_recoil_detail">Recoil: %1$s</string>
+    <string name="weapon_recoil">Recoil</string>
+    <string name="weapon_recoil_very_weak">Very Weak</string>
+    <string name="weapon_recoil_weak">Weak</string>
+    <string name="weapon_recoil_light">Light</string>
+    <string name="weapon_recoil_moderate">Moderate</string>
+    <string name="weapon_ammo_bowgun">Ammo</string>
+    <string name="weapon_ammo_bowgun_normal">Normal</string>
+    <string name="weapon_ammo_bowgun_pierce">Pierce</string>
+    <string name="weapon_ammo_bowgun_pellet">Pellet</string>
+    <string name="weapon_ammo_bowgun_crag">Crag</string>
+    <string name="weapon_ammo_bowgun_clust">Clust</string>
+    <string name="weapon_ammo_bowgun_recovery">Recovery</string>
+    <string name="weapon_ammo_bowgun_poison">Poison</string>
+    <string name="weapon_ammo_bowgun_paralysis">Para</string>
+    <string name="weapon_ammo_bowgun_sleep">Sleep</string>
+    <string name="weapon_ammo_bowgun_flame">Flame</string>
+    <string name="weapon_ammo_bowgun_water">Water</string>
+    <string name="weapon_ammo_bowgun_thunder">Thunder</string>
+    <string name="weapon_ammo_bowgun_freeze">Freeze</string>
+    <string name="weapon_ammo_bowgun_dragon">Dragon</string>
+    <string name="weapon_ammo_bowgun_tranq">Tranq</string>
+    <string name="weapon_ammo_bowgun_paint">Paint</string>
+    <string name="weapon_ammo_bowgun_demon">Demon</string>
+    <string name="weapon_ammo_bowgun_armor">Armor</string>
+    <string name="weapon_ammo_bowgun_rapid_fire">Rapid Fire</string>
+    <string name="weapon_bow_charges">Charges</string>
+    <string name="weapon_bow_coating">Coatings</string>
+    <string name="weapon_bow_coating_power">Power</string>
+    <string name="weapon_bow_coating_close">Close</string>
+    <string name="weapon_bow_coating_paint">Paint</string>
+    <string name="weapon_bow_coating_poison">Poison</string>
+    <string name="weapon_bow_coating_paralysis">Para</string>
+    <string name="weapon_bow_coating_sleep">Sleep</string>
+    <string name="weapon_path">Path</string>
+    <string name="weapon_path_details">Path: %1$d</string>
+    <string name="weapon_finals">Finals</string>
 
 </resources>
