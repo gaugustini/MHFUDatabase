@@ -12,6 +12,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.gaugustini.mhfudatabase.ui.armor.detail.ArmorDetailRoute
+import com.gaugustini.mhfudatabase.ui.armor.list.ArmorSetListRoute
 
 @Composable
 fun NavigationGraph(
@@ -57,7 +59,11 @@ fun NavigationGraph(
             Text("MHFU")
         }
         composable(Destinations.ARMOR_SET_LIST) {
-            Text("MHFU")
+            ArmorSetListRoute(
+                openDrawer = openDrawer,
+                openSearch = navigationActions.navigateToSearch,
+                onArmorClick = navigationActions.navigateToArmorDetail,
+            )
         }
         composable(Destinations.DECORATION_LIST) {
             Text("MHFU")
@@ -92,7 +98,13 @@ fun NavigationGraph(
                 navArgument("armorId") { type = NavType.IntType },
             ),
         ) {
-            Text("MHFU")
+            ArmorDetailRoute(
+                navigateBack = navigationActions.navigateBack,
+                openSearch = navigationActions.navigateToSearch,
+                onArmorClick = navigationActions.navigateToArmorDetail,
+                onSkillClick = navigationActions.navigateToSkillTreeDetail,
+                onItemClick = navigationActions.navigateToItemDetail,
+            )
         }
         composable(
             route = Destinations.DECORATION_DETAIL,

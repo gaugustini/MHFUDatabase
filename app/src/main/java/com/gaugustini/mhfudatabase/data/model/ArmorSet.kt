@@ -3,7 +3,7 @@ package com.gaugustini.mhfudatabase.data.model
 import com.gaugustini.mhfudatabase.data.enums.HunterType
 import com.gaugustini.mhfudatabase.data.enums.Rank
 
-// TODO: Add Gender in Armor Set
+// TODO: Add Gender in Armor Set, defense and resistances
 data class ArmorSet(
     val id: Int,
     val name: String,
