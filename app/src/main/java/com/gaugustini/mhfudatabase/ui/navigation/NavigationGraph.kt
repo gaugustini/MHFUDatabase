@@ -16,6 +16,7 @@ import com.gaugustini.mhfudatabase.ui.armor.detail.ArmorDetailRoute
 import com.gaugustini.mhfudatabase.ui.armor.list.ArmorSetListRoute
 import com.gaugustini.mhfudatabase.ui.item.detail.ItemDetailRoute
 import com.gaugustini.mhfudatabase.ui.item.list.ItemListRoute
+import com.gaugustini.mhfudatabase.ui.itemcombination.list.ItemCombinationListRoute
 
 @Composable
 fun NavigationGraph(
@@ -78,7 +79,11 @@ fun NavigationGraph(
             )
         }
         composable(Destinations.ITEM_COMBINATION_LIST) {
-            Text("MHFU")
+            ItemCombinationListRoute(
+                openDrawer = openDrawer,
+                openSearch = navigationActions.navigateToSearch,
+                onItemClick = navigationActions.navigateToItemDetail,
+            )
         }
         composable(Destinations.LOCATION_LIST) {
             Text("MHFU")
