@@ -23,6 +23,8 @@ import com.gaugustini.mhfudatabase.ui.location.detail.LocationDetailRoute
 import com.gaugustini.mhfudatabase.ui.location.list.LocationListRoute
 import com.gaugustini.mhfudatabase.ui.monster.detail.MonsterDetailRoute
 import com.gaugustini.mhfudatabase.ui.monster.list.MonsterListRoute
+import com.gaugustini.mhfudatabase.ui.quest.detail.QuestDetailRoute
+import com.gaugustini.mhfudatabase.ui.quest.list.QuestListRoute
 
 @Composable
 fun NavigationGraph(
@@ -110,7 +112,11 @@ fun NavigationGraph(
             )
         }
         composable(Destinations.QUEST_LIST) {
-            Text("MHFU")
+            QuestListRoute(
+                openDrawer = openDrawer,
+                openSearch = navigationActions.navigateToSearch,
+                onQuestClick = navigationActions.navigateToQuestDetail,
+            )
         }
         composable(Destinations.SKILL_TREE_LIST) {
             Text("MHFU")
@@ -189,7 +195,12 @@ fun NavigationGraph(
                 navArgument("questId") { type = NavType.IntType },
             ),
         ) {
-            Text("MHFU")
+            QuestDetailRoute(
+                navigateBack = navigationActions.navigateBack,
+                openSearch = navigationActions.navigateToSearch,
+                onLocationClick = navigationActions.navigateToLocationDetail,
+                onMonsterClick = navigationActions.navigateToMonsterDetail,
+            )
         }
         composable(
             route = Destinations.SKILL_TREE_DETAIL,

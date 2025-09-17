@@ -1,10 +1,8 @@
 package com.gaugustini.mhfudatabase.ui.components.icons
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.ColorFilter
@@ -19,23 +17,15 @@ fun QuestIcon(
     goalType: QuestGoalType,
     modifier: Modifier = Modifier,
 ) {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier
-    ) {
-        BackgroundDecorator(
-            modifier = Modifier.fillMaxSize()
-        )
-        Image(
-            painter = painterResource(id = R.drawable.ic_quest),
-            contentDescription = null,
-            colorFilter = ColorFilter.tint(
-                color = MHFUColors.getQuestColor(goalType),
-                blendMode = BlendMode.Modulate
-            ),
-            modifier = Modifier.fillMaxSize(0.8f)
-        )
-    }
+    Image(
+        painter = painterResource(id = R.drawable.ic_quest),
+        contentDescription = null,
+        colorFilter = ColorFilter.tint(
+            color = MHFUColors.getQuestColor(goalType),
+            blendMode = BlendMode.Modulate
+        ),
+        modifier = modifier.fillMaxSize()
+    )
 }
 
 @Preview
