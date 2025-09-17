@@ -25,6 +25,8 @@ import com.gaugustini.mhfudatabase.ui.monster.detail.MonsterDetailRoute
 import com.gaugustini.mhfudatabase.ui.monster.list.MonsterListRoute
 import com.gaugustini.mhfudatabase.ui.quest.detail.QuestDetailRoute
 import com.gaugustini.mhfudatabase.ui.quest.list.QuestListRoute
+import com.gaugustini.mhfudatabase.ui.skill.detail.SkillTreeDetailRoute
+import com.gaugustini.mhfudatabase.ui.skill.list.SkillTreeListRoute
 
 @Composable
 fun NavigationGraph(
@@ -119,7 +121,11 @@ fun NavigationGraph(
             )
         }
         composable(Destinations.SKILL_TREE_LIST) {
-            Text("MHFU")
+            SkillTreeListRoute(
+                openDrawer = openDrawer,
+                openSearch = navigationActions.navigateToSearch,
+                onSkillTreeClick = navigationActions.navigateToSkillTreeDetail,
+            )
         }
         composable(Destinations.WEAPON_TYPE_LIST) {
             Text("MHFU")
@@ -208,7 +214,10 @@ fun NavigationGraph(
                 navArgument("skillTreeId") { type = NavType.IntType },
             ),
         ) {
-            Text("MHFU")
+            SkillTreeDetailRoute(
+                navigateBack = navigationActions.navigateBack,
+                openSearch = navigationActions.navigateToSearch,
+            )
         }
         composable(
             route = Destinations.WEAPON_GRAPH,
