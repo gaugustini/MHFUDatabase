@@ -14,6 +14,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.gaugustini.mhfudatabase.ui.armor.detail.ArmorDetailRoute
 import com.gaugustini.mhfudatabase.ui.armor.list.ArmorSetListRoute
+import com.gaugustini.mhfudatabase.ui.decoration.detail.DecorationDetailRoute
+import com.gaugustini.mhfudatabase.ui.decoration.list.DecorationListRoute
 import com.gaugustini.mhfudatabase.ui.item.detail.ItemDetailRoute
 import com.gaugustini.mhfudatabase.ui.item.list.ItemListRoute
 import com.gaugustini.mhfudatabase.ui.itemcombination.list.ItemCombinationListRoute
@@ -69,7 +71,11 @@ fun NavigationGraph(
             )
         }
         composable(Destinations.DECORATION_LIST) {
-            Text("MHFU")
+            DecorationListRoute(
+                openDrawer = openDrawer,
+                openSearch = navigationActions.navigateToSearch,
+                onDecorationClick = navigationActions.navigateToDecorationDetail,
+            )
         }
         composable(Destinations.ITEM_LIST) {
             ItemListRoute(
@@ -123,7 +129,12 @@ fun NavigationGraph(
                 navArgument("decorationId") { type = NavType.IntType },
             ),
         ) {
-            Text("MHFU")
+            DecorationDetailRoute(
+                navigateBack = navigationActions.navigateBack,
+                openSearch = navigationActions.navigateToSearch,
+                onSkillClick = navigationActions.navigateToSkillTreeDetail,
+                onItemClick = navigationActions.navigateToItemDetail,
+            )
         }
         composable(
             route = Destinations.ITEM_DETAIL,
