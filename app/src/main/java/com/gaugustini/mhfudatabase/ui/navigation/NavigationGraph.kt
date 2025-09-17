@@ -21,6 +21,8 @@ import com.gaugustini.mhfudatabase.ui.item.list.ItemListRoute
 import com.gaugustini.mhfudatabase.ui.itemcombination.list.ItemCombinationListRoute
 import com.gaugustini.mhfudatabase.ui.location.detail.LocationDetailRoute
 import com.gaugustini.mhfudatabase.ui.location.list.LocationListRoute
+import com.gaugustini.mhfudatabase.ui.monster.detail.MonsterDetailRoute
+import com.gaugustini.mhfudatabase.ui.monster.list.MonsterListRoute
 
 @Composable
 fun NavigationGraph(
@@ -101,7 +103,11 @@ fun NavigationGraph(
             )
         }
         composable(Destinations.MONSTER_LIST) {
-            Text("MHFU")
+            MonsterListRoute(
+                openDrawer = openDrawer,
+                openSearch = navigationActions.navigateToSearch,
+                onMonsterClick = navigationActions.navigateToMonsterDetail,
+            )
         }
         composable(Destinations.QUEST_LIST) {
             Text("MHFU")
@@ -171,7 +177,11 @@ fun NavigationGraph(
                 navArgument("monsterId") { type = NavType.IntType },
             ),
         ) {
-            Text("MHFU")
+            MonsterDetailRoute(
+                navigateBack = navigationActions.navigateBack,
+                openSearch = navigationActions.navigateToSearch,
+                onItemClick = navigationActions.navigateToItemDetail,
+            )
         }
         composable(
             route = Destinations.QUEST_DETAIL,

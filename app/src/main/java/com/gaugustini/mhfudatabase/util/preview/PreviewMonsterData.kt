@@ -103,9 +103,12 @@ object PreviewMonsterData {
     )
 
     val monsterRewardList = listOf(
-        monsterReward.copy(itemId = 1, itemName = "Item 1"),
-        monsterReward.copy(itemId = 2, itemName = "Item 2"),
-        monsterReward.copy(itemId = 3, itemName = "Item 3"),
+        monsterReward.copy(itemId = 1, itemName = "Item 1", condition = "Condition 1"),
+        monsterReward.copy(itemId = 2, itemName = "Item 2", condition = "Condition 1"),
+        monsterReward.copy(itemId = 3, itemName = "Item 3", condition = "Condition 1"),
+        monsterReward.copy(itemId = 4, itemName = "Item 4", condition = "Condition 2"),
+        monsterReward.copy(itemId = 5, itemName = "Item 5", condition = "Condition 2"),
+        monsterReward.copy(itemId = 6, itemName = "Item 6", condition = "Condition 2"),
     )
 
 }
