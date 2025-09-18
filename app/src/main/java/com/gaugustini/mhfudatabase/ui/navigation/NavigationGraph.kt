@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.EaseIn
 import androidx.compose.animation.core.EaseOut
 import androidx.compose.animation.core.tween
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -25,6 +24,7 @@ import com.gaugustini.mhfudatabase.ui.monster.detail.MonsterDetailRoute
 import com.gaugustini.mhfudatabase.ui.monster.list.MonsterListRoute
 import com.gaugustini.mhfudatabase.ui.quest.detail.QuestDetailRoute
 import com.gaugustini.mhfudatabase.ui.quest.list.QuestListRoute
+import com.gaugustini.mhfudatabase.ui.search.SearchRoute
 import com.gaugustini.mhfudatabase.ui.skill.detail.SkillTreeDetailRoute
 import com.gaugustini.mhfudatabase.ui.skill.list.SkillTreeListRoute
 import com.gaugustini.mhfudatabase.ui.weapon.detail.WeaponDetailRoute
@@ -72,7 +72,18 @@ fun NavigationGraph(
         // Main Routes
 
         composable(Destinations.SEARCH) {
-            Text("MHFU")
+            SearchRoute(
+                navigateBack = navigationActions.navigateBack,
+                onArmorClick = navigationActions.navigateToArmorDetail,
+                onDecorationClick = navigationActions.navigateToDecorationDetail,
+                onItemClick = navigationActions.navigateToItemDetail,
+                onLocationClick = navigationActions.navigateToLocationDetail,
+                onMonsterClick = navigationActions.navigateToMonsterDetail,
+                onQuestClick = navigationActions.navigateToQuestDetail,
+                onSkillTreeClick = navigationActions.navigateToSkillTreeDetail,
+                onSkillClick = navigationActions.navigateToSkillTreeDetail,
+                onWeaponClick = navigationActions.navigateToWeaponDetail,
+            )
         }
         composable(Destinations.ARMOR_SET_LIST) {
             ArmorSetListRoute(
