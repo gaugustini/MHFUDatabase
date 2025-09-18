@@ -27,6 +27,9 @@ import com.gaugustini.mhfudatabase.ui.quest.detail.QuestDetailRoute
 import com.gaugustini.mhfudatabase.ui.quest.list.QuestListRoute
 import com.gaugustini.mhfudatabase.ui.skill.detail.SkillTreeDetailRoute
 import com.gaugustini.mhfudatabase.ui.skill.list.SkillTreeListRoute
+import com.gaugustini.mhfudatabase.ui.weapon.detail.WeaponDetailRoute
+import com.gaugustini.mhfudatabase.ui.weapon.graph.WeaponGraphRoute
+import com.gaugustini.mhfudatabase.ui.weapon.list.WeaponTypeListRoute
 
 @Composable
 fun NavigationGraph(
@@ -128,7 +131,13 @@ fun NavigationGraph(
             )
         }
         composable(Destinations.WEAPON_TYPE_LIST) {
-            Text("MHFU")
+            WeaponTypeListRoute(
+                openDrawer = openDrawer,
+                openSearch = navigationActions.navigateToSearch,
+                onWeaponTypeClick = { weaponType ->
+                    navigationActions.navigateToWeaponGraph(weaponType)
+                },
+            )
         }
 
         // Detail Routes
@@ -225,7 +234,13 @@ fun NavigationGraph(
                 navArgument("weaponType") { type = NavType.StringType },
             ),
         ) {
-            Text("MHFU")
+            WeaponGraphRoute(
+                navigateBack = navigationActions.navigateBack,
+                openSearch = navigationActions.navigateToSearch,
+                onWeaponClick = { weaponId ->
+                    navigationActions.navigateToWeaponDetail(weaponId)
+                }
+            )
         }
         composable(
             route = Destinations.WEAPON_DETAIL,
@@ -233,7 +248,16 @@ fun NavigationGraph(
                 navArgument("weaponId") { type = NavType.IntType },
             ),
         ) {
-            Text("MHFU")
+            WeaponDetailRoute(
+                navigateBack = navigationActions.navigateBack,
+                openSearch = navigationActions.navigateToSearch,
+                onItemClick = { itemId ->
+                    navigationActions.navigateToItemDetail(itemId)
+                },
+                onWeaponClick = { weaponId ->
+                    navigationActions.navigateToWeaponDetail(weaponId)
+                }
+            )
         }
     }
 }

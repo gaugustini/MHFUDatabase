@@ -15,6 +15,32 @@ object PreviewWeaponData {
 
     // Weapon
 
+    val weapon = Weapon(
+        id = 1,
+        name = "Weapon",
+        description = "Weapon Description",
+        type = WeaponType.GREAT_SWORD,
+        rarity = 1,
+        affinity = 1,
+        defense = 1,
+        numSlots = 1,
+        attack = 500,
+        maxAttack = 600,
+        priceCreate = 1000,
+        priceUpgrade = 1000,
+        element1 = ElementType.FIRE,
+        element1Value = 100,
+        element2 = ElementType.WATER,
+        element2Value = 100,
+        sharpness = "16-5-4",
+        sharpnessPlus = "8-3-11-10-6-5-2",
+        shellingType = WeaponShelling.NORMAL,
+        shellingLevel = 3,
+        songNotes = "PYR",
+        reloadSpeed = WeaponReloadSpeed.NORMAL,
+        recoil = WeaponRecoil.MODERATE,
+    )
+
     val weaponGS = Weapon(
         id = 1,
         name = "Weapon",
@@ -36,7 +62,7 @@ object PreviewWeaponData {
         sharpnessPlus = "8-3-11-10-6-5-2",
         shellingType = null,
         shellingLevel = null,
-        songNotes = "PYR",
+        songNotes = null,
         reloadSpeed = null,
         recoil = null,
     )
