@@ -3,7 +3,8 @@ package com.gaugustini.mhfudatabase.ui.armor.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.enums.HunterType
-import com.gaugustini.mhfudatabase.data.model.ArmorSetSummary
+import com.gaugustini.mhfudatabase.data.model.Armor
+import com.gaugustini.mhfudatabase.data.model.ArmorSet
 import com.gaugustini.mhfudatabase.data.repository.ArmorRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,8 +16,9 @@ import javax.inject.Inject
 
 data class ArmorSetListState(
     val initialTab: ArmorSetListTab = ArmorSetListTab.BLADEMASTER,
-    val armorSetsBlade: List<ArmorSetSummary> = emptyList(),
-    val armorSetsGunner: List<ArmorSetSummary> = emptyList(),
+    val armorsBySet: Map<Int, List<Armor>> = emptyMap(),
+    val armorSetsBlade: List<ArmorSet> = emptyList(),
+    val armorSetsGunner: List<ArmorSet> = emptyList(),
     val expandedArmorSetsBlade: Set<Int> = emptySet(),
     val expandedArmorSetsGunner: Set<Int> = emptySet()
 )
@@ -35,10 +37,13 @@ class ArmorSetListViewModel @Inject constructor(
 
     private fun loadArmorSets() {
         viewModelScope.launch {
+            val armors = armorRepository.getArmorList()
             val armorSetsBlade = armorRepository.getArmorSetList(HunterType.BLADE)
             val armorSetsGunner = armorRepository.getArmorSetList(HunterType.GUNNER)
+
             _uiState.update {
                 it.copy(
+                    armorsBySet = armors.groupBy { armor -> armor.armorSetId },
                     armorSetsBlade = armorSetsBlade,
                     armorSetsGunner = armorSetsGunner,
                 )

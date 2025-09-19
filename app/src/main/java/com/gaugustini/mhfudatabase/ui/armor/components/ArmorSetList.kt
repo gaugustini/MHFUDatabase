@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.data.model.Armor
 import com.gaugustini.mhfudatabase.data.model.ArmorSet
-import com.gaugustini.mhfudatabase.data.model.ArmorSetSummary
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.ArmorSetIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
@@ -29,7 +28,8 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
 
 @Composable
 fun ArmorSetList(
-    armorSetSummaries: List<ArmorSetSummary>,
+    armorSets: List<ArmorSet>,
+    armors: Map<Int, List<Armor>>,
     expandedArmorSets: Set<Int>,
     modifier: Modifier = Modifier,
     onToggleExpand: (armorSetId: Int) -> Unit = {},
@@ -38,12 +38,12 @@ fun ArmorSetList(
     LazyColumn(
         modifier = modifier
     ) {
-        items(armorSetSummaries) { summary ->
+        items(armorSets) { armorSet ->
             ArmorSetListItem(
-                armorSet = summary.armorSet,
-                armors = summary.armors,
-                expanded = summary.armorSet.id in expandedArmorSets,
-                onToggleExpand = { onToggleExpand(summary.armorSet.id) },
+                armorSet = armorSet,
+                armors = armors[armorSet.id] ?: emptyList(),
+                expanded = armorSet.id in expandedArmorSets,
+                onToggleExpand = { onToggleExpand(armorSet.id) },
                 onArmorClick = onArmorClick,
             )
             HorizontalDivider()
@@ -119,7 +119,8 @@ fun ArmorSetListItem(
 fun ArmorSetListPreview() {
     Theme {
         ArmorSetList(
-            armorSetSummaries = PreviewArmorData.armorSetSummaryList,
+            armorSets = PreviewArmorData.armorSetList,
+            armors = mapOf(2 to PreviewArmorData.armorList),
             expandedArmorSets = setOf(2),
         )
     }

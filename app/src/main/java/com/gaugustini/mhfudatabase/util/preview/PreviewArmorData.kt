@@ -6,7 +6,6 @@ import com.gaugustini.mhfudatabase.data.enums.HunterType
 import com.gaugustini.mhfudatabase.data.enums.Rank
 import com.gaugustini.mhfudatabase.data.model.Armor
 import com.gaugustini.mhfudatabase.data.model.ArmorSet
-import com.gaugustini.mhfudatabase.data.model.ArmorSetSummary
 
 object PreviewArmorData {
 
@@ -48,25 +47,19 @@ object PreviewArmorData {
         rarity = 1,
         rank = Rank.LOW,
         hunterType = HunterType.BLADE,
+        defense = 10,
+        maxDefense = 10,
+        fire = 10,
+        water = 10,
+        thunder = 10,
+        ice = 10,
+        dragon = 10,
     )
 
     val armorSetList = listOf(
         armorSet.copy(id = 1, name = "Armor Set 1", rarity = 1),
         armorSet.copy(id = 2, name = "Armor Set 2", rarity = 5),
         armorSet.copy(id = 3, name = "Armor Set 3", rarity = 10),
-    )
-
-    // Armor Set Summary
-
-    val armorSetSummary = ArmorSetSummary(
-        armorSet = armorSet,
-        armors = armorList,
-    )
-
-    val armorSetSummaryList = listOf(
-        armorSetSummary.copy(armorSet = armorSet.copy(id = 1, name = "Armor Set 1")),
-        armorSetSummary.copy(armorSet = armorSet.copy(id = 2, name = "Armor Set 2")),
-        armorSetSummary.copy(armorSet = armorSet.copy(id = 3, name = "Armor Set 3")),
     )
 
 }

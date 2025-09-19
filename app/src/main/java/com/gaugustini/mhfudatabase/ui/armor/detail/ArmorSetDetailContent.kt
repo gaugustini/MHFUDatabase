@@ -15,6 +15,7 @@ import com.gaugustini.mhfudatabase.data.model.ArmorSet
 import com.gaugustini.mhfudatabase.data.model.ItemQuantity
 import com.gaugustini.mhfudatabase.data.model.SkillTreePoints
 import com.gaugustini.mhfudatabase.ui.armor.components.ArmorList
+import com.gaugustini.mhfudatabase.ui.armor.components.ArmorSummary
 import com.gaugustini.mhfudatabase.ui.components.DetailHeader
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.components.icons.ArmorSetIcon
@@ -52,16 +53,15 @@ fun ArmorSetDetailContent(
             subtitle = stringResource(R.string.armor_rarity, armorSet.rarity),
         )
 
-//        TODO: Add this when ArmorSetDetails is implemented
-//        ArmorValues(
-//            defense = armorSet.defense,
-//            numberOfSlots = null,
-//            fire = armorSet.fire,
-//            water = armorSet.water,
-//            thunder = armorSet.thunder,
-//            ice = armorSet.ice,
-//            dragon = armorSet.dragon,
-//        )
+        ArmorSummary(
+            defense = armorSet.defense,
+            numberOfSlots = null,
+            fire = armorSet.fire,
+            water = armorSet.water,
+            thunder = armorSet.thunder,
+            ice = armorSet.ice,
+            dragon = armorSet.dragon,
+        )
 
         SectionHeader(
             title = stringResource(R.string.list_armors),

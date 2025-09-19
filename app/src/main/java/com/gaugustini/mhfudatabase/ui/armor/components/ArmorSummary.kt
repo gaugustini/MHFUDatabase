@@ -26,7 +26,7 @@ import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.MHFUColors
 
 @Composable
-fun ArmorValues(
+fun ArmorSummary(
     defense: Int,
     numberOfSlots: Int?,
     fire: Int,
@@ -243,9 +243,9 @@ fun ArmorValues(
 @Preview(showBackground = true)
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun ArmorValuesPreview() {
+fun ArmorSummaryPreview() {
     Theme {
-        ArmorValues(
+        ArmorSummary(
             defense = 100,
             numberOfSlots = 3,
             fire = 10,

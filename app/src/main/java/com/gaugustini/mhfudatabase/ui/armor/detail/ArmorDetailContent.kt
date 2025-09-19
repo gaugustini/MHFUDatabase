@@ -13,7 +13,7 @@ import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.data.model.Armor
 import com.gaugustini.mhfudatabase.data.model.ItemQuantity
 import com.gaugustini.mhfudatabase.data.model.SkillTreePoints
-import com.gaugustini.mhfudatabase.ui.armor.components.ArmorValues
+import com.gaugustini.mhfudatabase.ui.armor.components.ArmorSummary
 import com.gaugustini.mhfudatabase.ui.components.DetailHeader
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.components.icons.ArmorIcon
@@ -51,7 +51,7 @@ fun ArmorDetailContent(
             description = armor.description,
         )
 
-        ArmorValues(
+        ArmorSummary(
             defense = armor.defense,
             numberOfSlots = armor.numberOfSlots,
             fire = armor.fire,

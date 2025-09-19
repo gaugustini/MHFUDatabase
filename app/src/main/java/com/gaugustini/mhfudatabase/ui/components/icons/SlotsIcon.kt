@@ -3,6 +3,7 @@ package com.gaugustini.mhfudatabase.ui.components.icons
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,7 +45,7 @@ fun SlotsIcon(
 fun SlotIcon(
     modifier: Modifier = Modifier,
     filled: Boolean = false,
-    color: Color = Color.Gray,
+    color: Color = MaterialTheme.colorScheme.onSurface,
 ) {
     Canvas(
         modifier = modifier
@@ -58,7 +59,7 @@ fun SlotIcon(
             )
         } else {
             drawCircle(
-                color = Color.Gray,
+                color = color,
                 radius = radius,
                 style = Stroke(width = 1.dp.toPx())
             )
@@ -69,12 +70,13 @@ fun SlotIcon(
 @Composable
 fun NoSlotIcon(
     modifier: Modifier = Modifier,
+    color: Color = MaterialTheme.colorScheme.onSurface,
 ) {
     Canvas(
         modifier = modifier
     ) {
         drawRect(
-            color = Color.Gray,
+            color = color,
             topLeft = Offset(
                 x = 0f + 2.dp.toPx(),
                 y = size.height / 2
@@ -87,7 +89,7 @@ fun NoSlotIcon(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun SlotsIconPreview() {
     SlotsIcon(2)

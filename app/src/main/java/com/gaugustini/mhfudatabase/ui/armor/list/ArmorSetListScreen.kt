@@ -79,14 +79,16 @@ fun ArmorSetListScreen(
     ) { tabIndex ->
         when (ArmorSetListTab.fromIndex(tabIndex)) {
             ArmorSetListTab.BLADEMASTER -> ArmorSetList(
-                armorSetSummaries = uiState.armorSetsBlade,
+                armorSets = uiState.armorSetsBlade,
+                armors = uiState.armorsBySet,
                 expandedArmorSets = uiState.expandedArmorSetsBlade,
                 onToggleExpand = { onToggleExpand(it, HunterType.BLADE) },
                 onArmorClick = onArmorClick,
             )
 
             ArmorSetListTab.GUNNER -> ArmorSetList(
-                armorSetSummaries = uiState.armorSetsGunner,
+                armorSets = uiState.armorSetsGunner,
+                armors = uiState.armorsBySet,
                 expandedArmorSets = uiState.expandedArmorSetsGunner,
                 onToggleExpand = { onToggleExpand(it, HunterType.GUNNER) },
                 onArmorClick = onArmorClick,
@@ -111,7 +113,8 @@ private class ArmorSetListScreenPreviewParamProvider : PreviewParameterProvider<
     override val values: Sequence<ArmorSetListState> = sequenceOf(
         ArmorSetListState(
             initialTab = ArmorSetListTab.BLADEMASTER,
-            armorSetsBlade = PreviewArmorData.armorSetSummaryList,
+            armorsBySet = mapOf(1 to PreviewArmorData.armorList),
+            armorSetsBlade = PreviewArmorData.armorSetList,
             expandedArmorSetsBlade = setOf(1),
         ),
     )
