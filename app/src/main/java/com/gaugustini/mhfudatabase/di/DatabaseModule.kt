@@ -3,6 +3,7 @@ package com.gaugustini.mhfudatabase.di
 import android.content.Context
 import androidx.room.Room
 import com.gaugustini.mhfudatabase.data.database.AppDatabase
+import com.gaugustini.mhfudatabase.data.database.DatabaseMigration
 import com.gaugustini.mhfudatabase.data.database.dao.ArmorDao
 import com.gaugustini.mhfudatabase.data.database.dao.DecorationDao
 import com.gaugustini.mhfudatabase.data.database.dao.ItemDao
@@ -31,6 +32,9 @@ object DatabaseModule {
         return Room.databaseBuilder(
             context.applicationContext, AppDatabase::class.java, "data.db"
         )
+            .createFromAsset("database/data.db")
+            .addMigrations(*DatabaseMigration.allMigrations(context))
+            .fallbackToDestructiveMigration(true)
             .build()
     }
 

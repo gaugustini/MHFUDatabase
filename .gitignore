@@ -1,3 +1,6 @@
+# Remove this when released
+/app/src/main/assets/database/*
+
 # Built application files
 *.apk
 *.aar
