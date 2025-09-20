@@ -25,7 +25,7 @@ import com.gaugustini.mhfudatabase.ui.navigation.Destinations
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 
-data class DrawerItem(
+private data class DrawerItem(
     val label: String,
     val icon: Int,
     val route: String,
@@ -46,6 +46,7 @@ fun Drawer(
     navigateToQuestList: () -> Unit = {},
     navigateToSkillTreeList: () -> Unit = {},
     navigateToWeaponList: () -> Unit = {},
+    navigateToAbout: () -> Unit = {},
 ) {
     val drawerItems = listOf(
         DrawerItem(
@@ -93,6 +94,11 @@ fun Drawer(
             icon = R.drawable.ic_ui_weapon,
             route = Destinations.WEAPON_TYPE_LIST,
         ),
+        DrawerItem(
+            label = stringResource(R.string.screen_about),
+            icon = R.drawable.ic_item_ticket,
+            route = Destinations.ABOUT,
+        ),
     )
 
     ModalDrawerSheet(
@@ -137,6 +143,7 @@ fun Drawer(
                             Destinations.QUEST_LIST -> navigateToQuestList()
                             Destinations.SKILL_TREE_LIST -> navigateToSkillTreeList()
                             Destinations.WEAPON_TYPE_LIST -> navigateToWeaponList()
+                            Destinations.ABOUT -> navigateToAbout()
                         }
                         closeDrawer()
                     },

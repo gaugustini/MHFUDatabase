@@ -12,6 +12,7 @@
     <string name="screen_quest_list">Quests</string>
     <string name="screen_skill_tree_list">Skills</string>
     <string name="screen_weapon_list">Weapons</string>
+    <string name="screen_about">About</string>
 
     <!-- Screen Title: Detail Routes -->
     <string name="screen_armor_detail">Armor Detail</string>
@@ -224,5 +225,13 @@
     <string name="weapon_path">Path</string>
     <string name="weapon_path_details">Path: %1$d</string>
     <string name="weapon_finals">Finals</string>
+
+    <!-- About -->
+    <string name="about_description">MHFU Database is an open source android app for Monster Hunter
+        Freedom Unite (MHFU). Based on the apps developed by Gathering Hall Studios, it provides
+        data about monsters, weapons, armors, items, and quests.
+    </string>
+    <string name="about_version">Version %1$s</string>
+    <string name="about_credit_resources">Credits and Resources</string>
 
 </resources>

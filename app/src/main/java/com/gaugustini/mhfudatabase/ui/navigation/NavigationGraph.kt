@@ -11,6 +11,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.gaugustini.mhfudatabase.ui.about.AboutRoute
 import com.gaugustini.mhfudatabase.ui.armor.detail.ArmorDetailRoute
 import com.gaugustini.mhfudatabase.ui.armor.list.ArmorSetListRoute
 import com.gaugustini.mhfudatabase.ui.decoration.detail.DecorationDetailRoute
@@ -148,6 +149,12 @@ fun NavigationGraph(
                 onWeaponTypeClick = { weaponType ->
                     navigationActions.navigateToWeaponGraph(weaponType)
                 },
+            )
+        }
+        composable(Destinations.ABOUT) {
+            AboutRoute(
+                navigateBack = navigationActions.navigateBack,
+                openSearch = navigationActions.navigateToSearch,
             )
         }
 
