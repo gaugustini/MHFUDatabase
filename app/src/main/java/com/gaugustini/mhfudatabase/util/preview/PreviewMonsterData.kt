@@ -77,8 +77,11 @@ object PreviewMonsterData {
     val monsterItemUsage = ItemUsage(
         monsterState = MonsterStateType.NORMAL,
         canUsePitfallTrap = true,
+        pitfallDuration = 10,
         canUseShockTrap = true,
+        shockDuration = 10,
         canUseFlashBomb = true,
+        flashDuration = 10,
         canUseSonicBomb = true,
         canUseDungBomb = true,
         canUseMeat = true,

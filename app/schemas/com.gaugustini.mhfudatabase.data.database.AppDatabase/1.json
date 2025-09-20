@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "dd97cd54ac7476529ceaf4aa8e9cc50e",
+    "identityHash": "1e22748960b087087c52ee5cb066bafe",
     "entities": [
       {
         "tableName": "armor",
@@ -1260,7 +1260,7 @@
       },
       {
         "tableName": "monster_item",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`monster_id` INTEGER NOT NULL, `state` TEXT NOT NULL, `pitfall_trap` INTEGER NOT NULL, `shock_trap` INTEGER NOT NULL, `flash_bomb` INTEGER NOT NULL, `sonic_bomb` INTEGER NOT NULL, `dung_bomb` INTEGER NOT NULL, `meat` INTEGER NOT NULL, PRIMARY KEY(`monster_id`, `state`), FOREIGN KEY(`monster_id`) REFERENCES `monster`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`monster_id` INTEGER NOT NULL, `state` TEXT NOT NULL, `pitfall` INTEGER NOT NULL, `pitfall_duration` INTEGER, `shock` INTEGER NOT NULL, `shock_duration` INTEGER, `flash` INTEGER NOT NULL, `flash_duration` INTEGER, `sonic` INTEGER NOT NULL, `dung` INTEGER NOT NULL, `meat` INTEGER NOT NULL, PRIMARY KEY(`monster_id`, `state`), FOREIGN KEY(`monster_id`) REFERENCES `monster`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "monsterId",
@@ -1275,32 +1275,47 @@
             "notNull": true
           },
           {
-            "fieldPath": "pitfallTrap",
-            "columnName": "pitfall_trap",
+            "fieldPath": "pitfall",
+            "columnName": "pitfall",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "shockTrap",
-            "columnName": "shock_trap",
+            "fieldPath": "pitfallDuration",
+            "columnName": "pitfall_duration",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "shock",
+            "columnName": "shock",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "flashBomb",
-            "columnName": "flash_bomb",
+            "fieldPath": "shockDuration",
+            "columnName": "shock_duration",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "flash",
+            "columnName": "flash",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "sonicBomb",
-            "columnName": "sonic_bomb",
+            "fieldPath": "flashDuration",
+            "columnName": "flash_duration",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "sonic",
+            "columnName": "sonic",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "dungBomb",
-            "columnName": "dung_bomb",
+            "fieldPath": "dung",
+            "columnName": "dung",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -2449,7 +2464,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dd97cd54ac7476529ceaf4aa8e9cc50e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1e22748960b087087c52ee5cb066bafe')"
     ]
   }
 }
