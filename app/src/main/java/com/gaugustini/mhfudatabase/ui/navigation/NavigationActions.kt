@@ -74,49 +74,31 @@ class NavigationActions(
     // Detail Routes
 
     val navigateToArmorDetail: (armorId: Int) -> Unit = {
-        navController.navigate(Destinations.armorDetailRoute(it)) {
-            launchSingleTop = true
-        }
+        navController.navigate(Destinations.armorDetailRoute(it))
     }
     val navigateToDecorationDetail: (decorationId: Int) -> Unit = {
-        navController.navigate(Destinations.decorationDetailRoute(it)) {
-            launchSingleTop = true
-        }
+        navController.navigate(Destinations.decorationDetailRoute(it))
     }
     val navigateToItemDetail: (itemId: Int) -> Unit = {
-        navController.navigate(Destinations.itemDetailRoute(it)) {
-            launchSingleTop = true
-        }
+        navController.navigate(Destinations.itemDetailRoute(it))
     }
     val navigateToLocationDetail: (locationId: Int) -> Unit = {
-        navController.navigate(Destinations.locationDetailRoute(it)) {
-            launchSingleTop = true
-        }
+        navController.navigate(Destinations.locationDetailRoute(it))
     }
     val navigateToMonsterDetail: (monsterId: Int) -> Unit = {
-        navController.navigate(Destinations.monsterDetailRoute(it)) {
-            launchSingleTop = true
-        }
+        navController.navigate(Destinations.monsterDetailRoute(it))
     }
     val navigateToQuestDetail: (questId: Int) -> Unit = {
-        navController.navigate(Destinations.questDetailRoute(it)) {
-            launchSingleTop = true
-        }
+        navController.navigate(Destinations.questDetailRoute(it))
     }
     val navigateToSkillTreeDetail: (skillTreeId: Int) -> Unit = {
-        navController.navigate(Destinations.skillTreeDetailRoute(it)) {
-            launchSingleTop = true
-        }
+        navController.navigate(Destinations.skillTreeDetailRoute(it))
     }
     val navigateToWeaponGraph: (weaponType: WeaponType) -> Unit = {
-        navController.navigate(Destinations.weaponGraphRoute(it.name)) {
-            launchSingleTop = true
-        }
+        navController.navigate(Destinations.weaponGraphRoute(it.name))
     }
     val navigateToWeaponDetail: (weaponId: Int) -> Unit = {
-        navController.navigate(Destinations.weaponDetailRoute(it)) {
-            launchSingleTop = true
-        }
+        navController.navigate(Destinations.weaponDetailRoute(it))
     }
 
 }
