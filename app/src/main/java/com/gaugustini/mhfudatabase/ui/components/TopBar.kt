@@ -40,7 +40,6 @@ fun TopBar(
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
-                color = MaterialTheme.colorScheme.primary,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -55,7 +54,6 @@ fun TopBar(
                         NavigationType.BACK -> Icons.AutoMirrored.Filled.ArrowBack
                     },
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(Dimension.Size.extraSmall)
                 )
             }
@@ -68,7 +66,6 @@ fun TopBar(
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(Dimension.Size.extraSmall)
                 )
             }

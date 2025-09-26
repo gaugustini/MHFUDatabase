@@ -3,7 +3,6 @@ package com.gaugustini.mhfudatabase.ui.components
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -103,7 +102,6 @@ fun Drawer(
 
     ModalDrawerSheet(
         drawerState = drawerState,
-        windowInsets = WindowInsets(),
         modifier = modifier
     ) {
         Column(

@@ -37,10 +37,10 @@ fun EmptyContent(
             contentDescription = null,
             modifier = Modifier.size(Dimension.Size.huge)
         )
-        Spacer(modifier = Modifier.height(Dimension.Size.large))
+        Spacer(modifier = Modifier.height(Dimension.Size.medium))
         Text(
             text = stringResource(R.string.empty_content),
-            style = MaterialTheme.typography.headlineMedium,
+            style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onBackground
         )
     }
