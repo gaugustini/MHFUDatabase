@@ -52,7 +52,7 @@ fun Drawer(
     val mainRoutes = listOf(
         DrawerItem(
             label = stringResource(R.string.screen_armor_set_list),
-            icon = R.drawable.ic_ui_armor_set,
+            icon = R.drawable.ic_armor_chest,
             route = Destinations.ARMOR_SET_LIST,
         ),
         DrawerItem(
