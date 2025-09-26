@@ -4,11 +4,13 @@ import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.NavigationDrawerItem
@@ -47,7 +49,7 @@ fun Drawer(
     navigateToWeaponList: () -> Unit = {},
     navigateToAbout: () -> Unit = {},
 ) {
-    val drawerItems = listOf(
+    val mainRoutes = listOf(
         DrawerItem(
             label = stringResource(R.string.screen_armor_set_list),
             icon = R.drawable.ic_ui_armor_set,
@@ -93,6 +95,8 @@ fun Drawer(
             icon = R.drawable.ic_ui_weapon,
             route = Destinations.WEAPON_TYPE_LIST,
         ),
+    )
+    val otherRoutes = listOf(
         DrawerItem(
             label = stringResource(R.string.screen_about),
             icon = R.drawable.ic_item_ticket,
@@ -110,22 +114,26 @@ fun Drawer(
             Image(
                 painter = painterResource(R.drawable.header),
                 contentDescription = null,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        bottom = Dimension.Padding.medium,
+                    )
             )
 
-            drawerItems.forEach { item ->
+            mainRoutes.forEach { item ->
                 NavigationDrawerItem(
-                    label = {
-                        Text(
-                            text = item.label,
-                            style = MaterialTheme.typography.bodyLarge,
-                        )
-                    },
                     icon = {
                         Image(
                             painter = painterResource(item.icon),
                             contentDescription = null,
-                            modifier = Modifier.size(Dimension.Size.small),
+                            modifier = Modifier.size(Dimension.Size.extraSmall),
+                        )
+                    },
+                    label = {
+                        Text(
+                            text = item.label,
+                            style = MaterialTheme.typography.titleMedium,
                         )
                     },
                     selected = currentRoute == item.route,
@@ -141,6 +149,37 @@ fun Drawer(
                             Destinations.QUEST_LIST -> navigateToQuestList()
                             Destinations.SKILL_TREE_LIST -> navigateToSkillTreeList()
                             Destinations.WEAPON_TYPE_LIST -> navigateToWeaponList()
+                        }
+                        closeDrawer()
+                    },
+                )
+            }
+
+            HorizontalDivider(
+                modifier = Modifier.padding(
+                    vertical = Dimension.Padding.medium,
+                )
+            )
+
+            otherRoutes.forEach { item ->
+                NavigationDrawerItem(
+                    label = {
+                        Text(
+                            text = item.label,
+                            style = MaterialTheme.typography.titleMedium,
+                        )
+                    },
+                    icon = {
+                        Image(
+                            painter = painterResource(item.icon),
+                            contentDescription = null,
+                            modifier = Modifier.size(Dimension.Size.extraSmall),
+                        )
+                    },
+                    selected = currentRoute == item.route,
+                    shape = RectangleShape,
+                    onClick = {
+                        when (item.route) {
                             Destinations.ABOUT -> navigateToAbout()
                         }
                         closeDrawer()
