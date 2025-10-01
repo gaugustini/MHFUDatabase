@@ -51,11 +51,8 @@ data class AilmentStatus(
 data class ItemUsage(
     val monsterState: MonsterStateType,
     val canUsePitfallTrap: Boolean,
-    val pitfallDuration: Int?,
     val canUseShockTrap: Boolean,
-    val shockDuration: Int?,
     val canUseFlashBomb: Boolean,
-    val flashDuration: Int?,
     val canUseSonicBomb: Boolean,
     val canUseDungBomb: Boolean,
     val canUseMeat: Boolean,

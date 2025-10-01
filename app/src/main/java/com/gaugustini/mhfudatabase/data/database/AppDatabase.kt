@@ -69,7 +69,7 @@ import com.gaugustini.mhfudatabase.data.database.entity.WeaponTextEntity
         WeaponAmmoBowEntity::class, WeaponAmmoBowgunEntity::class,
         WeaponRecipeEntity::class,
     ],
-    version = 1,
+    version = 2,
     exportSchema = true,
 )
 abstract class AppDatabase : RoomDatabase() {
