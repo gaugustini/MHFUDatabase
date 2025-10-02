@@ -20,6 +20,7 @@ interface LocationDao {
             ON location.id = location_text.location_id
         WHERE
             location_text.language = :language
+        ORDER BY name ASC
         """
     )
     suspend fun getLocationList(language: String): List<Location>

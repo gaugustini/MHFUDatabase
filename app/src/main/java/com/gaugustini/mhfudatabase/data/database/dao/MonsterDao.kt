@@ -30,6 +30,7 @@ interface MonsterDao {
             ON monster.id = monster_text.monster_id
         WHERE
             monster_text.language = :language
+        ORDER BY name ASC
         """
     )
     suspend fun getMonsterList(language: String): List<Monster>
