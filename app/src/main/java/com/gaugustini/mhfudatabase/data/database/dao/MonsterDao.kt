@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Query
 import com.gaugustini.mhfudatabase.data.model.AilmentStatus
 import com.gaugustini.mhfudatabase.data.model.Hitzone
-import com.gaugustini.mhfudatabase.data.model.ItemUsage
 import com.gaugustini.mhfudatabase.data.model.Monster
+import com.gaugustini.mhfudatabase.data.model.MonsterItemUsage
 import com.gaugustini.mhfudatabase.data.model.MonsterReward
 
 @Dao
@@ -112,7 +112,7 @@ interface MonsterDao {
             monster_item.monster_id = :id
         """
     )
-    suspend fun getItemUsagesForMonster(id: Int): List<ItemUsage>
+    suspend fun getItemUsagesForMonster(id: Int): List<MonsterItemUsage>
 
     @Query(
         """

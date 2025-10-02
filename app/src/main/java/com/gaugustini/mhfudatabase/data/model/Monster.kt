@@ -23,7 +23,7 @@ data class MonsterDetails(
     val monster: Monster,
     val damage: List<Hitzone>,
     val status: List<AilmentStatus>,
-    val item: List<ItemUsage>,
+    val item: List<MonsterItemUsage>,
     val reward: List<MonsterReward>,
 )
 
@@ -48,7 +48,7 @@ data class AilmentStatus(
     val damage: Int,
 )
 
-data class ItemUsage(
+data class MonsterItemUsage(
     val monsterState: MonsterStateType,
     val canUsePitfallTrap: Boolean,
     val canUseShockTrap: Boolean,

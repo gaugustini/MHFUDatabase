@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.data.enums.ItemIconColor
 import com.gaugustini.mhfudatabase.data.enums.MonsterStateType
-import com.gaugustini.mhfudatabase.data.model.ItemUsage
+import com.gaugustini.mhfudatabase.data.model.MonsterItemUsage
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
@@ -30,7 +30,7 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
 
 @Composable
 fun MonsterItemUsageList(
-    items: List<ItemUsage>,
+    items: List<MonsterItemUsage>,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -46,7 +46,7 @@ fun MonsterItemUsageList(
 
 @Composable
 fun MonsterItemUsageListItem(
-    item: ItemUsage,
+    item: MonsterItemUsage,
     modifier: Modifier = Modifier,
 ) {
     Column(

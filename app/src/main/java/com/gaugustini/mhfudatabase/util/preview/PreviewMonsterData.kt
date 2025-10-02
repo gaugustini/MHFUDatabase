@@ -8,8 +8,8 @@ import com.gaugustini.mhfudatabase.data.enums.Rank
 import com.gaugustini.mhfudatabase.data.enums.StatusType
 import com.gaugustini.mhfudatabase.data.model.AilmentStatus
 import com.gaugustini.mhfudatabase.data.model.Hitzone
-import com.gaugustini.mhfudatabase.data.model.ItemUsage
 import com.gaugustini.mhfudatabase.data.model.Monster
+import com.gaugustini.mhfudatabase.data.model.MonsterItemUsage
 import com.gaugustini.mhfudatabase.data.model.MonsterReward
 
 object PreviewMonsterData {
@@ -74,7 +74,7 @@ object PreviewMonsterData {
 
     // Monster Item Usage
 
-    val monsterItemUsage = ItemUsage(
+    val monsterItemUsage = MonsterItemUsage(
         monsterState = MonsterStateType.NORMAL,
         canUsePitfallTrap = true,
         canUseShockTrap = true,
