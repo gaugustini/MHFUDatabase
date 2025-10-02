@@ -22,8 +22,8 @@ data class Item(
 
 data class ItemDetails(
     val item: Item,
-    val usages: List<String>,
-    val sources: List<String>,
+    val usages: ItemUsages,
+    val sources: ItemSources,
 )
 
 data class ItemCombination(
@@ -43,6 +43,18 @@ data class ItemCombination(
     val quantityMin: Int,
     val quantityMax: Int,
     val percentage: Int,
+)
+
+data class ItemUsages(
+    val craftRecipes: List<ItemCombination>,
+    val armors: List<Armor>,
+    val weapons: List<Weapon>
+)
+
+data class ItemSources(
+    val craftRecipes: List<ItemCombination>,
+    val locations: List<ItemLocation>,
+    val monsterRewards: List<MonsterReward>,
 )
 
 data class ItemQuantity(
