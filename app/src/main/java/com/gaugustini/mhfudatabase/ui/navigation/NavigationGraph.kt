@@ -196,6 +196,11 @@ fun NavigationGraph(
             ItemDetailRoute(
                 navigateBack = navigationActions.navigateBack,
                 openSearch = navigationActions.navigateToSearch,
+                onArmorClick = navigationActions.navigateToArmorDetail,
+                onItemClick = navigationActions.navigateToItemDetail,
+                onLocationClick = navigationActions.navigateToLocationDetail,
+                onMonsterClick = navigationActions.navigateToMonsterDetail,
+                onWeaponClick = navigationActions.navigateToWeaponDetail,
             )
         }
         composable(

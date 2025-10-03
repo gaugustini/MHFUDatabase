@@ -48,6 +48,11 @@
     <string name="tab_armor_detail">DETAIL</string>
     <string name="tab_armor_set_detail">ARMOR SET DETAIL</string>
 
+    <!-- Tab Title: Item Detail -->
+    <string name="tab_item_summary">SUMMARY</string>
+    <string name="tab_item_usages">USAGE</string>
+    <string name="tab_item_sources">OBTAINING</string>
+
     <!-- Tab Title: Location Detail -->
     <string name="tab_location_low_rank">LOW RANK</string>
     <string name="tab_location_high_rank">HIGH RANK</string>
@@ -118,6 +123,11 @@
     <string name="item_carry_max">Carry Max</string>
     <string name="item_buy_price">Buy Price</string>
     <string name="item_sell_price">Sell Price</string>
+    <string name="item_crafting">Crafting</string>
+    <string name="item_armor">Armor</string>
+    <string name="item_weapon">Weapon</string>
+    <string name="item_location">Location</string>
+    <string name="item_monster">Monster</string>
 
     <!-- Location -->
     <string name="location_secret_area">Secret Area</string>
