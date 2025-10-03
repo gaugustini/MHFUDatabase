@@ -50,6 +50,7 @@ class ItemRepository @Inject constructor(
         return ItemUsages(
             craftRecipes = itemDao.getItemCombinationListForItemUsages(itemId, language),
             armors = itemDao.getArmorListForItemUsages(itemId, language),
+            decorations = itemDao.getDecorationListForItemUsages(itemId, language),
             weapons = itemDao.getWeaponListForItemUsages(itemId, language),
         )
     }

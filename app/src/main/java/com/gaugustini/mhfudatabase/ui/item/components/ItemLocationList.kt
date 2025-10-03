@@ -55,7 +55,7 @@ fun ItemLocationListItem(
         },
         headlineContent = {
             Text(
-                text = item.name,
+                text = item.itemName,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
@@ -64,7 +64,7 @@ fun ItemLocationListItem(
             horizontal = Dimension.Padding.large,
             vertical = Dimension.Padding.medium,
         ),
-        modifier = modifier.clickable { onItemClick(item.id) }
+        modifier = modifier.clickable { onItemClick(item.itemId) }
     )
 }
 

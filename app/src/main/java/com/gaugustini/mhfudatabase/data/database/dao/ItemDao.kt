@@ -2,12 +2,13 @@ package com.gaugustini.mhfudatabase.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.gaugustini.mhfudatabase.data.model.Armor
 import com.gaugustini.mhfudatabase.data.model.Item
 import com.gaugustini.mhfudatabase.data.model.ItemCombination
 import com.gaugustini.mhfudatabase.data.model.ItemLocation
+import com.gaugustini.mhfudatabase.data.model.ItemUsageArmor
+import com.gaugustini.mhfudatabase.data.model.ItemUsageDecoration
+import com.gaugustini.mhfudatabase.data.model.ItemUsageWeapon
 import com.gaugustini.mhfudatabase.data.model.MonsterReward
-import com.gaugustini.mhfudatabase.data.model.Weapon
 
 @Dao
 interface ItemDao {
@@ -138,7 +139,8 @@ interface ItemDao {
         JOIN item_text item_b_text
             ON item_combination.item_b_id = item_b_text.item_id
         WHERE
-            item_combination.item_created_id = :id AND
+            item_combination.item_a_id = :id OR
+            item_combination.item_b_id = :id AND            
             item_created_text.language = :language AND
             item_a_text.language = :language AND
             item_b_text.language = :language
@@ -149,28 +151,14 @@ interface ItemDao {
         language: String
     ): List<ItemCombination>
 
-    // Item Usages
-
     @Query(
         """
         SELECT
-            armor.id                AS id,
-            armor.armor_set_id      AS armorSetId,
-            armor_text.name         AS name,
-            armor_text.description  AS description,
-            armor.armor_type        AS type,
-            armor.hunter_type       AS hunterType,
-            armor.gender            AS gender,
+            armor.id                AS armorId,
+            armor_text.name         AS armorName,
+            armor.armor_type        AS armorType,
             armor.rarity            AS rarity,
-            armor.price             AS price,
-            armor.num_slots         AS numberOfSlots,
-            armor.defense           AS defense,
-            armor.max_defense       AS maxDefense,
-            armor.fire_res          AS fire,
-            armor.water_res         AS water,
-            armor.thunder_res       AS thunder,
-            armor.ice_res           AS ice,
-            armor.dragon_res        AS dragon
+            armor_recipe.quantity   AS itemQuantity
         FROM armor
         JOIN armor_text
             ON armor.id = armor_text.armor_id
@@ -181,34 +169,38 @@ interface ItemDao {
             armor_text.language = :language
         """
     )
-    suspend fun getArmorListForItemUsages(id: Int, language: String): List<Armor>
+    suspend fun getArmorListForItemUsages(id: Int, language: String): List<ItemUsageArmor>
 
     @Query(
         """
         SELECT
-            weapon.id                AS id,
-            weapon_text.name         AS name,
-            weapon_text.description  AS description,
-            weapon.weapon_type       AS type,
+            decoration.id               AS decorationId,
+            item_text.name              AS decorationName,
+            item.icon_color             AS decorationColor,
+            item.rarity                 AS rarity,
+            decoration_recipe.quantity  AS itemQuantity
+        FROM decoration
+        JOIN item
+            on decoration.id = item.id
+        JOIN item_text
+            ON decoration.id = item_text.item_id
+        JOIN decoration_recipe
+            ON decoration.id = decoration_recipe.decoration_id
+        WHERE
+            decoration_recipe.item_id = :id AND
+            item_text.language = :language
+        """
+    )
+    suspend fun getDecorationListForItemUsages(id: Int, language: String): List<ItemUsageDecoration>
+
+    @Query(
+        """
+        SELECT
+            weapon.id                AS weaponId,
+            weapon_text.name         AS weaponName,
+            weapon.weapon_type       AS weaponType,
             weapon.rarity            AS rarity,
-            weapon.affinity          AS affinity,
-            weapon.defense           AS defense,
-            weapon.num_slots         AS numSlots,
-            weapon.attack            AS attack,
-            weapon.max_attack        AS maxAttack,
-            weapon.price_create      AS priceCreate,
-            weapon.price_upgrade     AS priceUpgrade,
-            weapon.element_1         AS element1,
-            weapon.element_1_value   AS element1Value,
-            weapon.element_2         AS element2,
-            weapon.element_2_value   AS element2Value,
-            weapon.sharpness         AS sharpness,
-            weapon.sharpness_plus    AS sharpnessPlus,
-            weapon.shelling_type     AS shellingType,
-            weapon.shelling_level    AS shellingLevel,
-            weapon.song_notes        AS songNotes,
-            weapon.reload_speed      AS reloadSpeed,
-            weapon.recoil            AS recoil
+            weapon_recipe.quantity   AS itemQuantity
         FROM weapon
         JOIN weapon_text
             ON weapon.id = weapon_text.weapon_id
@@ -219,7 +211,7 @@ interface ItemDao {
             weapon_text.language = :language
         """
     )
-    suspend fun getWeaponListForItemUsages(id: Int, language: String): List<Weapon>
+    suspend fun getWeaponListForItemUsages(id: Int, language: String): List<ItemUsageWeapon>
 
     // Item Sources
 
@@ -256,8 +248,7 @@ interface ItemDao {
         JOIN item_text item_b_text
             ON item_combination.item_b_id = item_b_text.item_id
         WHERE
-            item_combination.item_a_id = :id OR
-            item_combination.item_b_id = :id AND
+            item_combination.item_created_id = :id AND
             item_created_text.language = :language AND
             item_a_text.language = :language AND
             item_b_text.language = :language
@@ -272,8 +263,10 @@ interface ItemDao {
     @Query(
         """
         SELECT
-            item.id                     AS id,
-            item_text.name              AS name,
+            item.id                     AS itemId,
+            item_text.name              AS itemName,
+            location_item.location_id   AS locationId,
+            location_text.name          AS locationName,
             location_item.rank          AS `rank`,
             location_item.gather_type   AS type,
             location_item.area          AS area,
@@ -284,6 +277,8 @@ interface ItemDao {
             ON location_item.item_id = item.id
         JOIN item_text
             ON location_item.item_id = item_text.item_id
+        JOIN location_text
+            ON location_item.location_id = location_text.location_id
         WHERE
             location_item.item_id = :id AND
             item_text.language = :language
@@ -298,6 +293,8 @@ interface ItemDao {
         SELECT
             monster_reward.item_id      AS itemId,
             item_text.name              AS itemName,
+            monster_reward.monster_id   AS monsterId,
+            monster_text.name           AS monsterName,
             item.icon_type              AS itemIconType,
             item.icon_color             AS itemIconColor,
             reward_condition_text.name  AS condition,
@@ -309,6 +306,8 @@ interface ItemDao {
             ON monster_reward.item_id = item_text.item_id
         JOIN item
             ON monster_reward.item_id = item.id
+        JOIN monster_text
+            ON monster_reward.monster_id = monster_text.monster_id
         JOIN reward_condition_text
             ON monster_reward.reward_condition_id = reward_condition_text.reward_condition_id
         WHERE

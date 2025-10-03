@@ -105,6 +105,7 @@ fun ItemDetailScreen(
                         ItemUsagesContent(
                             combinations = uiState.usages.craftRecipes,
                             armors = uiState.usages.armors,
+                            decorations = uiState.usages.decorations,
                             weapons = uiState.usages.weapons,
                             onArmorClick = onArmorClick,
                             onItemClick = onItemClick,

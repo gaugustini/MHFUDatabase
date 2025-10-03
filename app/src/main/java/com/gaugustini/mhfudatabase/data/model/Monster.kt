@@ -61,6 +61,8 @@ data class MonsterItemUsage(
 data class MonsterReward(
     val itemId: Int,
     val itemName: String,
+    val monsterId: Int,
+    val monsterName: String,
     val itemIconType: ItemIconType,
     val itemIconColor: ItemIconColor,
     val condition: String,

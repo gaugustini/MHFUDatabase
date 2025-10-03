@@ -119,6 +119,8 @@ interface MonsterDao {
         SELECT
             monster_reward.item_id      AS itemId,
             item_text.name              AS itemName,
+            monster_reward.monster_id   AS monsterId,
+            monster_text.name           AS monsterName,
             item.icon_type              AS itemIconType,
             item.icon_color             AS itemIconColor,
             reward_condition_text.name  AS condition,
@@ -130,6 +132,8 @@ interface MonsterDao {
             ON monster_reward.item_id = item_text.item_id
         JOIN item
             ON monster_reward.item_id = item.id
+        JOIN monster_text
+            ON monster_reward.monster_id = monster_text.monster_id
         JOIN reward_condition_text
             ON monster_reward.reward_condition_id = reward_condition_text.reward_condition_id
         WHERE

@@ -94,6 +94,8 @@ object PreviewMonsterData {
     val monsterReward = MonsterReward(
         itemId = 1,
         itemName = "Item",
+        monsterId = 1,
+        monsterName = "Monster",
         itemIconType = ItemIconType.BALL,
         itemIconColor = ItemIconColor.YELLOW,
         condition = "Condition",

@@ -19,7 +19,7 @@ data class ItemDetailState(
     val initialTab: ItemDetailTab = ItemDetailTab.ITEM_SUMMARY,
     val item: Item? = null,
     val sources: ItemSources = ItemSources(emptyList(), emptyList(), emptyList()),
-    val usages: ItemUsages = ItemUsages(emptyList(), emptyList(), emptyList()),
+    val usages: ItemUsages = ItemUsages(emptyList(), emptyList(), emptyList(), emptyList()),
 )
 
 @HiltViewModel
