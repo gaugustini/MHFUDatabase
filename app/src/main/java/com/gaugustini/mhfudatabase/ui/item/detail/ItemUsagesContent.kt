@@ -1,9 +1,8 @@
 package com.gaugustini.mhfudatabase.ui.item.detail
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,6 +14,9 @@ import com.gaugustini.mhfudatabase.data.model.ItemUsageArmor
 import com.gaugustini.mhfudatabase.data.model.ItemUsageDecoration
 import com.gaugustini.mhfudatabase.data.model.ItemUsageWeapon
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
+import com.gaugustini.mhfudatabase.ui.item.components.ItemUsageArmorListItem
+import com.gaugustini.mhfudatabase.ui.item.components.ItemUsageDecorationListItem
+import com.gaugustini.mhfudatabase.ui.item.components.ItemUsageWeaponListItem
 import com.gaugustini.mhfudatabase.ui.itemcombination.components.ItemCombinationListItem
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
@@ -27,51 +29,78 @@ fun ItemUsagesContent(
     weapons: List<ItemUsageWeapon>,
     modifier: Modifier = Modifier,
     onArmorClick: (armorId: Int) -> Unit = {},
+    onDecorationClick: (decorationId: Int) -> Unit = {},
     onItemClick: (itemId: Int) -> Unit = {},
     onWeaponClick: (weaponId: Int) -> Unit = {},
 ) {
-    Column(
-        modifier = modifier.verticalScroll(rememberScrollState())
+    LazyColumn(
+        modifier = modifier
     ) {
         if (combinations.isNotEmpty()) {
-            SectionHeader(
-                title = stringResource(R.string.item_crafting),
-            )
-
-            combinations.forEach { combination ->
+            item {
+                SectionHeader(
+                    title = stringResource(R.string.item_crafting),
+                )
+            }
+            itemsIndexed(combinations) { index, combination ->
                 ItemCombinationListItem(
                     itemCombination = combination,
                     onItemClick = onItemClick,
                 )
-                HorizontalDivider()
+                if (index != combinations.lastIndex) {
+                    HorizontalDivider()
+                }
             }
         }
 
         if (armors.isNotEmpty()) {
-            SectionHeader(
-                title = stringResource(R.string.item_armor),
-            )
+            item {
+                SectionHeader(
+                    title = stringResource(R.string.item_armor),
+                )
+            }
+            itemsIndexed(armors) { index, armor ->
+                ItemUsageArmorListItem(
+                    armor = armor,
+                    onArmorClick = onArmorClick,
+                )
+                if (index != armors.lastIndex) {
+                    HorizontalDivider()
+                }
+            }
+        }
 
-            armors.forEach { armor ->
-//                ArmorListItem(
-//                    armor = armor,
-//                    onArmorClick = onArmorClick,
-//                )
-                HorizontalDivider()
+        if (decorations.isNotEmpty()) {
+            item {
+                SectionHeader(
+                    title = stringResource(R.string.item_decoration),
+                )
+            }
+            itemsIndexed(decorations) { index, decoration ->
+                ItemUsageDecorationListItem(
+                    decoration = decoration,
+                    onDecorationClick = onDecorationClick,
+                )
+                if (index != decorations.lastIndex) {
+                    HorizontalDivider()
+                }
             }
         }
 
         if (weapons.isNotEmpty()) {
-            SectionHeader(
-                title = stringResource(R.string.item_weapon),
-            )
-
-            weapons.forEach { weapon ->
-//                WeaponListItem(
-//                    weapon = weapon,
-//                    onWeaponClick = onWeaponClick,
-//                )
-                HorizontalDivider()
+            item {
+                SectionHeader(
+                    title = stringResource(R.string.item_weapon),
+                )
+            }
+            itemsIndexed(weapons) { index, weapon ->
+                ItemUsageWeaponListItem(
+                    weapon = weapon,
+                    onWeaponClick = onWeaponClick,
+                )
+                if (index != weapons.lastIndex) {
+                    HorizontalDivider()
+                }
             }
         }
     }

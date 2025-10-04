@@ -197,6 +197,7 @@ fun NavigationGraph(
                 navigateBack = navigationActions.navigateBack,
                 openSearch = navigationActions.navigateToSearch,
                 onArmorClick = navigationActions.navigateToArmorDetail,
+                onDecorationClick = navigationActions.navigateToDecorationDetail,
                 onItemClick = navigationActions.navigateToItemDetail,
                 onLocationClick = navigationActions.navigateToLocationDetail,
                 onMonsterClick = navigationActions.navigateToMonsterDetail,
