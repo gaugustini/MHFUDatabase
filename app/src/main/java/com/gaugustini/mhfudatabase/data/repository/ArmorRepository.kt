@@ -48,7 +48,7 @@ class ArmorRepository @Inject constructor(
     ): ArmorSetDetails {
         return ArmorSetDetails(
             armorSet = armorDao.getArmorSet(armorSetId, language),
-            armors = armorDao.getArmorsForArmorSet(armorSetId, language),
+            armors = armorDao.getArmorsForArmorSet(armorSetId, language).sortedBy { it.type },
             skills = armorDao.getSkillsForArmorSet(armorSetId, language),
             recipe = armorDao.getItemsForArmorSet(armorSetId, language),
         )

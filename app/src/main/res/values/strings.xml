@@ -135,6 +135,10 @@
     <string name="item_rank_treasure">Treasure</string>
     <string name="item_rank_training">Training</string>
 
+    <!-- Item Combination-->
+    <string name="combination_treasure">Treasure</string>
+    <string name="combination_alchemy">Alchemy</string>
+
     <!-- Location -->
     <string name="location_secret_area">Secret Area</string>
     <string name="location_base_camp">Base Camp</string>
