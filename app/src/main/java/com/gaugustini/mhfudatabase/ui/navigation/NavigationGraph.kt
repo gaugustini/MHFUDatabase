@@ -52,7 +52,7 @@ fun NavigationGraph(
         exitTransition = {
             slideOutOfContainer(
                 towards = AnimatedContentTransitionScope.SlideDirection.Start,
-                animationSpec = tween(durationMillis = 450, easing = EaseIn),
+                animationSpec = tween(durationMillis = 300, easing = EaseIn),
             )
         },
         popEnterTransition = {
@@ -64,7 +64,7 @@ fun NavigationGraph(
         popExitTransition = {
             slideOutOfContainer(
                 towards = AnimatedContentTransitionScope.SlideDirection.End,
-                animationSpec = tween(durationMillis = 450, easing = EaseIn),
+                animationSpec = tween(durationMillis = 300, easing = EaseIn),
             )
         },
         modifier = modifier,
@@ -196,6 +196,12 @@ fun NavigationGraph(
             ItemDetailRoute(
                 navigateBack = navigationActions.navigateBack,
                 openSearch = navigationActions.navigateToSearch,
+                onArmorClick = navigationActions.navigateToArmorDetail,
+                onDecorationClick = navigationActions.navigateToDecorationDetail,
+                onItemClick = navigationActions.navigateToItemDetail,
+                onLocationClick = navigationActions.navigateToLocationDetail,
+                onMonsterClick = navigationActions.navigateToMonsterDetail,
+                onWeaponClick = navigationActions.navigateToWeaponDetail,
             )
         }
         composable(

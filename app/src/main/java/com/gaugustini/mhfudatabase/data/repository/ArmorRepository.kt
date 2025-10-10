@@ -19,7 +19,7 @@ class ArmorRepository @Inject constructor(
     suspend fun getArmorList(
         language: String = "en",
     ): List<Armor> {
-        return armorDao.getArmorList(language)
+        return armorDao.getArmorList(language).sortedBy { it.type }
     }
 
     suspend fun getArmorSetList(
@@ -48,7 +48,7 @@ class ArmorRepository @Inject constructor(
     ): ArmorSetDetails {
         return ArmorSetDetails(
             armorSet = armorDao.getArmorSet(armorSetId, language),
-            armors = armorDao.getArmorsForArmorSet(armorSetId, language),
+            armors = armorDao.getArmorsForArmorSet(armorSetId, language).sortedBy { it.type },
             skills = armorDao.getSkillsForArmorSet(armorSetId, language),
             recipe = armorDao.getItemsForArmorSet(armorSetId, language),
         )

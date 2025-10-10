@@ -19,7 +19,7 @@ import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
 
 @Composable
-fun ItemDetailContent(
+fun ItemSummaryContent(
     item: Item,
     modifier: Modifier = Modifier,
 ) {
@@ -49,9 +49,9 @@ fun ItemDetailContent(
 @Preview(showBackground = true)
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun ItemDetailContentPreview() {
+fun ItemSummaryContentPreview() {
     Theme {
-        ItemDetailContent(
+        ItemSummaryContent(
             item = PreviewItemData.item,
         )
     }

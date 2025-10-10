@@ -54,13 +54,13 @@ fun ArmorListItem(
             ArmorIcon(
                 type = armor.type,
                 rarity = armor.rarity,
-                modifier = Modifier.size(Dimension.Size.large)
+                modifier = Modifier.size(Dimension.Size.medium)
             )
         },
         headlineContent = {
             Text(
                 text = armor.name,
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
         },

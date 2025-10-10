@@ -26,7 +26,7 @@ fun ArmorSetIcon(
             modifier = Modifier.fillMaxSize()
         )
         Image(
-            painter = painterResource(id = R.drawable.ic_ui_armor_set),
+            painter = painterResource(id = R.drawable.ic_armor_set),
             contentDescription = null,
             colorFilter = ColorFilter.tint(
                 color = MHFUColors.getArmorSetColor(rarity),

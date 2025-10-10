@@ -20,6 +20,7 @@ interface LocationDao {
             ON location.id = location_text.location_id
         WHERE
             location_text.language = :language
+        ORDER BY name ASC
         """
     )
     suspend fun getLocationList(language: String): List<Location>
@@ -44,8 +45,10 @@ interface LocationDao {
     @Query(
         """
         SELECT
-            item.id                     AS id,
-            item_text.name              AS name,
+            item.id                     AS itemId,
+            item_text.name              AS itemName,
+            location_item.location_id   AS locationId,
+            location_text.name          AS locationName,
             location_item.rank          AS `rank`,
             location_item.gather_type   AS type,
             location_item.area          AS area,
@@ -56,6 +59,8 @@ interface LocationDao {
             ON location_item.item_id = item.id
         JOIN item_text
             ON location_item.item_id = item_text.item_id
+        JOIN location_text
+            ON location_item.location_id = location_text.location_id
         WHERE
             location_item.location_id = :id AND
             item_text.language = :language

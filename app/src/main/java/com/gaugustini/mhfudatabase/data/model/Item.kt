@@ -1,11 +1,13 @@
 package com.gaugustini.mhfudatabase.data.model
 
+import com.gaugustini.mhfudatabase.data.enums.ArmorType
 import com.gaugustini.mhfudatabase.data.enums.CombinationType
 import com.gaugustini.mhfudatabase.data.enums.GatherType
 import com.gaugustini.mhfudatabase.data.enums.ItemCategory
 import com.gaugustini.mhfudatabase.data.enums.ItemIconColor
 import com.gaugustini.mhfudatabase.data.enums.ItemIconType
 import com.gaugustini.mhfudatabase.data.enums.Rank
+import com.gaugustini.mhfudatabase.data.enums.WeaponType
 
 data class Item(
     val id: Int,
@@ -22,8 +24,8 @@ data class Item(
 
 data class ItemDetails(
     val item: Item,
-    val usages: List<String>,
-    val sources: List<String>,
+    val usages: ItemUsages,
+    val sources: ItemSources,
 )
 
 data class ItemCombination(
@@ -45,6 +47,43 @@ data class ItemCombination(
     val percentage: Int,
 )
 
+data class ItemUsages(
+    val craftRecipes: List<ItemCombination>,
+    val armors: List<ItemUsageArmor>,
+    val decorations: List<ItemUsageDecoration>,
+    val weapons: List<ItemUsageWeapon>
+)
+
+data class ItemUsageArmor(
+    val armorId: Int,
+    val armorName: String,
+    val armorType: ArmorType,
+    val rarity: Int,
+    val itemQuantity: Int,
+)
+
+data class ItemUsageDecoration(
+    val decorationId: Int,
+    val decorationName: String,
+    val decorationColor: ItemIconColor,
+    val rarity: Int,
+    val itemQuantity: Int,
+)
+
+data class ItemUsageWeapon(
+    val weaponId: Int,
+    val weaponName: String,
+    val weaponType: WeaponType,
+    val rarity: Int,
+    val itemQuantity: Int,
+)
+
+data class ItemSources(
+    val craftRecipes: List<ItemCombination>,
+    val locations: List<ItemLocation>,
+    val monsterRewards: List<MonsterReward>,
+)
+
 data class ItemQuantity(
     val id: Int,
     val name: String,
@@ -54,8 +93,10 @@ data class ItemQuantity(
 )
 
 data class ItemLocation(
-    val id: Int,
-    val name: String,
+    val itemId: Int,
+    val itemName: String,
+    val locationId: Int,
+    val locationName: String,
     val rank: Rank,
     val type: GatherType,
     val area: Int,

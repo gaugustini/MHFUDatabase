@@ -190,9 +190,9 @@ object MHFUIcons {
         78 to R.drawable.ic_monster_lao_shan_lung,
         79 to R.drawable.ic_monster_ashen_lao_shan_lung,
         80 to R.drawable.ic_monster_yama_tsukami,
-        81 to R.drawable.ic_monster_fatalis,
-        82 to R.drawable.ic_monster_crimson_fatalis,
-        83 to R.drawable.ic_monster_white_fatalis,
+        81 to R.drawable.ic_monster_question_mark,
+        82 to R.drawable.ic_monster_question_mark,
+        83 to R.drawable.ic_monster_question_mark,
     )
 
     val weapons: Map<WeaponType, Int> = mapOf(

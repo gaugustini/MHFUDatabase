@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.enums.Rank
 import com.gaugustini.mhfudatabase.data.model.AilmentStatus
 import com.gaugustini.mhfudatabase.data.model.Hitzone
-import com.gaugustini.mhfudatabase.data.model.ItemUsage
 import com.gaugustini.mhfudatabase.data.model.Monster
+import com.gaugustini.mhfudatabase.data.model.MonsterItemUsage
 import com.gaugustini.mhfudatabase.data.model.MonsterReward
 import com.gaugustini.mhfudatabase.data.repository.MonsterRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +23,7 @@ data class MonsterDetailState(
     val monster: Monster? = null,
     val damage: List<Hitzone> = emptyList(),
     val status: List<AilmentStatus> = emptyList(),
-    val items: List<ItemUsage> = emptyList(),
+    val items: List<MonsterItemUsage> = emptyList(),
     val rewardsLowRank: List<MonsterReward> = emptyList(),
     val rewardsHighRank: List<MonsterReward> = emptyList(),
     val rewardsGRank: List<MonsterReward> = emptyList(),

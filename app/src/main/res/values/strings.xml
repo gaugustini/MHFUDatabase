@@ -48,6 +48,11 @@
     <string name="tab_armor_detail">DETAIL</string>
     <string name="tab_armor_set_detail">ARMOR SET DETAIL</string>
 
+    <!-- Tab Title: Item Detail -->
+    <string name="tab_item_summary">SUMMARY</string>
+    <string name="tab_item_usages">USAGE</string>
+    <string name="tab_item_sources">OBTAINING</string>
+
     <!-- Tab Title: Location Detail -->
     <string name="tab_location_low_rank">LOW RANK</string>
     <string name="tab_location_high_rank">HIGH RANK</string>
@@ -118,6 +123,21 @@
     <string name="item_carry_max">Carry Max</string>
     <string name="item_buy_price">Buy Price</string>
     <string name="item_sell_price">Sell Price</string>
+    <string name="item_crafting">Crafting</string>
+    <string name="item_armor">Armor</string>
+    <string name="item_decoration">Decoration</string>
+    <string name="item_weapon">Weapon</string>
+    <string name="item_location">Location</string>
+    <string name="item_monster">Monster</string>
+    <string name="item_rank_low">LR</string>
+    <string name="item_rank_high">HR</string>
+    <string name="item_rank_g">G</string>
+    <string name="item_rank_treasure">Treasure</string>
+    <string name="item_rank_training">Training</string>
+
+    <!-- Item Combination-->
+    <string name="combination_treasure">Treasure</string>
+    <string name="combination_alchemy">Alchemy</string>
 
     <!-- Location -->
     <string name="location_secret_area">Secret Area</string>
@@ -231,6 +251,8 @@
         Freedom Unite (MHFU). Based on the apps developed by Gathering Hall Studios, it provides
         data about monsters, weapons, armors, items, and quests.
     </string>
+    <string name="about_visit_project">For issues, ideas or suggestions visit the project on
+        GitHub and join the Discussions section.</string>
     <string name="about_version">Version %1$s</string>
     <string name="about_credit_resources">Credits and Resources</string>
 

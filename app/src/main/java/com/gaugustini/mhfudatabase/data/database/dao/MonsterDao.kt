@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Query
 import com.gaugustini.mhfudatabase.data.model.AilmentStatus
 import com.gaugustini.mhfudatabase.data.model.Hitzone
-import com.gaugustini.mhfudatabase.data.model.ItemUsage
 import com.gaugustini.mhfudatabase.data.model.Monster
+import com.gaugustini.mhfudatabase.data.model.MonsterItemUsage
 import com.gaugustini.mhfudatabase.data.model.MonsterReward
 
 @Dao
@@ -30,6 +30,7 @@ interface MonsterDao {
             ON monster.id = monster_text.monster_id
         WHERE
             monster_text.language = :language
+        ORDER BY name ASC
         """
     )
     suspend fun getMonsterList(language: String): List<Monster>
@@ -99,28 +100,27 @@ interface MonsterDao {
     @Query(
         """
         SELECT
-            monster_item.state              AS monsterState,
-            monster_item.pitfall            AS canUsePitfallTrap,
-            monster_item.pitfall_duration   AS pitfallDuration,
-            monster_item.shock              AS canUseShockTrap,
-            monster_item.shock_duration     AS shockDuration,
-            monster_item.flash              AS canUseFlashBomb,
-            monster_item.flash_duration     AS flashDuration,
-            monster_item.sonic              AS canUseSonicBomb,
-            monster_item.dung               AS canUseDungBomb,
-            monster_item.meat               AS canUseMeat
+            monster_item.state      AS monsterState,
+            monster_item.pitfall    AS canUsePitfallTrap,
+            monster_item.shock      AS canUseShockTrap,
+            monster_item.flash      AS canUseFlashBomb,
+            monster_item.sonic      AS canUseSonicBomb,
+            monster_item.dung       AS canUseDungBomb,
+            monster_item.meat       AS canUseMeat
         FROM monster_item
         WHERE
             monster_item.monster_id = :id
         """
     )
-    suspend fun getItemUsagesForMonster(id: Int): List<ItemUsage>
+    suspend fun getItemUsagesForMonster(id: Int): List<MonsterItemUsage>
 
     @Query(
         """
         SELECT
             monster_reward.item_id      AS itemId,
             item_text.name              AS itemName,
+            monster_reward.monster_id   AS monsterId,
+            monster_text.name           AS monsterName,
             item.icon_type              AS itemIconType,
             item.icon_color             AS itemIconColor,
             reward_condition_text.name  AS condition,
@@ -132,6 +132,8 @@ interface MonsterDao {
             ON monster_reward.item_id = item_text.item_id
         JOIN item
             ON monster_reward.item_id = item.id
+        JOIN monster_text
+            ON monster_reward.monster_id = monster_text.monster_id
         JOIN reward_condition_text
             ON monster_reward.reward_condition_id = reward_condition_text.reward_condition_id
         WHERE

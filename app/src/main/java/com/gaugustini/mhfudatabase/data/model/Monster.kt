@@ -23,7 +23,7 @@ data class MonsterDetails(
     val monster: Monster,
     val damage: List<Hitzone>,
     val status: List<AilmentStatus>,
-    val item: List<ItemUsage>,
+    val item: List<MonsterItemUsage>,
     val reward: List<MonsterReward>,
 )
 
@@ -48,14 +48,11 @@ data class AilmentStatus(
     val damage: Int,
 )
 
-data class ItemUsage(
+data class MonsterItemUsage(
     val monsterState: MonsterStateType,
     val canUsePitfallTrap: Boolean,
-    val pitfallDuration: Int?,
     val canUseShockTrap: Boolean,
-    val shockDuration: Int?,
     val canUseFlashBomb: Boolean,
-    val flashDuration: Int?,
     val canUseSonicBomb: Boolean,
     val canUseDungBomb: Boolean,
     val canUseMeat: Boolean,
@@ -64,6 +61,8 @@ data class ItemUsage(
 data class MonsterReward(
     val itemId: Int,
     val itemName: String,
+    val monsterId: Int,
+    val monsterName: String,
     val itemIconType: ItemIconType,
     val itemIconColor: ItemIconColor,
     val condition: String,

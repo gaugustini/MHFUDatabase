@@ -1,12 +1,14 @@
 package com.gaugustini.mhfudatabase.ui.itemcombination.components
 
 import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -18,7 +20,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.gaugustini.mhfudatabase.R
+import com.gaugustini.mhfudatabase.data.enums.CombinationType
 import com.gaugustini.mhfudatabase.data.model.ItemCombination
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.ItemIcon
@@ -83,6 +88,33 @@ fun ItemCombinationListItem(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
+                Spacer(modifier = Modifier.width(Dimension.Spacing.large))
+                if (itemCombination.type == CombinationType.TREASURE) {
+                    Text(
+                        text = stringResource(R.string.combination_treasure),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onTertiaryContainer,
+                        modifier = Modifier
+                            .background(
+                                color = MaterialTheme.colorScheme.tertiaryContainer,
+                                shape = MaterialTheme.shapes.small,
+                            )
+                            .padding(Dimension.Padding.small)
+                    )
+                }
+                if (itemCombination.type == CombinationType.ALCHEMY) {
+                    Text(
+                        text = stringResource(R.string.combination_alchemy),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onTertiaryContainer,
+                        modifier = Modifier
+                            .background(
+                                color = MaterialTheme.colorScheme.tertiaryContainer,
+                                shape = MaterialTheme.shapes.small,
+                            )
+                            .padding(Dimension.Padding.small)
+                    )
+                }
             }
         },
         trailingContent = {

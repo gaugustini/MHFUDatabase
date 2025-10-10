@@ -21,6 +21,7 @@ interface SkillDao {
             ON skill_tree.id = skill_tree_text.skill_tree_id
         WHERE
             skill_tree_text.language = :language
+        ORDER BY name ASC
         """
     )
     suspend fun getSkillTreeList(language: String): List<SkillTree>
@@ -58,6 +59,7 @@ interface SkillDao {
         WHERE
             skill.skill_tree_id = :id AND
             skill_text.language = :language
+        ORDER BY requiredPoints DESC
         """
     )
     suspend fun getSkillsForSkillTree(id: Int, language: String): List<Skill>
