@@ -4,11 +4,18 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.gaugustini.mhfudatabase.data.UserPreferences
+import com.gaugustini.mhfudatabase.ui.components.BetaDialog
 import com.gaugustini.mhfudatabase.ui.components.Drawer
 import com.gaugustini.mhfudatabase.ui.navigation.Destinations
 import com.gaugustini.mhfudatabase.ui.navigation.NavigationActions
@@ -19,6 +26,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun MHFUDatabase() {
     Theme {
+        val context = LocalContext.current
+
         val navController = rememberNavController()
         val navigationActions = remember(navController) { NavigationActions(navController) }
 
@@ -27,6 +36,22 @@ fun MHFUDatabase() {
 
         val coroutineScope = rememberCoroutineScope()
         val drawerState = rememberDrawerState(DrawerValue.Closed)
+
+        var showBetaDialog by rememberSaveable { mutableStateOf(false) }
+
+        LaunchedEffect(Unit) {
+            if (UserPreferences.isFirstLaunch(context)) {
+                showBetaDialog = true
+                UserPreferences.setFirstLaunchDone(context)
+            }
+        }
+
+        if (showBetaDialog) {
+            BetaDialog(
+                onConfirm = { showBetaDialog = false },
+                onDismiss = { showBetaDialog = false },
+            )
+        }
 
         ModalNavigationDrawer(
             drawerState = drawerState,

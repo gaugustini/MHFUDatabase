@@ -2,6 +2,13 @@
     <string name="app_name">MHFU Database</string>
     <string name="app_name_launcher">MHFUDB</string>
 
+    <!-- Beta Version -->
+    <string name="beta_version">Beta Version Notice</string>
+    <string name="beta_version_message">This is a beta version of MHFU Database. Some data may be
+        incomplete or inaccurate. For issues, corrections, or suggestions, please visit the project
+        on GitHub (accessible via the About screen).</string>
+    <string name="dialog_confirm">Confirm</string>
+
     <!-- Screen Title: Main Routes -->
     <string name="screen_armor_set_list">Armor Sets</string>
     <string name="screen_decoration_list">Decorations</string>
