@@ -54,8 +54,6 @@ interface SkillDao {
         FROM skill
         JOIN skill_text
             ON skill.id = skill_text.skill_id
-        JOIN skill_tree
-            ON skill.skill_tree_id = skill_tree.id
         WHERE
             skill.skill_tree_id = :id AND
             skill_text.language = :language

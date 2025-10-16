@@ -19,6 +19,7 @@ interface SearchDao {
         """
         SELECT
             armor.id                AS id,
+            armor.armor_set_id      AS armorSetId,
             armor_text.name         AS name,
             armor_text.description  AS description,
             armor.armor_type        AS type,
@@ -33,19 +34,10 @@ interface SearchDao {
             armor.water_res         AS water,
             armor.thunder_res       AS thunder,
             armor.ice_res           AS ice,
-            armor.dragon_res        AS dragon,
-            armor_set.id            AS armorSetId,
-            armor_set_text.name     AS armorSetName,
-            armor_set.rarity        AS armorSetRarity,
-            armor_set.rank          AS armorSetRank,
-            armor_set.hunter_type   AS armorSetHunterType
+            armor.dragon_res        AS dragon
         FROM armor
         JOIN armor_text
             ON armor.id = armor_text.armor_id
-        JOIN armor_set
-            ON armor.armor_set_id = armor_set.id
-        JOIN armor_set_text
-            ON armor.armor_set_id = armor_set_text.armor_set_id
         WHERE
             armor_text.name LIKE '%' || :query || '%' AND
             armor_text.language = :language
@@ -193,8 +185,6 @@ interface SearchDao {
         FROM skill
         JOIN skill_text
             ON skill.id = skill_text.skill_id
-        JOIN skill_tree
-            ON skill.skill_tree_id = skill_tree.id
         WHERE
             skill_text.name LIKE '%' || :query || '%' AND
             skill_text.language = :language
