@@ -254,6 +254,15 @@
     <string name="weapon_path_details">Path: %1$d</string>
     <string name="weapon_finals">Finals</string>
 
+    <!-- Settings -->
+    <string name="settings_option_confirm">Confirm</string>
+    <string name="settings_option_cancel">Cancel</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_options_title">Choose a theme</string>
+    <string name="settings_theme_system">System</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+
     <!-- About -->
     <string name="about_description">MHFU Database is an open source android app for Monster Hunter
         Freedom Unite (MHFU). Based on the apps developed by Gathering Hall Studios, it provides

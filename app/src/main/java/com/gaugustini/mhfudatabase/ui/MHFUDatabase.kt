@@ -5,6 +5,7 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -14,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.gaugustini.mhfudatabase.data.ThemeMode
 import com.gaugustini.mhfudatabase.data.UserPreferences
 import com.gaugustini.mhfudatabase.ui.components.BetaDialog
 import com.gaugustini.mhfudatabase.ui.components.Drawer
@@ -25,8 +27,14 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun MHFUDatabase() {
-    Theme {
-        val context = LocalContext.current
+    val context = LocalContext.current
+
+    val themeMode by UserPreferences.getThemeMode(context)
+        .collectAsState(initial = ThemeMode.SYSTEM)
+
+    Theme(
+        themeMode = themeMode,
+    ) {
 
         val navController = rememberNavController()
         val navigationActions = remember(navController) { NavigationActions(navController) }
