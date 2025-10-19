@@ -26,6 +26,7 @@ import com.gaugustini.mhfudatabase.ui.monster.list.MonsterListRoute
 import com.gaugustini.mhfudatabase.ui.quest.detail.QuestDetailRoute
 import com.gaugustini.mhfudatabase.ui.quest.list.QuestListRoute
 import com.gaugustini.mhfudatabase.ui.search.SearchRoute
+import com.gaugustini.mhfudatabase.ui.settings.SettingsRoute
 import com.gaugustini.mhfudatabase.ui.skill.detail.SkillTreeDetailRoute
 import com.gaugustini.mhfudatabase.ui.skill.list.SkillTreeListRoute
 import com.gaugustini.mhfudatabase.ui.weapon.detail.WeaponDetailRoute
@@ -149,6 +150,12 @@ fun NavigationGraph(
                 onWeaponTypeClick = { weaponType ->
                     navigationActions.navigateToWeaponGraph(weaponType)
                 },
+            )
+        }
+        composable(Destinations.SETTINGS) {
+            SettingsRoute(
+                navigateBack = navigationActions.navigateBack,
+                openSearch = navigationActions.navigateToSearch,
             )
         }
         composable(Destinations.ABOUT) {

@@ -2,6 +2,7 @@ package com.gaugustini.mhfudatabase.ui.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -47,6 +48,7 @@ fun Drawer(
     navigateToQuestList: () -> Unit = {},
     navigateToSkillTreeList: () -> Unit = {},
     navigateToWeaponList: () -> Unit = {},
+    navigateToSettings: () -> Unit = {},
     navigateToAbout: () -> Unit = {},
 ) {
     val mainRoutes = listOf(
@@ -97,6 +99,11 @@ fun Drawer(
         ),
     )
     val otherRoutes = listOf(
+        DrawerItem(
+            label = stringResource(R.string.screen_settings),
+            icon = if (isSystemInDarkTheme()) R.drawable.ic_ui_settings_white else R.drawable.ic_ui_settings_black,
+            route = Destinations.SETTINGS,
+        ),
         DrawerItem(
             label = stringResource(R.string.screen_about),
             icon = R.drawable.ic_item_ticket,
@@ -180,6 +187,7 @@ fun Drawer(
                     shape = RectangleShape,
                     onClick = {
                         when (item.route) {
+                            Destinations.SETTINGS -> navigateToSettings()
                             Destinations.ABOUT -> navigateToAbout()
                         }
                         closeDrawer()

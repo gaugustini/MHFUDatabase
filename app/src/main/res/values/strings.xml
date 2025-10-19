@@ -19,6 +19,7 @@
     <string name="screen_quest_list">Quests</string>
     <string name="screen_skill_tree_list">Skills</string>
     <string name="screen_weapon_list">Weapons</string>
+    <string name="screen_settings">Settings</string>
     <string name="screen_about">About</string>
 
     <!-- Screen Title: Detail Routes -->
