@@ -5,7 +5,6 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,11 +25,10 @@ import com.gaugustini.mhfudatabase.ui.theme.Theme
 import kotlinx.coroutines.launch
 
 @Composable
-fun MHFUDatabase() {
+fun MHFUDatabase(
+    themeMode: ThemeMode,
+) {
     val context = LocalContext.current
-
-    val themeMode by UserPreferences.getThemeMode(context)
-        .collectAsState(initial = ThemeMode.SYSTEM)
 
     Theme(
         themeMode = themeMode,
