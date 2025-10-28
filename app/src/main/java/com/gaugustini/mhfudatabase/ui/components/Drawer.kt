@@ -2,7 +2,6 @@ package com.gaugustini.mhfudatabase.ui.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -25,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.ui.navigation.Destinations
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
+import com.gaugustini.mhfudatabase.ui.theme.LocalIsDarkTheme
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 
 private data class DrawerItem(
@@ -101,7 +101,7 @@ fun Drawer(
     val otherRoutes = listOf(
         DrawerItem(
             label = stringResource(R.string.screen_settings),
-            icon = if (isSystemInDarkTheme()) R.drawable.ic_ui_settings_white else R.drawable.ic_ui_settings_black,
+            icon = if (LocalIsDarkTheme.current) R.drawable.ic_ui_settings_white else R.drawable.ic_ui_settings_black,
             route = Destinations.SETTINGS,
         ),
         DrawerItem(

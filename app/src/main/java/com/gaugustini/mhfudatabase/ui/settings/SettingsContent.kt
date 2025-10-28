@@ -3,7 +3,6 @@ package com.gaugustini.mhfudatabase.ui.settings
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -31,6 +30,7 @@ import com.gaugustini.mhfudatabase.data.ThemeMode
 import com.gaugustini.mhfudatabase.data.UserPreferences
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
+import com.gaugustini.mhfudatabase.ui.theme.LocalIsDarkTheme
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import kotlinx.coroutines.launch
 
@@ -72,7 +72,7 @@ fun ThemeSettingsItem(
         leadingContent = {
             Image(
                 painter = painterResource(
-                    if (isSystemInDarkTheme()) R.drawable.ic_ui_theme_white else R.drawable.ic_ui_theme_black
+                    if (LocalIsDarkTheme.current) R.drawable.ic_ui_theme_white else R.drawable.ic_ui_theme_black
                 ),
                 contentDescription = null,
                 modifier = Modifier.size(Dimension.Size.extraSmall)
