@@ -13,7 +13,7 @@
     <string name="screen_armor_set_list">Armor Sets</string>
     <string name="screen_decoration_list">Decorations</string>
     <string name="screen_item_list">Items</string>
-    <string name="screen_item_combination_list">Item Combination</string>
+    <string name="screen_item_combination_list">Combinations</string>
     <string name="screen_location_list">Locations</string>
     <string name="screen_monster_list">Monsters</string>
     <string name="screen_quest_list">Quests</string>
@@ -26,7 +26,7 @@
     <string name="screen_armor_detail">Armor Detail</string>
     <string name="screen_decoration_detail">Decoration Detail</string>
     <string name="screen_item_detail">Item Detail</string>
-    <string name="screen_item_combination_detail">Item Combination Detail</string>
+    <string name="screen_item_combination_detail">Combination Detail</string>
     <string name="screen_location_detail">Location Detail</string>
     <string name="screen_monster_detail">Monster Detail</string>
     <string name="screen_quest_detail">Quest Detail</string>

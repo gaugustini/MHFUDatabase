@@ -53,14 +53,24 @@ fun Drawer(
 ) {
     val mainRoutes = listOf(
         DrawerItem(
+            label = stringResource(R.string.screen_monster_list),
+            icon = R.drawable.ic_ui_monster,
+            route = Destinations.MONSTER_LIST,
+        ),
+        DrawerItem(
+            label = stringResource(R.string.screen_weapon_list),
+            icon = R.drawable.ic_ui_weapon,
+            route = Destinations.WEAPON_TYPE_LIST,
+        ),
+        DrawerItem(
             label = stringResource(R.string.screen_armor_set_list),
             icon = R.drawable.ic_armor_chest,
             route = Destinations.ARMOR_SET_LIST,
         ),
         DrawerItem(
-            label = stringResource(R.string.screen_decoration_list),
-            icon = R.drawable.ic_ui_decoration,
-            route = Destinations.DECORATION_LIST,
+            label = stringResource(R.string.screen_quest_list),
+            icon = R.drawable.ic_ui_quest,
+            route = Destinations.QUEST_LIST,
         ),
         DrawerItem(
             label = stringResource(R.string.screen_item_list),
@@ -78,24 +88,14 @@ fun Drawer(
             route = Destinations.LOCATION_LIST,
         ),
         DrawerItem(
-            label = stringResource(R.string.screen_monster_list),
-            icon = R.drawable.ic_ui_monster,
-            route = Destinations.MONSTER_LIST,
-        ),
-        DrawerItem(
-            label = stringResource(R.string.screen_quest_list),
-            icon = R.drawable.ic_ui_quest,
-            route = Destinations.QUEST_LIST,
-        ),
-        DrawerItem(
             label = stringResource(R.string.screen_skill_tree_list),
             icon = R.drawable.ic_ui_skill,
             route = Destinations.SKILL_TREE_LIST,
         ),
         DrawerItem(
-            label = stringResource(R.string.screen_weapon_list),
-            icon = R.drawable.ic_ui_weapon,
-            route = Destinations.WEAPON_TYPE_LIST,
+            label = stringResource(R.string.screen_decoration_list),
+            icon = R.drawable.ic_ui_decoration,
+            route = Destinations.DECORATION_LIST,
         ),
     )
     val otherRoutes = listOf(

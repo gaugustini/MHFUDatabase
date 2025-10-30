@@ -39,7 +39,7 @@ fun NavigationGraph(
     navigationActions: NavigationActions,
     openDrawer: () -> Unit,
     modifier: Modifier = Modifier,
-    startDestination: String = Destinations.ARMOR_SET_LIST,
+    startDestination: String = Destinations.MONSTER_LIST,
 ) {
     NavHost(
         navController = navController,
