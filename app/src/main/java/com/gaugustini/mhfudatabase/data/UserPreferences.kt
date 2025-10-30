@@ -1,41 +1,47 @@
 package com.gaugustini.mhfudatabase.data
 
-import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
+import javax.inject.Singleton
 
-private val Context.dataStore by preferencesDataStore(name = "user_prefs")
+@Singleton
+class UserPreferences @Inject constructor(
+    private val dataStore: DataStore<Preferences>,
+) {
 
-object UserPreferences {
-
-    private val FIRST_LAUNCH = booleanPreferencesKey("first_launch")
-    private val THEME_MODE = intPreferencesKey("theme_mode")
-
-    suspend fun isFirstLaunch(context: Context): Boolean {
-        val firstLaunch = context.dataStore.data.map { it[FIRST_LAUNCH] ?: true }.first()
-        return firstLaunch
+    private companion object PreferencesKeys {
+        val FIRST_LAUNCH = booleanPreferencesKey("first_launch")
+        val THEME_MODE = intPreferencesKey("theme_mode")
     }
 
-    suspend fun setFirstLaunchDone(context: Context) {
-        context.dataStore.edit { prefs ->
-            prefs[FIRST_LAUNCH] = false
+    suspend fun isFirstLaunch(): Boolean {
+        return dataStore.data.map { preferences ->
+            preferences[FIRST_LAUNCH] ?: true
+        }.first()
+    }
+
+    suspend fun setFirstLaunchDone() {
+        dataStore.edit { preferences ->
+            preferences[FIRST_LAUNCH] = false
         }
     }
 
-    fun getThemeMode(context: Context): Flow<ThemeMode> {
-        return context.dataStore.data.map { prefs ->
-            ThemeMode.fromValue(prefs[THEME_MODE] ?: ThemeMode.SYSTEM.value)
+    fun getThemeMode(): Flow<ThemeMode> {
+        return dataStore.data.map { preferences ->
+            ThemeMode.fromValue(preferences[THEME_MODE] ?: ThemeMode.SYSTEM.value)
         }
     }
 
-    suspend fun setThemeMode(context: Context, themeMode: ThemeMode) {
-        context.dataStore.edit { prefs ->
-            prefs[THEME_MODE] = themeMode.value
+    suspend fun setThemeMode(themeMode: ThemeMode) {
+        dataStore.edit { preferences ->
+            preferences[THEME_MODE] = themeMode.value
         }
     }
 

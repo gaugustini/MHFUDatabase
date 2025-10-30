@@ -4,31 +4,34 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.collectAsState
+import androidx.activity.viewModels
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.gaugustini.mhfudatabase.data.UserPreferences
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
-        var keepSplashScreenOn by mutableStateOf(true)
-        splashScreen.setKeepOnScreenCondition { keepSplashScreenOn }
+        splashScreen.setKeepOnScreenCondition {
+            viewModel.uiState.value.isThemeLoading
+        }
 
         setContent {
-            val themeMode by UserPreferences.getThemeMode(this).collectAsState(initial = null)
+            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-            if (themeMode != null) {
-                keepSplashScreenOn = false
-                MHFUDatabase(themeMode = themeMode!!)
+            if (!uiState.isThemeLoading) {
+                MHFUDatabase(
+                    uiState = uiState,
+                    onBetaDialogDismissed = viewModel::onBetaDialogDismissed,
+                )
             }
         }
     }
