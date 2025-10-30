@@ -14,6 +14,7 @@ object Destinations {
     const val QUEST_LIST = "quest_list"
     const val SKILL_TREE_LIST = "skill_tree_list"
     const val WEAPON_TYPE_LIST = "weapon_type_list"
+    const val SETTINGS = "settings"
     const val ABOUT = "about"
 
     // Detail Routes

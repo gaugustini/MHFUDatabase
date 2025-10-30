@@ -2,7 +2,6 @@ package com.gaugustini.mhfudatabase.ui.decoration.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,6 +21,7 @@ import com.gaugustini.mhfudatabase.data.enums.ItemIconColor
 import com.gaugustini.mhfudatabase.data.model.Decoration
 import com.gaugustini.mhfudatabase.ui.components.icons.SlotIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
+import com.gaugustini.mhfudatabase.ui.theme.LocalIsDarkTheme
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.MHFUColors
 import com.gaugustini.mhfudatabase.util.preview.PreviewDecorationData
@@ -49,7 +49,7 @@ fun DecorationSummary(
                 repeat(decoration.requiredSlots) {
                     SlotIcon(
                         filled = true,
-                        color = if (!isSystemInDarkTheme() && decoration.iconColor == ItemIconColor.WHITE) {
+                        color = if (!LocalIsDarkTheme.current && decoration.iconColor == ItemIconColor.WHITE) {
                             Color.Gray
                         } else {
                             MHFUColors.getItemColor(decoration.iconColor)

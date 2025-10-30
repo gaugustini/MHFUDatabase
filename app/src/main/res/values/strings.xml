@@ -19,6 +19,7 @@
     <string name="screen_quest_list">Quests</string>
     <string name="screen_skill_tree_list">Skills</string>
     <string name="screen_weapon_list">Weapons</string>
+    <string name="screen_settings">Settings</string>
     <string name="screen_about">About</string>
 
     <!-- Screen Title: Detail Routes -->
@@ -252,6 +253,15 @@
     <string name="weapon_path">Path</string>
     <string name="weapon_path_details">Path: %1$d</string>
     <string name="weapon_finals">Finals</string>
+
+    <!-- Settings -->
+    <string name="settings_option_confirm">Confirm</string>
+    <string name="settings_option_cancel">Cancel</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_options_title">Choose a theme</string>
+    <string name="settings_theme_system">System</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
 
     <!-- About -->
     <string name="about_description">MHFU Database is an open source android app for Monster Hunter

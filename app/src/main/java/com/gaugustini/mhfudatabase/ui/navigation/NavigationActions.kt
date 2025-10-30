@@ -65,6 +65,11 @@ class NavigationActions(
             launchSingleTop = true
         }
     }
+    val navigateToSettings: () -> Unit = {
+        navController.navigate(Destinations.SETTINGS) {
+            launchSingleTop = true
+        }
+    }
     val navigateToAbout: () -> Unit = {
         navController.navigate(Destinations.ABOUT) {
             launchSingleTop = true

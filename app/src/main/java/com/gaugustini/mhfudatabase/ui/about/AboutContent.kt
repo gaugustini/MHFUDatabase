@@ -5,7 +5,6 @@ import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,6 +28,7 @@ import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
+import com.gaugustini.mhfudatabase.ui.theme.LocalIsDarkTheme
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 
 private data class AboutItem(
@@ -42,14 +42,15 @@ private data class AboutItem(
 fun AboutContent(
     modifier: Modifier = Modifier,
 ) {
+    val isDarkTheme = LocalIsDarkTheme.current
     val links = listOf(
         AboutItem(
-            icon = if (isSystemInDarkTheme()) R.drawable.ic_github_white else R.drawable.ic_github_black,
+            icon = if (isDarkTheme) R.drawable.ic_github_white else R.drawable.ic_github_black,
             title = "Gathering Hall Studios",
             uri = "https://github.com/gatheringhallstudios",
         ),
         AboutItem(
-            icon = if (isSystemInDarkTheme()) R.drawable.ic_github_white else R.drawable.ic_github_black,
+            icon = if (isDarkTheme) R.drawable.ic_github_white else R.drawable.ic_github_black,
             title = "MHFU-DB",
             uri = "https://github.com/Kolyn090/mhfu-db",
             author = "Kolyn090",
@@ -82,7 +83,7 @@ fun AboutContent(
             uri = "https://monsterhunter.neoseeker.com/wiki/Monster_Hunter_Freedom_Unite_(PSP)",
         ),
         AboutItem(
-            icon = if (isSystemInDarkTheme()) R.drawable.ic_github_white else R.drawable.ic_github_black,
+            icon = if (isDarkTheme) R.drawable.ic_github_white else R.drawable.ic_github_black,
             title = "Monster Hunter DB",
             uri = "https://github.com/CrimsonNynja/monster-hunter-DB",
             author = "CrimsonNynja",
@@ -129,7 +130,7 @@ fun AboutContent(
             ),
         )
         LinkItem(
-            icon = if (isSystemInDarkTheme()) R.drawable.ic_github_white else R.drawable.ic_github_black,
+            icon = if (isDarkTheme) R.drawable.ic_github_white else R.drawable.ic_github_black,
             title = "GitHub",
             author = null,
             uri = "https://github.com/gaugustini/MHFUDatabase",

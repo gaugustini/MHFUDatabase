@@ -4,17 +4,11 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.gaugustini.mhfudatabase.data.UserPreferences
 import com.gaugustini.mhfudatabase.ui.components.BetaDialog
 import com.gaugustini.mhfudatabase.ui.components.Drawer
 import com.gaugustini.mhfudatabase.ui.navigation.Destinations
@@ -24,32 +18,26 @@ import com.gaugustini.mhfudatabase.ui.theme.Theme
 import kotlinx.coroutines.launch
 
 @Composable
-fun MHFUDatabase() {
-    Theme {
-        val context = LocalContext.current
+fun MHFUDatabase(
+    uiState: MainUiState,
+    onBetaDialogDismissed: () -> Unit,
+) {
+    val navController = rememberNavController()
+    val navigationActions = remember(navController) { NavigationActions(navController) }
 
-        val navController = rememberNavController()
-        val navigationActions = remember(navController) { NavigationActions(navController) }
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route ?: Destinations.ARMOR_SET_LIST
 
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route ?: Destinations.ARMOR_SET_LIST
+    val coroutineScope = rememberCoroutineScope()
+    val drawerState = rememberDrawerState(DrawerValue.Closed)
 
-        val coroutineScope = rememberCoroutineScope()
-        val drawerState = rememberDrawerState(DrawerValue.Closed)
-
-        var showBetaDialog by rememberSaveable { mutableStateOf(false) }
-
-        LaunchedEffect(Unit) {
-            if (UserPreferences.isFirstLaunch(context)) {
-                showBetaDialog = true
-                UserPreferences.setFirstLaunchDone(context)
-            }
-        }
-
-        if (showBetaDialog) {
+    Theme(
+        themeMode = uiState.themeMode!!,
+    ) {
+        if (uiState.showBetaDialog) {
             BetaDialog(
-                onConfirm = { showBetaDialog = false },
-                onDismiss = { showBetaDialog = false },
+                onConfirm = onBetaDialogDismissed,
+                onDismiss = onBetaDialogDismissed,
             )
         }
 
@@ -69,6 +57,7 @@ fun MHFUDatabase() {
                     navigateToQuestList = navigationActions.navigateToQuestList,
                     navigateToSkillTreeList = navigationActions.navigateToSkillTreeList,
                     navigateToWeaponList = navigationActions.navigateToWeaponTypeList,
+                    navigateToSettings = navigationActions.navigateToSettings,
                     navigateToAbout = navigationActions.navigateToAbout,
                 )
             },
