@@ -35,24 +35,6 @@ fun SearchResultsList(
     LazyColumn(
         modifier = modifier
     ) {
-        items(results.armors) { armor ->
-            SearchListItem(
-                armor = armor,
-                onArmorClick = onArmorClick,
-            )
-        }
-        items(results.decorations) { decoration ->
-            SearchListItem(
-                decoration = decoration,
-                onDecorationClick = onDecorationClick,
-            )
-        }
-        items(results.items) { item ->
-            SearchListItem(
-                item = item,
-                onItemClick = onItemClick,
-            )
-        }
         items(results.locations) { location ->
             SearchListItem(
                 location = location,
@@ -65,12 +47,6 @@ fun SearchResultsList(
                 onMonsterClick = onMonsterClick,
             )
         }
-        items(results.quests) { quest ->
-            SearchListItem(
-                quest = quest,
-                onQuestClick = onQuestClick,
-            )
-        }
         items(results.skillTrees) { skillTree ->
             SearchListItem(
                 skillTree = skillTree,
@@ -81,6 +57,30 @@ fun SearchResultsList(
             SearchListItem(
                 skill = skill,
                 onSkillClick = onSkillClick,
+            )
+        }
+        items(results.quests) { quest ->
+            SearchListItem(
+                quest = quest,
+                onQuestClick = onQuestClick,
+            )
+        }
+        items(results.items) { item ->
+            SearchListItem(
+                item = item,
+                onItemClick = onItemClick,
+            )
+        }
+        items(results.decorations) { decoration ->
+            SearchListItem(
+                decoration = decoration,
+                onDecorationClick = onDecorationClick,
+            )
+        }
+        items(results.armors) { armor ->
+            SearchListItem(
+                armor = armor,
+                onArmorClick = onArmorClick,
             )
         }
         items(results.weapons) { weapon ->
