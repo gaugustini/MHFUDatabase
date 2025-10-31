@@ -29,7 +29,7 @@ class MonsterRepository @Inject constructor(
             monster = monsterDao.getMonster(monsterId, language),
             damage = monsterDao.getHitzonesForMonster(monsterId, language),
             status = monsterDao.getAilmentStatusForMonster(monsterId),
-            item = monsterDao.getItemUsagesForMonster(monsterId),
+            item = monsterDao.getItemUsagesForMonster(monsterId).sortedBy { it.monsterState },
             reward = monsterDao.getRewardsForMonster(monsterId, language)
         )
     }

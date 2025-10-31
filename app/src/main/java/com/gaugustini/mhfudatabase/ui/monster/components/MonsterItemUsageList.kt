@@ -36,6 +36,9 @@ fun MonsterItemUsageList(
     Column(
         modifier = modifier
     ) {
+        SectionHeader(
+            title = stringResource(R.string.monster_item_usage)
+        )
         items.forEach { item ->
             MonsterItemUsageListItem(
                 item = item,
@@ -49,115 +52,111 @@ fun MonsterItemUsageListItem(
     item: MonsterItemUsage,
     modifier: Modifier = Modifier,
 ) {
-    Column(
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
         modifier = modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.surface)
+            .padding(
+                horizontal = Dimension.Padding.large,
+                vertical = Dimension.Padding.medium
+            )
     ) {
-        SectionHeader(
-            title = stringResource(
+        Text(
+            text = stringResource(
                 when (item.monsterState) {
                     MonsterStateType.NORMAL -> R.string.monster_state_normal
                     MonsterStateType.ENRAGED -> R.string.monster_state_enraged
                 }
-            )
+            ),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.weight(1f)
         )
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.surface)
-                .padding(Dimension.Padding.large)
+
+        if (item.canUsePitfallTrap) {
+            Image(
+                painter = painterResource(R.drawable.ic_item_trap),
+                contentDescription = null,
+                colorFilter = ColorFilter.tint(
+                    color = MHFUColors.getItemColor(ItemIconColor.GREEN),
+                    blendMode = BlendMode.Modulate
+                ),
+                modifier = Modifier.size(Dimension.Size.small)
+            )
+        }
+        if (item.canUseShockTrap) {
+            Image(
+                painter = painterResource(R.drawable.ic_item_trap),
+                contentDescription = null,
+                colorFilter = ColorFilter.tint(
+                    color = MHFUColors.getItemColor(ItemIconColor.PURPLE),
+                    blendMode = BlendMode.Modulate
+                ),
+                modifier = Modifier.size(Dimension.Size.small)
+            )
+        }
+        if (item.canUseFlashBomb) {
+            Image(
+                painter = painterResource(R.drawable.ic_item_ball),
+                contentDescription = null,
+                colorFilter = ColorFilter.tint(
+                    color = MHFUColors.getItemColor(ItemIconColor.YELLOW),
+                    blendMode = BlendMode.Modulate
+                ),
+                modifier = Modifier.size(Dimension.Size.small)
+            )
+        }
+
+        if (item.canUseSonicBomb) {
+            Image(
+                painter = painterResource(R.drawable.ic_item_ball),
+                contentDescription = null,
+                colorFilter = ColorFilter.tint(
+                    color = MHFUColors.getItemColor(ItemIconColor.GRAY),
+                    blendMode = BlendMode.Modulate
+                ),
+                modifier = Modifier.size(Dimension.Size.small)
+            )
+        }
+
+        if (item.canUseDungBomb) {
+            Image(
+                painter = painterResource(R.drawable.ic_item_dung),
+                contentDescription = null,
+                colorFilter = ColorFilter.tint(
+                    color = MHFUColors.getItemColor(ItemIconColor.YELLOW),
+                    blendMode = BlendMode.Modulate
+                ),
+                modifier = Modifier.size(Dimension.Size.small)
+            )
+        }
+
+        if (item.canUseMeat) {
+            Image(
+                painter = painterResource(R.drawable.ic_item_meat),
+                contentDescription = null,
+                colorFilter = ColorFilter.tint(
+                    color = MHFUColors.getItemColor(ItemIconColor.RED),
+                    blendMode = BlendMode.Modulate
+                ),
+                modifier = Modifier.size(Dimension.Size.small)
+            )
+        }
+
+        if (
+            !item.canUsePitfallTrap &&
+            !item.canUseShockTrap &&
+            !item.canUseFlashBomb &&
+            !item.canUseSonicBomb &&
+            !item.canUseDungBomb &&
+            !item.canUseMeat
         ) {
             Text(
-                text = stringResource(R.string.monster_item_usage),
+                text = stringResource(R.string.monster_item_usage_none),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.weight(1f)
             )
-
-            if (item.canUsePitfallTrap) {
-                Image(
-                    painter = painterResource(R.drawable.ic_item_trap),
-                    contentDescription = null,
-                    colorFilter = ColorFilter.tint(
-                        color = MHFUColors.getItemColor(ItemIconColor.GREEN),
-                        blendMode = BlendMode.Modulate
-                    ),
-                    modifier = Modifier.size(Dimension.Size.small)
-                )
-            }
-            if (item.canUseShockTrap) {
-                Image(
-                    painter = painterResource(R.drawable.ic_item_trap),
-                    contentDescription = null,
-                    colorFilter = ColorFilter.tint(
-                        color = MHFUColors.getItemColor(ItemIconColor.PURPLE),
-                        blendMode = BlendMode.Modulate
-                    ),
-                    modifier = Modifier.size(Dimension.Size.small)
-                )
-            }
-            if (item.canUseFlashBomb) {
-                Image(
-                    painter = painterResource(R.drawable.ic_item_ball),
-                    contentDescription = null,
-                    colorFilter = ColorFilter.tint(
-                        color = MHFUColors.getItemColor(ItemIconColor.YELLOW),
-                        blendMode = BlendMode.Modulate
-                    ),
-                    modifier = Modifier.size(Dimension.Size.small)
-                )
-            }
-
-            if (item.canUseSonicBomb) {
-                Image(
-                    painter = painterResource(R.drawable.ic_item_ball),
-                    contentDescription = null,
-                    colorFilter = ColorFilter.tint(
-                        color = MHFUColors.getItemColor(ItemIconColor.GRAY),
-                        blendMode = BlendMode.Modulate
-                    ),
-                    modifier = Modifier.size(Dimension.Size.small)
-                )
-            }
-
-            if (item.canUseDungBomb) {
-                Image(
-                    painter = painterResource(R.drawable.ic_item_dung),
-                    contentDescription = null,
-                    colorFilter = ColorFilter.tint(
-                        color = MHFUColors.getItemColor(ItemIconColor.YELLOW),
-                        blendMode = BlendMode.Modulate
-                    ),
-                    modifier = Modifier.size(Dimension.Size.small)
-                )
-            }
-
-            if (item.canUseMeat) {
-                Image(
-                    painter = painterResource(R.drawable.ic_item_meat),
-                    contentDescription = null,
-                    colorFilter = ColorFilter.tint(
-                        color = MHFUColors.getItemColor(ItemIconColor.RED),
-                        blendMode = BlendMode.Modulate
-                    ),
-                    modifier = Modifier.size(Dimension.Size.small)
-                )
-            }
-
-            if (
-                !item.canUsePitfallTrap &&
-                !item.canUseShockTrap &&
-                !item.canUseFlashBomb &&
-                !item.canUseSonicBomb &&
-                !item.canUseDungBomb &&
-                !item.canUseMeat
-            ) {
-                Text(
-                    text = stringResource(R.string.monster_item_usage_none),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-            }
         }
     }
 }
