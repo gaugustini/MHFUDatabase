@@ -4,6 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.model.Skill
+import com.gaugustini.mhfudatabase.data.model.SkillPointsArmor
+import com.gaugustini.mhfudatabase.data.model.SkillPointsDecoration
 import com.gaugustini.mhfudatabase.data.model.SkillTree
 import com.gaugustini.mhfudatabase.data.repository.SkillRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,8 +17,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class SkillTreeDetailState(
+    val initialTab: SkillTreeDetailTab = SkillTreeDetailTab.SKILL_TREE_SUMMARY,
     val skillTree: SkillTree? = null,
     val skills: List<Skill> = emptyList(),
+    val decorations: List<SkillPointsDecoration> = emptyList(),
+    val armors: List<SkillPointsArmor> = emptyList(),
 )
 
 @HiltViewModel
@@ -42,6 +47,8 @@ class SkillTreeDetailViewModel @Inject constructor(
                 state.copy(
                     skillTree = skillTreeDetails.skillTree,
                     skills = skillTreeDetails.skills,
+                    decorations = skillTreeDetails.decorations,
+                    armors = skillTreeDetails.armors,
                 )
             }
         }
