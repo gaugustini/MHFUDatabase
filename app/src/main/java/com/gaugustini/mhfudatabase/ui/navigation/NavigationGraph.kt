@@ -257,6 +257,8 @@ fun NavigationGraph(
             SkillTreeDetailRoute(
                 navigateBack = navigationActions.navigateBack,
                 openSearch = navigationActions.navigateToSearch,
+                onArmorClick = navigationActions.navigateToArmorDetail,
+                onDecorationClick = navigationActions.navigateToDecorationDetail,
             )
         }
         composable(

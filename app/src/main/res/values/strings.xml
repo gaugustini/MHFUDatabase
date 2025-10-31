@@ -82,6 +82,10 @@
     <string name="tab_quest_village">VILLAGE</string>
     <string name="tab_quest_guild">GUILD</string>
 
+    <!-- Tab Title: Skill Tree Detail -->
+    <string name="tab_skill_detail_summary">SUMMARY</string>
+    <string name="tab_skill_detail_equipment">EQUIPMENT</string>
+
     <!-- Tab Title: Weapon Detail -->
     <string name="tab_weapon_detail_summary">SUMMARY</string>
     <string name="tab_weapon_detail_paths">PATHS</string>
@@ -182,6 +186,11 @@
     <string name="quest_monsters">Monsters</string>
     <string name="quest_description">Description</string>
     <string name="quest_client">Client: %1$s</string>
+
+    <!-- Skill Tree -->
+    <string name="skill_empty_list">None</string>
+    <string name="skill_decoration_list">Decoration</string>
+    <string name="skill_armor_list">Armor</string>
 
     <!-- Weapon -->
     <string name="weapon_great_sword">Great Sword</string>

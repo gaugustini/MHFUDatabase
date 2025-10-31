@@ -14,7 +14,7 @@ import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.preview.PreviewSkillData
 
 @Composable
-fun SkillTreeDetailContent(
+fun SkillTreeSummaryContent(
     skills: List<Skill>,
     modifier: Modifier = Modifier,
 ) {
@@ -64,9 +64,9 @@ fun SkillListItem(
 @Preview(showBackground = true)
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun SkillTreeDetailContentPreview() {
+fun SkillTreeSummaryContentPreview() {
     Theme {
-        SkillTreeDetailContent(
+        SkillTreeSummaryContent(
             skills = PreviewSkillData.skillList,
         )
     }
