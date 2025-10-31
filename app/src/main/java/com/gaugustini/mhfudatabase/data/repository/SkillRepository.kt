@@ -27,7 +27,9 @@ class SkillRepository @Inject constructor(
     ): SkillTreeDetails {
         return SkillTreeDetails(
             skillTree = skillDao.getSkillTree(skillTreeId, language),
-            skills = skillDao.getSkillsForSkillTree(skillTreeId, language)
+            skills = skillDao.getSkillsForSkillTree(skillTreeId, language),
+            decorations = skillDao.getDecorationsWithSkillPoints(skillTreeId, language),
+            armors = skillDao.getArmorsWithSkillPoints(skillTreeId, language),
         )
     }
 
