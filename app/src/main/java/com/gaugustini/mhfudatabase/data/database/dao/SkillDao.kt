@@ -82,6 +82,7 @@ interface SkillDao {
             armor_skill.skill_tree_id = :id AND
             armor_skill.point_value > 0 AND
             armor_text.language = :language
+        ORDER BY pointValue ASC, rarity ASC
         """
     )
     suspend fun getArmorsWithSkillPoints(id: Int, language: String): List<SkillPointsArmor>
@@ -105,6 +106,7 @@ interface SkillDao {
             decoration_skill.skill_tree_id = :id AND
             decoration_skill.point_value > 0 AND
             item_text.language = :language
+        ORDER BY pointValue ASC
         """
     )
     suspend fun getDecorationsWithSkillPoints(id: Int, language: String): List<SkillPointsDecoration>
