@@ -144,6 +144,7 @@ interface ItemDao {
             item_created_text.language = :language AND
             item_a_text.language = :language AND
             item_b_text.language = :language
+        ORDER BY itemCreatedName ASC
         """
     )
     suspend fun getItemCombinationListForItemUsages(
@@ -167,6 +168,7 @@ interface ItemDao {
         WHERE
             armor_recipe.item_id = :id AND
             armor_text.language = :language
+        ORDER BY itemQuantity ASC, rarity ASC
         """
     )
     suspend fun getArmorListForItemUsages(id: Int, language: String): List<ItemUsageArmor>
@@ -177,7 +179,6 @@ interface ItemDao {
             decoration.id               AS decorationId,
             item_text.name              AS decorationName,
             item.icon_color             AS decorationColor,
-            item.rarity                 AS rarity,
             decoration_recipe.quantity  AS itemQuantity
         FROM decoration
         JOIN item
@@ -189,6 +190,7 @@ interface ItemDao {
         WHERE
             decoration_recipe.item_id = :id AND
             item_text.language = :language
+        ORDER BY itemQuantity ASC
         """
     )
     suspend fun getDecorationListForItemUsages(id: Int, language: String): List<ItemUsageDecoration>
@@ -209,6 +211,7 @@ interface ItemDao {
         WHERE
             weapon_recipe.item_id = :id AND
             weapon_text.language = :language
+        ORDER BY itemQuantity ASC, rarity ASC
         """
     )
     suspend fun getWeaponListForItemUsages(id: Int, language: String): List<ItemUsageWeapon>
@@ -252,7 +255,7 @@ interface ItemDao {
             item_created_text.language = :language AND
             item_a_text.language = :language AND
             item_b_text.language = :language
-
+        ORDER BY itemCreatedName ASC
         """
     )
     suspend fun getItemCombinationListForItemSources(
@@ -282,8 +285,7 @@ interface ItemDao {
         WHERE
             location_item.item_id = :id AND
             item_text.language = :language
-        ORDER BY
-            location_item.area, location_item.gather_type, item_text.name
+        ORDER BY locationName ASC, `rank` DESC, area ASC, type ASC
         """
     )
     suspend fun getItemLocationListForItemSources(id: Int, language: String): List<ItemLocation>
@@ -314,6 +316,7 @@ interface ItemDao {
             monster_reward.item_id = :id AND
             item_text.language = :language AND
             reward_condition_text.language = :language
+        ORDER BY percentage DESC, monsterName ASC, `rank` DESC
         """
     )
     suspend fun getMonsterRewardListForItemSources(id: Int, language: String): List<MonsterReward>

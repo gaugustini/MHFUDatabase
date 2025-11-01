@@ -66,7 +66,6 @@ data class ItemUsageDecoration(
     val decorationId: Int,
     val decorationName: String,
     val decorationColor: ItemIconColor,
-    val rarity: Int,
     val itemQuantity: Int,
 )
 

@@ -136,7 +136,6 @@ object PreviewItemData {
         decorationId = 1,
         decorationName = "Decoration",
         decorationColor = ItemIconColor.RED,
-        rarity = 1,
         itemQuantity = 1,
     )
 
