@@ -54,6 +54,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.17.0")
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("androidx.datastore:datastore-preferences:1.1.7")
+    implementation("androidx.appcompat:appcompat:1.7.1")
 
     // Compose
     implementation(platform("androidx.compose:compose-bom:2025.10.00"))

@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -19,6 +20,7 @@ class UserPreferences @Inject constructor(
     private companion object PreferencesKeys {
         val FIRST_LAUNCH = booleanPreferencesKey("first_launch")
         val THEME_MODE = intPreferencesKey("theme_mode")
+        val APP_LANGUAGE = stringPreferencesKey("app_language")
     }
 
     suspend fun isFirstLaunch(): Boolean {
@@ -45,6 +47,18 @@ class UserPreferences @Inject constructor(
         }
     }
 
+    fun getLanguage(): Flow<Language> {
+        return dataStore.data.map { preferences ->
+            Language.fromCode(preferences[APP_LANGUAGE] ?: Language.ENGLISH.code)
+        }
+    }
+
+    suspend fun setLanguage(language: Language) {
+        dataStore.edit { preferences ->
+            preferences[APP_LANGUAGE] = language.code
+        }
+    }
+
 }
 
 enum class ThemeMode(val value: Int) {
@@ -53,6 +67,14 @@ enum class ThemeMode(val value: Int) {
     DARK(2);
 
     companion object {
-        fun fromValue(value: Int): ThemeMode = entries.getOrElse(value) { SYSTEM }
+        fun fromValue(value: Int): ThemeMode = entries.find { it.value == value } ?: SYSTEM
+    }
+}
+
+enum class Language(val code: String) {
+    ENGLISH("en");
+
+    companion object {
+        fun fromCode(code: String): Language = entries.find { it.code == code } ?: ENGLISH
     }
 }
