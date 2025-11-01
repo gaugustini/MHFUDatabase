@@ -1,31 +1,44 @@
 package com.gaugustini.mhfudatabase.data.repository
 
+import com.gaugustini.mhfudatabase.data.Language
+import com.gaugustini.mhfudatabase.data.UserPreferences
 import com.gaugustini.mhfudatabase.data.database.dao.ArmorDao
 import com.gaugustini.mhfudatabase.data.enums.HunterType
 import com.gaugustini.mhfudatabase.data.model.Armor
 import com.gaugustini.mhfudatabase.data.model.ArmorDetails
 import com.gaugustini.mhfudatabase.data.model.ArmorSet
 import com.gaugustini.mhfudatabase.data.model.ArmorSetDetails
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ArmorRepository @Inject constructor(
     private val armorDao: ArmorDao,
+    userPreferences: UserPreferences,
 ) {
+    private val currentLanguage: StateFlow<Language> = userPreferences.getLanguage()
+        .stateIn(
+            scope = CoroutineScope(Dispatchers.Default),
+            started = SharingStarted.Eagerly,
+            initialValue = Language.ENGLISH
+        )
 
     // List
 
-    suspend fun getArmorList(
-        language: String = "en",
-    ): List<Armor> {
+    suspend fun getArmorList(): List<Armor> {
+        val language = currentLanguage.value.code
         return armorDao.getArmorList(language).sortedBy { it.type }
     }
 
     suspend fun getArmorSetList(
         hunterType: HunterType,
-        language: String = "en",
     ): List<ArmorSet> {
+        val language = currentLanguage.value.code
         return armorDao.getArmorSetsByHunterType(hunterType, language)
     }
 
@@ -33,8 +46,8 @@ class ArmorRepository @Inject constructor(
 
     suspend fun getArmorDetails(
         armorId: Int,
-        language: String = "en",
     ): ArmorDetails {
+        val language = currentLanguage.value.code
         return ArmorDetails(
             armor = armorDao.getArmor(armorId, language),
             skills = armorDao.getSkillsForArmor(armorId, language),
@@ -44,8 +57,8 @@ class ArmorRepository @Inject constructor(
 
     suspend fun getArmorSetDetails(
         armorSetId: Int,
-        language: String = "en",
     ): ArmorSetDetails {
+        val language = currentLanguage.value.code
         return ArmorSetDetails(
             armorSet = armorDao.getArmorSet(armorSetId, language),
             armors = armorDao.getArmorsForArmorSet(armorSetId, language).sortedBy { it.type },

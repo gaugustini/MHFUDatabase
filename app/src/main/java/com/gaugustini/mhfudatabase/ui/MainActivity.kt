@@ -5,7 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.core.os.LocaleListCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,13 +24,20 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         splashScreen.setKeepOnScreenCondition {
-            viewModel.uiState.value.isThemeLoading
+            viewModel.uiState.value.isLoading
         }
 
         setContent {
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-            if (!uiState.isThemeLoading) {
+            LaunchedEffect(uiState.language) {
+                uiState.language?.let { language ->
+                    val locale = LocaleListCompat.forLanguageTags(language.code)
+                    AppCompatDelegate.setApplicationLocales(locale)
+                }
+            }
+
+            if (!uiState.isLoading) {
                 MHFUDatabase(
                     uiState = uiState,
                     onBetaDialogDismissed = viewModel::onBetaDialogDismissed,

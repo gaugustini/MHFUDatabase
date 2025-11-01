@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
+import com.gaugustini.mhfudatabase.data.Language
 import com.gaugustini.mhfudatabase.data.ThemeMode
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
@@ -43,7 +44,8 @@ fun SettingsRoute(
         uiState = uiState,
         navigateBack = navigateBack,
         openSearch = openSearch,
-        onThemeChange = viewModel::setThemeMode
+        onThemeChange = viewModel::setThemeMode,
+        onLanguageChange = viewModel::setLanguage,
     )
 }
 
@@ -53,6 +55,7 @@ fun SettingsScreen(
     navigateBack: () -> Unit = {},
     openSearch: () -> Unit = {},
     onThemeChange: (ThemeMode) -> Unit = {},
+    onLanguageChange: (Language) -> Unit = {},
 ) {
     Scaffold(
         topBar = {
@@ -72,6 +75,10 @@ fun SettingsScreen(
             ThemeSettingsItem(
                 themeMode = uiState.themeMode,
                 onThemeChange = onThemeChange
+            )
+            LanguageSettingsItem(
+                language = uiState.language,
+                onLanguageChange = onLanguageChange
             )
         }
     }
@@ -132,6 +139,63 @@ fun ThemeSettingsItem(
                     themeSystemString -> onThemeChange(ThemeMode.SYSTEM)
                     themeLightString -> onThemeChange(ThemeMode.LIGHT)
                     themeDarkString -> onThemeChange(ThemeMode.DARK)
+                }
+                openOptions.value = false
+            },
+            onDismiss = {
+                openOptions.value = false
+            },
+        )
+    }
+}
+
+@Composable
+fun LanguageSettingsItem(
+    language: Language,
+    modifier: Modifier = Modifier,
+    onLanguageChange: (Language) -> Unit,
+) {
+    val openOptions = remember { mutableStateOf(false) }
+    val languageEnglishString = stringResource(R.string.settings_language_english)
+
+    ListItemLayout(
+        leadingContent = {
+            Image(
+                painter = painterResource(
+                    if (LocalIsDarkTheme.current) R.drawable.ic_ui_language_white else R.drawable.ic_ui_language_black
+                ),
+                contentDescription = null,
+                modifier = Modifier.size(Dimension.Size.extraSmall)
+            )
+        },
+        headlineContent = {
+            Text(
+                text = stringResource(R.string.settings_language),
+                style = MaterialTheme.typography.bodyLarge,
+            )
+        },
+        supportingContent = {
+            Text(
+                text = when (language) {
+                    Language.ENGLISH -> languageEnglishString
+                },
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        },
+        modifier = modifier.clickable { openOptions.value = true },
+    )
+
+    if (openOptions.value) {
+        SettingsDialogOptions(
+            title = stringResource(R.string.settings_language_options_title),
+            options = listOf(languageEnglishString),
+            selectedOption = when (language) {
+                Language.ENGLISH -> languageEnglishString
+            },
+            onConfirm = { option ->
+                when (option) {
+                    languageEnglishString -> onLanguageChange(Language.ENGLISH)
                 }
                 openOptions.value = false
             },
