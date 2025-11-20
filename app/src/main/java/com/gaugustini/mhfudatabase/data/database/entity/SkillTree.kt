@@ -15,7 +15,7 @@ data class SkillTreeEntity(
 
 @Entity(
     tableName = "skill_tree_text",
-    primaryKeys = ["skill_tree_id"],
+    primaryKeys = ["skill_tree_id", "language"],
     foreignKeys = [
         ForeignKey(
             entity = SkillTreeEntity::class,

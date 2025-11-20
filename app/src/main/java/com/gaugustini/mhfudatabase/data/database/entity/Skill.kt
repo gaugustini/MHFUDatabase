@@ -27,7 +27,7 @@ data class SkillEntity(
 
 @Entity(
     tableName = "skill_text",
-    primaryKeys = ["skill_id"],
+    primaryKeys = ["skill_id", "language"],
     foreignKeys = [
         ForeignKey(
             entity = SkillEntity::class,
