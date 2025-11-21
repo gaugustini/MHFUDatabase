@@ -1,13 +1,15 @@
 package com.gaugustini.mhfudatabase.ui.armor.detail
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gaugustini.mhfudatabase.data.Language
+import com.gaugustini.mhfudatabase.data.UserPreferences
 import com.gaugustini.mhfudatabase.data.model.Armor
 import com.gaugustini.mhfudatabase.data.model.ArmorSet
 import com.gaugustini.mhfudatabase.data.model.ItemQuantity
 import com.gaugustini.mhfudatabase.data.model.SkillTreePoints
 import com.gaugustini.mhfudatabase.data.repository.ArmorRepository
+import com.gaugustini.mhfudatabase.ui.components.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -30,22 +32,24 @@ data class ArmorDetailState(
 @HiltViewModel
 class ArmorDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    userPreferences: UserPreferences,
     private val armorRepository: ArmorRepository,
-) : ViewModel() {
+) : BaseViewModel(userPreferences) {
 
     private val armorId: Int = checkNotNull(savedStateHandle["armorId"])
 
     private val _uiState = MutableStateFlow(ArmorDetailState())
     val uiState: StateFlow<ArmorDetailState> = _uiState.asStateFlow()
 
-    init {
-        loadArmorDetails()
+    override fun onLanguageChanged(language: Language) {
+        loadArmorDetails(language)
     }
 
-    private fun loadArmorDetails() {
+    private fun loadArmorDetails(language: Language) {
         viewModelScope.launch {
-            val armorDetails = armorRepository.getArmorDetails(armorId)
-            val armorSetDetails = armorRepository.getArmorSetDetails(armorDetails.armor.armorSetId)
+            val armorDetails = armorRepository.getArmorDetails(armorId, language)
+            val armorSetDetails =
+                armorRepository.getArmorSetDetails(armorDetails.armor.armorSetId, language)
 
             _uiState.update { state ->
                 state.copy(

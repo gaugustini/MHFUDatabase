@@ -1,10 +1,12 @@
 package com.gaugustini.mhfudatabase.ui.quest.list
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gaugustini.mhfudatabase.data.Language
+import com.gaugustini.mhfudatabase.data.UserPreferences
 import com.gaugustini.mhfudatabase.data.enums.HubType
 import com.gaugustini.mhfudatabase.data.model.Quest
 import com.gaugustini.mhfudatabase.data.repository.QuestRepository
+import com.gaugustini.mhfudatabase.ui.components.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,21 +24,22 @@ data class QuestListState(
 
 @HiltViewModel
 class QuestListViewModel @Inject constructor(
+    userPreferences: UserPreferences,
     private val questRepository: QuestRepository,
-) : ViewModel() {
+) : BaseViewModel(userPreferences) {
 
     private val _uiState = MutableStateFlow(QuestListState())
     val uiState: StateFlow<QuestListState> = _uiState.asStateFlow()
 
-    init {
-        loadQuests()
+    override fun onLanguageChanged(language: Language) {
+        loadQuests(language)
     }
 
-    private fun loadQuests() {
+    private fun loadQuests(language: Language) {
         viewModelScope.launch {
             _uiState.update {
                 it.copy(
-                    quests = questRepository.getQuestList(),
+                    quests = questRepository.getQuestList(language),
                 )
             }
         }

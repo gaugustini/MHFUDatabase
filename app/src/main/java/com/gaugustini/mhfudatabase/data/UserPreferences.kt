@@ -9,6 +9,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -49,7 +50,7 @@ class UserPreferences @Inject constructor(
 
     fun getLanguage(): Flow<Language> {
         return dataStore.data.map { preferences ->
-            Language.fromCode(preferences[APP_LANGUAGE] ?: Language.ENGLISH.code)
+            Language.fromCode(preferences[APP_LANGUAGE] ?: getDeviceLanguage())
         }
     }
 
@@ -57,6 +58,10 @@ class UserPreferences @Inject constructor(
         dataStore.edit { preferences ->
             preferences[APP_LANGUAGE] = language.code
         }
+    }
+
+    private fun getDeviceLanguage(): String {
+        return Locale.getDefault().toLanguageTag()
     }
 
 }
@@ -76,6 +81,9 @@ enum class Language(val code: String) {
     SPANISH("es");
 
     companion object {
-        fun fromCode(code: String): Language = entries.find { it.code == code } ?: ENGLISH
+        fun fromCode(code: String): Language {
+            val base = code.lowercase().substringBefore("-")
+            return entries.find { it.code == base } ?: ENGLISH
+        }
     }
 }

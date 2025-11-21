@@ -1,10 +1,12 @@
 package com.gaugustini.mhfudatabase.ui.search
 
 import android.util.Log
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gaugustini.mhfudatabase.data.Language
+import com.gaugustini.mhfudatabase.data.UserPreferences
 import com.gaugustini.mhfudatabase.data.model.SearchResults
 import com.gaugustini.mhfudatabase.data.repository.SearchRepository
+import com.gaugustini.mhfudatabase.ui.components.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,18 +27,19 @@ data class SearchState(
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
+    userPreferences: UserPreferences,
     private val searchRepository: SearchRepository,
-) : ViewModel() {
+) : BaseViewModel(userPreferences) {
 
     private val _uiState = MutableStateFlow(SearchState())
     val uiState: StateFlow<SearchState> = _uiState.asStateFlow()
 
-    init {
-        observeQuery()
+    override fun onLanguageChanged(language: Language) {
+        observeQuery(language)
     }
 
     @OptIn(FlowPreview::class)
-    private fun observeQuery() {
+    private fun observeQuery(language: Language) {
         viewModelScope.launch {
             _uiState
                 .map { it.query }
@@ -46,7 +49,7 @@ class SearchViewModel @Inject constructor(
                     if (currentQuery.isNotBlank()) {
                         try {
                             _uiState.update {
-                                it.copy(results = searchRepository.search(currentQuery))
+                                it.copy(results = searchRepository.search(currentQuery, language))
                             }
                         } catch (e: Exception) {
                             Log.e("SearchViewModel", "Error while searching: $currentQuery", e)

@@ -1,12 +1,14 @@
 package com.gaugustini.mhfudatabase.ui.location.detail
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gaugustini.mhfudatabase.data.Language
+import com.gaugustini.mhfudatabase.data.UserPreferences
 import com.gaugustini.mhfudatabase.data.enums.Rank
 import com.gaugustini.mhfudatabase.data.model.ItemLocation
 import com.gaugustini.mhfudatabase.data.model.Location
 import com.gaugustini.mhfudatabase.data.repository.LocationRepository
+import com.gaugustini.mhfudatabase.ui.components.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,21 +29,22 @@ data class LocationDetailState(
 @HiltViewModel
 class LocationDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    userPreferences: UserPreferences,
     private val locationRepository: LocationRepository,
-) : ViewModel() {
+) : BaseViewModel(userPreferences) {
 
     private val locationId: Int = checkNotNull(savedStateHandle["locationId"])
 
     private val _uiState = MutableStateFlow(LocationDetailState())
     val uiState: StateFlow<LocationDetailState> = _uiState.asStateFlow()
 
-    init {
-        loadLocationDetails()
+    override fun onLanguageChanged(language: Language) {
+        loadLocationDetails(language)
     }
 
-    private fun loadLocationDetails() {
+    private fun loadLocationDetails(language: Language) {
         viewModelScope.launch {
-            val locationDetails = locationRepository.getLocationDetails(locationId)
+            val locationDetails = locationRepository.getLocationDetails(locationId, language)
             _uiState.update { state ->
                 state.copy(
                     location = locationDetails.location,

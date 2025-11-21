@@ -1,9 +1,11 @@
 package com.gaugustini.mhfudatabase.ui.decoration.list
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gaugustini.mhfudatabase.data.Language
+import com.gaugustini.mhfudatabase.data.UserPreferences
 import com.gaugustini.mhfudatabase.data.model.Decoration
 import com.gaugustini.mhfudatabase.data.repository.DecorationRepository
+import com.gaugustini.mhfudatabase.ui.components.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,21 +20,22 @@ data class DecorationListState(
 
 @HiltViewModel
 class DecorationListViewModel @Inject constructor(
+    userPreferences: UserPreferences,
     private val decorationRepository: DecorationRepository,
-) : ViewModel() {
+) : BaseViewModel(userPreferences) {
 
     private val _uiState = MutableStateFlow(DecorationListState())
     val uiState: StateFlow<DecorationListState> = _uiState.asStateFlow()
 
-    init {
-        loadDecorations()
+    override fun onLanguageChanged(language: Language) {
+        loadDecorations(language)
     }
 
-    private fun loadDecorations() {
+    private fun loadDecorations(language: Language) {
         viewModelScope.launch {
             _uiState.update {
                 it.copy(
-                    decorations = decorationRepository.getDecorationList(),
+                    decorations = decorationRepository.getDecorationList(language),
                 )
             }
         }
