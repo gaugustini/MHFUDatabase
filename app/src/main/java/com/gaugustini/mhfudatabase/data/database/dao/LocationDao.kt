@@ -63,7 +63,8 @@ interface LocationDao {
             ON location_item.location_id = location_text.location_id
         WHERE
             location_item.location_id = :id AND
-            item_text.language = :language
+            item_text.language = :language AND
+            location_text.language = :language
         ORDER BY
             location_item.area, location_item.gather_type, item_text.name
         """
