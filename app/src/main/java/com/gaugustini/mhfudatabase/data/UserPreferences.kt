@@ -72,7 +72,8 @@ enum class ThemeMode(val value: Int) {
 }
 
 enum class Language(val code: String) {
-    ENGLISH("en");
+    ENGLISH("en"),
+    SPANISH("es");
 
     companion object {
         fun fromCode(code: String): Language = entries.find { it.code == code } ?: ENGLISH

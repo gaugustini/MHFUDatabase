@@ -1,8 +1,9 @@
 package com.gaugustini.mhfudatabase.ui
 
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gaugustini.mhfudatabase.data.Language
 import com.gaugustini.mhfudatabase.data.ThemeMode
 import com.gaugustini.mhfudatabase.data.UserPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +20,6 @@ import javax.inject.Inject
 data class MainUiState(
     val isLoading: Boolean = true,
     val themeMode: ThemeMode? = null,
-    val language: Language? = null,
     val showBetaDialog: Boolean = false,
 )
 
@@ -38,11 +38,19 @@ class MainViewModel @Inject constructor(
         ) { themeMode, language ->
             Pair(themeMode, language)
         }.onEach { (themeMode, language) ->
+            language.let {
+                val currentLocale = AppCompatDelegate.getApplicationLocales()
+                val newLocale = LocaleListCompat.forLanguageTags(it.code)
+
+                if (newLocale != currentLocale) {
+                    AppCompatDelegate.setApplicationLocales(newLocale)
+                }
+            }
+
             _uiState.update { state ->
                 state.copy(
                     isLoading = false,
                     themeMode = themeMode,
-                    language = language,
                 )
             }
         }.launchIn(viewModelScope)
