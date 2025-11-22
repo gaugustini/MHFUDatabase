@@ -1,9 +1,11 @@
 package com.gaugustini.mhfudatabase.ui.item.list
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gaugustini.mhfudatabase.data.Language
+import com.gaugustini.mhfudatabase.data.UserPreferences
 import com.gaugustini.mhfudatabase.data.model.Item
 import com.gaugustini.mhfudatabase.data.repository.ItemRepository
+import com.gaugustini.mhfudatabase.ui.components.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,20 +20,21 @@ data class ItemListState(
 
 @HiltViewModel
 class ItemListViewModel @Inject constructor(
+    userPreferences: UserPreferences,
     private val itemRepository: ItemRepository,
-) : ViewModel() {
+) : BaseViewModel(userPreferences) {
 
     private val _uiState = MutableStateFlow(ItemListState())
     val uiState: StateFlow<ItemListState> = _uiState.asStateFlow()
 
-    init {
-        loadItems()
+    override fun onLanguageChanged(language: Language) {
+        loadItems(language)
     }
 
-    private fun loadItems() {
+    private fun loadItems(language: Language) {
         viewModelScope.launch {
             _uiState.update {
-                it.copy(items = itemRepository.getItemList())
+                it.copy(items = itemRepository.getItemList(language))
             }
         }
     }

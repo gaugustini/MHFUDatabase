@@ -1,13 +1,15 @@
 package com.gaugustini.mhfudatabase.ui.skill.detail
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gaugustini.mhfudatabase.data.Language
+import com.gaugustini.mhfudatabase.data.UserPreferences
 import com.gaugustini.mhfudatabase.data.model.Skill
 import com.gaugustini.mhfudatabase.data.model.SkillPointsArmor
 import com.gaugustini.mhfudatabase.data.model.SkillPointsDecoration
 import com.gaugustini.mhfudatabase.data.model.SkillTree
 import com.gaugustini.mhfudatabase.data.repository.SkillRepository
+import com.gaugustini.mhfudatabase.ui.components.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,21 +29,22 @@ data class SkillTreeDetailState(
 @HiltViewModel
 class SkillTreeDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    userPreferences: UserPreferences,
     private val skillRepository: SkillRepository,
-) : ViewModel() {
+) : BaseViewModel(userPreferences) {
 
     private val skillTreeId: Int = checkNotNull(savedStateHandle["skillTreeId"])
 
     private val _uiState = MutableStateFlow(SkillTreeDetailState())
     val uiState: StateFlow<SkillTreeDetailState> = _uiState.asStateFlow()
 
-    init {
-        loadSkillTreeDetails()
+    override fun onLanguageChanged(language: Language) {
+        loadSkillTreeDetails(language)
     }
 
-    private fun loadSkillTreeDetails() {
+    private fun loadSkillTreeDetails(language: Language) {
         viewModelScope.launch {
-            val skillTreeDetails = skillRepository.getSkillTreeDetails(skillTreeId)
+            val skillTreeDetails = skillRepository.getSkillTreeDetails(skillTreeId, language)
 
             _uiState.update { state ->
                 state.copy(

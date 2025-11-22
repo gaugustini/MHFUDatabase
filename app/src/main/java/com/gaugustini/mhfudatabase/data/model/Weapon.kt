@@ -1,6 +1,7 @@
 package com.gaugustini.mhfudatabase.data.model
 
 import com.gaugustini.mhfudatabase.data.enums.ElementType
+import com.gaugustini.mhfudatabase.data.enums.WeaponBowCharge
 import com.gaugustini.mhfudatabase.data.enums.WeaponRecoil
 import com.gaugustini.mhfudatabase.data.enums.WeaponReloadSpeed
 import com.gaugustini.mhfudatabase.data.enums.WeaponShelling
@@ -54,15 +55,14 @@ data class WeaponNode(
     val children: MutableList<WeaponNode> = mutableListOf(),
 )
 
-//TODO: Make enum for charge type
 data class AmmoBow(
-    val charge1Type: String,
+    val charge1Type: WeaponBowCharge,
     val charge1Level: Int,
-    val charge2Type: String,
+    val charge2Type: WeaponBowCharge,
     val charge2Level: Int,
-    val charge3Type: String,
+    val charge3Type: WeaponBowCharge,
     val charge3Level: Int,
-    val charge4Type: String?,
+    val charge4Type: WeaponBowCharge?,
     val charge4Level: Int?,
     val power: Boolean,
     val close: Boolean,

@@ -139,8 +139,8 @@ interface ItemDao {
         JOIN item_text item_b_text
             ON item_combination.item_b_id = item_b_text.item_id
         WHERE
-            item_combination.item_a_id = :id OR
-            item_combination.item_b_id = :id AND            
+            (item_combination.item_a_id = :id OR
+            item_combination.item_b_id = :id) AND            
             item_created_text.language = :language AND
             item_a_text.language = :language AND
             item_b_text.language = :language
@@ -284,7 +284,8 @@ interface ItemDao {
             ON location_item.location_id = location_text.location_id
         WHERE
             location_item.item_id = :id AND
-            item_text.language = :language
+            item_text.language = :language AND
+            location_text.language = :language
         ORDER BY locationName ASC, `rank` DESC, area ASC, type ASC
         """
     )
@@ -315,6 +316,7 @@ interface ItemDao {
         WHERE
             monster_reward.item_id = :id AND
             item_text.language = :language AND
+            monster_text.language = :language AND
             reward_condition_text.language = :language
         ORDER BY percentage DESC, monsterName ASC, `rank` DESC
         """

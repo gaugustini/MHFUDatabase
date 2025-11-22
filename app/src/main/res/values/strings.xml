@@ -6,7 +6,8 @@
     <string name="beta_version">Beta Version Notice</string>
     <string name="beta_version_message">This is a beta version of MHFU Database. Some data may be
         incomplete or inaccurate. For issues, corrections, or suggestions, please visit the project
-        on GitHub (accessible via the About screen).</string>
+        on GitHub (accessible via the About screen).
+    </string>
     <string name="dialog_confirm">Confirm</string>
 
     <!-- Screen Title: Main Routes -->
@@ -252,6 +253,9 @@
     <string name="weapon_ammo_bowgun_armor">Armor</string>
     <string name="weapon_ammo_bowgun_rapid_fire">Rapid Fire</string>
     <string name="weapon_bow_charges">Charges</string>
+    <string name="weapon_bow_charge_rapid">%1$d: Rapid Lv %2$d</string>
+    <string name="weapon_bow_charge_pierce">%1$d: Pierce Lv %2$d</string>
+    <string name="weapon_bow_charge_scatter">%1$d: Scatter Lv %2$d</string>
     <string name="weapon_bow_coating">Coatings</string>
     <string name="weapon_bow_coating_power">Power</string>
     <string name="weapon_bow_coating_close">Close</string>
@@ -274,6 +278,7 @@
     <string name="settings_language">Language</string>
     <string name="settings_language_options_title">Choose a language</string>
     <string name="settings_language_english">English</string>
+    <string name="settings_language_spanish">Spanish</string>
 
     <!-- About -->
     <string name="about_description">MHFU Database is an open source android app for Monster Hunter
@@ -281,7 +286,8 @@
         data about monsters, weapons, armors, items, and quests.
     </string>
     <string name="about_visit_project">For issues, ideas or suggestions visit the project on
-        GitHub and join the Discussions section.</string>
+        GitHub and join the Discussions section.
+    </string>
     <string name="about_version">Version %1$s</string>
     <string name="about_credit_resources">Credits and Resources</string>
 

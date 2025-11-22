@@ -157,6 +157,7 @@ fun LanguageSettingsItem(
 ) {
     val openOptions = remember { mutableStateOf(false) }
     val languageEnglishString = stringResource(R.string.settings_language_english)
+    val languageSpanishString = stringResource(R.string.settings_language_spanish)
 
     ListItemLayout(
         leadingContent = {
@@ -178,6 +179,7 @@ fun LanguageSettingsItem(
             Text(
                 text = when (language) {
                     Language.ENGLISH -> languageEnglishString
+                    Language.SPANISH -> languageSpanishString
                 },
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -189,13 +191,15 @@ fun LanguageSettingsItem(
     if (openOptions.value) {
         SettingsDialogOptions(
             title = stringResource(R.string.settings_language_options_title),
-            options = listOf(languageEnglishString),
+            options = listOf(languageEnglishString, languageSpanishString),
             selectedOption = when (language) {
                 Language.ENGLISH -> languageEnglishString
+                Language.SPANISH -> languageSpanishString
             },
             onConfirm = { option ->
                 when (option) {
                     languageEnglishString -> onLanguageChange(Language.ENGLISH)
+                    languageSpanishString -> onLanguageChange(Language.SPANISH)
                 }
                 openOptions.value = false
             },

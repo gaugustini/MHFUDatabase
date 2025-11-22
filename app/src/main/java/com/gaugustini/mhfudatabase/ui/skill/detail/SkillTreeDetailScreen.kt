@@ -18,7 +18,7 @@ import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.preview.PreviewSkillData
 
-enum class SkillTreeDetailTab(@param: StringRes val title: Int) {
+enum class SkillTreeDetailTab(@param:StringRes val title: Int) {
     SKILL_TREE_SUMMARY(R.string.tab_skill_detail_summary),
     SKILL_TREE_EQUIPMENT(R.string.tab_skill_detail_equipment);
 

@@ -20,8 +20,10 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.data.enums.ItemIconColor
+import com.gaugustini.mhfudatabase.data.enums.WeaponBowCharge
 import com.gaugustini.mhfudatabase.data.model.AmmoBow
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
@@ -61,23 +63,55 @@ fun WeaponAmmoBowSummary(
             trailingContent = {
                 Column {
                     Text(
-                        text = "1 :${ammo.charge1Type} Lv ${ammo.charge1Level}",
+                        text = stringResource(
+                            when (ammo.charge1Type) {
+                                WeaponBowCharge.RAPID -> R.string.weapon_bow_charge_rapid
+                                WeaponBowCharge.PIERCE -> R.string.weapon_bow_charge_pierce
+                                WeaponBowCharge.SCATTER -> R.string.weapon_bow_charge_scatter
+                            },
+                            1,
+                            ammo.charge1Level
+                        ),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
                     Text(
-                        text = "2: ${ammo.charge2Type} Lv ${ammo.charge2Level}",
+                        text = stringResource(
+                            when (ammo.charge2Type) {
+                                WeaponBowCharge.RAPID -> R.string.weapon_bow_charge_rapid
+                                WeaponBowCharge.PIERCE -> R.string.weapon_bow_charge_pierce
+                                WeaponBowCharge.SCATTER -> R.string.weapon_bow_charge_scatter
+                            },
+                            2,
+                            ammo.charge2Level
+                        ),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
                     Text(
-                        text = "3: ${ammo.charge3Type} Lv ${ammo.charge3Level}",
+                        text = stringResource(
+                            when (ammo.charge3Type) {
+                                WeaponBowCharge.RAPID -> R.string.weapon_bow_charge_rapid
+                                WeaponBowCharge.PIERCE -> R.string.weapon_bow_charge_pierce
+                                WeaponBowCharge.SCATTER -> R.string.weapon_bow_charge_scatter
+                            },
+                            3,
+                            ammo.charge3Level
+                        ),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
                     if (ammo.charge4Type != null && ammo.charge4Level != null) {
                         Text(
-                            text = "4: ${ammo.charge4Type} Lv ${ammo.charge4Level}",
+                            text = stringResource(
+                                when (ammo.charge4Type) {
+                                    WeaponBowCharge.RAPID -> R.string.weapon_bow_charge_rapid
+                                    WeaponBowCharge.PIERCE -> R.string.weapon_bow_charge_pierce
+                                    WeaponBowCharge.SCATTER -> R.string.weapon_bow_charge_scatter
+                                },
+                                4,
+                                ammo.charge4Level
+                            ),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurface,
                         )
@@ -139,6 +173,7 @@ fun WeaponAmmoBowSummary(
                             text = stringResource(R.string.weapon_bow_coating_power),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            fontSize = 8.sp
                         )
                     }
                     Column(
@@ -165,6 +200,7 @@ fun WeaponAmmoBowSummary(
                             text = stringResource(R.string.weapon_bow_coating_close),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            fontSize = 8.sp
                         )
                     }
                     Column(
@@ -191,6 +227,7 @@ fun WeaponAmmoBowSummary(
                             text = stringResource(R.string.weapon_bow_coating_paint),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            fontSize = 8.sp
                         )
                     }
                     Column(
@@ -217,6 +254,7 @@ fun WeaponAmmoBowSummary(
                             text = stringResource(R.string.weapon_bow_coating_poison),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            fontSize = 8.sp
                         )
                     }
                     Column(
@@ -243,6 +281,7 @@ fun WeaponAmmoBowSummary(
                             text = stringResource(R.string.weapon_bow_coating_paralysis),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            fontSize = 8.sp
                         )
                     }
                     Column(
@@ -269,6 +308,7 @@ fun WeaponAmmoBowSummary(
                             text = stringResource(R.string.weapon_bow_coating_sleep),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            fontSize = 8.sp
                         )
                     }
                 }

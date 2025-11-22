@@ -1,8 +1,9 @@
 package com.gaugustini.mhfudatabase.ui.monster.detail
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gaugustini.mhfudatabase.data.Language
+import com.gaugustini.mhfudatabase.data.UserPreferences
 import com.gaugustini.mhfudatabase.data.enums.Rank
 import com.gaugustini.mhfudatabase.data.model.AilmentStatus
 import com.gaugustini.mhfudatabase.data.model.Hitzone
@@ -10,6 +11,7 @@ import com.gaugustini.mhfudatabase.data.model.Monster
 import com.gaugustini.mhfudatabase.data.model.MonsterItemUsage
 import com.gaugustini.mhfudatabase.data.model.MonsterReward
 import com.gaugustini.mhfudatabase.data.repository.MonsterRepository
+import com.gaugustini.mhfudatabase.ui.components.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -32,21 +34,22 @@ data class MonsterDetailState(
 @HiltViewModel
 class MonsterDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    userPreferences: UserPreferences,
     private val monsterRepository: MonsterRepository,
-) : ViewModel() {
+) : BaseViewModel(userPreferences) {
 
     private val monsterId: Int = checkNotNull(savedStateHandle["monsterId"])
 
     private val _uiState = MutableStateFlow(MonsterDetailState())
     val uiState: StateFlow<MonsterDetailState> = _uiState.asStateFlow()
 
-    init {
-        loadMonsterDetails()
+    override fun onLanguageChanged(language: Language) {
+        loadMonsterDetails(language)
     }
 
-    private fun loadMonsterDetails() {
+    private fun loadMonsterDetails(language: Language) {
         viewModelScope.launch {
-            val monsterDetails = monsterRepository.getMonsterDetails(monsterId)
+            val monsterDetails = monsterRepository.getMonsterDetails(monsterId, language)
 
             _uiState.update { state ->
                 state.copy(

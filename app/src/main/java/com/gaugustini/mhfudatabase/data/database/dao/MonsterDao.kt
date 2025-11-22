@@ -139,6 +139,7 @@ interface MonsterDao {
         WHERE
             monster_reward.monster_id = :id AND
             item_text.language = :language AND
+            monster_text.language = :language AND
             reward_condition_text.language = :language
         ORDER BY percentage DESC
         """
