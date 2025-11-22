@@ -84,11 +84,6 @@ class MainViewModel @Inject constructor(
             val currentVersion = BuildConfig.VERSION_CODE
             val lastVersion = userPreferences.getLastAppVersion()
 
-            if (lastVersion == -1) {
-                userPreferences.setLastAppVersion(currentVersion)
-                return@launch
-            }
-
             if (currentVersion > lastVersion) {
                 _uiState.update { state ->
                     state.copy(showWhatsNew = true)
