@@ -11,6 +11,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.gaugustini.mhfudatabase.ui.components.BetaDialog
 import com.gaugustini.mhfudatabase.ui.components.Drawer
+import com.gaugustini.mhfudatabase.ui.components.WhatsNewDialog
 import com.gaugustini.mhfudatabase.ui.navigation.Destinations
 import com.gaugustini.mhfudatabase.ui.navigation.NavigationActions
 import com.gaugustini.mhfudatabase.ui.navigation.NavigationGraph
@@ -21,6 +22,7 @@ import kotlinx.coroutines.launch
 fun MHFUDatabase(
     uiState: MainUiState,
     onBetaDialogDismissed: () -> Unit,
+    onWhatsNewDialogDismissed: () -> Unit,
 ) {
     val navController = rememberNavController()
     val navigationActions = remember(navController) { NavigationActions(navController) }
@@ -38,6 +40,13 @@ fun MHFUDatabase(
             BetaDialog(
                 onConfirm = onBetaDialogDismissed,
                 onDismiss = onBetaDialogDismissed,
+            )
+        }
+
+        if (uiState.showWhatsNew) {
+            WhatsNewDialog(
+                onConfirm = onWhatsNewDialogDismissed,
+                onDismiss = onWhatsNewDialogDismissed,
             )
         }
 

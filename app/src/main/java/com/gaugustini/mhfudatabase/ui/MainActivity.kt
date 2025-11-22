@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
                 MHFUDatabase(
                     uiState = uiState,
                     onBetaDialogDismissed = viewModel::onBetaDialogDismissed,
+                    onWhatsNewDialogDismissed = viewModel::onWhatsNewDialogDismissed,
                 )
             }
         }

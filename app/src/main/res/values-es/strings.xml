@@ -10,6 +10,18 @@
     </string>
     <string name="dialog_confirm">Confirmar</string>
 
+    <!-- What's New -->
+    <string name="whats_new_title">¿Qué hay de nuevo?</string>
+    <string name="whats_new_text">
+        Versión 0.3.0\n
+        • Agregado soporte para el idioma español\n
+        • Agregado cambio de tema (claro y oscuro)\n
+        • Agregado contenido de equipamiento en la pantalla \'Detalle de Habilidad\'\n
+        • Corregidos los valores de íconos y colores para \'Objetos\'\n
+        • Revisados los nombres y descripciones de todos los datos para coincidir con el juego\n
+        • Pequeñas mejoras en la interfaz de usuario (IU)
+    </string>
+
     <!-- Screen Title: Main Routes -->
     <string name="screen_armor_set_list">Armaduras</string>
     <string name="screen_decoration_list">Decoraciones</string>

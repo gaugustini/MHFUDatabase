@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gaugustini.mhfudatabase.BuildConfig
 import com.gaugustini.mhfudatabase.data.ThemeMode
 import com.gaugustini.mhfudatabase.data.UserPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +22,7 @@ data class MainUiState(
     val isLoading: Boolean = true,
     val themeMode: ThemeMode? = null,
     val showBetaDialog: Boolean = false,
+    val showWhatsNew: Boolean = false,
 )
 
 @HiltViewModel
@@ -35,6 +37,7 @@ class MainViewModel @Inject constructor(
         observeTheme()
         observeLanguage()
         checkFirstLaunch()
+        checkAppUpdate()
     }
 
     private fun observeTheme() {
@@ -76,9 +79,35 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    private fun checkAppUpdate() {
+        viewModelScope.launch {
+            val currentVersion = BuildConfig.VERSION_CODE
+            val lastVersion = userPreferences.getLastAppVersion()
+
+            if (lastVersion == -1) {
+                userPreferences.setLastAppVersion(currentVersion)
+                return@launch
+            }
+
+            if (currentVersion > lastVersion) {
+                _uiState.update { state ->
+                    state.copy(showWhatsNew = true)
+                }
+
+                userPreferences.setLastAppVersion(currentVersion)
+            }
+        }
+    }
+
     fun onBetaDialogDismissed() {
         _uiState.update { state ->
             state.copy(showBetaDialog = false)
+        }
+    }
+
+    fun onWhatsNewDialogDismissed() {
+        _uiState.update { state ->
+            state.copy(showWhatsNew = false)
         }
     }
 

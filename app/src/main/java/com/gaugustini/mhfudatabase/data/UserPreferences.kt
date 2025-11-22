@@ -22,6 +22,7 @@ class UserPreferences @Inject constructor(
         val FIRST_LAUNCH = booleanPreferencesKey("first_launch")
         val THEME_MODE = intPreferencesKey("theme_mode")
         val APP_LANGUAGE = stringPreferencesKey("app_language")
+        val LAST_VERSION = intPreferencesKey("last_version")
     }
 
     suspend fun isFirstLaunch(): Boolean {
@@ -62,6 +63,18 @@ class UserPreferences @Inject constructor(
 
     private fun getDeviceLanguage(): String {
         return Locale.getDefault().toLanguageTag()
+    }
+
+    suspend fun getLastAppVersion(): Int {
+        return dataStore.data.map { preferences ->
+            preferences[LAST_VERSION] ?: -1
+        }.first()
+    }
+
+    suspend fun setLastAppVersion(version: Int) {
+        dataStore.edit { preferences ->
+            preferences[LAST_VERSION] = version
+        }
     }
 
 }

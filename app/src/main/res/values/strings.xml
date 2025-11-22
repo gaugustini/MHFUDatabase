@@ -10,6 +10,18 @@
     </string>
     <string name="dialog_confirm">Confirm</string>
 
+    <!-- What's New -->
+    <string name="whats_new_title">What\'s New?</string>
+    <string name="whats_new_text">
+        Version 0.3.0\n
+        • Added Spanish language support\n
+        • Added theme switching (light and dark)\n
+        • Added equipment content to the \'Skill Detail\' screen\n
+        • Fixed icon and color values for \'Items\'\n
+        • Reviewed names and descriptions across all data to match the game\n
+        • Small UI improvements
+    </string>
+
     <!-- Screen Title: Main Routes -->
     <string name="screen_armor_set_list">Armor Sets</string>
     <string name="screen_decoration_list">Decorations</string>
