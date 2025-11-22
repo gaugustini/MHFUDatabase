@@ -1,6 +1,7 @@
 package com.gaugustini.mhfudatabase.util.preview
 
 import com.gaugustini.mhfudatabase.data.enums.ElementType
+import com.gaugustini.mhfudatabase.data.enums.WeaponBowCharge
 import com.gaugustini.mhfudatabase.data.enums.WeaponRecoil
 import com.gaugustini.mhfudatabase.data.enums.WeaponReloadSpeed
 import com.gaugustini.mhfudatabase.data.enums.WeaponShelling
@@ -182,13 +183,13 @@ object PreviewWeaponData {
     // Weapon Ammo Bow
 
     val ammoBow = AmmoBow(
-        charge1Type = "RAPID",
+        charge1Type = WeaponBowCharge.RAPID,
         charge1Level = 1,
-        charge2Type = "PIERCE",
+        charge2Type = WeaponBowCharge.PIERCE,
         charge2Level = 2,
-        charge3Type = "SCATTER",
+        charge3Type = WeaponBowCharge.SCATTER,
         charge3Level = 3,
-        charge4Type = "RAPID",
+        charge4Type = WeaponBowCharge.RAPID,
         charge4Level = 4,
         power = false,
         close = true,

@@ -245,7 +245,7 @@
     <string name="weapon_ammo_bowgun_flame">Llama</string>
     <string name="weapon_ammo_bowgun_water">Agua</string>
     <string name="weapon_ammo_bowgun_thunder">Trueno</string>
-    <string name="weapon_ammo_bowgun_freeze">Hielo</string>
+    <string name="weapon_ammo_bowgun_freeze">Congelante</string>
     <string name="weapon_ammo_bowgun_dragon">Dragón</string>
     <string name="weapon_ammo_bowgun_tranq">Tranquilizante</string>
     <string name="weapon_ammo_bowgun_paint">Pintura</string>
@@ -253,12 +253,15 @@
     <string name="weapon_ammo_bowgun_armor">Armadura</string>
     <string name="weapon_ammo_bowgun_rapid_fire">Fuego Rápido</string>
     <string name="weapon_bow_charges">Cargas</string>
+    <string name="weapon_bow_charge_rapid">%1$d: Rápido Nv %2$d</string>
+    <string name="weapon_bow_charge_pierce">%1$d: Perforante Nv %2$d</string>
+    <string name="weapon_bow_charge_scatter">%1$d: Disperso Nv %2$d</string>
     <string name="weapon_bow_coating">Revestimientos</string>
     <string name="weapon_bow_coating_power">Energía</string>
-    <string name="weapon_bow_coating_close">Corto Alcance</string>
-    <string name="weapon_bow_coating_paint">Pintura</string>
+    <string name="weapon_bow_coating_close">C. Alc.</string>
+    <string name="weapon_bow_coating_paint">Pint.</string>
     <string name="weapon_bow_coating_poison">Veneno</string>
-    <string name="weapon_bow_coating_paralysis">Parálisis</string>
+    <string name="weapon_bow_coating_paralysis">Pará.</string>
     <string name="weapon_bow_coating_sleep">Sueño</string>
     <string name="weapon_path">Ruta</string>
     <string name="weapon_path_details">Ruta: %1$d</string>
