@@ -27,6 +27,25 @@ Access game data efficiently with fast navigation, offline support, and clear cr
 
 Or download the latest APK from the [Releases](../../releases) page.
 
+## Data
+
+The app stores its data using a local SQLite database. A pre-populated database file is packaged
+with the project and used to initialize the local database when the app is launched for the first
+time.
+
+### Database File
+
+The pre-populated SQLite database file is located at:
+
+[app/src/main/assets/database/data.db](app/src/main/assets/database/data.db)
+
+### Database Schema (Room)
+
+Room generates JSON schema files for each database version. These files are used to track structural
+changes and ensure consistency across versions. They can be found at:
+
+[app/schemas/com.gaugustini.mhfudatabase.data.database.AppDatabase/](app/schemas/com.gaugustini.mhfudatabase.data.database.AppDatabase/)
+
 ## Contributing
 
 Whether you want to improve features, fix bugs, enhance documentation, or share new ideas — all contributions are welcome.
