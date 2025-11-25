@@ -13,6 +13,8 @@
     <!-- What's New -->
     <string name="whats_new_title">What\'s New?</string>
     <string name="whats_new_text">
+        Version 0.3.1\n
+        • Fixed occasional crashes\n
         Version 0.3.0\n
         • Added Spanish language support\n
         • Added theme switching (light and dark)\n

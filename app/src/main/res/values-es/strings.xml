@@ -13,6 +13,8 @@
     <!-- What's New -->
     <string name="whats_new_title">¿Qué hay de nuevo?</string>
     <string name="whats_new_text">
+        Versión 0.3.1\n
+        • Corregidos crashes ocasionales\n
         Versión 0.3.0\n
         • Agregado soporte para el idioma español\n
         • Agregado cambio de tema (claro y oscuro)\n
