@@ -1,6 +1,7 @@
 package com.gaugustini.mhfudatabase.ui.skill.detail
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.Language
 import com.gaugustini.mhfudatabase.data.UserPreferences
@@ -9,11 +10,13 @@ import com.gaugustini.mhfudatabase.data.model.SkillPointsArmor
 import com.gaugustini.mhfudatabase.data.model.SkillPointsDecoration
 import com.gaugustini.mhfudatabase.data.model.SkillTree
 import com.gaugustini.mhfudatabase.data.repository.SkillRepository
-import com.gaugustini.mhfudatabase.ui.components.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,17 +32,26 @@ data class SkillTreeDetailState(
 @HiltViewModel
 class SkillTreeDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    userPreferences: UserPreferences,
+    private val userPreferences: UserPreferences,
     private val skillRepository: SkillRepository,
-) : BaseViewModel(userPreferences) {
+) : ViewModel() {
 
     private val skillTreeId: Int = checkNotNull(savedStateHandle["skillTreeId"])
 
     private val _uiState = MutableStateFlow(SkillTreeDetailState())
     val uiState: StateFlow<SkillTreeDetailState> = _uiState.asStateFlow()
 
-    override fun onLanguageChanged(language: Language) {
-        loadSkillTreeDetails(language)
+    init {
+        observeLanguage()
+    }
+
+    private fun observeLanguage() {
+        userPreferences.getLanguage()
+            .distinctUntilChanged()
+            .onEach { language ->
+                loadSkillTreeDetails(language)
+            }
+            .launchIn(viewModelScope)
     }
 
     private fun loadSkillTreeDetails(language: Language) {

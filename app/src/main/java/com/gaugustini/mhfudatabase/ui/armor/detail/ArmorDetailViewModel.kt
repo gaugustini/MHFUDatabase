@@ -1,6 +1,7 @@
 package com.gaugustini.mhfudatabase.ui.armor.detail
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.Language
 import com.gaugustini.mhfudatabase.data.UserPreferences
@@ -9,11 +10,13 @@ import com.gaugustini.mhfudatabase.data.model.ArmorSet
 import com.gaugustini.mhfudatabase.data.model.ItemQuantity
 import com.gaugustini.mhfudatabase.data.model.SkillTreePoints
 import com.gaugustini.mhfudatabase.data.repository.ArmorRepository
-import com.gaugustini.mhfudatabase.ui.components.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,17 +35,26 @@ data class ArmorDetailState(
 @HiltViewModel
 class ArmorDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    userPreferences: UserPreferences,
+    private val userPreferences: UserPreferences,
     private val armorRepository: ArmorRepository,
-) : BaseViewModel(userPreferences) {
+) : ViewModel() {
 
     private val armorId: Int = checkNotNull(savedStateHandle["armorId"])
 
     private val _uiState = MutableStateFlow(ArmorDetailState())
     val uiState: StateFlow<ArmorDetailState> = _uiState.asStateFlow()
 
-    override fun onLanguageChanged(language: Language) {
-        loadArmorDetails(language)
+    init {
+        observeLanguage()
+    }
+
+    private fun observeLanguage() {
+        userPreferences.getLanguage()
+            .distinctUntilChanged()
+            .onEach { language ->
+                loadArmorDetails(language)
+            }
+            .launchIn(viewModelScope)
     }
 
     private fun loadArmorDetails(language: Language) {

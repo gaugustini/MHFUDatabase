@@ -1,17 +1,20 @@
 package com.gaugustini.mhfudatabase.ui.weapon.graph
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.Language
 import com.gaugustini.mhfudatabase.data.UserPreferences
 import com.gaugustini.mhfudatabase.data.enums.WeaponType
 import com.gaugustini.mhfudatabase.data.model.WeaponNode
 import com.gaugustini.mhfudatabase.data.repository.WeaponRepository
-import com.gaugustini.mhfudatabase.ui.components.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,9 +27,9 @@ data class WeaponGraphState(
 @HiltViewModel
 class WeaponGraphViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    userPreferences: UserPreferences,
+    private val userPreferences: UserPreferences,
     private val weaponRepository: WeaponRepository,
-) : BaseViewModel(userPreferences) {
+) : ViewModel() {
 
     private val weaponType: WeaponType =
         WeaponType.getWeaponTypeFromString(checkNotNull(savedStateHandle["weaponType"]))
@@ -34,14 +37,23 @@ class WeaponGraphViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(WeaponGraphState())
     val uiState: StateFlow<WeaponGraphState> = _uiState.asStateFlow()
 
-    override fun onLanguageChanged(language: Language) {
-        loadWeaponGraph(language)
+    init {
+        observeLanguage()
+    }
+
+    private fun observeLanguage() {
+        userPreferences.getLanguage()
+            .distinctUntilChanged()
+            .onEach { language ->
+                loadWeaponGraph(language)
+            }
+            .launchIn(viewModelScope)
     }
 
     private fun loadWeaponGraph(language: Language) {
         viewModelScope.launch {
-            _uiState.update {
-                it.copy(
+            _uiState.update { state ->
+                state.copy(
                     weaponType = weaponType,
                     nodes = weaponRepository.getWeaponGraph(weaponType, language),
                 )

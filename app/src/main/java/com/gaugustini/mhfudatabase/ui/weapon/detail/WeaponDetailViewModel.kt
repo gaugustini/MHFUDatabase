@@ -1,6 +1,7 @@
 package com.gaugustini.mhfudatabase.ui.weapon.detail
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.Language
 import com.gaugustini.mhfudatabase.data.UserPreferences
@@ -9,11 +10,13 @@ import com.gaugustini.mhfudatabase.data.model.AmmoBowgun
 import com.gaugustini.mhfudatabase.data.model.ItemQuantity
 import com.gaugustini.mhfudatabase.data.model.Weapon
 import com.gaugustini.mhfudatabase.data.repository.WeaponRepository
-import com.gaugustini.mhfudatabase.ui.components.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,17 +35,26 @@ data class WeaponDetailState(
 @HiltViewModel
 class WeaponDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    userPreferences: UserPreferences,
+    private val userPreferences: UserPreferences,
     private val weaponRepository: WeaponRepository,
-) : BaseViewModel(userPreferences) {
+) : ViewModel() {
 
     private val weaponId: Int = checkNotNull(savedStateHandle["weaponId"])
 
     private val _uiState = MutableStateFlow(WeaponDetailState())
     val uiState: StateFlow<WeaponDetailState> = _uiState.asStateFlow()
 
-    override fun onLanguageChanged(language: Language) {
-        loadWeaponDetails(language)
+    init {
+        observeLanguage()
+    }
+
+    private fun observeLanguage() {
+        userPreferences.getLanguage()
+            .distinctUntilChanged()
+            .onEach { language ->
+                loadWeaponDetails(language)
+            }
+            .launchIn(viewModelScope)
     }
 
     private fun loadWeaponDetails(language: Language) {

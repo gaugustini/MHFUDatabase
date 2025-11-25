@@ -1,17 +1,20 @@
 package com.gaugustini.mhfudatabase.ui.quest.detail
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.Language
 import com.gaugustini.mhfudatabase.data.UserPreferences
 import com.gaugustini.mhfudatabase.data.model.Monster
 import com.gaugustini.mhfudatabase.data.model.Quest
 import com.gaugustini.mhfudatabase.data.repository.QuestRepository
-import com.gaugustini.mhfudatabase.ui.components.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,17 +27,26 @@ data class QuestDetailState(
 @HiltViewModel
 class QuestDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    userPreferences: UserPreferences,
+    private val userPreferences: UserPreferences,
     private val questRepository: QuestRepository,
-) : BaseViewModel(userPreferences) {
+) : ViewModel() {
 
     private val questId: Int = checkNotNull(savedStateHandle["questId"])
 
     private val _uiState = MutableStateFlow(QuestDetailState())
     val uiState: StateFlow<QuestDetailState> = _uiState.asStateFlow()
 
-    override fun onLanguageChanged(language: Language) {
-        loadQuestDetails(language)
+    init {
+        observeLanguage()
+    }
+
+    private fun observeLanguage() {
+        userPreferences.getLanguage()
+            .distinctUntilChanged()
+            .onEach { language ->
+                loadQuestDetails(language)
+            }
+            .launchIn(viewModelScope)
     }
 
     private fun loadQuestDetails(language: Language) {

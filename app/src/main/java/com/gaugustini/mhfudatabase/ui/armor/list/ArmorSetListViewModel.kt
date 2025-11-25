@@ -1,5 +1,6 @@
 package com.gaugustini.mhfudatabase.ui.armor.list
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.Language
 import com.gaugustini.mhfudatabase.data.UserPreferences
@@ -7,11 +8,13 @@ import com.gaugustini.mhfudatabase.data.enums.HunterType
 import com.gaugustini.mhfudatabase.data.model.Armor
 import com.gaugustini.mhfudatabase.data.model.ArmorSet
 import com.gaugustini.mhfudatabase.data.repository.ArmorRepository
-import com.gaugustini.mhfudatabase.ui.components.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,15 +30,24 @@ data class ArmorSetListState(
 
 @HiltViewModel
 class ArmorSetListViewModel @Inject constructor(
-    userPreferences: UserPreferences,
+    private val userPreferences: UserPreferences,
     private val armorRepository: ArmorRepository,
-) : BaseViewModel(userPreferences) {
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ArmorSetListState())
     val uiState: StateFlow<ArmorSetListState> = _uiState.asStateFlow()
 
-    override fun onLanguageChanged(language: Language) {
-        loadArmorSets(language)
+    init {
+        observeLanguage()
+    }
+
+    private fun observeLanguage() {
+        userPreferences.getLanguage()
+            .distinctUntilChanged()
+            .onEach { language ->
+                loadArmorSets(language)
+            }
+            .launchIn(viewModelScope)
     }
 
     private fun loadArmorSets(language: Language) {
@@ -44,8 +56,8 @@ class ArmorSetListViewModel @Inject constructor(
             val armorSetsBlade = armorRepository.getArmorSetList(HunterType.BLADE, language)
             val armorSetsGunner = armorRepository.getArmorSetList(HunterType.GUNNER, language)
 
-            _uiState.update {
-                it.copy(
+            _uiState.update { state ->
+                state.copy(
                     armorsBySet = armors.groupBy { armor -> armor.armorSetId },
                     armorSetsBlade = armorSetsBlade,
                     armorSetsGunner = armorSetsGunner,

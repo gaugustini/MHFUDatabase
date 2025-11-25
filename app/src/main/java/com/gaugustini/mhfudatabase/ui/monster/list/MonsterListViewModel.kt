@@ -1,15 +1,18 @@
 package com.gaugustini.mhfudatabase.ui.monster.list
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.Language
 import com.gaugustini.mhfudatabase.data.UserPreferences
 import com.gaugustini.mhfudatabase.data.model.Monster
 import com.gaugustini.mhfudatabase.data.repository.MonsterRepository
-import com.gaugustini.mhfudatabase.ui.components.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,21 +24,30 @@ data class MonsterListState(
 
 @HiltViewModel
 class MonsterListViewModel @Inject constructor(
-    userPreferences: UserPreferences,
+    private val userPreferences: UserPreferences,
     private val monsterRepository: MonsterRepository,
-) : BaseViewModel(userPreferences) {
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(MonsterListState())
     val uiState: StateFlow<MonsterListState> = _uiState.asStateFlow()
 
-    override fun onLanguageChanged(language: Language) {
-        loadMonsters(language)
+    init {
+        observeLanguage()
+    }
+
+    private fun observeLanguage() {
+        userPreferences.getLanguage()
+            .distinctUntilChanged()
+            .onEach { language ->
+                loadMonsters(language)
+            }
+            .launchIn(viewModelScope)
     }
 
     private fun loadMonsters(language: Language) {
         viewModelScope.launch {
-            _uiState.update {
-                it.copy(monsters = monsterRepository.getMonsterList(language))
+            _uiState.update { state ->
+                state.copy(monsters = monsterRepository.getMonsterList(language))
             }
         }
     }

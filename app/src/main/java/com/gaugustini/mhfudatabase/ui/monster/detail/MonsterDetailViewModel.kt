@@ -1,6 +1,7 @@
 package com.gaugustini.mhfudatabase.ui.monster.detail
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.Language
 import com.gaugustini.mhfudatabase.data.UserPreferences
@@ -11,11 +12,13 @@ import com.gaugustini.mhfudatabase.data.model.Monster
 import com.gaugustini.mhfudatabase.data.model.MonsterItemUsage
 import com.gaugustini.mhfudatabase.data.model.MonsterReward
 import com.gaugustini.mhfudatabase.data.repository.MonsterRepository
-import com.gaugustini.mhfudatabase.ui.components.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -34,17 +37,26 @@ data class MonsterDetailState(
 @HiltViewModel
 class MonsterDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    userPreferences: UserPreferences,
+    private val userPreferences: UserPreferences,
     private val monsterRepository: MonsterRepository,
-) : BaseViewModel(userPreferences) {
+) : ViewModel() {
 
     private val monsterId: Int = checkNotNull(savedStateHandle["monsterId"])
 
     private val _uiState = MutableStateFlow(MonsterDetailState())
     val uiState: StateFlow<MonsterDetailState> = _uiState.asStateFlow()
 
-    override fun onLanguageChanged(language: Language) {
-        loadMonsterDetails(language)
+    init {
+        observeLanguage()
+    }
+
+    private fun observeLanguage() {
+        userPreferences.getLanguage()
+            .distinctUntilChanged()
+            .onEach { language ->
+                loadMonsterDetails(language)
+            }
+            .launchIn(viewModelScope)
     }
 
     private fun loadMonsterDetails(language: Language) {

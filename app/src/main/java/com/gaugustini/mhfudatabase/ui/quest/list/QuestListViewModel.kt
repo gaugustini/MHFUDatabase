@@ -1,16 +1,19 @@
 package com.gaugustini.mhfudatabase.ui.quest.list
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.Language
 import com.gaugustini.mhfudatabase.data.UserPreferences
 import com.gaugustini.mhfudatabase.data.enums.HubType
 import com.gaugustini.mhfudatabase.data.model.Quest
 import com.gaugustini.mhfudatabase.data.repository.QuestRepository
-import com.gaugustini.mhfudatabase.ui.components.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,21 +27,30 @@ data class QuestListState(
 
 @HiltViewModel
 class QuestListViewModel @Inject constructor(
-    userPreferences: UserPreferences,
+    private val userPreferences: UserPreferences,
     private val questRepository: QuestRepository,
-) : BaseViewModel(userPreferences) {
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(QuestListState())
     val uiState: StateFlow<QuestListState> = _uiState.asStateFlow()
 
-    override fun onLanguageChanged(language: Language) {
-        loadQuests(language)
+    init {
+        observeLanguage()
+    }
+
+    private fun observeLanguage() {
+        userPreferences.getLanguage()
+            .distinctUntilChanged()
+            .onEach { language ->
+                loadQuests(language)
+            }
+            .launchIn(viewModelScope)
     }
 
     private fun loadQuests(language: Language) {
         viewModelScope.launch {
-            _uiState.update {
-                it.copy(
+            _uiState.update { state ->
+                state.copy(
                     quests = questRepository.getQuestList(language),
                 )
             }

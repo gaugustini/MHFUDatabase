@@ -29,18 +29,15 @@ class SettingsViewModel @Inject constructor(
     val uiState: StateFlow<SettingsState> = _uiState.asStateFlow()
 
     init {
+        observeThemeMode()
+        observeLanguage()
+    }
+
+    private fun observeThemeMode() {
         userPreferences.getThemeMode()
             .onEach { themeMode ->
                 _uiState.update { state ->
                     state.copy(themeMode = themeMode)
-                }
-            }
-            .launchIn(viewModelScope)
-
-        userPreferences.getLanguage()
-            .onEach { language ->
-                _uiState.update { state ->
-                    state.copy(language = language)
                 }
             }
             .launchIn(viewModelScope)
@@ -50,6 +47,16 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             userPreferences.setThemeMode(themeMode)
         }
+    }
+
+    private fun observeLanguage() {
+        userPreferences.getLanguage()
+            .onEach { language ->
+                _uiState.update { state ->
+                    state.copy(language = language)
+                }
+            }
+            .launchIn(viewModelScope)
     }
 
     fun setLanguage(language: Language) {
