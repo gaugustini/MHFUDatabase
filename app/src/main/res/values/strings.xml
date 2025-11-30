@@ -13,15 +13,11 @@
     <!-- What's New -->
     <string name="whats_new_title">What\'s New?</string>
     <string name="whats_new_text">
-        Version 0.3.1\n
-        • Fixed occasional crashes\n
-        Version 0.3.0\n
-        • Added Spanish language support\n
-        • Added theme switching (light and dark)\n
-        • Added equipment content to the \'Skill Detail\' screen\n
-        • Fixed icon and color values for \'Items\'\n
-        • Reviewed names and descriptions across all data to match the game\n
-        • Small UI improvements
+        Version 0.3.2\n
+        • Improved search functionality. Searches can now be performed using either the exact
+        in-game names or the full names\n
+        • Added missing combinations\n
+        • Reordered the monster hitzones and reward conditions
     </string>
 
     <!-- Screen Title: Main Routes -->

@@ -13,15 +13,11 @@
     <!-- What's New -->
     <string name="whats_new_title">¿Qué hay de nuevo?</string>
     <string name="whats_new_text">
-        Versión 0.3.1\n
-        • Corregidos crashes ocasionales\n
-        Versión 0.3.0\n
-        • Agregado soporte para el idioma español\n
-        • Agregado cambio de tema (claro y oscuro)\n
-        • Agregado contenido de equipamiento en la pantalla \'Detalle de Habilidad\'\n
-        • Corregidos los valores de íconos y colores para \'Objetos\'\n
-        • Revisados los nombres y descripciones de todos los datos para coincidir con el juego\n
-        • Pequeñas mejoras en la interfaz de usuario (IU)
+        Versión 0.3.2\n
+        • Mejora en la función de búsqueda. Ahora es posible buscar usando los nombres exactos del
+        juego o los nombres completos\n
+        • Agregado combinaciones faltantes\n
+        • Reordenado las zonas de impacto de los monstruos y condiciones de recompensa
     </string>
 
     <!-- Screen Title: Main Routes -->
