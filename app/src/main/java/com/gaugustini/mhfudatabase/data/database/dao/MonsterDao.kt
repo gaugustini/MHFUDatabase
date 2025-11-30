@@ -141,7 +141,6 @@ interface MonsterDao {
             item_text.language = :language AND
             monster_text.language = :language AND
             reward_condition_text.language = :language
-        ORDER BY percentage DESC
         """
     )
     suspend fun getRewardsForMonster(id: Int, language: String): List<MonsterReward>
