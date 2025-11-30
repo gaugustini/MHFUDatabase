@@ -35,6 +35,7 @@ data class ItemTextEntity(
     @ColumnInfo(name = "item_id") val itemId: Int,
     @ColumnInfo(name = "language") val language: String,
     @ColumnInfo(name = "name") val name: String,
+    @ColumnInfo(name = "full_name") val fullName: String,
     @ColumnInfo(name = "description") val description: String,
 )
 

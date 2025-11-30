@@ -52,6 +52,7 @@ data class ArmorTextEntity(
     @ColumnInfo(name = "armor_id") val armorId: Int,
     @ColumnInfo(name = "language") val language: String,
     @ColumnInfo(name = "name") val name: String,
+    @ColumnInfo(name = "full_name") val fullName: String,
     @ColumnInfo(name = "description") val description: String,
 )
 
