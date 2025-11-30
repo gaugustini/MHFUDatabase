@@ -39,7 +39,8 @@ interface SearchDao {
         JOIN armor_text
             ON armor.id = armor_text.armor_id
         WHERE
-            armor_text.name LIKE '%' || :query || '%' AND
+            (armor_text.name LIKE '%' || :query || '%' OR
+            armor_text.full_name LIKE '%' || :query || '%') AND
             armor_text.language = :language
         """
     )
@@ -63,7 +64,8 @@ interface SearchDao {
         JOIN item_text
             ON decoration.id = item_text.item_id
         WHERE
-            item_text.name LIKE '%' || :query || '%' AND
+            (item_text.name LIKE '%' || :query || '%' OR
+            item_text.full_name LIKE '%' || :query || '%') AND
             item_text.language = :language
         """
     )
@@ -86,7 +88,8 @@ interface SearchDao {
         JOIN item_text
             ON item.id = item_text.item_id
         WHERE
-            item_text.name LIKE '%' || :query || '%' AND
+            (item_text.name LIKE '%' || :query || '%' OR
+            item_text.full_name LIKE '%' || :query || '%') AND
             item_text.language = :language
         """
     )
@@ -169,7 +172,8 @@ interface SearchDao {
         JOIN skill_tree_text
             ON skill_tree.id = skill_tree_text.skill_tree_id
         WHERE
-            skill_tree_text.name LIKE '%' || :query || '%' AND
+            (skill_tree_text.name LIKE '%' || :query || '%' OR
+            skill_tree_text.full_name LIKE '%' || :query || '%') AND
             skill_tree_text.language = :language
         """
     )
@@ -186,7 +190,8 @@ interface SearchDao {
         JOIN skill_text
             ON skill.id = skill_text.skill_id
         WHERE
-            skill_text.name LIKE '%' || :query || '%' AND
+            (skill_text.name LIKE '%' || :query || '%' OR
+            skill_text.full_name LIKE '%' || :query || '%') AND
             skill_text.language = :language
         """
     )
@@ -222,7 +227,8 @@ interface SearchDao {
         JOIN weapon_text
             ON weapon.id = weapon_text.weapon_id
         WHERE
-            weapon_text.name LIKE '%' || :query || '%' AND
+            (weapon_text.name LIKE '%' || :query || '%' OR
+            weapon_text.full_name LIKE '%' || :query || '%') AND
             weapon_text.language = :language
         """
     )
