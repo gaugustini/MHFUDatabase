@@ -1,0 +1,2487 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 4,
+    "identityHash": "cbad11c3f04389625c289fb4a39aa2b5",
+    "entities": [
+      {
+        "tableName": "armor",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `armor_set_id` INTEGER NOT NULL, `armor_type` TEXT NOT NULL, `hunter_type` TEXT NOT NULL, `gender` TEXT NOT NULL, `rarity` INTEGER NOT NULL, `price` INTEGER NOT NULL, `num_slots` INTEGER NOT NULL, `defense` INTEGER NOT NULL, `max_defense` INTEGER NOT NULL, `fire_res` INTEGER NOT NULL, `water_res` INTEGER NOT NULL, `thunder_res` INTEGER NOT NULL, `ice_res` INTEGER NOT NULL, `dragon_res` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`armor_set_id`) REFERENCES `armor_set`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "armorSetId",
+            "columnName": "armor_set_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "armorType",
+            "columnName": "armor_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hunterType",
+            "columnName": "hunter_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "gender",
+            "columnName": "gender",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rarity",
+            "columnName": "rarity",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "price",
+            "columnName": "price",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "numberOfSlots",
+            "columnName": "num_slots",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "defense",
+            "columnName": "defense",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "maxDefense",
+            "columnName": "max_defense",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fireResistance",
+            "columnName": "fire_res",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "waterResistance",
+            "columnName": "water_res",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "thunderResistance",
+            "columnName": "thunder_res",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "iceResistance",
+            "columnName": "ice_res",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dragonResistance",
+            "columnName": "dragon_res",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_armor_armor_set_id",
+            "unique": false,
+            "columnNames": [
+              "armor_set_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_armor_armor_set_id` ON `${TABLE_NAME}` (`armor_set_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "armor_set",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "armor_set_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "armor_text",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`armor_id` INTEGER NOT NULL, `language` TEXT NOT NULL, `name` TEXT NOT NULL, `full_name` TEXT NOT NULL, `description` TEXT NOT NULL, PRIMARY KEY(`armor_id`, `language`), FOREIGN KEY(`armor_id`) REFERENCES `armor`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "armorId",
+            "columnName": "armor_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "language",
+            "columnName": "language",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fullName",
+            "columnName": "full_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "armor_id",
+            "language"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "armor",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "armor_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "armor_skill",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`armor_id` INTEGER NOT NULL, `skill_tree_id` INTEGER NOT NULL, `point_value` INTEGER NOT NULL, PRIMARY KEY(`armor_id`, `skill_tree_id`), FOREIGN KEY(`armor_id`) REFERENCES `armor`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`skill_tree_id`) REFERENCES `skill_tree`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "armorId",
+            "columnName": "armor_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "skillTreeId",
+            "columnName": "skill_tree_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pointValue",
+            "columnName": "point_value",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "armor_id",
+            "skill_tree_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_armor_skill_skill_tree_id",
+            "unique": false,
+            "columnNames": [
+              "skill_tree_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_armor_skill_skill_tree_id` ON `${TABLE_NAME}` (`skill_tree_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "armor",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "armor_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "skill_tree",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "skill_tree_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "armor_recipe",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`armor_id` INTEGER NOT NULL, `item_id` INTEGER NOT NULL, `quantity` INTEGER NOT NULL, PRIMARY KEY(`armor_id`, `item_id`), FOREIGN KEY(`armor_id`) REFERENCES `armor`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`item_id`) REFERENCES `item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "armorId",
+            "columnName": "armor_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemId",
+            "columnName": "item_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "quantity",
+            "columnName": "quantity",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "armor_id",
+            "item_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_armor_recipe_item_id",
+            "unique": false,
+            "columnNames": [
+              "item_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_armor_recipe_item_id` ON `${TABLE_NAME}` (`item_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "armor",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "armor_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "item",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "item_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "armor_set",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `rarity` INTEGER NOT NULL, `rank` TEXT NOT NULL, `hunter_type` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rarity",
+            "columnName": "rarity",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rank",
+            "columnName": "rank",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hunterType",
+            "columnName": "hunter_type",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "armor_set_text",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`armor_set_id` INTEGER NOT NULL, `language` TEXT NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`armor_set_id`, `language`), FOREIGN KEY(`armor_set_id`) REFERENCES `armor_set`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "armor_set_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "language",
+            "columnName": "language",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "armor_set_id",
+            "language"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "armor_set",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "armor_set_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "decoration",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `required_slots` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`id`) REFERENCES `item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "requiredSlots",
+            "columnName": "required_slots",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "item",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "decoration_skill",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`decoration_id` INTEGER NOT NULL, `skill_tree_id` INTEGER NOT NULL, `point_value` INTEGER NOT NULL, PRIMARY KEY(`decoration_id`, `skill_tree_id`), FOREIGN KEY(`decoration_id`) REFERENCES `decoration`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`skill_tree_id`) REFERENCES `skill_tree`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "decorationId",
+            "columnName": "decoration_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "skillTreeId",
+            "columnName": "skill_tree_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pointValue",
+            "columnName": "point_value",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "decoration_id",
+            "skill_tree_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_decoration_skill_skill_tree_id",
+            "unique": false,
+            "columnNames": [
+              "skill_tree_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_decoration_skill_skill_tree_id` ON `${TABLE_NAME}` (`skill_tree_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "decoration",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "decoration_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "skill_tree",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "skill_tree_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "decoration_recipe",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`decoration_id` INTEGER NOT NULL, `item_id` INTEGER NOT NULL, `recipe_variant` INTEGER NOT NULL, `quantity` INTEGER NOT NULL, PRIMARY KEY(`decoration_id`, `item_id`, `recipe_variant`), FOREIGN KEY(`decoration_id`) REFERENCES `decoration`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`item_id`) REFERENCES `item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "decorationId",
+            "columnName": "decoration_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemId",
+            "columnName": "item_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "variant",
+            "columnName": "recipe_variant",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "quantity",
+            "columnName": "quantity",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "decoration_id",
+            "item_id",
+            "recipe_variant"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_decoration_recipe_item_id",
+            "unique": false,
+            "columnNames": [
+              "item_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_decoration_recipe_item_id` ON `${TABLE_NAME}` (`item_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "decoration",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "decoration_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "item",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "item_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "item",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `rarity` INTEGER NOT NULL, `buy_price` INTEGER, `sell_price` INTEGER NOT NULL, `carry_max` INTEGER NOT NULL, `category` TEXT NOT NULL, `icon_type` TEXT NOT NULL, `icon_color` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rarity",
+            "columnName": "rarity",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "buyPrice",
+            "columnName": "buy_price",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "sellPrice",
+            "columnName": "sell_price",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "carryMax",
+            "columnName": "carry_max",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "category",
+            "columnName": "category",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "iconType",
+            "columnName": "icon_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "iconColor",
+            "columnName": "icon_color",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "item_text",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`item_id` INTEGER NOT NULL, `language` TEXT NOT NULL, `name` TEXT NOT NULL, `full_name` TEXT NOT NULL, `description` TEXT NOT NULL, PRIMARY KEY(`item_id`, `language`), FOREIGN KEY(`item_id`) REFERENCES `item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "itemId",
+            "columnName": "item_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "language",
+            "columnName": "language",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fullName",
+            "columnName": "full_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "item_id",
+            "language"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "item",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "item_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "item_combination",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`item_created_id` INTEGER NOT NULL, `item_a_id` INTEGER NOT NULL, `item_b_id` INTEGER NOT NULL, `combination_type` TEXT NOT NULL, `quantity_min` INTEGER NOT NULL, `quantity_max` INTEGER NOT NULL, `percentage` INTEGER NOT NULL, PRIMARY KEY(`item_created_id`, `item_a_id`, `item_b_id`), FOREIGN KEY(`item_created_id`) REFERENCES `item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`item_a_id`) REFERENCES `item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`item_b_id`) REFERENCES `item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "itemCreatedId",
+            "columnName": "item_created_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemAId",
+            "columnName": "item_a_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemBId",
+            "columnName": "item_b_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "combinationType",
+            "columnName": "combination_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "quantityMin",
+            "columnName": "quantity_min",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "quantityMax",
+            "columnName": "quantity_max",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "percentage",
+            "columnName": "percentage",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "item_created_id",
+            "item_a_id",
+            "item_b_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_item_combination_item_a_id",
+            "unique": false,
+            "columnNames": [
+              "item_a_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_item_combination_item_a_id` ON `${TABLE_NAME}` (`item_a_id`)"
+          },
+          {
+            "name": "index_item_combination_item_b_id",
+            "unique": false,
+            "columnNames": [
+              "item_b_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_item_combination_item_b_id` ON `${TABLE_NAME}` (`item_b_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "item",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "item_created_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "item",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "item_a_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "item",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "item_b_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "location",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "location_text",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`location_id` INTEGER NOT NULL, `language` TEXT NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`location_id`, `language`), FOREIGN KEY(`location_id`) REFERENCES `location`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "location_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "language",
+            "columnName": "language",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "location_id",
+            "language"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "location",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "location_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "location_item",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`location_id` INTEGER NOT NULL, `item_id` INTEGER NOT NULL, `rank` TEXT NOT NULL, `gather_type` TEXT NOT NULL, `area` INTEGER NOT NULL, PRIMARY KEY(`location_id`, `item_id`, `rank`, `gather_type`, `area`), FOREIGN KEY(`item_id`) REFERENCES `item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "locationId",
+            "columnName": "location_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemId",
+            "columnName": "item_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rank",
+            "columnName": "rank",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "gatherType",
+            "columnName": "gather_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "area",
+            "columnName": "area",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "location_id",
+            "item_id",
+            "rank",
+            "gather_type",
+            "area"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_location_item_item_id",
+            "unique": false,
+            "columnNames": [
+              "item_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_location_item_item_id` ON `${TABLE_NAME}` (`item_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "item",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "item_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "monster",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `monster_type` TEXT NOT NULL, `golden_smallest_min` INTEGER, `golden_smallest_max` INTEGER, `golden_largest_min` INTEGER, `golden_largest_max` INTEGER, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "monsterType",
+            "columnName": "monster_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sizeSmallestMin",
+            "columnName": "golden_smallest_min",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "sizeSmallestMax",
+            "columnName": "golden_smallest_max",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "sizeLargestMin",
+            "columnName": "golden_largest_min",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "sizeLargestMax",
+            "columnName": "golden_largest_max",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "monster_text",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`monster_id` INTEGER NOT NULL, `language` TEXT NOT NULL, `name` TEXT NOT NULL, `ecology` TEXT NOT NULL, `description` TEXT NOT NULL, PRIMARY KEY(`monster_id`, `language`), FOREIGN KEY(`monster_id`) REFERENCES `monster`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "monsterId",
+            "columnName": "monster_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "language",
+            "columnName": "language",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ecology",
+            "columnName": "ecology",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "monster_id",
+            "language"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "monster",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "monster_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "hitzone",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "hitzone_text",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`hitzone_id` INTEGER NOT NULL, `language` TEXT NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`hitzone_id`, `language`), FOREIGN KEY(`hitzone_id`) REFERENCES `hitzone`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "hitzoneId",
+            "columnName": "hitzone_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "language",
+            "columnName": "language",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "hitzone_id",
+            "language"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "hitzone",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "hitzone_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "monster_hitzone",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`monster_id` INTEGER NOT NULL, `hitzone_id` INTEGER NOT NULL, `cut` INTEGER NOT NULL, `impact` INTEGER NOT NULL, `shot` INTEGER NOT NULL, `fire` INTEGER NOT NULL, `water` INTEGER NOT NULL, `thunder` INTEGER NOT NULL, `ice` INTEGER NOT NULL, `dragon` INTEGER NOT NULL, PRIMARY KEY(`monster_id`, `hitzone_id`), FOREIGN KEY(`monster_id`) REFERENCES `monster`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`hitzone_id`) REFERENCES `hitzone`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "monsterId",
+            "columnName": "monster_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hitzoneId",
+            "columnName": "hitzone_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cut",
+            "columnName": "cut",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "impact",
+            "columnName": "impact",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "shot",
+            "columnName": "shot",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fire",
+            "columnName": "fire",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "water",
+            "columnName": "water",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "thunder",
+            "columnName": "thunder",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ice",
+            "columnName": "ice",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dragon",
+            "columnName": "dragon",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "monster_id",
+            "hitzone_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_monster_hitzone_hitzone_id",
+            "unique": false,
+            "columnNames": [
+              "hitzone_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_monster_hitzone_hitzone_id` ON `${TABLE_NAME}` (`hitzone_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "monster",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "monster_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "hitzone",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "hitzone_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "monster_status",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`monster_id` INTEGER NOT NULL, `status` TEXT NOT NULL, `initial` INTEGER NOT NULL, `increase` INTEGER NOT NULL, `max` INTEGER NOT NULL, `duration` INTEGER NOT NULL, `damage` INTEGER NOT NULL, PRIMARY KEY(`monster_id`, `status`), FOREIGN KEY(`monster_id`) REFERENCES `monster`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "monsterId",
+            "columnName": "monster_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "initial",
+            "columnName": "initial",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "increase",
+            "columnName": "increase",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "max",
+            "columnName": "max",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "duration",
+            "columnName": "duration",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "damage",
+            "columnName": "damage",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "monster_id",
+            "status"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "monster",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "monster_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "monster_item",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`monster_id` INTEGER NOT NULL, `state` TEXT NOT NULL, `pitfall` INTEGER NOT NULL, `shock` INTEGER NOT NULL, `flash` INTEGER NOT NULL, `sonic` INTEGER NOT NULL, `dung` INTEGER NOT NULL, `meat` INTEGER NOT NULL, PRIMARY KEY(`monster_id`, `state`), FOREIGN KEY(`monster_id`) REFERENCES `monster`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "monsterId",
+            "columnName": "monster_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "state",
+            "columnName": "state",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pitfall",
+            "columnName": "pitfall",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "shock",
+            "columnName": "shock",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "flash",
+            "columnName": "flash",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sonic",
+            "columnName": "sonic",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dung",
+            "columnName": "dung",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "meat",
+            "columnName": "meat",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "monster_id",
+            "state"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "monster",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "monster_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "reward_condition",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "reward_condition_text",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`reward_condition_id` INTEGER NOT NULL, `language` TEXT NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`reward_condition_id`, `language`), FOREIGN KEY(`reward_condition_id`) REFERENCES `reward_condition`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "rewardConditionId",
+            "columnName": "reward_condition_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "language",
+            "columnName": "language",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "reward_condition_id",
+            "language"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "reward_condition",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "reward_condition_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "monster_reward",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`monster_id` INTEGER NOT NULL, `reward_condition_id` INTEGER NOT NULL, `item_id` INTEGER NOT NULL, `rank` TEXT NOT NULL, `stack_size` INTEGER NOT NULL, `percentage` INTEGER, PRIMARY KEY(`monster_id`, `reward_condition_id`, `item_id`, `rank`, `stack_size`), FOREIGN KEY(`monster_id`) REFERENCES `monster`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`reward_condition_id`) REFERENCES `reward_condition`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`item_id`) REFERENCES `item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "monsterId",
+            "columnName": "monster_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rewardConditionId",
+            "columnName": "reward_condition_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemId",
+            "columnName": "item_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rank",
+            "columnName": "rank",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "stackSize",
+            "columnName": "stack_size",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "percentage",
+            "columnName": "percentage",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "monster_id",
+            "reward_condition_id",
+            "item_id",
+            "rank",
+            "stack_size"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_monster_reward_reward_condition_id",
+            "unique": false,
+            "columnNames": [
+              "reward_condition_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_monster_reward_reward_condition_id` ON `${TABLE_NAME}` (`reward_condition_id`)"
+          },
+          {
+            "name": "index_monster_reward_item_id",
+            "unique": false,
+            "columnNames": [
+              "item_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_monster_reward_item_id` ON `${TABLE_NAME}` (`item_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "monster",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "monster_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "reward_condition",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "reward_condition_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "item",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "item_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "quest",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `location_id` INTEGER NOT NULL, `hub_type` TEXT NOT NULL, `stars` INTEGER NOT NULL, `goal_type` TEXT NOT NULL, `quest_type` TEXT NOT NULL, `reward` INTEGER NOT NULL, `fee` INTEGER NOT NULL, `time_limit` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`location_id`) REFERENCES `location`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "locationId",
+            "columnName": "location_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hubType",
+            "columnName": "hub_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "stars",
+            "columnName": "stars",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "goalType",
+            "columnName": "goal_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "questType",
+            "columnName": "quest_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reward",
+            "columnName": "reward",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fee",
+            "columnName": "fee",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timeLimit",
+            "columnName": "time_limit",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_quest_location_id",
+            "unique": false,
+            "columnNames": [
+              "location_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_quest_location_id` ON `${TABLE_NAME}` (`location_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "location",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "location_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "quest_text",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`quest_id` INTEGER NOT NULL, `language` TEXT NOT NULL, `name` TEXT NOT NULL, `goal` TEXT NOT NULL, `client` TEXT NOT NULL, `description` TEXT NOT NULL, PRIMARY KEY(`quest_id`, `language`), FOREIGN KEY(`quest_id`) REFERENCES `quest`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "questId",
+            "columnName": "quest_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "language",
+            "columnName": "language",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "goal",
+            "columnName": "goal",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "client",
+            "columnName": "client",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "quest_id",
+            "language"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "quest",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "quest_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "quest_monster",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`quest_id` INTEGER NOT NULL, `monster_id` INTEGER NOT NULL, PRIMARY KEY(`quest_id`, `monster_id`), FOREIGN KEY(`quest_id`) REFERENCES `quest`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`monster_id`) REFERENCES `monster`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "questId",
+            "columnName": "quest_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "monsterId",
+            "columnName": "monster_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "quest_id",
+            "monster_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_quest_monster_monster_id",
+            "unique": false,
+            "columnNames": [
+              "monster_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_quest_monster_monster_id` ON `${TABLE_NAME}` (`monster_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "quest",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "quest_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "monster",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "monster_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "skill_tree",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `category` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "category",
+            "columnName": "category",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "skill_tree_text",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`skill_tree_id` INTEGER NOT NULL, `language` TEXT NOT NULL, `name` TEXT NOT NULL, `full_name` TEXT NOT NULL, PRIMARY KEY(`skill_tree_id`, `language`), FOREIGN KEY(`skill_tree_id`) REFERENCES `skill_tree`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "skillTreeId",
+            "columnName": "skill_tree_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "language",
+            "columnName": "language",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fullName",
+            "columnName": "full_name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "skill_tree_id",
+            "language"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "skill_tree",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "skill_tree_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "skill",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `skill_tree_id` INTEGER NOT NULL, `required_points` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`skill_tree_id`) REFERENCES `skill_tree`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "skillTreeId",
+            "columnName": "skill_tree_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "requiredPoints",
+            "columnName": "required_points",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_skill_skill_tree_id",
+            "unique": false,
+            "columnNames": [
+              "skill_tree_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_skill_skill_tree_id` ON `${TABLE_NAME}` (`skill_tree_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "skill_tree",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "skill_tree_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "skill_text",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`skill_id` INTEGER NOT NULL, `language` TEXT NOT NULL, `name` TEXT NOT NULL, `full_name` TEXT NOT NULL, `description` TEXT NOT NULL, PRIMARY KEY(`skill_id`, `language`), FOREIGN KEY(`skill_id`) REFERENCES `skill`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "skillTreeId",
+            "columnName": "skill_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "language",
+            "columnName": "language",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fullName",
+            "columnName": "full_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "skill_id",
+            "language"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "skill",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "skill_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "weapon",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `weapon_type` TEXT NOT NULL, `rarity` INTEGER NOT NULL, `affinity` INTEGER NOT NULL, `defense` INTEGER NOT NULL, `num_slots` INTEGER NOT NULL, `attack` INTEGER NOT NULL, `max_attack` INTEGER, `price_create` INTEGER, `price_upgrade` INTEGER, `element_1` TEXT, `element_1_value` INTEGER, `element_2` TEXT, `element_2_value` INTEGER, `sharpness` TEXT, `sharpness_plus` TEXT, `shelling_type` TEXT, `shelling_level` INTEGER, `song_notes` TEXT, `reload_speed` TEXT, `recoil` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "weaponType",
+            "columnName": "weapon_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rarity",
+            "columnName": "rarity",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "affinity",
+            "columnName": "affinity",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "defense",
+            "columnName": "defense",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "numSlots",
+            "columnName": "num_slots",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "attack",
+            "columnName": "attack",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "maxAttack",
+            "columnName": "max_attack",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "priceCreate",
+            "columnName": "price_create",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "priceUpgrade",
+            "columnName": "price_upgrade",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "element1",
+            "columnName": "element_1",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "element1Value",
+            "columnName": "element_1_value",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "element2",
+            "columnName": "element_2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "element2Value",
+            "columnName": "element_2_value",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "sharpness",
+            "columnName": "sharpness",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "sharpnessPlus",
+            "columnName": "sharpness_plus",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "shellingType",
+            "columnName": "shelling_type",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "shellingLevel",
+            "columnName": "shelling_level",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "songNotes",
+            "columnName": "song_notes",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "reloadSpeed",
+            "columnName": "reload_speed",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "recoil",
+            "columnName": "recoil",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "weapon_text",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`weapon_id` INTEGER NOT NULL, `language` TEXT NOT NULL, `name` TEXT NOT NULL, `full_name` TEXT NOT NULL, `description` TEXT NOT NULL, PRIMARY KEY(`weapon_id`, `language`), FOREIGN KEY(`weapon_id`) REFERENCES `weapon`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "weaponId",
+            "columnName": "weapon_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "language",
+            "columnName": "language",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fullName",
+            "columnName": "full_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "weapon_id",
+            "language"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "weapon",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "weapon_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "weapon_parent",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`weapon_id` INTEGER NOT NULL, `parent_weapon_id` INTEGER NOT NULL, PRIMARY KEY(`weapon_id`, `parent_weapon_id`), FOREIGN KEY(`weapon_id`) REFERENCES `weapon`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`parent_weapon_id`) REFERENCES `weapon`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "weaponId",
+            "columnName": "weapon_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "parentWeaponId",
+            "columnName": "parent_weapon_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "weapon_id",
+            "parent_weapon_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_weapon_parent_parent_weapon_id",
+            "unique": false,
+            "columnNames": [
+              "parent_weapon_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_weapon_parent_parent_weapon_id` ON `${TABLE_NAME}` (`parent_weapon_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "weapon",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "weapon_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "weapon",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "parent_weapon_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "weapon_ammo_bow",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`weapon_id` INTEGER NOT NULL, `charge_1_type` TEXT NOT NULL, `charge_1_level` INTEGER NOT NULL, `charge_2_type` TEXT NOT NULL, `charge_2_level` INTEGER NOT NULL, `charge_3_type` TEXT NOT NULL, `charge_3_level` INTEGER NOT NULL, `charge_4_type` TEXT, `charge_4_level` INTEGER, `power` INTEGER NOT NULL, `close` INTEGER NOT NULL, `paint` INTEGER NOT NULL, `poison` INTEGER NOT NULL, `paralysis` INTEGER NOT NULL, `sleep` INTEGER NOT NULL, PRIMARY KEY(`weapon_id`), FOREIGN KEY(`weapon_id`) REFERENCES `weapon`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "weaponId",
+            "columnName": "weapon_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "charge1Type",
+            "columnName": "charge_1_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "charge1Level",
+            "columnName": "charge_1_level",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "charge2Type",
+            "columnName": "charge_2_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "charge2Level",
+            "columnName": "charge_2_level",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "charge3Type",
+            "columnName": "charge_3_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "charge3Level",
+            "columnName": "charge_3_level",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "charge4Type",
+            "columnName": "charge_4_type",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "charge4Level",
+            "columnName": "charge_4_level",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "power",
+            "columnName": "power",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "close",
+            "columnName": "close",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "paint",
+            "columnName": "paint",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "poison",
+            "columnName": "poison",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "paralysis",
+            "columnName": "paralysis",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sleep",
+            "columnName": "sleep",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "weapon_id"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "weapon",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "weapon_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "weapon_ammo_bowgun",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`weapon_id` INTEGER NOT NULL, `normal` TEXT NOT NULL, `pierce` TEXT NOT NULL, `pellet` TEXT NOT NULL, `crag` TEXT NOT NULL, `clust` TEXT NOT NULL, `recovery` TEXT NOT NULL, `poison` TEXT NOT NULL, `paralysis` TEXT NOT NULL, `sleep` TEXT NOT NULL, `flame` TEXT NOT NULL, `water` TEXT NOT NULL, `thunder` TEXT NOT NULL, `freeze` TEXT NOT NULL, `dragon` TEXT NOT NULL, `tranq` TEXT NOT NULL, `paint` TEXT NOT NULL, `demon` TEXT NOT NULL, `armor` TEXT NOT NULL, `rapid_fire` TEXT, PRIMARY KEY(`weapon_id`), FOREIGN KEY(`weapon_id`) REFERENCES `weapon`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "weaponId",
+            "columnName": "weapon_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "normal",
+            "columnName": "normal",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pierce",
+            "columnName": "pierce",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pellet",
+            "columnName": "pellet",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "crag",
+            "columnName": "crag",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clust",
+            "columnName": "clust",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recovery",
+            "columnName": "recovery",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "poison",
+            "columnName": "poison",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "paralysis",
+            "columnName": "paralysis",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sleep",
+            "columnName": "sleep",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "flame",
+            "columnName": "flame",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "water",
+            "columnName": "water",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "thunder",
+            "columnName": "thunder",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "freeze",
+            "columnName": "freeze",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dragon",
+            "columnName": "dragon",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tranq",
+            "columnName": "tranq",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "paint",
+            "columnName": "paint",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "demon",
+            "columnName": "demon",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "armor",
+            "columnName": "armor",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rapidFire",
+            "columnName": "rapid_fire",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "weapon_id"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "weapon",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "weapon_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "weapon_recipe",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`weapon_id` INTEGER NOT NULL, `item_id` INTEGER NOT NULL, `recipe_type` TEXT NOT NULL, `quantity` INTEGER NOT NULL, PRIMARY KEY(`weapon_id`, `item_id`, `recipe_type`), FOREIGN KEY(`weapon_id`) REFERENCES `weapon`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`item_id`) REFERENCES `item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "weaponId",
+            "columnName": "weapon_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemId",
+            "columnName": "item_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recipeType",
+            "columnName": "recipe_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "quantity",
+            "columnName": "quantity",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "weapon_id",
+            "item_id",
+            "recipe_type"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_weapon_recipe_item_id",
+            "unique": false,
+            "columnNames": [
+              "item_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_weapon_recipe_item_id` ON `${TABLE_NAME}` (`item_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "weapon",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "weapon_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "item",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "item_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cbad11c3f04389625c289fb4a39aa2b5')"
+    ]
+  }
+}
