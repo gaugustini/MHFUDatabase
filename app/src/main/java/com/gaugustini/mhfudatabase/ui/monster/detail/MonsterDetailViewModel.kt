@@ -11,6 +11,7 @@ import com.gaugustini.mhfudatabase.data.model.Hitzone
 import com.gaugustini.mhfudatabase.data.model.Monster
 import com.gaugustini.mhfudatabase.data.model.MonsterItemUsage
 import com.gaugustini.mhfudatabase.data.model.MonsterReward
+import com.gaugustini.mhfudatabase.data.model.Quest
 import com.gaugustini.mhfudatabase.data.repository.MonsterRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,6 +33,7 @@ data class MonsterDetailState(
     val rewardsLowRank: List<MonsterReward> = emptyList(),
     val rewardsHighRank: List<MonsterReward> = emptyList(),
     val rewardsGRank: List<MonsterReward> = emptyList(),
+    val quests: List<Quest> = emptyList(),
 )
 
 @HiltViewModel
@@ -72,6 +74,7 @@ class MonsterDetailViewModel @Inject constructor(
                     rewardsLowRank = monsterDetails.reward.filter { it.rank == Rank.LOW },
                     rewardsHighRank = monsterDetails.reward.filter { it.rank == Rank.HIGH },
                     rewardsGRank = monsterDetails.reward.filter { it.rank == Rank.G },
+                    quests = monsterDetails.quest,
                 )
             }
         }

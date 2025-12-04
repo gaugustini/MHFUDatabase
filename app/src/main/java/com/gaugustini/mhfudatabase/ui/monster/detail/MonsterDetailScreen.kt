@@ -18,13 +18,15 @@ import com.gaugustini.mhfudatabase.ui.components.TabbedLayout
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
+import com.gaugustini.mhfudatabase.util.preview.PreviewQuestData
 
 enum class MonsterDetailTab(@param:StringRes val title: Int) {
     SUMMARY(R.string.tab_monster_detail_summary),
     DAMAGE(R.string.tab_monster_detail_damage),
     LOW_RANK(R.string.tab_monster_detail_low_rank),
     HIGH_RANK(R.string.tab_monster_detail_high_rank),
-    G_RANK(R.string.tab_monster_detail_g_rank);
+    G_RANK(R.string.tab_monster_detail_g_rank),
+    QUEST(R.string.tab_monster_detail_quest);
 
     companion object {
         val all = MonsterDetailTab.entries
@@ -41,6 +43,7 @@ fun MonsterDetailRoute(
     navigateBack: () -> Unit,
     openSearch: () -> Unit,
     onItemClick: (itemId: Int) -> Unit,
+    onQuestClick: (questId: Int) -> Unit,
     viewModel: MonsterDetailViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -50,6 +53,7 @@ fun MonsterDetailRoute(
         navigateBack = navigateBack,
         openSearch = openSearch,
         onItemClick = onItemClick,
+        onQuestClick = onQuestClick,
     )
 }
 
@@ -59,6 +63,7 @@ fun MonsterDetailScreen(
     navigateBack: () -> Unit = {},
     openSearch: () -> Unit = {},
     onItemClick: (itemId: Int) -> Unit = {},
+    onQuestClick: (questId: Int) -> Unit = {},
 ) {
     val pagerState = rememberPagerState(
         initialPage = MonsterDetailTab.toIndex(uiState.initialTab),
@@ -125,6 +130,17 @@ fun MonsterDetailScreen(
                         EmptyContent()
                     }
                 }
+
+                MonsterDetailTab.QUEST -> {
+                    if (uiState.quests.isNotEmpty()) {
+                        MonsterDetailQuestContent(
+                            quests = uiState.quests,
+                            onQuestClick = onQuestClick,
+                        )
+                    } else {
+                        EmptyContent()
+                    }
+                }
             }
         }
     }
@@ -160,6 +176,11 @@ private class MonsterDetailScreenPreviewParameter : PreviewParameterProvider<Mon
             monster = PreviewMonsterData.monster,
             rewardsLowRank = PreviewMonsterData.monsterRewardList,
         ),
+        MonsterDetailState(
+            initialTab = MonsterDetailTab.QUEST,
+            monster = PreviewMonsterData.monster,
+            quests = PreviewQuestData.questList,
+        )
     )
 
 }

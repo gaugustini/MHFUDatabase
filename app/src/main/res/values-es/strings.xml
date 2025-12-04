@@ -88,6 +88,7 @@
     <string name="tab_monster_detail_low_rank">RANGO BAJO</string>
     <string name="tab_monster_detail_high_rank">RANGO ALTO</string>
     <string name="tab_monster_detail_g_rank">RANGO G</string>
+    <string name="tab_monster_detail_quest">MISIÓN</string>
 
     <!-- Tab Title: Quest List -->
     <string name="tab_quest_village">ALDEA</string>
@@ -188,8 +189,8 @@
     <!-- Quest -->
     <string name="quest_type_key">Clave</string>
     <string name="quest_type_urgent">Urgente</string>
-    <string name="quest_village_stars">Aldea %1$d Estrellas</string>
-    <string name="quest_guild_stars">Gremio %1$d Estrellas</string>
+    <string name="quest_village_stars">Aldea %1$d ★</string>
+    <string name="quest_guild_stars">Gremio %1$d ★</string>
     <string name="quest_reward">Recompensa</string>
     <string name="quest_fee">Cuota</string>
     <string name="quest_time_limit">Límite de Tiempo</string>
