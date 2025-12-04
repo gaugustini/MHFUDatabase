@@ -31,7 +31,8 @@ class MonsterRepository @Inject constructor(
             damage = monsterDao.getHitzonesForMonster(monsterId, language.code),
             status = monsterDao.getAilmentStatusForMonster(monsterId),
             item = monsterDao.getItemUsagesForMonster(monsterId),
-            reward = monsterDao.getRewardsForMonster(monsterId, language.code)
+            reward = monsterDao.getRewardsForMonster(monsterId, language.code),
+            quest = monsterDao.getQuestsForMonster(monsterId, language.code),
         )
     }
 

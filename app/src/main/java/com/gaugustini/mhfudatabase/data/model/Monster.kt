@@ -25,6 +25,7 @@ data class MonsterDetails(
     val status: List<AilmentStatus>,
     val item: List<MonsterItemUsage>,
     val reward: List<MonsterReward>,
+    val quest: List<Quest>,
 )
 
 data class Hitzone(

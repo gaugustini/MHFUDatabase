@@ -88,6 +88,7 @@
     <string name="tab_monster_detail_low_rank">LOW RANK</string>
     <string name="tab_monster_detail_high_rank">HIGH RANK</string>
     <string name="tab_monster_detail_g_rank">G RANK</string>
+    <string name="tab_monster_detail_quest">QUEST</string>
 
     <!-- Tab Title: Quest List -->
     <string name="tab_quest_village">VILLAGE</string>
@@ -188,8 +189,8 @@
     <!-- Quest -->
     <string name="quest_type_key">Key</string>
     <string name="quest_type_urgent">Urgent</string>
-    <string name="quest_village_stars">Village %1$d Stars</string>
-    <string name="quest_guild_stars">Guild %1$d Stars</string>
+    <string name="quest_village_stars">Village %1$d ★</string>
+    <string name="quest_guild_stars">Guild %1$d ★</string>
     <string name="quest_reward">Reward</string>
     <string name="quest_fee">Fee</string>
     <string name="quest_time_limit">Time Limit</string>

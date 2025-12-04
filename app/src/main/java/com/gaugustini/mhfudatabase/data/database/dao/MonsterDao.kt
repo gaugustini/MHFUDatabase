@@ -7,6 +7,7 @@ import com.gaugustini.mhfudatabase.data.model.Hitzone
 import com.gaugustini.mhfudatabase.data.model.Monster
 import com.gaugustini.mhfudatabase.data.model.MonsterItemUsage
 import com.gaugustini.mhfudatabase.data.model.MonsterReward
+import com.gaugustini.mhfudatabase.data.model.Quest
 
 @Dao
 interface MonsterDao {
@@ -144,5 +145,37 @@ interface MonsterDao {
         """
     )
     suspend fun getRewardsForMonster(id: Int, language: String): List<MonsterReward>
+
+    @Query(
+        """
+        SELECT
+            quest.id               AS id,
+            quest_text.name        AS name,
+            quest_text.goal        AS goal,
+            quest.goal_type        AS goalType,
+            quest_text.client      AS client,
+            quest_text.description AS description,
+            quest.hub_type         AS hubType,
+            quest.stars            AS stars,
+            quest.quest_type       AS questType,
+            quest.reward           AS reward,
+            quest.fee              AS fee,
+            quest.time_limit       AS timeLimit,
+            quest.location_id      AS locationId,
+            location_text.name     AS locationName
+        FROM quest
+        JOIN quest_text
+            ON quest.id = quest_text.quest_id
+        JOIN location_text
+            ON quest.location_id = location_text.location_id
+        JOIN quest_monster
+            ON quest.id = quest_monster.quest_id
+        WHERE
+            quest_monster.monster_id = :id AND
+            quest_text.language = :language AND
+            location_text.language = :language
+        """
+    )
+    suspend fun getQuestsForMonster(id: Int, language: String): List<Quest>
 
 }
