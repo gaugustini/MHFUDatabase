@@ -54,16 +54,19 @@ class UserSetDetailViewModel @Inject constructor(
     }
 
     private fun loadEquipmentSetDetails(language: Language) {
-        viewModelScope.launch {
-            val equipmentSetDetails = userEquipmentSetRepository.getEquipmentSetDetails(setId, language)
+        if (setId != 0) {
+            viewModelScope.launch {
+                val equipmentSetDetails =
+                    userEquipmentSetRepository.getEquipmentSetDetails(setId, language)
 
-            _uiState.update { state ->
-                state.copy(
-                    set = equipmentSetDetails.set,
-                    weapon = equipmentSetDetails.weapon,
-                    armors = equipmentSetDetails.armors,
-                    decorations = equipmentSetDetails.decorations,
-                )
+                _uiState.update { state ->
+                    state.copy(
+                        set = equipmentSetDetails.set,
+                        weapon = equipmentSetDetails.weapon,
+                        armors = equipmentSetDetails.armors,
+                        decorations = equipmentSetDetails.decorations,
+                    )
+                }
             }
         }
     }

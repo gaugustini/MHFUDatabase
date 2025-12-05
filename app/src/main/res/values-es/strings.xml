@@ -280,6 +280,9 @@
     <string name="weapon_path_details">Ruta: %1$d</string>
     <string name="weapon_finals">Finales</string>
 
+    <!-- User Equipment Set -->
+    <string name="user_set_new">Nuevo Set</string>
+
     <!-- Settings -->
     <string name="settings_option_confirm">Confirmar</string>
     <string name="settings_option_cancel">Cancelar</string>
