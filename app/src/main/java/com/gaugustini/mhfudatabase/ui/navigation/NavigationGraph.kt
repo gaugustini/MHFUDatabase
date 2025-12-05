@@ -29,6 +29,8 @@ import com.gaugustini.mhfudatabase.ui.search.SearchRoute
 import com.gaugustini.mhfudatabase.ui.settings.SettingsRoute
 import com.gaugustini.mhfudatabase.ui.skill.detail.SkillTreeDetailRoute
 import com.gaugustini.mhfudatabase.ui.skill.list.SkillTreeListRoute
+import com.gaugustini.mhfudatabase.ui.userset.detail.UserSetDetailRoute
+import com.gaugustini.mhfudatabase.ui.userset.list.UserSetListRoute
 import com.gaugustini.mhfudatabase.ui.weapon.detail.WeaponDetailRoute
 import com.gaugustini.mhfudatabase.ui.weapon.graph.WeaponGraphRoute
 import com.gaugustini.mhfudatabase.ui.weapon.list.WeaponTypeListRoute
@@ -147,9 +149,14 @@ fun NavigationGraph(
             WeaponTypeListRoute(
                 openDrawer = openDrawer,
                 openSearch = navigationActions.navigateToSearch,
-                onWeaponTypeClick = { weaponType ->
-                    navigationActions.navigateToWeaponGraph(weaponType)
-                },
+                onWeaponTypeClick = navigationActions.navigateToWeaponGraph,
+            )
+        }
+        composable(Destinations.USER_EQUIPMENT_SET_LIST) {
+            UserSetListRoute(
+                openDrawer = openDrawer,
+                openSearch = navigationActions.navigateToSearch,
+                onSetClick = navigationActions.navigateToUserEquipmentSetDetail,
             )
         }
         composable(Destinations.SETTINGS) {
@@ -271,9 +278,7 @@ fun NavigationGraph(
             WeaponGraphRoute(
                 navigateBack = navigationActions.navigateBack,
                 openSearch = navigationActions.navigateToSearch,
-                onWeaponClick = { weaponId ->
-                    navigationActions.navigateToWeaponDetail(weaponId)
-                }
+                onWeaponClick = navigationActions.navigateToWeaponDetail,
             )
         }
         composable(
@@ -285,12 +290,19 @@ fun NavigationGraph(
             WeaponDetailRoute(
                 navigateBack = navigationActions.navigateBack,
                 openSearch = navigationActions.navigateToSearch,
-                onItemClick = { itemId ->
-                    navigationActions.navigateToItemDetail(itemId)
-                },
-                onWeaponClick = { weaponId ->
-                    navigationActions.navigateToWeaponDetail(weaponId)
-                }
+                onItemClick = navigationActions.navigateToItemDetail,
+                onWeaponClick = navigationActions.navigateToWeaponDetail,
+            )
+        }
+        composable(
+            route = Destinations.USER_EQUIPMENT_SET_DETAIL,
+            arguments = listOf(
+                navArgument("setId") { type = NavType.IntType },
+            ),
+        ) {
+            UserSetDetailRoute(
+                navigateBack = navigationActions.navigateBack,
+                openSearch = navigationActions.navigateToSearch,
             )
         }
     }

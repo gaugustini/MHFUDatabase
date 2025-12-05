@@ -21,6 +21,6 @@ data class EquipmentSetDecoration(
 data class UserEquipmentSetDetails(
     val set: UserEquipmentSet,
     val weapon: Weapon?,
-    val armor: List<Armor>,
+    val armors: List<Armor>,
     val decorations: List<EquipmentSetDecoration>,
 )

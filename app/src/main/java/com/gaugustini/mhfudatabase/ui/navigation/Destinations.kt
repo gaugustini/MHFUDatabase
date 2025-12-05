@@ -14,6 +14,7 @@ object Destinations {
     const val QUEST_LIST = "quest_list"
     const val SKILL_TREE_LIST = "skill_tree_list"
     const val WEAPON_TYPE_LIST = "weapon_type_list"
+    const val USER_EQUIPMENT_SET_LIST = "user_equipment_set_list"
     const val SETTINGS = "settings"
     const val ABOUT = "about"
 
@@ -28,6 +29,7 @@ object Destinations {
     const val SKILL_TREE_DETAIL = "skill_tree_detail/{skillTreeId}"
     const val WEAPON_GRAPH = "weapon_graph/{weaponType}"
     const val WEAPON_DETAIL = "weapon_detail/{weaponId}"
+    const val USER_EQUIPMENT_SET_DETAIL = "user_equipment_set_detail/{setId}"
 
     fun armorDetailRoute(armorId: Int): String = "armor_detail/$armorId"
     fun decorationDetailRoute(decorationId: Int): String = "decoration_detail/$decorationId"
@@ -38,5 +40,6 @@ object Destinations {
     fun skillTreeDetailRoute(skillTreeId: Int): String = "skill_tree_detail/$skillTreeId"
     fun weaponGraphRoute(weaponType: String): String = "weapon_graph/$weaponType"
     fun weaponDetailRoute(weaponId: Int): String = "weapon_detail/$weaponId"
+    fun userEquipmentSetDetailRoute(setId: Int): String = "user_equipment_set_detail/$setId"
 
 }

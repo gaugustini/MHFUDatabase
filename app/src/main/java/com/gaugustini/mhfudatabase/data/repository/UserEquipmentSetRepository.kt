@@ -31,7 +31,7 @@ class UserEquipmentSetRepository @Inject constructor(
         return UserEquipmentSetDetails(
             set = userEquipmentSetDao.getEquipmentSet(id),
             weapon = userEquipmentSetDao.getWeaponForSet(id, language.code),
-            armor = userEquipmentSetDao.getArmorsForSet(id, language.code),
+            armors = userEquipmentSetDao.getArmorsForSet(id, language.code),
             decorations = userEquipmentSetDao.getDecorationsForSet(id, language.code),
         )
     }
@@ -46,7 +46,7 @@ class UserEquipmentSetRepository @Inject constructor(
             name = newSet.set.name,
             weaponId = newSet.weapon?.id,
         )
-        val setArmorsEntity = newSet.armor.map { armor ->
+        val setArmorsEntity = newSet.armors.map { armor ->
             UserEquipmentSetArmorEntity(
                 userSetId = 0,
                 armorId = armor.id,
@@ -74,7 +74,7 @@ class UserEquipmentSetRepository @Inject constructor(
             name = set.set.name,
             weaponId = set.weapon?.id,
         )
-        val setArmorsEntity = set.armor.map { armor ->
+        val setArmorsEntity = set.armors.map { armor ->
             UserEquipmentSetArmorEntity(
                 userSetId = set.set.id,
                 armorId = armor.id,

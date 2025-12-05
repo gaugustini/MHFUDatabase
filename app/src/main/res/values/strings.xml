@@ -30,6 +30,7 @@
     <string name="screen_quest_list">Quests</string>
     <string name="screen_skill_tree_list">Skills</string>
     <string name="screen_weapon_list">Weapons</string>
+    <string name="screen_user_set_list">Armor Set Builder</string>
     <string name="screen_settings">Settings</string>
     <string name="screen_about">About</string>
 
@@ -43,6 +44,7 @@
     <string name="screen_quest_detail">Quest Detail</string>
     <string name="screen_skill_tree_detail">Skill Detail</string>
     <string name="screen_weapon_detail">Weapon Detail</string>
+    <string name="screen_user_set_detail">Armor Set Detail</string>
 
     <!-- Screen Title: Weapon Graph -->
     <string name="screen_weapon_great_sword">Great Sword</string>

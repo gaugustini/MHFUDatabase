@@ -48,6 +48,7 @@ fun Drawer(
     navigateToQuestList: () -> Unit = {},
     navigateToSkillTreeList: () -> Unit = {},
     navigateToWeaponList: () -> Unit = {},
+    navigateToUserEquipmentSetList: () -> Unit = {},
     navigateToSettings: () -> Unit = {},
     navigateToAbout: () -> Unit = {},
 ) {
@@ -97,6 +98,11 @@ fun Drawer(
             icon = R.drawable.ic_ui_decoration,
             route = Destinations.DECORATION_LIST,
         ),
+        DrawerItem(
+            label = stringResource(R.string.screen_user_set_list),
+            icon = R.drawable.ic_armor_set,
+            route = Destinations.USER_EQUIPMENT_SET_LIST,
+        )
     )
     val otherRoutes = listOf(
         DrawerItem(
@@ -156,6 +162,7 @@ fun Drawer(
                             Destinations.QUEST_LIST -> navigateToQuestList()
                             Destinations.SKILL_TREE_LIST -> navigateToSkillTreeList()
                             Destinations.WEAPON_TYPE_LIST -> navigateToWeaponList()
+                            Destinations.USER_EQUIPMENT_SET_LIST -> navigateToUserEquipmentSetList()
                         }
                         closeDrawer()
                     },

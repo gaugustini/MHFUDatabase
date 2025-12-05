@@ -30,6 +30,7 @@
     <string name="screen_quest_list">Misiones</string>
     <string name="screen_skill_tree_list">Habilidades</string>
     <string name="screen_weapon_list">Armas</string>
+    <string name="screen_user_set_list">Constructor de Sets</string>
     <string name="screen_settings">Ajustes</string>
     <string name="screen_about">Sobre</string>
 
@@ -43,6 +44,7 @@
     <string name="screen_quest_detail">Detalle de Misión</string>
     <string name="screen_skill_tree_detail">Detalle de Habilidad</string>
     <string name="screen_weapon_detail">Detalle de Arma</string>
+    <string name="screen_user_set_detail">Detalle de Set</string>
 
     <!-- Screen Title: Weapon Graph -->
     <string name="screen_weapon_great_sword">Gran Espada</string>

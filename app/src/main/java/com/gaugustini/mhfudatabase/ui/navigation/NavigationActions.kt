@@ -65,6 +65,11 @@ class NavigationActions(
             launchSingleTop = true
         }
     }
+    val navigateToUserEquipmentSetList: () -> Unit = {
+        navController.navigate(Destinations.USER_EQUIPMENT_SET_LIST) {
+            launchSingleTop = true
+        }
+    }
     val navigateToSettings: () -> Unit = {
         navController.navigate(Destinations.SETTINGS) {
             launchSingleTop = true
@@ -104,6 +109,9 @@ class NavigationActions(
     }
     val navigateToWeaponDetail: (weaponId: Int) -> Unit = {
         navController.navigate(Destinations.weaponDetailRoute(it))
+    }
+    val navigateToUserEquipmentSetDetail: (setId: Int) -> Unit = {
+        navController.navigate(Destinations.userEquipmentSetDetailRoute(it))
     }
 
 }
