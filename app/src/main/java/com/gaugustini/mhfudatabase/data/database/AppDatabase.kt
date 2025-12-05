@@ -10,6 +10,7 @@ import com.gaugustini.mhfudatabase.data.database.dao.MonsterDao
 import com.gaugustini.mhfudatabase.data.database.dao.QuestDao
 import com.gaugustini.mhfudatabase.data.database.dao.SearchDao
 import com.gaugustini.mhfudatabase.data.database.dao.SkillDao
+import com.gaugustini.mhfudatabase.data.database.dao.UserEquipmentSetDao
 import com.gaugustini.mhfudatabase.data.database.dao.WeaponDao
 import com.gaugustini.mhfudatabase.data.database.entity.ArmorEntity
 import com.gaugustini.mhfudatabase.data.database.entity.ArmorRecipeEntity
@@ -43,6 +44,9 @@ import com.gaugustini.mhfudatabase.data.database.entity.SkillEntity
 import com.gaugustini.mhfudatabase.data.database.entity.SkillTextEntity
 import com.gaugustini.mhfudatabase.data.database.entity.SkillTreeEntity
 import com.gaugustini.mhfudatabase.data.database.entity.SkillTreeTextEntity
+import com.gaugustini.mhfudatabase.data.database.entity.UserEquipmentSetArmorEntity
+import com.gaugustini.mhfudatabase.data.database.entity.UserEquipmentSetDecorationEntity
+import com.gaugustini.mhfudatabase.data.database.entity.UserEquipmentSetEntity
 import com.gaugustini.mhfudatabase.data.database.entity.WeaponAmmoBowEntity
 import com.gaugustini.mhfudatabase.data.database.entity.WeaponAmmoBowgunEntity
 import com.gaugustini.mhfudatabase.data.database.entity.WeaponEntity
@@ -68,8 +72,10 @@ import com.gaugustini.mhfudatabase.data.database.entity.WeaponTextEntity
         WeaponEntity::class, WeaponTextEntity::class, WeaponParentEntity::class,
         WeaponAmmoBowEntity::class, WeaponAmmoBowgunEntity::class,
         WeaponRecipeEntity::class,
+        UserEquipmentSetEntity::class, UserEquipmentSetArmorEntity::class,
+        UserEquipmentSetDecorationEntity::class,
     ],
-    version = 4,
+    version = 5,
     exportSchema = true,
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -91,5 +97,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun questDao(): QuestDao
 
     abstract fun weaponDao(): WeaponDao
+
+    abstract fun userEquipmentSetDao(): UserEquipmentSetDao
 
 }

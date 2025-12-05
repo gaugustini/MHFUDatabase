@@ -12,6 +12,7 @@ import com.gaugustini.mhfudatabase.data.database.dao.MonsterDao
 import com.gaugustini.mhfudatabase.data.database.dao.QuestDao
 import com.gaugustini.mhfudatabase.data.database.dao.SearchDao
 import com.gaugustini.mhfudatabase.data.database.dao.SkillDao
+import com.gaugustini.mhfudatabase.data.database.dao.UserEquipmentSetDao
 import com.gaugustini.mhfudatabase.data.database.dao.WeaponDao
 import dagger.Module
 import dagger.Provides
@@ -81,6 +82,11 @@ object DatabaseModule {
     @Provides
     fun provideWeaponDao(appDatabase: AppDatabase): WeaponDao {
         return appDatabase.weaponDao()
+    }
+
+    @Provides
+    fun provideUserEquipmentSetDao(appDatabase: AppDatabase): UserEquipmentSetDao {
+        return appDatabase.userEquipmentSetDao()
     }
 
 }
