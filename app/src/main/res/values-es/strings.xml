@@ -104,8 +104,13 @@
     <string name="tab_weapon_detail_summary">RESUMEN</string>
     <string name="tab_weapon_detail_paths">RUTAS</string>
 
+    <!-- Tab Title: User Equipment Set Detail -->
+    <string name="tab_user_set_detail_equipment">EQUIPO</string>
+    <string name="tab_user_set_detail_summary">RESUMEN</string>
+
     <!-- List Header -->
     <string name="list_armors">Piezas de Armadura</string>
+    <string name="list_active_skills">Habilidades Activas</string>
     <string name="list_skills">Habilidades</string>
     <string name="list_recipe">Materiales Requeridos</string>
     <string name="list_recipe_a">Materiales Requeridos (A)</string>
@@ -282,6 +287,8 @@
 
     <!-- User Equipment Set -->
     <string name="user_set_new">Nuevo Set</string>
+    <string name="user_set_nothing_equipped">Nada equipado</string>
+    <string name="user_set_none">Ninguno</string>
 
     <!-- Settings -->
     <string name="settings_option_confirm">Confirmar</string>

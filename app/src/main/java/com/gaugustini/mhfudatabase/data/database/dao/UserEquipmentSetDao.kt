@@ -76,7 +76,7 @@ interface UserEquipmentSetDao {
         JOIN weapon_text
             ON weapon.id = weapon_text.weapon_id
         WHERE
-            user_set.weapon_id = :id AND
+            user_set.id = :id AND
             weapon_text.language = :language
         """
     )
@@ -108,7 +108,7 @@ interface UserEquipmentSetDao {
         JOIN armor_text
             ON armor.id = armor_text.armor_id
         WHERE
-            user_set_armor.armor_id = :id AND
+            user_set_armor.user_set_id = :id AND
             armor_text.language = :language
         """
     )
@@ -132,7 +132,7 @@ interface UserEquipmentSetDao {
         JOIN item_text
             ON user_set_decoration.decoration_id = item_text.item_id
         WHERE
-            user_set_decoration.decoration_id = :id AND
+            user_set_decoration.user_set_id = :id AND
             item_text.language = :language
         """
     )

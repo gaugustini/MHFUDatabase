@@ -22,6 +22,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class UserSetDetailState(
+    val initialTab: UserSetDetailTab = UserSetDetailTab.EQUIPMENT,
     val set: UserEquipmentSet? = null,
     val weapon: Weapon? = null,
     val armors: List<Armor> = emptyList(),
