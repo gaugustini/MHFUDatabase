@@ -34,4 +34,13 @@ class DecorationRepository @Inject constructor(
         )
     }
 
+    // User Equipment Set
+
+    suspend fun getDecorationListForUserEquipmentSet(
+        availableSlots: Int,
+        language: Language,
+    ): List<Decoration> {
+        return decorationDao.getDecorationListForUserEquipmentSet(availableSlots, language.code)
+    }
+
 }

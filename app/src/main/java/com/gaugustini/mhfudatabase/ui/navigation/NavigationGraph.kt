@@ -303,6 +303,8 @@ fun NavigationGraph(
             UserSetDetailRoute(
                 navigateBack = navigationActions.navigateBack,
                 openSearch = navigationActions.navigateToSearch,
+                onItemClick = navigationActions.navigateToItemDetail,
+                onSkillClick = navigationActions.navigateToSkillTreeDetail,
             )
         }
     }

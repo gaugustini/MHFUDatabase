@@ -3,6 +3,7 @@ package com.gaugustini.mhfudatabase.data.repository
 import com.gaugustini.mhfudatabase.data.Language
 import com.gaugustini.mhfudatabase.data.database.dao.WeaponDao
 import com.gaugustini.mhfudatabase.data.enums.WeaponType
+import com.gaugustini.mhfudatabase.data.model.Weapon
 import com.gaugustini.mhfudatabase.data.model.WeaponDetails
 import com.gaugustini.mhfudatabase.data.model.WeaponGraph
 import com.gaugustini.mhfudatabase.data.model.WeaponNode
@@ -46,6 +47,12 @@ class WeaponRepository @Inject constructor(
             paths = weaponGraph.findPathsToRoot(weaponId),
             finals = weaponGraph.findLeaves(weaponId),
         )
+    }
+
+    // User Equipment Set
+
+    suspend fun getWeaponListForUserEquipmentSet(language: Language): List<Weapon> {
+        return weaponDao.getWeaponListForUserEquipmentSet(language.code)
     }
 
 }

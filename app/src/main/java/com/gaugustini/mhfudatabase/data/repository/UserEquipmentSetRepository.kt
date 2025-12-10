@@ -5,6 +5,9 @@ import com.gaugustini.mhfudatabase.data.database.dao.UserEquipmentSetDao
 import com.gaugustini.mhfudatabase.data.database.entity.UserEquipmentSetArmorEntity
 import com.gaugustini.mhfudatabase.data.database.entity.UserEquipmentSetDecorationEntity
 import com.gaugustini.mhfudatabase.data.database.entity.UserEquipmentSetEntity
+import com.gaugustini.mhfudatabase.data.model.ItemQuantity
+import com.gaugustini.mhfudatabase.data.model.Skill
+import com.gaugustini.mhfudatabase.data.model.SkillTreePoints
 import com.gaugustini.mhfudatabase.data.model.UserEquipmentSet
 import com.gaugustini.mhfudatabase.data.model.UserEquipmentSetDetails
 import kotlinx.coroutines.flow.Flow
@@ -96,6 +99,92 @@ class UserEquipmentSetRepository @Inject constructor(
 
     suspend fun deleteSet(id: Int) {
         userEquipmentSetDao.deleteSet(id)
+    }
+
+    // Skills Tree points in Set
+
+    suspend fun getSkillTreePointsInSet(
+        setId: Int,
+        language: Language,
+    ): List<SkillTreePoints> {
+        // TODO: Add calculation for Torso Increased
+
+        val armorsSkills = userEquipmentSetDao.getSkillTreePointsInArmors(setId, language.code)
+        val decorationsSkills = userEquipmentSetDao.getSkillTreePointsInDecorations(setId, language.code)
+        val allSkills = armorsSkills + decorationsSkills
+
+        return allSkills.groupBy { it.id }
+            .map { (_, skills) ->
+                skills.first().copy(
+                    pointValue = skills.sumOf { it.pointValue }
+                )
+            }
+    }
+
+    // Active Skills in Set
+
+    suspend fun getActiveSkillsForSet(
+        setId: Int,
+        language: Language,
+    ): List<Skill> {
+        val skillPointsInSet = getSkillTreePointsInSet(setId, language)
+
+        val potentialActiveSkillPoints = skillPointsInSet.filter { skill ->
+            skill.pointValue >= 10 || skill.pointValue <= -10
+        }
+        if (potentialActiveSkillPoints.isEmpty()) {
+            return emptyList()
+        }
+
+        val attainableSkills = userEquipmentSetDao.getActiveSkillsForSet(
+            potentialActiveSkillPoints.map { it.id }, language.code
+        )
+
+        val skillsByTreeId = attainableSkills.groupBy { it.skillTreeId }
+
+        return potentialActiveSkillPoints.mapNotNull { skillPoint ->
+            val skillsForThisTree = skillsByTreeId[skillPoint.id] ?: return@mapNotNull null
+
+            findBestMatchingSkill(skillPoint.pointValue, skillsForThisTree)
+        }
+    }
+
+    private fun findBestMatchingSkill(
+        pointValue: Int,
+        skillsForTree: List<Skill>
+    ): Skill? {
+        return if (pointValue >= 10) {
+            skillsForTree
+                .filter { it.requiredPoints in 10..pointValue }
+                .maxByOrNull { it.requiredPoints }
+        } else if (pointValue <= -10) {
+            skillsForTree
+                .filter { it.requiredPoints in pointValue..-10 }
+                .minByOrNull { it.requiredPoints }
+        } else {
+            null
+        }
+    }
+
+    // Required Materials for set
+
+    suspend fun getRequiredMaterialsForSet(
+        setId: Int,
+        language: Language,
+    ): List<ItemQuantity> {
+        val weaponMaterials = userEquipmentSetDao.getItemsForWeapon(setId, language.code)
+        val armorMaterials = userEquipmentSetDao.getItemsForArmors(setId, language.code)
+        val decorationMaterials = userEquipmentSetDao.getItemsForDecorations(setId, language.code)
+
+        val allMaterials = weaponMaterials + armorMaterials + decorationMaterials
+
+        return allMaterials
+            .groupBy { it.id }
+            .map { (_, items) ->
+                items.first().copy(
+                    quantity = items.sumOf { it.quantity }
+                )
+            }
     }
 
 }

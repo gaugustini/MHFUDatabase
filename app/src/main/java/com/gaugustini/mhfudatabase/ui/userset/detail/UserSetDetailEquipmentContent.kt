@@ -60,10 +60,9 @@ fun UserSetDetailEquipmentContent(
     armors: List<Armor>,
     decorations: List<EquipmentSetDecoration>,
     modifier: Modifier = Modifier,
-    onWeaponClick: (weaponId: Int) -> Unit = {},
-    onArmorClick: (armorId: Int) -> Unit = {},
-    onDecorationClick: (decorationId: Int, equipmentType: EquipmentType) -> Unit = { _, _ -> },
-    onAddDecoration: () -> Unit = {},
+    onWeaponClick: () -> Unit = {},
+    onArmorClick: (armorType: ArmorType) -> Unit = {},
+    onAddDecoration: (equipmentType: EquipmentType, availableSlots: Int) -> Unit = { _, _ -> },
     onRemoveDecoration: (decorationId: Int, equipmentType: EquipmentType) -> Unit = { _, _ -> },
 ) {
     Column(
@@ -75,74 +74,65 @@ fun UserSetDetailEquipmentContent(
             weapon = weapon,
             decorations = decorations.filter { it.equipmentType == EquipmentType.WEAPON },
             onWeaponClick = onWeaponClick,
-            onDecorationClick = onDecorationClick,
-            onAddDecoration = onAddDecoration,
-            onRemoveDecoration = onRemoveDecoration,
+            onAddDecoration = { onAddDecoration(EquipmentType.WEAPON, it) },
+            onRemoveDecoration = { onRemoveDecoration(it, EquipmentType.WEAPON) },
         )
         EquipmentArmorListItem(
             armor = armors.firstOrNull { it.type == ArmorType.HEAD },
             armorType = ArmorType.HEAD,
             decorations = decorations.filter { it.equipmentType == EquipmentType.ARMOR_HEAD },
-            onArmorClick = onArmorClick,
-            onDecorationClick = onDecorationClick,
-            onAddDecoration = onAddDecoration,
-            onRemoveDecoration = onRemoveDecoration,
+            onArmorClick = { onArmorClick(ArmorType.HEAD) },
+            onAddDecoration = { onAddDecoration(EquipmentType.ARMOR_HEAD, it) },
+            onRemoveDecoration = { onRemoveDecoration(it, EquipmentType.ARMOR_HEAD) },
         )
         EquipmentArmorListItem(
             armor = armors.firstOrNull { it.type == ArmorType.CHEST },
             armorType = ArmorType.CHEST,
             decorations = decorations.filter { it.equipmentType == EquipmentType.ARMOR_CHEST },
-            onArmorClick = onArmorClick,
-            onDecorationClick = onDecorationClick,
-            onAddDecoration = onAddDecoration,
-            onRemoveDecoration = onRemoveDecoration,
-
-            )
+            onArmorClick = { onArmorClick(ArmorType.CHEST) },
+            onAddDecoration = { onAddDecoration(EquipmentType.ARMOR_CHEST, it) },
+            onRemoveDecoration = { onRemoveDecoration(it, EquipmentType.ARMOR_CHEST) },
+        )
         EquipmentArmorListItem(
             armor = armors.firstOrNull { it.type == ArmorType.ARMS },
             armorType = ArmorType.ARMS,
             decorations = decorations.filter { it.equipmentType == EquipmentType.ARMOR_ARMS },
-            onArmorClick = onArmorClick,
-            onDecorationClick = onDecorationClick,
-            onAddDecoration = onAddDecoration,
-            onRemoveDecoration = onRemoveDecoration,
+            onArmorClick = { onArmorClick(ArmorType.ARMS) },
+            onAddDecoration = { onAddDecoration(EquipmentType.ARMOR_ARMS, it) },
+            onRemoveDecoration = { onRemoveDecoration(it, EquipmentType.ARMOR_ARMS) },
         )
         EquipmentArmorListItem(
             armor = armors.firstOrNull { it.type == ArmorType.WAIST },
             armorType = ArmorType.WAIST,
             decorations = decorations.filter { it.equipmentType == EquipmentType.ARMOR_WAIST },
-            onArmorClick = onArmorClick,
-            onDecorationClick = onDecorationClick,
-            onAddDecoration = onAddDecoration,
-            onRemoveDecoration = onRemoveDecoration,
+            onArmorClick = { onArmorClick(ArmorType.WAIST) },
+            onAddDecoration = { onAddDecoration(EquipmentType.ARMOR_WAIST, it) },
+            onRemoveDecoration = { onRemoveDecoration(it, EquipmentType.ARMOR_WAIST) },
         )
         EquipmentArmorListItem(
             armor = armors.firstOrNull { it.type == ArmorType.LEGS },
             armorType = ArmorType.LEGS,
             decorations = decorations.filter { it.equipmentType == EquipmentType.ARMOR_LEGS },
-            onArmorClick = onArmorClick,
-            onDecorationClick = onDecorationClick,
-            onAddDecoration = onAddDecoration,
-            onRemoveDecoration = onRemoveDecoration,
+            onArmorClick = { onArmorClick(ArmorType.LEGS) },
+            onAddDecoration = { onAddDecoration(EquipmentType.ARMOR_LEGS, it) },
+            onRemoveDecoration = { onRemoveDecoration(it, EquipmentType.ARMOR_LEGS) },
         )
     }
 }
 
 @Composable
 fun EquipmentListItem(
-    id: Int,
-    name: String,
+    name: String?,
     numberOfSlots: Int,
     decorations: List<EquipmentSetDecoration>,
     icon: @Composable () -> Unit,
-    onEquipmentClick: (equipmentId: Int) -> Unit,
-    onDecorationClick: (decorationId: Int, equipmentType: EquipmentType) -> Unit,
-    onAddDecoration: () -> Unit,
-    onRemoveDecoration: (decorationId: Int, equipmentType: EquipmentType) -> Unit,
+    onEquipmentClick: () -> Unit,
+    onAddDecoration: (availableSlots: Int) -> Unit,
+    onRemoveDecoration: (decorationId: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val totalDecorationSlots = decorations.sumOf { it.requiredSlots * it.quantity }
-    val emptySlots = numberOfSlots - totalDecorationSlots
+    val availableSlots = numberOfSlots - totalDecorationSlots
     val expanded = rememberSaveable { mutableStateOf(false) }
 
     Card(
@@ -151,8 +141,9 @@ fun EquipmentListItem(
         ),
         modifier = modifier
             .padding(
-                horizontal = Dimension.Padding.large,
-                vertical = Dimension.Padding.medium,
+                start = Dimension.Padding.large,
+                end = Dimension.Padding.large,
+                top = Dimension.Padding.large,
             )
     ) {
         Column {
@@ -160,13 +151,13 @@ fun EquipmentListItem(
                 leadingContent = icon,
                 headlineContent = {
                     Text(
-                        text = name,
+                        text = name ?: stringResource(R.string.user_set_nothing_equipped),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
                 },
                 trailingContent = {
-                    if (id != 0) {
+                    if (name != null) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
@@ -188,9 +179,9 @@ fun EquipmentListItem(
                                 }
                             }
 
-                            // Add empty slots after decorations
+                            // Add available slots after decorations
                             if (totalDecorationSlots < numberOfSlots) {
-                                repeat(emptySlots) {
+                                repeat(availableSlots) {
                                     SlotIcon(
                                         modifier = Modifier
                                             .weight(1f)
@@ -221,7 +212,7 @@ fun EquipmentListItem(
                         bottom = Dimension.Padding.medium,
                     )
                 },
-                modifier = Modifier.clickable { onEquipmentClick(id) }
+                modifier = Modifier.clickable { onEquipmentClick() }
             )
             if (numberOfSlots > 0) {
                 Row(
@@ -230,7 +221,7 @@ fun EquipmentListItem(
                         .fillMaxWidth()
                         .clickable {
                             if (totalDecorationSlots == 0) {
-                                onAddDecoration()
+                                onAddDecoration(availableSlots)
                             } else {
                                 expanded.value = !expanded.value
                             }
@@ -253,13 +244,12 @@ fun EquipmentListItem(
                 }
             }
             AnimatedVisibility(
-                visible = expanded.value,
+                visible = expanded.value && totalDecorationSlots > 0,
             ) {
                 EquipmentDecorationList(
-                    emptySlots = emptySlots,
+                    availableSlots = availableSlots,
                     decorations = decorations,
-                    onDecorationClick = onDecorationClick,
-                    onAddDecoration = onAddDecoration,
+                    onAddDecoration = { onAddDecoration(availableSlots) },
                     onRemoveDecoration = onRemoveDecoration,
                 )
             }
@@ -269,11 +259,10 @@ fun EquipmentListItem(
 
 @Composable
 fun EquipmentDecorationList(
-    emptySlots: Int,
+    availableSlots: Int,
     decorations: List<EquipmentSetDecoration>,
-    onDecorationClick: (decorationId: Int, equipmentType: EquipmentType) -> Unit,
     onAddDecoration: () -> Unit,
-    onRemoveDecoration: (decorationId: Int, equipmentType: EquipmentType) -> Unit,
+    onRemoveDecoration: (decorationId: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -309,9 +298,7 @@ fun EquipmentDecorationList(
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier
                                 .size(Dimension.Size.extraSmall)
-                                .clickable {
-                                    onRemoveDecoration(decoration.decorationId, decoration.equipmentType)
-                                }
+                                .clickable { onRemoveDecoration(decoration.decorationId) }
                         )
                     },
                     backgroundColor = Color.Transparent,
@@ -319,13 +306,10 @@ fun EquipmentDecorationList(
                         horizontal = Dimension.Padding.large,
                         vertical = Dimension.Padding.medium
                     ),
-                    modifier = Modifier.clickable {
-                        onDecorationClick(decoration.decorationId, decoration.equipmentType)
-                    }
                 )
             }
         }
-        if (emptySlots > 0) {
+        if (availableSlots > 0) {
             Row(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier
@@ -347,15 +331,13 @@ fun EquipmentDecorationList(
 fun EquipmentWeaponListItem(
     weapon: Weapon?,
     decorations: List<EquipmentSetDecoration>,
-    onWeaponClick: (weaponId: Int) -> Unit,
-    onDecorationClick: (decorationId: Int, equipmentType: EquipmentType) -> Unit,
-    onAddDecoration: () -> Unit,
-    onRemoveDecoration: (decorationId: Int, equipmentType: EquipmentType) -> Unit,
+    onWeaponClick: () -> Unit,
+    onAddDecoration: (availableSlots: Int) -> Unit,
+    onRemoveDecoration: (decorationId: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     EquipmentListItem(
-        id = weapon?.id ?: 0,
-        name = weapon?.name ?: stringResource(R.string.user_set_nothing_equipped),
+        name = weapon?.name,
         numberOfSlots = weapon?.numSlots ?: 0,
         decorations = decorations,
         icon = {
@@ -366,7 +348,6 @@ fun EquipmentWeaponListItem(
             )
         },
         onEquipmentClick = onWeaponClick,
-        onDecorationClick = onDecorationClick,
         onAddDecoration = onAddDecoration,
         onRemoveDecoration = onRemoveDecoration,
         modifier = modifier,
@@ -378,26 +359,23 @@ fun EquipmentArmorListItem(
     armor: Armor?,
     armorType: ArmorType,
     decorations: List<EquipmentSetDecoration>,
-    onArmorClick: (armorId: Int) -> Unit,
-    onDecorationClick: (decorationId: Int, equipmentType: EquipmentType) -> Unit,
-    onAddDecoration: () -> Unit,
-    onRemoveDecoration: (decorationId: Int, equipmentType: EquipmentType) -> Unit,
+    onArmorClick: () -> Unit,
+    onAddDecoration: (availableSlots: Int) -> Unit,
+    onRemoveDecoration: (decorationId: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     EquipmentListItem(
-        id = armor?.id ?: 0,
-        name = armor?.name ?: stringResource(R.string.user_set_nothing_equipped),
+        name = armor?.name,
         numberOfSlots = armor?.numberOfSlots ?: 0,
         decorations = decorations,
         icon = {
             ArmorIcon(
-                type = armor?.type ?: armorType,
+                type = armorType,
                 rarity = armor?.rarity ?: 1,
                 modifier = Modifier.size(Dimension.Size.large)
             )
         },
         onEquipmentClick = onArmorClick,
-        onDecorationClick = onDecorationClick,
         onAddDecoration = onAddDecoration,
         onRemoveDecoration = onRemoveDecoration,
         modifier = modifier,

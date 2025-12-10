@@ -11,6 +11,9 @@ import com.gaugustini.mhfudatabase.data.database.entity.UserEquipmentSetDecorati
 import com.gaugustini.mhfudatabase.data.database.entity.UserEquipmentSetEntity
 import com.gaugustini.mhfudatabase.data.model.Armor
 import com.gaugustini.mhfudatabase.data.model.EquipmentSetDecoration
+import com.gaugustini.mhfudatabase.data.model.ItemQuantity
+import com.gaugustini.mhfudatabase.data.model.Skill
+import com.gaugustini.mhfudatabase.data.model.SkillTreePoints
 import com.gaugustini.mhfudatabase.data.model.UserEquipmentSet
 import com.gaugustini.mhfudatabase.data.model.Weapon
 import kotlinx.coroutines.flow.Flow
@@ -194,5 +197,149 @@ interface UserEquipmentSetDao {
 
     @Query("DELETE FROM user_set_decoration WHERE user_set_id = :id")
     suspend fun deleteSetDecorations(id: Int)
+
+    // Skills Tree points in Set
+
+    @Query(
+        """
+        SELECT
+            armor_skill.skill_tree_id       AS id,
+            skill_tree_text.name            AS name,
+            SUM(armor_skill.point_value)    AS pointValue
+        FROM user_set
+        JOIN user_set_armor
+            ON user_set.id = user_set_armor.user_set_id
+        JOIN armor_skill
+            ON user_set_armor.armor_id = armor_skill.armor_id
+        JOIN skill_tree_text
+            ON armor_skill.skill_tree_id = skill_tree_text.skill_tree_id
+        WHERE
+            user_set.id = :id AND
+            skill_tree_text.language = :language
+        GROUP BY skill_tree_text.skill_tree_id
+        ORDER BY pointValue DESC;
+        """
+    )
+    suspend fun getSkillTreePointsInArmors(id: Int, language: String): List<SkillTreePoints>
+
+    @Query(
+        """
+        SELECT
+            decoration_skill.skill_tree_id                                      AS id,
+            skill_tree_text.name                                                AS name,
+            SUM(decoration_skill.point_value * user_set_decoration.quantity)    AS pointValue
+        FROM user_set
+        JOIN user_set_decoration
+            ON user_set.id = user_set_decoration.user_set_id
+        JOIN decoration_skill
+            ON user_set_decoration.decoration_id = decoration_skill.decoration_id
+        JOIN skill_tree_text
+            ON decoration_skill.skill_tree_id = skill_tree_text.skill_tree_id
+        WHERE
+            user_set.id = :id AND
+            skill_tree_text.language = :language
+        GROUP BY skill_tree_text.skill_tree_id
+        ORDER BY pointValue DESC;
+        """
+    )
+    suspend fun getSkillTreePointsInDecorations(id: Int, language: String): List<SkillTreePoints>
+
+    // Active Skills in Set
+
+    @Query(
+        """
+        SELECT
+            skill.skill_tree_id     AS skillTreeId,
+            skill_text.name         AS name,
+            skill_text.description  AS description,
+            skill.required_points   AS requiredPoints
+        FROM skill
+        JOIN skill_text
+            ON skill.id = skill_text.skill_id
+        WHERE
+            skill.skill_tree_id IN (:ids) AND
+            skill_text.language = :language
+        ORDER BY requiredPoints DESC
+        """
+    )
+    suspend fun getActiveSkillsForSet(ids: List<Int>, language: String): List<Skill>
+
+    // Required Materials for set
+
+    @Query(
+        """
+        SELECT
+            weapon_recipe.item_id		AS id,
+            item_text.name          	AS name,
+            SUM(weapon_recipe.quantity)	AS quantity,
+            item.icon_type          	AS iconType,
+            item.icon_color         	AS iconColor
+        FROM user_set
+        JOIN weapon_recipe
+            ON user_set.weapon_id = weapon_recipe.weapon_id
+        JOIN item
+            ON weapon_recipe.item_id = item.id
+        JOIN item_text
+            ON weapon_recipe.item_id = item_text.item_id
+        WHERE
+            user_set.id = :id AND
+            item_text.language = :language
+        GROUP BY item.id
+        ORDER BY quantity DESC;
+        """
+    )
+    suspend fun getItemsForWeapon(id: Int, language: String): List<ItemQuantity>
+
+    @Query(
+        """
+        SELECT
+            armor_recipe.item_id		AS id,
+            item_text.name          	AS name,
+            SUM(armor_recipe.quantity)	AS quantity,
+            item.icon_type          	AS iconType,
+            item.icon_color         	AS iconColor
+        FROM user_set
+        JOIN user_set_armor
+            ON user_set.id = user_set_armor.user_set_id
+        JOIN armor_recipe
+            ON user_set_armor.armor_id = armor_recipe.armor_id
+        JOIN item
+            ON armor_recipe.item_id = item.id
+        JOIN item_text
+            ON armor_recipe.item_id = item_text.item_id
+        WHERE
+            user_set.id = :id AND
+            item_text.language = :language
+        GROUP BY item.id
+        ORDER BY quantity DESC;
+        """
+    )
+    suspend fun getItemsForArmors(id: Int, language: String): List<ItemQuantity>
+
+    @Query(
+        """
+        SELECT
+            decoration_recipe.item_id		AS id,
+            item_text.name          	    AS name,
+            SUM(decoration_recipe.quantity)	AS quantity,
+            item.icon_type          	    AS iconType,
+            item.icon_color         	    AS iconColor
+        FROM user_set
+        JOIN user_set_decoration
+            ON user_set.id = user_set_decoration.user_set_id
+        JOIN decoration_recipe
+            ON user_set_decoration.decoration_id = decoration_recipe.decoration_id
+        JOIN item
+            ON decoration_recipe.item_id = item.id
+        JOIN item_text
+            ON decoration_recipe.item_id = item_text.item_id
+        WHERE
+            user_set.id = :id AND
+            item_text.language = :language
+        GROUP BY item.id
+        ORDER BY quantity DESC;
+        """
+    )
+    suspend fun getItemsForDecorations(id: Int, language: String): List<ItemQuantity>
 
 }

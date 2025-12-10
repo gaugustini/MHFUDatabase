@@ -2,6 +2,7 @@ package com.gaugustini.mhfudatabase.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query
+import com.gaugustini.mhfudatabase.data.enums.ArmorType
 import com.gaugustini.mhfudatabase.data.enums.HunterType
 import com.gaugustini.mhfudatabase.data.model.Armor
 import com.gaugustini.mhfudatabase.data.model.ArmorSet
@@ -247,5 +248,38 @@ interface ArmorDao {
         """
     )
     suspend fun getItemsForArmorSet(id: Int, language: String): List<ItemQuantity>
+
+    // User Equipment Set
+
+    @Query(
+        """
+        SELECT
+            armor.id                AS id,
+            armor.armor_set_id      AS armorSetId,
+            armor_text.name         AS name,
+            armor_text.description  AS description,
+            armor.armor_type        AS type,
+            armor.hunter_type       AS hunterType,
+            armor.gender            AS gender,
+            armor.rarity            AS rarity,
+            armor.price             AS price,
+            armor.num_slots         AS numberOfSlots,
+            armor.defense           AS defense,
+            armor.max_defense       AS maxDefense,
+            armor.fire_res          AS fire,
+            armor.water_res         AS water,
+            armor.thunder_res       AS thunder,
+            armor.ice_res           AS ice,
+            armor.dragon_res        AS dragon
+        FROM armor
+        JOIN armor_text
+            ON armor.id = armor_text.armor_id
+        WHERE
+            armor.armor_type = :armorType AND
+            armor_text.language = :language
+        ORDER BY armor.armor_set_id
+        """
+    )
+    suspend fun getArmorListForUserEquipmentSet(armorType: ArmorType, language: String): List<Armor>
 
 }

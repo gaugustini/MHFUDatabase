@@ -12,6 +12,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
+import com.gaugustini.mhfudatabase.data.enums.ArmorType
+import com.gaugustini.mhfudatabase.data.enums.EquipmentType
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TabbedLayout
 import com.gaugustini.mhfudatabase.ui.components.TopBar
@@ -35,6 +37,8 @@ enum class UserSetDetailTab(@param:StringRes val title: Int) {
 fun UserSetDetailRoute(
     navigateBack: () -> Unit,
     openSearch: () -> Unit,
+    onItemClick: (itemId: Int) -> Unit = {},
+    onSkillClick: (skillTreeId: Int) -> Unit = {},
     viewModel: UserSetDetailViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -43,6 +47,16 @@ fun UserSetDetailRoute(
         uiState = uiState,
         navigateBack = navigateBack,
         openSearch = openSearch,
+        openWeaponSelection = viewModel::openWeaponSelection,
+        openArmorSelection = viewModel::openArmorSelection,
+        openDecorationSelection = viewModel::openDecorationSelection,
+        closeSelection = viewModel::closeSelection,
+        changeWeapon = viewModel::changeWeapon,
+        changeArmor = viewModel::changeArmor,
+        addDecoration = viewModel::addDecoration,
+        removeDecoration = viewModel::removeDecoration,
+        onItemClick = onItemClick,
+        onSkillClick = onSkillClick,
     )
 }
 
@@ -51,60 +65,85 @@ fun UserSetDetailScreen(
     uiState: UserSetDetailState = UserSetDetailState(),
     navigateBack: () -> Unit = {},
     openSearch: () -> Unit = {},
+    openWeaponSelection: () -> Unit = {},
+    openArmorSelection: (armorType: ArmorType) -> Unit = {},
+    openDecorationSelection: (equipmentType: EquipmentType, availableSlots: Int) -> Unit = { _, _ -> },
+    closeSelection: () -> Unit = {},
+    changeWeapon: (weaponId: Int) -> Unit = {},
+    changeArmor: (armorId: Int) -> Unit = {},
+    addDecoration: (decorationId: Int) -> Unit = {},
+    removeDecoration: (decorationId: Int, equipmentType: EquipmentType) -> Unit = { _, _ -> },
+    onItemClick: (itemId: Int) -> Unit = {},
+    onSkillClick: (skillTreeId: Int) -> Unit = {},
 ) {
-    val pagerState = rememberPagerState(
-        initialPage = UserSetDetailTab.toIndex(uiState.initialTab),
-        pageCount = { UserSetDetailTab.all.size },
-    )
+    if (!uiState.openSelectionEquipment) {
+        val pagerState = rememberPagerState(
+            initialPage = UserSetDetailTab.toIndex(uiState.initialTab),
+            pageCount = { UserSetDetailTab.all.size },
+        )
 
-    TabbedLayout(
-        pagerState = pagerState,
-        tabTitles = UserSetDetailTab.all.map { stringResource(it.title) },
-        topBar = {
-            TopBar(
-                title = uiState.set?.name ?: stringResource(R.string.user_set_new),
-                navigationType = NavigationType.BACK,
-                navigation = navigateBack,
-                openSearch = openSearch,
-            )
-        },
-    ) { tabIndex ->
-        when (UserSetDetailTab.fromIndex(tabIndex)) {
-            UserSetDetailTab.EQUIPMENT -> UserSetDetailEquipmentContent(
-                weapon = uiState.weapon,
-                armors = uiState.armors,
-                decorations = uiState.decorations,
-                onWeaponClick = {
-                    // TODO: Open weapon selection
-                },
-                onArmorClick = {
-                    // TODO: Open armor selection
-                },
-                onDecorationClick = { _, _ ->
-                    // TODO: Open decoration selection
-                },
-                onAddDecoration = {
-                    // TODO: Open decoration selection
-                },
-                onRemoveDecoration = { _, _ ->
-                    // TODO: Remove decoration
-                },
-            )
+        TabbedLayout(
+            pagerState = pagerState,
+            tabTitles = UserSetDetailTab.all.map { stringResource(it.title) },
+            topBar = { // TODO: Change top bar for this screen
+                TopBar(
+                    title = uiState.set?.name ?: stringResource(R.string.user_set_new),
+                    navigationType = NavigationType.BACK,
+                    navigation = navigateBack,
+                    openSearch = openSearch,
+                )
+            },
+        ) { tabIndex ->
+            when (UserSetDetailTab.fromIndex(tabIndex)) {
+                UserSetDetailTab.EQUIPMENT -> UserSetDetailEquipmentContent(
+                    weapon = uiState.setWeapon,
+                    armors = uiState.setArmors,
+                    decorations = uiState.setDecorations,
+                    onWeaponClick = openWeaponSelection,
+                    onArmorClick = openArmorSelection,
+                    onAddDecoration = openDecorationSelection,
+                    onRemoveDecoration = removeDecoration,
+                )
 
-            UserSetDetailTab.SUMMARY -> UserSetDetailSummaryContent(
-                set = uiState.set,
-                weapon = uiState.weapon,
-                armors = uiState.armors,
-                onItemClick = {
-                    // TODO: Open item detail
-                },
-                onSkillClick = {
-                    // TODO: Open skill tree detail
-                },
-                onSkillTreeClick = {
-                    // TODO: Open skill tree detail
-                },
-            )
+                UserSetDetailTab.SUMMARY -> UserSetDetailSummaryContent(
+                    set = uiState.set,
+                    weapon = uiState.setWeapon,
+                    armors = uiState.setArmors,
+                    activeSkills = uiState.setActiveSkills,
+                    skillTreePoints = uiState.setSkillTreePoints,
+                    requiredMaterials = uiState.setRequiredMaterials,
+                    onItemClick = onItemClick,
+                    onSkillClick = onSkillClick,
+                )
+            }
+        }
+    } else {
+        when (uiState.selectionType) {
+            SelectionType.WEAPON -> {
+                WeaponSelection(
+                    weapons = uiState.weapons,
+                    onWeaponClick = changeWeapon,
+                    onBack = closeSelection,
+                )
+            }
+
+            SelectionType.ARMOR -> {
+                ArmorSelection(
+                    armors = uiState.armors,
+                    onArmorClick = changeArmor,
+                    onBack = closeSelection,
+                )
+            }
+
+            SelectionType.DECORATION -> {
+                DecorationSelection(
+                    decorations = uiState.decorations,
+                    onDecorationClick = addDecoration,
+                    onBack = closeSelection,
+                )
+            }
+
+            else -> {}
         }
     }
 }
@@ -125,9 +164,9 @@ private class UserSetDetailScreenPreviewParamProvider : PreviewParameterProvider
     override val values: Sequence<UserSetDetailState> = sequenceOf(
         UserSetDetailState(
             set = null,
-            weapon = null,
-            armors = listOf(),
-            decorations = listOf(),
+            setWeapon = null,
+            setArmors = listOf(),
+            setDecorations = listOf(),
         ),
     )
 

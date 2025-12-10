@@ -1,0 +1,65 @@
+package com.gaugustini.mhfudatabase.ui.userset.detail
+
+import android.content.res.Configuration
+import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import com.gaugustini.mhfudatabase.R
+import com.gaugustini.mhfudatabase.data.model.Decoration
+import com.gaugustini.mhfudatabase.ui.components.NavigationType
+import com.gaugustini.mhfudatabase.ui.components.TopBar
+import com.gaugustini.mhfudatabase.ui.decoration.components.DecorationListItem
+import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.preview.PreviewDecorationData
+
+@Composable
+fun DecorationSelection(
+    decorations: List<Decoration>,
+    onDecorationClick: (decorationId: Int) -> Unit = {},
+    onBack: () -> Unit = {},
+) {
+    BackHandler { onBack() }
+
+    Scaffold(
+        topBar = { // TODO: Change top bar for filters
+            TopBar(
+                title = stringResource(R.string.screen_user_set_list),
+                navigationType = NavigationType.BACK,
+                navigation = onBack,
+                openSearch = {},
+            )
+        },
+    ) { innerPadding ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            items(decorations) { decoration ->
+                DecorationListItem(
+                    decoration = decoration,
+                    onDecorationClick = onDecorationClick
+                )
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun DecorationSelectionPreview(
+) {
+    Theme {
+        DecorationSelection(
+            decorations = PreviewDecorationData.decorationList,
+        )
+    }
+}

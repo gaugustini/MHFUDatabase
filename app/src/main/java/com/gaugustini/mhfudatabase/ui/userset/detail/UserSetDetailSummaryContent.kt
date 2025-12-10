@@ -14,12 +14,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.data.model.Armor
+import com.gaugustini.mhfudatabase.data.model.ItemQuantity
+import com.gaugustini.mhfudatabase.data.model.Skill
+import com.gaugustini.mhfudatabase.data.model.SkillTreePoints
 import com.gaugustini.mhfudatabase.data.model.UserEquipmentSet
 import com.gaugustini.mhfudatabase.data.model.Weapon
 import com.gaugustini.mhfudatabase.ui.armor.components.ArmorSummary
 import com.gaugustini.mhfudatabase.ui.components.DetailHeader
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.components.icons.ArmorSetIcon
+import com.gaugustini.mhfudatabase.ui.item.components.ItemQuantityList
+import com.gaugustini.mhfudatabase.ui.skill.components.SkillTreePointsList
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
@@ -31,10 +36,12 @@ fun UserSetDetailSummaryContent(
     set: UserEquipmentSet?,
     weapon: Weapon?,
     armors: List<Armor>,
+    activeSkills: List<Skill>,
+    skillTreePoints: List<SkillTreePoints>,
+    requiredMaterials: List<ItemQuantity>,
     modifier: Modifier = Modifier,
     onItemClick: (itemId: Int) -> Unit = {},
     onSkillClick: (skillTreeId: Int) -> Unit = {},
-    onSkillTreeClick: (skillTreeId: Int) -> Unit = {},
 ) {
     Column(
         modifier = modifier
@@ -63,50 +70,68 @@ fun UserSetDetailSummaryContent(
         SectionHeader(
             title = stringResource(R.string.list_active_skills),
         )
-        // TODO: Add active skills
-        Text(
-            text = stringResource(R.string.user_set_none),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    horizontal = Dimension.Spacing.large,
-                    vertical = Dimension.Spacing.medium
-                )
-        )
+        if (activeSkills.isEmpty()) {
+            Text(
+                text = stringResource(R.string.user_set_none),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = Dimension.Spacing.large,
+                        vertical = Dimension.Spacing.medium
+                    )
+            )
+        } else {
+            SkillList(
+                skills = activeSkills,
+                onSkillClick = onSkillClick,
+            )
+        }
 
         SectionHeader(
             title = stringResource(R.string.list_skills),
         )
-        // TODO: Add skill tree points
-        Text(
-            text = stringResource(R.string.user_set_none),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    horizontal = Dimension.Spacing.large,
-                    vertical = Dimension.Spacing.medium
-                )
-        )
+        if (skillTreePoints.isEmpty()) {
+            Text(
+                text = stringResource(R.string.user_set_none),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = Dimension.Spacing.large,
+                        vertical = Dimension.Spacing.medium
+                    )
+            )
+        } else {
+            SkillTreePointsList(
+                skills = skillTreePoints,
+                onSkillClick = onSkillClick,
+            )
+        }
 
         SectionHeader(
             title = stringResource(R.string.list_recipe),
         )
-        // TODO: Add recipe
-        Text(
-            text = stringResource(R.string.user_set_none),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    horizontal = Dimension.Spacing.large,
-                    vertical = Dimension.Spacing.medium
-                )
-        )
+        if (requiredMaterials.isEmpty()) {
+            Text(
+                text = stringResource(R.string.user_set_none),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = Dimension.Spacing.large,
+                        vertical = Dimension.Spacing.medium
+                    )
+            )
+        } else {
+            ItemQuantityList(
+                items = requiredMaterials,
+                onItemClick = onItemClick,
+            )
+        }
     }
 }
 
@@ -119,6 +144,9 @@ fun UserSetDetailSummaryContentPreview() {
             set = PreviewUserEquipmentSet.userSet,
             weapon = PreviewWeaponData.weapon,
             armors = PreviewArmorData.armorList,
+            activeSkills = emptyList(),
+            skillTreePoints = emptyList(),
+            requiredMaterials = emptyList(),
         )
     }
 }
