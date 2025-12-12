@@ -160,6 +160,21 @@ class UserSetDetailViewModel @Inject constructor(
         }
     }
 
+    fun renameUserSet(newSetName: String) {
+        _uiState.update { state ->
+            state.copy(
+                set = UserEquipmentSet(setId, newSetName),
+            )
+        }
+        saveChanges()
+    }
+
+    fun deleteUserSet() {
+        viewModelScope.launch {
+            userEquipmentSetRepository.deleteSet(setId)
+        }
+    }
+
     fun openWeaponSelection() {
         viewModelScope.launch {
             val currentLanguage = _uiState.value.language

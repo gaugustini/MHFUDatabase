@@ -2,9 +2,19 @@ package com.gaugustini.mhfudatabase.ui.userset.detail
 
 import android.content.res.Configuration
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -17,7 +27,10 @@ import com.gaugustini.mhfudatabase.data.enums.EquipmentType
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TabbedLayout
 import com.gaugustini.mhfudatabase.ui.components.TopBar
+import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.ui.userset.components.DeleteConfirmationDialog
+import com.gaugustini.mhfudatabase.ui.userset.components.RenameDialog
 
 enum class UserSetDetailTab(@param:StringRes val title: Int) {
     EQUIPMENT(R.string.tab_user_set_detail_equipment),
@@ -47,6 +60,8 @@ fun UserSetDetailRoute(
         uiState = uiState,
         navigateBack = navigateBack,
         openSearch = openSearch,
+        renameUserSet = viewModel::renameUserSet,
+        deleteUserSet = viewModel::deleteUserSet,
         openWeaponSelection = viewModel::openWeaponSelection,
         openArmorSelection = viewModel::openArmorSelection,
         openDecorationSelection = viewModel::openDecorationSelection,
@@ -65,6 +80,8 @@ fun UserSetDetailScreen(
     uiState: UserSetDetailState = UserSetDetailState(),
     navigateBack: () -> Unit = {},
     openSearch: () -> Unit = {},
+    renameUserSet: (newSetName: String) -> Unit = {},
+    deleteUserSet: () -> Unit = {},
     openWeaponSelection: () -> Unit = {},
     openArmorSelection: (armorType: ArmorType) -> Unit = {},
     openDecorationSelection: (equipmentType: EquipmentType, availableSlots: Int) -> Unit = { _, _ -> },
@@ -76,6 +93,9 @@ fun UserSetDetailScreen(
     onItemClick: (itemId: Int) -> Unit = {},
     onSkillClick: (skillTreeId: Int) -> Unit = {},
 ) {
+    var showRenameDialog by rememberSaveable { mutableStateOf(false) }
+    var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
+
     if (!uiState.openSelectionEquipment) {
         val pagerState = rememberPagerState(
             initialPage = UserSetDetailTab.toIndex(uiState.initialTab),
@@ -85,12 +105,32 @@ fun UserSetDetailScreen(
         TabbedLayout(
             pagerState = pagerState,
             tabTitles = UserSetDetailTab.all.map { stringResource(it.title) },
-            topBar = { // TODO: Change top bar for this screen
+            topBar = {
                 TopBar(
                     title = uiState.set?.name ?: stringResource(R.string.user_set_new),
                     navigationType = NavigationType.BACK,
                     navigation = navigateBack,
                     openSearch = openSearch,
+                    actions = {
+                        IconButton(
+                            onClick = { showRenameDialog = true },
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Edit,
+                                contentDescription = null,
+                                modifier = Modifier.size(Dimension.Size.extraSmall)
+                            )
+                        }
+                        IconButton(
+                            onClick = { showDeleteDialog = true },
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Delete,
+                                contentDescription = null,
+                                modifier = Modifier.size(Dimension.Size.extraSmall)
+                            )
+                        }
+                    }
                 )
             },
         ) { tabIndex ->
@@ -145,6 +185,28 @@ fun UserSetDetailScreen(
 
             else -> {}
         }
+    }
+
+    if (showRenameDialog) {
+        RenameDialog(
+            setName = uiState.set?.name ?: stringResource(R.string.user_set_new),
+            onConfirm = { newName ->
+                renameUserSet(newName)
+                showRenameDialog = false
+            },
+            onDismiss = { showRenameDialog = false },
+        )
+    }
+
+    if (showDeleteDialog) {
+        DeleteConfirmationDialog(
+            onConfirm = {
+                deleteUserSet()
+                showDeleteDialog = false
+                navigateBack()
+            },
+            onDismiss = { showDeleteDialog = false },
+        )
     }
 }
 

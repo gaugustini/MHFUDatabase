@@ -289,6 +289,10 @@
     <string name="user_set_new">New Set</string>
     <string name="user_set_nothing_equipped">Nothing Equipped</string>
     <string name="user_set_none">None</string>
+    <string name="user_set_dialog_rename_title">Rename Set</string>
+    <string name="user_set_dialog_delete_title">Delete Set?</string>
+    <string name="user_set_dialog_confirm">Confirm</string>
+    <string name="user_set_dialog_cancel">Cancel</string>
 
     <!-- Settings -->
     <string name="settings_option_confirm">Confirm</string>
