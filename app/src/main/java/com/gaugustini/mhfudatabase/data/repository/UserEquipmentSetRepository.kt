@@ -172,7 +172,10 @@ class UserEquipmentSetRepository @Inject constructor(
         setId: Int,
         language: Language,
     ): List<ItemQuantity> {
-        val weaponMaterials = userEquipmentSetDao.getItemsForWeapon(setId, language.code)
+        var weaponMaterials = userEquipmentSetDao.getWeaponCreationMaterials(setId, language.code)
+        if (weaponMaterials.isEmpty()) {
+            weaponMaterials = userEquipmentSetDao.getWeaponUpgradeMaterials(setId, language.code)
+        }
         val armorMaterials = userEquipmentSetDao.getItemsForArmors(setId, language.code)
         val decorationMaterials = userEquipmentSetDao.getItemsForDecorations(setId, language.code)
 

@@ -284,12 +284,38 @@ interface UserEquipmentSetDao {
             ON weapon_recipe.item_id = item_text.item_id
         WHERE
             user_set.id = :id AND
+            weapon_recipe.recipe_type = "CREATE" AND
             item_text.language = :language
         GROUP BY item.id
         ORDER BY quantity DESC;
         """
     )
-    suspend fun getItemsForWeapon(id: Int, language: String): List<ItemQuantity>
+    suspend fun getWeaponCreationMaterials(id: Int, language: String): List<ItemQuantity>
+
+    @Query(
+        """
+        SELECT
+            weapon_recipe.item_id		AS id,
+            item_text.name          	AS name,
+            SUM(weapon_recipe.quantity)	AS quantity,
+            item.icon_type          	AS iconType,
+            item.icon_color         	AS iconColor
+        FROM user_set
+        JOIN weapon_recipe
+            ON user_set.weapon_id = weapon_recipe.weapon_id
+        JOIN item
+            ON weapon_recipe.item_id = item.id
+        JOIN item_text
+            ON weapon_recipe.item_id = item_text.item_id
+        WHERE
+            user_set.id = :id AND
+            weapon_recipe.recipe_type = "UPGRADE" AND
+            item_text.language = :language
+        GROUP BY item.id
+        ORDER BY quantity DESC;
+        """
+    )
+    suspend fun getWeaponUpgradeMaterials(id: Int, language: String): List<ItemQuantity>
 
     @Query(
         """
@@ -336,6 +362,7 @@ interface UserEquipmentSetDao {
             ON decoration_recipe.item_id = item_text.item_id
         WHERE
             user_set.id = :id AND
+            decoration_recipe.recipe_variant = 1 AND
             item_text.language = :language
         GROUP BY item.id
         ORDER BY quantity DESC;
