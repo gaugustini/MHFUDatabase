@@ -20,6 +20,7 @@ import com.gaugustini.mhfudatabase.data.repository.ArmorRepository
 import com.gaugustini.mhfudatabase.data.repository.DecorationRepository
 import com.gaugustini.mhfudatabase.data.repository.UserEquipmentSetRepository
 import com.gaugustini.mhfudatabase.data.repository.WeaponRepository
+import com.gaugustini.mhfudatabase.ui.userset.components.WeaponSelectionFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -47,6 +48,7 @@ data class UserSetDetailState(
     val weapons: List<Weapon> = emptyList(),
     val armors: List<Armor> = emptyList(),
     val decorations: List<Decoration> = emptyList(),
+    val weaponSelectionFilter: WeaponSelectionFilter = WeaponSelectionFilter(),
 )
 
 enum class SelectionType {
@@ -196,7 +198,7 @@ class UserSetDetailViewModel @Inject constructor(
                 state.copy(
                     openSelectionEquipment = true,
                     selectionType = SelectionType.WEAPON,
-                    weapons = weaponRepository.getWeaponListForUserEquipmentSet(currentLanguage)
+                    weapons = weaponRepository.getWeaponListForUserEquipmentSet("", currentLanguage)
                 )
             }
         }
@@ -242,6 +244,10 @@ class UserSetDetailViewModel @Inject constructor(
             state.copy(
                 openSelectionEquipment = false,
                 selectionType = null,
+                weapons = emptyList(),
+                armors = emptyList(),
+                decorations = emptyList(),
+                weaponSelectionFilter = WeaponSelectionFilter(),
             )
         }
     }
@@ -372,6 +378,43 @@ class UserSetDetailViewModel @Inject constructor(
         }
 
         saveChanges()
+    }
+
+    fun applyWeaponFilter(filter: WeaponSelectionFilter) {
+        viewModelScope.launch {
+            val currentLanguage = _uiState.value.language
+            var newWeaponList = weaponRepository.getWeaponListForUserEquipmentSet(
+                filter.name, currentLanguage
+            )
+
+            if (filter.weaponType.isNotEmpty()) {
+                newWeaponList = newWeaponList.filter { weapon ->
+                    weapon.type in filter.weaponType
+                }
+            }
+            if (filter.elementType.isNotEmpty()) {
+                newWeaponList = newWeaponList.filter { weapon ->
+                    weapon.element1 in filter.elementType || weapon.element2 in filter.elementType
+                }
+            }
+            if (filter.numberOfSlots.isNotEmpty()) {
+                newWeaponList = newWeaponList.filter { weapon ->
+                    weapon.numSlots in filter.numberOfSlots
+                }
+            }
+            if (filter.rarity.isNotEmpty()) {
+                newWeaponList = newWeaponList.filter { weapon ->
+                    weapon.rarity in filter.rarity
+                }
+            }
+
+            _uiState.update { state ->
+                state.copy(
+                    weapons = newWeaponList,
+                    weaponSelectionFilter = filter,
+                )
+            }
+        }
     }
 
 }

@@ -293,6 +293,13 @@
     <string name="user_set_dialog_delete_title">Delete Set?</string>
     <string name="user_set_dialog_confirm">Confirm</string>
     <string name="user_set_dialog_cancel">Cancel</string>
+    <string name="user_set_weapon_selection">Weapon Selection</string>
+    <string name="user_set_armor_selection">Armor Selection</string>
+    <string name="user_set_decoration_selection">Decoration Selection</string>
+    <string name="user_set_filter_weapon_type">Weapon Type</string>
+    <string name="user_set_filter_element_type">Element Type</string>
+    <string name="user_set_filter_rarity">Rarity</string>
+    <string name="user_set_filter_number_of_slots">Number of Slots</string>
 
     <!-- Settings -->
     <string name="settings_option_confirm">Confirm</string>

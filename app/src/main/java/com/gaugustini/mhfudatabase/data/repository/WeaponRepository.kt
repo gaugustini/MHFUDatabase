@@ -51,8 +51,15 @@ class WeaponRepository @Inject constructor(
 
     // User Equipment Set
 
-    suspend fun getWeaponListForUserEquipmentSet(language: Language): List<Weapon> {
-        return weaponDao.getWeaponListForUserEquipmentSet(language.code)
+    suspend fun getWeaponListForUserEquipmentSet(
+        query: String,
+        language: Language
+    ): List<Weapon> {
+        return if (query.isEmpty()) {
+            weaponDao.getWeaponListForUserEquipmentSet(language.code)
+        } else {
+            weaponDao.getWeaponListForUserEquipmentSet(query, language.code)
+        }
     }
 
 }

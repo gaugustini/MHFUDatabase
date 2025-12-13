@@ -293,6 +293,13 @@
     <string name="user_set_dialog_delete_title">¿Eliminar Set?</string>
     <string name="user_set_dialog_confirm">Confirmar</string>
     <string name="user_set_dialog_cancel">Cancelar</string>
+    <string name="user_set_weapon_selection">Selección de Armas</string>
+    <string name="user_set_armor_selection">Selección de Armaduras</string>
+    <string name="user_set_decoration_selection">Selección de Decoraciones</string>
+    <string name="user_set_filter_weapon_type">Tipo de Arma</string>
+    <string name="user_set_filter_element_type">Tipo de Elemento</string>
+    <string name="user_set_filter_rarity">Rareza</string>
+    <string name="user_set_filter_number_of_slots">Número de Ranuras</string>
 
     <!-- Settings -->
     <string name="settings_option_confirm">Confirmar</string>

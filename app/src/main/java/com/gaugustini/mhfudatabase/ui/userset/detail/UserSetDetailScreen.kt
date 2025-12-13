@@ -31,6 +31,8 @@ import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.ui.userset.components.DeleteConfirmationDialog
 import com.gaugustini.mhfudatabase.ui.userset.components.RenameDialog
+import com.gaugustini.mhfudatabase.ui.userset.components.WeaponSelection
+import com.gaugustini.mhfudatabase.ui.userset.components.WeaponSelectionFilter
 
 enum class UserSetDetailTab(@param:StringRes val title: Int) {
     EQUIPMENT(R.string.tab_user_set_detail_equipment),
@@ -72,6 +74,7 @@ fun UserSetDetailRoute(
         removeDecoration = viewModel::removeDecoration,
         onItemClick = onItemClick,
         onSkillClick = onSkillClick,
+        onWeaponFilterChange = viewModel::applyWeaponFilter,
     )
 }
 
@@ -92,6 +95,7 @@ fun UserSetDetailScreen(
     removeDecoration: (decorationId: Int, equipmentType: EquipmentType) -> Unit = { _, _ -> },
     onItemClick: (itemId: Int) -> Unit = {},
     onSkillClick: (skillTreeId: Int) -> Unit = {},
+    onWeaponFilterChange: (filter: WeaponSelectionFilter) -> Unit = {},
 ) {
     var showRenameDialog by rememberSaveable { mutableStateOf(false) }
     var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
@@ -162,7 +166,9 @@ fun UserSetDetailScreen(
             SelectionType.WEAPON -> {
                 WeaponSelection(
                     weapons = uiState.weapons,
+                    filter = uiState.weaponSelectionFilter,
                     onWeaponClick = changeWeapon,
+                    onFilterChange = onWeaponFilterChange,
                     onBack = closeSelection,
                 )
             }
