@@ -65,7 +65,7 @@ class UserSetDetailViewModel @Inject constructor(
     private val decorationRepository: DecorationRepository,
 ) : ViewModel() {
 
-    private val setId: Int = checkNotNull(savedStateHandle["setId"])
+    private var setId: Int = checkNotNull(savedStateHandle["setId"])
 
     private val _uiState = MutableStateFlow(UserSetDetailState())
     val uiState: StateFlow<UserSetDetailState> = _uiState.asStateFlow()
@@ -122,6 +122,13 @@ class UserSetDetailViewModel @Inject constructor(
 
             _uiState.update { state ->
                 state.copy(
+                    set = UserEquipmentSet(
+                        id = setId,
+                        name = state.set?.name ?: when (currentLanguage) {
+                            Language.ENGLISH -> "New Set"
+                            Language.SPANISH -> "Nuevo Set"
+                        }
+                    ),
                     setActiveSkills = userEquipmentSetRepository.getActiveSkillsForSet(
                         setId,
                         currentLanguage
@@ -144,7 +151,13 @@ class UserSetDetailViewModel @Inject constructor(
             val currentState = _uiState.value
 
             val currentUserEquipmentSet = UserEquipmentSetDetails(
-                set = currentState.set ?: UserEquipmentSet(0, ""),
+                set = currentState.set ?: UserEquipmentSet(
+                    id = 0,
+                    name = when (currentState.language) {
+                        Language.ENGLISH -> "New Set"
+                        Language.SPANISH -> "Nuevo Set"
+                    }
+                ),
                 weapon = currentState.setWeapon,
                 armors = currentState.setArmors,
                 decorations = currentState.setDecorations,
@@ -153,7 +166,7 @@ class UserSetDetailViewModel @Inject constructor(
             if (setId != 0) {
                 userEquipmentSetRepository.updateSet(currentUserEquipmentSet)
             } else {
-                userEquipmentSetRepository.insertNewSet(currentUserEquipmentSet)
+                setId = userEquipmentSetRepository.insertNewSet(currentUserEquipmentSet)
             }
 
             updateSetData()

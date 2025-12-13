@@ -43,7 +43,7 @@ class UserEquipmentSetRepository @Inject constructor(
 
     suspend fun insertNewSet(
         newSet: UserEquipmentSetDetails,
-    ) {
+    ): Int {
         val setEntity = UserEquipmentSetEntity(
             id = 0,
             name = newSet.set.name,
@@ -64,7 +64,7 @@ class UserEquipmentSetRepository @Inject constructor(
             )
         }
 
-        userEquipmentSetDao.insertNewSet(setEntity, setArmorsEntity, setDecorationsEntity)
+        return userEquipmentSetDao.insertNewSet(setEntity, setArmorsEntity, setDecorationsEntity)
     }
 
     // Update

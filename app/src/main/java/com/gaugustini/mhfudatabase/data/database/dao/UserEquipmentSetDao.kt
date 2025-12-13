@@ -157,7 +157,7 @@ interface UserEquipmentSetDao {
         set: UserEquipmentSetEntity,
         setArmors: List<UserEquipmentSetArmorEntity>,
         setDecorations: List<UserEquipmentSetDecorationEntity>,
-    ) {
+    ): Int {
         val newSetId = insertSet(set).toInt()
         val armors = setArmors.map { armor ->
             armor.copy(userSetId = newSetId)
@@ -167,6 +167,7 @@ interface UserEquipmentSetDao {
         }
         insertSetArmors(armors)
         insertSetDecorations(decorations)
+        return newSetId
     }
 
     // Update
