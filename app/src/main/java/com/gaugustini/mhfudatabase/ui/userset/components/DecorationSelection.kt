@@ -3,37 +3,104 @@ package com.gaugustini.mhfudatabase.ui.userset.components
 import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.data.model.Decoration
-import com.gaugustini.mhfudatabase.ui.components.NavigationType
-import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.decoration.components.DecorationListItem
+import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.preview.PreviewDecorationData
 
+data class DecorationSelectionFilter(
+    val name: String = "",
+    val availableSlots: Int = 0,
+)
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DecorationSelection(
     decorations: List<Decoration>,
+    filter: DecorationSelectionFilter = DecorationSelectionFilter(),
     onDecorationClick: (decorationId: Int) -> Unit = {},
+    onFilterChange: (filter: DecorationSelectionFilter) -> Unit = {},
     onBack: () -> Unit = {},
 ) {
+    var showSearchTextField by rememberSaveable { mutableStateOf(false) }
+
     BackHandler { onBack() }
 
     Scaffold(
         topBar = { // TODO: Change top bar for filters
-            TopBar(
-                title = stringResource(R.string.screen_user_set_list),
-                navigationType = NavigationType.BACK,
-                navigation = onBack,
-                openSearch = {},
+            TopAppBar(
+                title = {
+                    if (showSearchTextField) {
+                        SearchTextField(
+                            onQueryChange = {
+                                onFilterChange(filter.copy(name = it))
+                            },
+                            onDismiss = {
+                                showSearchTextField = false
+                                onFilterChange(filter.copy(name = ""))
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    } else {
+                        Text(
+                            text = stringResource(id = R.string.user_set_decoration_selection),
+                            style = MaterialTheme.typography.titleLarge,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                },
+                navigationIcon = {
+                    IconButton(
+                        onClick = onBack,
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = null,
+                            modifier = Modifier.size(Dimension.Size.extraSmall)
+                        )
+                    }
+                },
+                actions = {
+                    if (!showSearchTextField) {
+                        IconButton(
+                            onClick = { showSearchTextField = true },
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Search,
+                                contentDescription = null,
+                                modifier = Modifier.size(Dimension.Size.extraSmall)
+                            )
+                        }
+                    }
+                },
             )
         },
     ) { innerPadding ->

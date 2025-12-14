@@ -39,8 +39,13 @@ class DecorationRepository @Inject constructor(
     suspend fun getDecorationListForUserEquipmentSet(
         availableSlots: Int,
         language: Language,
+        query: String = "",
     ): List<Decoration> {
-        return decorationDao.getDecorationListForUserEquipmentSet(availableSlots, language.code)
+        return if (query.isEmpty()) {
+            decorationDao.getDecorationListForUserEquipmentSet(availableSlots, language.code)
+        } else {
+            decorationDao.getDecorationListForUserEquipmentSet(query, availableSlots, language.code)
+        }
     }
 
 }

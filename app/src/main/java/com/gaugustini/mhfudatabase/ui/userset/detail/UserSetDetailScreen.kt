@@ -32,6 +32,7 @@ import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.ui.userset.components.ArmorSelection
 import com.gaugustini.mhfudatabase.ui.userset.components.ArmorSelectionFilter
 import com.gaugustini.mhfudatabase.ui.userset.components.DecorationSelection
+import com.gaugustini.mhfudatabase.ui.userset.components.DecorationSelectionFilter
 import com.gaugustini.mhfudatabase.ui.userset.components.DeleteConfirmationDialog
 import com.gaugustini.mhfudatabase.ui.userset.components.RenameDialog
 import com.gaugustini.mhfudatabase.ui.userset.components.WeaponSelection
@@ -79,6 +80,7 @@ fun UserSetDetailRoute(
         onSkillClick = onSkillClick,
         onWeaponFilterChange = viewModel::applyWeaponFilter,
         onArmorFilterChange = viewModel::applyArmorFilter,
+        onDecorationFilterChange = viewModel::applyDecorationFilter,
     )
 }
 
@@ -101,6 +103,7 @@ fun UserSetDetailScreen(
     onSkillClick: (skillTreeId: Int) -> Unit = {},
     onWeaponFilterChange: (filter: WeaponSelectionFilter) -> Unit = {},
     onArmorFilterChange: (filter: ArmorSelectionFilter) -> Unit = {},
+    onDecorationFilterChange: (filter: DecorationSelectionFilter) -> Unit = {},
 ) {
     var showRenameDialog by rememberSaveable { mutableStateOf(false) }
     var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
@@ -191,7 +194,9 @@ fun UserSetDetailScreen(
             SelectionType.DECORATION -> {
                 DecorationSelection(
                     decorations = uiState.decorations,
+                    filter = uiState.decorationSelectionFilter,
                     onDecorationClick = addDecoration,
+                    onFilterChange = onDecorationFilterChange,
                     onBack = closeSelection,
                 )
             }

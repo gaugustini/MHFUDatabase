@@ -21,6 +21,7 @@ import com.gaugustini.mhfudatabase.data.repository.DecorationRepository
 import com.gaugustini.mhfudatabase.data.repository.UserEquipmentSetRepository
 import com.gaugustini.mhfudatabase.data.repository.WeaponRepository
 import com.gaugustini.mhfudatabase.ui.userset.components.ArmorSelectionFilter
+import com.gaugustini.mhfudatabase.ui.userset.components.DecorationSelectionFilter
 import com.gaugustini.mhfudatabase.ui.userset.components.WeaponSelectionFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -51,6 +52,7 @@ data class UserSetDetailState(
     val decorations: List<Decoration> = emptyList(),
     val weaponSelectionFilter: WeaponSelectionFilter = WeaponSelectionFilter(),
     val armorSelectionFilter: ArmorSelectionFilter = ArmorSelectionFilter(),
+    val decorationSelectionFilter: DecorationSelectionFilter = DecorationSelectionFilter(),
 )
 
 enum class SelectionType {
@@ -236,7 +238,8 @@ class UserSetDetailViewModel @Inject constructor(
                     decorations = decorationRepository.getDecorationListForUserEquipmentSet(
                         availableSlots,
                         currentLanguage,
-                    )
+                    ),
+                    decorationSelectionFilter = DecorationSelectionFilter(availableSlots = availableSlots),
                 )
             }
         }
@@ -252,6 +255,7 @@ class UserSetDetailViewModel @Inject constructor(
                 decorations = emptyList(),
                 weaponSelectionFilter = WeaponSelectionFilter(),
                 armorSelectionFilter = ArmorSelectionFilter(),
+                decorationSelectionFilter = DecorationSelectionFilter(),
             )
         }
     }
@@ -434,6 +438,24 @@ class UserSetDetailViewModel @Inject constructor(
                 state.copy(
                     armors = newArmorList,
                     armorSelectionFilter = filter,
+                )
+            }
+        }
+    }
+
+    fun applyDecorationFilter(filter: DecorationSelectionFilter) {
+        viewModelScope.launch {
+            val currentLanguage = _uiState.value.language
+            val newDecorationList = decorationRepository.getDecorationListForUserEquipmentSet(
+                query = filter.name,
+                availableSlots = filter.availableSlots,
+                language = currentLanguage,
+            )
+
+            _uiState.update { state ->
+                state.copy(
+                    decorations = newDecorationList,
+                    decorationSelectionFilter = filter,
                 )
             }
         }

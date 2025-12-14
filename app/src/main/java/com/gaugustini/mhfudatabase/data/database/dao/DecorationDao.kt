@@ -126,4 +126,34 @@ interface DecorationDao {
         language: String
     ): List<Decoration>
 
+    @Query(
+        """
+        SELECT
+            decoration.id               AS id,
+            item_text.name              AS name,
+            item_text.description       AS description,
+            item.rarity                 AS rarity,
+            decoration.required_slots   AS requiredSlots,
+            item.buy_price              AS buyPrice,
+            item.sell_price             AS sellPrice,
+            item.icon_type              AS iconType,
+            item.icon_color             AS iconColor
+        FROM decoration
+        JOIN item
+            ON decoration.id = item.id
+        JOIN item_text
+            ON decoration.id = item_text.item_id
+        WHERE
+            (item_text.name LIKE '%' || :query || '%' OR
+            item_text.full_name LIKE '%' || :query || '%') AND
+            decoration.required_slots <= :availableSlots AND
+            item_text.language = :language
+        """
+    )
+    suspend fun getDecorationListForUserEquipmentSet(
+        query: String,
+        availableSlots: Int,
+        language: String
+    ): List<Decoration>
+
 }
