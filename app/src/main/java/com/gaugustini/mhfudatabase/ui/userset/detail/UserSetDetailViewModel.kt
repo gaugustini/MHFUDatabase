@@ -20,6 +20,7 @@ import com.gaugustini.mhfudatabase.data.repository.ArmorRepository
 import com.gaugustini.mhfudatabase.data.repository.DecorationRepository
 import com.gaugustini.mhfudatabase.data.repository.UserEquipmentSetRepository
 import com.gaugustini.mhfudatabase.data.repository.WeaponRepository
+import com.gaugustini.mhfudatabase.ui.userset.components.ArmorSelectionFilter
 import com.gaugustini.mhfudatabase.ui.userset.components.WeaponSelectionFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -49,6 +50,7 @@ data class UserSetDetailState(
     val armors: List<Armor> = emptyList(),
     val decorations: List<Decoration> = emptyList(),
     val weaponSelectionFilter: WeaponSelectionFilter = WeaponSelectionFilter(),
+    val armorSelectionFilter: ArmorSelectionFilter = ArmorSelectionFilter(),
 )
 
 enum class SelectionType {
@@ -212,7 +214,8 @@ class UserSetDetailViewModel @Inject constructor(
                 state.copy(
                     openSelectionEquipment = true,
                     selectionType = SelectionType.ARMOR,
-                    armors = armorRepository.getArmorListForUserEquipmentSet(armorType, currentLanguage)
+                    armors = armorRepository.getArmorListForUserEquipmentSet(armorType, currentLanguage),
+                    armorSelectionFilter = ArmorSelectionFilter(armorType = armorType)
                 )
             }
         }
@@ -248,6 +251,7 @@ class UserSetDetailViewModel @Inject constructor(
                 armors = emptyList(),
                 decorations = emptyList(),
                 weaponSelectionFilter = WeaponSelectionFilter(),
+                armorSelectionFilter = ArmorSelectionFilter(),
             )
         }
     }
@@ -412,6 +416,24 @@ class UserSetDetailViewModel @Inject constructor(
                 state.copy(
                     weapons = newWeaponList,
                     weaponSelectionFilter = filter,
+                )
+            }
+        }
+    }
+
+    fun applyArmorFilter(filter: ArmorSelectionFilter) {
+        viewModelScope.launch {
+            val currentLanguage = _uiState.value.language
+            val newArmorList = armorRepository.getArmorListForUserEquipmentSet(
+                query = filter.name,
+                armorType = filter.armorType,
+                language = currentLanguage,
+            )
+
+            _uiState.update { state ->
+                state.copy(
+                    armors = newArmorList,
+                    armorSelectionFilter = filter,
                 )
             }
         }

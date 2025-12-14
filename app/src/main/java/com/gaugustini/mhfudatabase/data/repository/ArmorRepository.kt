@@ -61,8 +61,13 @@ class ArmorRepository @Inject constructor(
     suspend fun getArmorListForUserEquipmentSet(
         armorType: ArmorType,
         language: Language,
+        query: String = "",
     ): List<Armor> {
-        return armorDao.getArmorListForUserEquipmentSet(armorType, language.code)
+        return if (query.isEmpty()) {
+            armorDao.getArmorListForUserEquipmentSet(armorType, language.code)
+        } else {
+            armorDao.getArmorListForUserEquipmentSet(query, armorType, language.code)
+        }
     }
 
 }

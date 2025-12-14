@@ -282,4 +282,41 @@ interface ArmorDao {
     )
     suspend fun getArmorListForUserEquipmentSet(armorType: ArmorType, language: String): List<Armor>
 
+    @Query(
+        """
+        SELECT
+            armor.id                AS id,
+            armor.armor_set_id      AS armorSetId,
+            armor_text.name         AS name,
+            armor_text.description  AS description,
+            armor.armor_type        AS type,
+            armor.hunter_type       AS hunterType,
+            armor.gender            AS gender,
+            armor.rarity            AS rarity,
+            armor.price             AS price,
+            armor.num_slots         AS numberOfSlots,
+            armor.defense           AS defense,
+            armor.max_defense       AS maxDefense,
+            armor.fire_res          AS fire,
+            armor.water_res         AS water,
+            armor.thunder_res       AS thunder,
+            armor.ice_res           AS ice,
+            armor.dragon_res        AS dragon
+        FROM armor
+        JOIN armor_text
+            ON armor.id = armor_text.armor_id
+        WHERE
+            (armor_text.name LIKE '%' || :query || '%' OR
+            armor_text.full_name LIKE '%' || :query || '%') AND
+            armor.armor_type = :armorType AND
+            armor_text.language = :language
+        ORDER BY armor.armor_set_id
+        """
+    )
+    suspend fun getArmorListForUserEquipmentSet(
+        query: String,
+        armorType: ArmorType,
+        language: String
+    ): List<Armor>
+
 }
