@@ -46,7 +46,6 @@ data class UserSetDetailState(
     val setRequiredMaterials: List<ItemQuantity> = emptyList(),
     val openSelectionEquipment: Boolean = false,
     val selectionType: SelectionType? = null,
-    val selectionEquipmentType: EquipmentType = EquipmentType.WEAPON,
     val weapons: List<Weapon> = emptyList(),
     val armors: List<Armor> = emptyList(),
     val decorations: List<Decoration> = emptyList(),
@@ -202,7 +201,7 @@ class UserSetDetailViewModel @Inject constructor(
                 state.copy(
                     openSelectionEquipment = true,
                     selectionType = SelectionType.WEAPON,
-                    weapons = weaponRepository.getWeaponListForUserEquipmentSet("", currentLanguage)
+                    weapons = weaponRepository.getWeaponListForUserEquipmentSet(currentLanguage)
                 )
             }
         }
@@ -234,12 +233,14 @@ class UserSetDetailViewModel @Inject constructor(
                 state.copy(
                     openSelectionEquipment = true,
                     selectionType = SelectionType.DECORATION,
-                    selectionEquipmentType = equipmentType,
                     decorations = decorationRepository.getDecorationListForUserEquipmentSet(
                         availableSlots,
                         currentLanguage,
                     ),
-                    decorationSelectionFilter = DecorationSelectionFilter(availableSlots = availableSlots),
+                    decorationSelectionFilter = DecorationSelectionFilter(
+                        availableSlots = availableSlots,
+                        equipmentType = equipmentType,
+                    ),
                 )
             }
         }
@@ -270,11 +271,8 @@ class UserSetDetailViewModel @Inject constructor(
 
         _uiState.update { state ->
             state.copy(
-                openSelectionEquipment = false,
-                selectionType = null,
                 setWeapon = selectedWeapon,
                 setDecorations = newSetDecorations,
-                weapons = emptyList(),
             )
         }
 
@@ -304,11 +302,8 @@ class UserSetDetailViewModel @Inject constructor(
 
         _uiState.update { state ->
             state.copy(
-                openSelectionEquipment = false,
-                selectionType = null,
                 setArmors = newSetArmors,
                 setDecorations = newSetDecorations,
-                armors = emptyList(),
             )
         }
 
@@ -319,9 +314,10 @@ class UserSetDetailViewModel @Inject constructor(
         val currentState = _uiState.value
 
         val selectedDecoration = currentState.decorations.firstOrNull { it.id == decorationId } ?: return
+        val selectedEquipmentType = currentState.decorationSelectionFilter.equipmentType
 
         val currentDecorationInSet = currentState.setDecorations.firstOrNull {
-            it.decorationId == decorationId && it.equipmentType == currentState.selectionEquipmentType
+            it.decorationId == decorationId && it.equipmentType == selectedEquipmentType
         }
 
         val newSetDecorations = if (currentDecorationInSet == null) {
@@ -331,7 +327,7 @@ class UserSetDetailViewModel @Inject constructor(
                 name = selectedDecoration.name,
                 requiredSlots = selectedDecoration.requiredSlots,
                 decorationColor = selectedDecoration.iconColor,
-                equipmentType = currentState.selectionEquipmentType,
+                equipmentType = selectedEquipmentType,
                 quantity = 1,
             )
             currentState.setDecorations + newDecoration
@@ -347,10 +343,7 @@ class UserSetDetailViewModel @Inject constructor(
 
         _uiState.update {
             it.copy(
-                openSelectionEquipment = false,
-                selectionType = null,
                 setDecorations = newSetDecorations,
-                decorations = emptyList(),
             )
         }
 
@@ -392,7 +385,8 @@ class UserSetDetailViewModel @Inject constructor(
         viewModelScope.launch {
             val currentLanguage = _uiState.value.language
             var newWeaponList = weaponRepository.getWeaponListForUserEquipmentSet(
-                filter.name, currentLanguage
+                query = filter.name,
+                language = currentLanguage,
             )
 
             if (filter.weaponType.isNotEmpty()) {

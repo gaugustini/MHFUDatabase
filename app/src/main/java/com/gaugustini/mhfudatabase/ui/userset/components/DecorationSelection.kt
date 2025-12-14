@@ -28,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
+import com.gaugustini.mhfudatabase.data.enums.EquipmentType
 import com.gaugustini.mhfudatabase.data.model.Decoration
 import com.gaugustini.mhfudatabase.ui.decoration.components.DecorationListItem
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
@@ -37,6 +38,7 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewDecorationData
 data class DecorationSelectionFilter(
     val name: String = "",
     val availableSlots: Int = 0,
+    val equipmentType: EquipmentType = EquipmentType.WEAPON,
 )
 
 @OptIn(ExperimentalMaterial3Api::class)

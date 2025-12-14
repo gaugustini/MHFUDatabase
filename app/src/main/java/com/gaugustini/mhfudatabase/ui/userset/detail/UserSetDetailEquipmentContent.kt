@@ -143,7 +143,7 @@ fun EquipmentListItem(
             .padding(
                 start = Dimension.Padding.large,
                 end = Dimension.Padding.large,
-                top = Dimension.Padding.large,
+                top = Dimension.Padding.medium,
             )
     ) {
         Column {

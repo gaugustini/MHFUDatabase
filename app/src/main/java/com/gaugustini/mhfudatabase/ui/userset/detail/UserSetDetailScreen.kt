@@ -175,7 +175,10 @@ fun UserSetDetailScreen(
                 WeaponSelection(
                     weapons = uiState.weapons,
                     filter = uiState.weaponSelectionFilter,
-                    onWeaponClick = changeWeapon,
+                    onWeaponClick = {
+                        changeWeapon(it)
+                        closeSelection()
+                    },
                     onFilterChange = onWeaponFilterChange,
                     onBack = closeSelection,
                 )
@@ -185,7 +188,10 @@ fun UserSetDetailScreen(
                 ArmorSelection(
                     armors = uiState.armors,
                     filter = uiState.armorSelectionFilter,
-                    onArmorClick = changeArmor,
+                    onArmorClick = {
+                        changeArmor(it)
+                        closeSelection()
+                    },
                     onFilterChange = onArmorFilterChange,
                     onBack = closeSelection,
                 )
@@ -195,7 +201,10 @@ fun UserSetDetailScreen(
                 DecorationSelection(
                     decorations = uiState.decorations,
                     filter = uiState.decorationSelectionFilter,
-                    onDecorationClick = addDecoration,
+                    onDecorationClick = {
+                        addDecoration(it)
+                        closeSelection()
+                    },
                     onFilterChange = onDecorationFilterChange,
                     onBack = closeSelection,
                 )

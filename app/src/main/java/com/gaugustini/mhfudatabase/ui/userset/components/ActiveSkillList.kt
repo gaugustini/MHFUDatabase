@@ -15,7 +15,7 @@ import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.preview.PreviewSkillData
 
 @Composable
-fun SkillList(
+fun ActiveSkillList(
     skills: List<Skill>,
     modifier: Modifier = Modifier,
     onSkillClick: (skillTreeId: Int) -> Unit = {},
@@ -24,7 +24,7 @@ fun SkillList(
         modifier = modifier
     ) {
         skills.forEachIndexed { index, skill ->
-            SkillListItem(
+            ActiveSkillListItem(
                 skill = skill,
                 onSkillClick = onSkillClick,
             )
@@ -36,7 +36,7 @@ fun SkillList(
 }
 
 @Composable
-fun SkillListItem(
+fun ActiveSkillListItem(
     skill: Skill,
     modifier: Modifier = Modifier,
     onSkillClick: (skillTreeId: Int) -> Unit = {},
@@ -49,13 +49,6 @@ fun SkillListItem(
                 color = MaterialTheme.colorScheme.onSurface,
             )
         },
-        trailingContent = {
-            Text(
-                text = skill.requiredPoints.toString(), // TODO: Add set points
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
-        },
         modifier = modifier.clickable { onSkillClick(skill.skillTreeId) }
     )
 }
@@ -63,8 +56,8 @@ fun SkillListItem(
 @Preview(showBackground = true)
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun SkillListPreview() {
+fun ActiveSkillListPreview() {
     Theme {
-        SkillList(PreviewSkillData.skillList)
+        ActiveSkillList(PreviewSkillData.skillList)
     }
 }

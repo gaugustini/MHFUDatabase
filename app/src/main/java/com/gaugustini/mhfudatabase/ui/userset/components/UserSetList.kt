@@ -51,8 +51,9 @@ fun UserSetListItem(
         ),
         modifier = modifier
             .padding(
-                horizontal = Dimension.Padding.large,
-                vertical = Dimension.Padding.small,
+                start = Dimension.Padding.large,
+                end = Dimension.Padding.large,
+                top = Dimension.Padding.medium,
             )
             .clickable { onSetClick(set.id) }
     ) {
