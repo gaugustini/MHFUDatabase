@@ -29,6 +29,8 @@ import com.gaugustini.mhfudatabase.ui.components.TabbedLayout
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.ui.userset.components.ArmorSelection
+import com.gaugustini.mhfudatabase.ui.userset.components.DecorationSelection
 import com.gaugustini.mhfudatabase.ui.userset.components.DeleteConfirmationDialog
 import com.gaugustini.mhfudatabase.ui.userset.components.RenameDialog
 import com.gaugustini.mhfudatabase.ui.userset.components.WeaponSelection

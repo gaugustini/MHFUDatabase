@@ -1,4 +1,4 @@
-package com.gaugustini.mhfudatabase.ui.userset.detail
+package com.gaugustini.mhfudatabase.ui.userset.components
 
 import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
