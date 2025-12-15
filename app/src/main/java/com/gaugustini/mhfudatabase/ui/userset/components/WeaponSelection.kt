@@ -3,10 +3,7 @@ package com.gaugustini.mhfudatabase.ui.userset.components
 import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,7 +16,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -30,23 +26,14 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -167,50 +154,6 @@ fun WeaponSelection(
             )
         }
     }
-}
-
-@Composable
-fun SearchTextField(
-    modifier: Modifier = Modifier,
-    onQueryChange: (String) -> Unit = {},
-    onDismiss: () -> Unit = {},
-) {
-    var query by rememberSaveable { mutableStateOf("") }
-    val focusManager = LocalFocusManager.current
-    val focusRequester = remember { FocusRequester() }
-
-    LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
-    }
-
-    TextField(
-        value = query,
-        onValueChange = {
-            query = it
-            onQueryChange(it)
-        },
-        trailingIcon = {
-            IconButton(
-                onClick = {
-                    focusManager.clearFocus()
-                    onDismiss()
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Clear,
-                    contentDescription = null,
-                    modifier = Modifier.size(Dimension.Size.extraSmall)
-                )
-            }
-        },
-        textStyle = MaterialTheme.typography.bodyLarge,
-        singleLine = true,
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = Color.Transparent,
-            unfocusedContainerColor = Color.Transparent,
-        ),
-        modifier = modifier.focusRequester(focusRequester)
-    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -365,34 +308,6 @@ fun WeaponFilterSheet(
                 }
             }
         }
-    }
-}
-
-@Composable
-fun SelectionContainer(
-    selected: Boolean,
-    onSelected: () -> Unit,
-    modifier: Modifier = Modifier,
-    content: @Composable () -> Unit = {},
-) {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier
-            .size(Dimension.Size.large)
-            .background(
-                color = if (selected) {
-                    MaterialTheme.colorScheme.primaryContainer
-                } else {
-                    MaterialTheme.colorScheme.surfaceContainer
-                },
-                shape = MaterialTheme.shapes.medium
-            )
-            .clickable(
-                indication = null,
-                interactionSource = null,
-            ) { onSelected() }
-    ) {
-        content()
     }
 }
 

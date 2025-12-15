@@ -2,22 +2,31 @@ package com.gaugustini.mhfudatabase.ui.userset.components
 
 import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,6 +47,8 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
 data class ArmorSelectionFilter(
     val name: String = "",
     val armorType: ArmorType = ArmorType.HEAD,
+    val numberOfSlots: List<Int> = emptyList(),
+    val rarity: List<Int> = emptyList(),
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,11 +61,13 @@ fun ArmorSelection(
     onBack: () -> Unit = {},
 ) {
     var showSearchTextField by rememberSaveable { mutableStateOf(false) }
+    var showFilterSheet by rememberSaveable { mutableStateOf(false) }
+    val filterSheetState = rememberModalBottomSheetState(true)
 
     BackHandler { onBack() }
 
     Scaffold(
-        topBar = { // TODO: Change top bar for filters
+        topBar = {
             TopAppBar(
                 title = {
                     if (showSearchTextField) {
@@ -90,6 +103,15 @@ fun ArmorSelection(
                     }
                 },
                 actions = {
+                    IconButton(
+                        onClick = { showFilterSheet = true },
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.FilterList,
+                            contentDescription = null,
+                            modifier = Modifier.size(Dimension.Size.extraSmall)
+                        )
+                    }
                     if (!showSearchTextField) {
                         IconButton(
                             onClick = { showSearchTextField = true },
@@ -115,6 +137,102 @@ fun ArmorSelection(
                     armor = armor,
                     onArmorClick = onArmorClick
                 )
+            }
+        }
+    }
+
+    if (showFilterSheet) {
+        ArmorFilterSheet(
+            sheetState = filterSheetState,
+            filter = filter,
+            onFilterChange = onFilterChange,
+            onDismiss = { showFilterSheet = false },
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ArmorFilterSheet(
+    sheetState: SheetState,
+    filter: ArmorSelectionFilter,
+    modifier: Modifier = Modifier,
+    onFilterChange: (filter: ArmorSelectionFilter) -> Unit = {},
+    onDismiss: () -> Unit = {},
+) {
+    var newFilter = filter
+
+    ModalBottomSheet(
+        sheetState = sheetState,
+        onDismissRequest = onDismiss,
+        modifier = modifier,
+    ) {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = Dimension.Padding.large)
+        ) {
+            Text(
+                text = stringResource(R.string.user_set_filter_rarity),
+                style = MaterialTheme.typography.titleMedium,
+            )
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
+                verticalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(Dimension.Padding.medium)
+            ) {
+                repeat(10) {
+                    SelectionContainer(
+                        selected = (it + 1) in newFilter.rarity,
+                        onSelected = {
+                            newFilter = if ((it + 1) in newFilter.rarity) {
+                                newFilter.copy(rarity = newFilter.rarity - (it + 1))
+                            } else {
+                                newFilter.copy(rarity = newFilter.rarity + (it + 1))
+                            }
+                            onFilterChange(newFilter)
+                        }
+                    ) {
+                        Text(
+                            text = (it + 1).toString(),
+                            style = MaterialTheme.typography.titleMedium,
+                        )
+                    }
+                }
+            }
+
+            Text(
+                text = stringResource(R.string.user_set_filter_number_of_slots),
+                style = MaterialTheme.typography.titleMedium,
+            )
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
+                verticalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(Dimension.Padding.medium)
+            ) {
+                repeat(4) {
+                    SelectionContainer(
+                        selected = it in newFilter.numberOfSlots,
+                        onSelected = {
+                            newFilter = if (it in newFilter.numberOfSlots) {
+                                newFilter.copy(numberOfSlots = newFilter.numberOfSlots - it)
+                            } else {
+                                newFilter.copy(numberOfSlots = newFilter.numberOfSlots + it)
+                            }
+                            onFilterChange(newFilter)
+                        }
+                    ) {
+                        Text(
+                            text = (it).toString(),
+                            style = MaterialTheme.typography.titleMedium,
+                        )
+                    }
+                }
             }
         }
     }

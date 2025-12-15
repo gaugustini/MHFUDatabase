@@ -422,11 +422,22 @@ class UserSetDetailViewModel @Inject constructor(
     fun applyArmorFilter(filter: ArmorSelectionFilter) {
         viewModelScope.launch {
             val currentLanguage = _uiState.value.language
-            val newArmorList = armorRepository.getArmorListForUserEquipmentSet(
+            var newArmorList = armorRepository.getArmorListForUserEquipmentSet(
                 query = filter.name,
                 armorType = filter.armorType,
                 language = currentLanguage,
             )
+
+            if (filter.numberOfSlots.isNotEmpty()) {
+                newArmorList = newArmorList.filter { armor ->
+                    armor.numberOfSlots in filter.numberOfSlots
+                }
+            }
+            if (filter.rarity.isNotEmpty()) {
+                newArmorList = newArmorList.filter { armor ->
+                    armor.rarity in filter.rarity
+                }
+            }
 
             _uiState.update { state ->
                 state.copy(
@@ -440,11 +451,17 @@ class UserSetDetailViewModel @Inject constructor(
     fun applyDecorationFilter(filter: DecorationSelectionFilter) {
         viewModelScope.launch {
             val currentLanguage = _uiState.value.language
-            val newDecorationList = decorationRepository.getDecorationListForUserEquipmentSet(
+            var newDecorationList = decorationRepository.getDecorationListForUserEquipmentSet(
                 query = filter.name,
                 availableSlots = filter.availableSlots,
                 language = currentLanguage,
             )
+
+            if (filter.numberOfSlots.isNotEmpty()) {
+                newDecorationList = newDecorationList.filter { decoration ->
+                    decoration.requiredSlots in filter.numberOfSlots
+                }
+            }
 
             _uiState.update { state ->
                 state.copy(
