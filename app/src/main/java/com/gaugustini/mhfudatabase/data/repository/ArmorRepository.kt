@@ -2,6 +2,7 @@ package com.gaugustini.mhfudatabase.data.repository
 
 import com.gaugustini.mhfudatabase.data.Language
 import com.gaugustini.mhfudatabase.data.database.dao.ArmorDao
+import com.gaugustini.mhfudatabase.data.enums.ArmorType
 import com.gaugustini.mhfudatabase.data.enums.HunterType
 import com.gaugustini.mhfudatabase.data.model.Armor
 import com.gaugustini.mhfudatabase.data.model.ArmorDetails
@@ -53,6 +54,20 @@ class ArmorRepository @Inject constructor(
             skills = armorDao.getSkillsForArmorSet(armorSetId, language.code),
             recipe = armorDao.getItemsForArmorSet(armorSetId, language.code),
         )
+    }
+
+    // User Equipment Set
+
+    suspend fun getArmorListForUserEquipmentSet(
+        armorType: ArmorType,
+        language: Language,
+        query: String = "",
+    ): List<Armor> {
+        return if (query.isEmpty()) {
+            armorDao.getArmorListForUserEquipmentSet(armorType, language.code)
+        } else {
+            armorDao.getArmorListForUserEquipmentSet(query, armorType, language.code)
+        }
     }
 
 }

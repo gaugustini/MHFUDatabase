@@ -30,6 +30,7 @@
     <string name="screen_quest_list">Misiones</string>
     <string name="screen_skill_tree_list">Habilidades</string>
     <string name="screen_weapon_list">Armas</string>
+    <string name="screen_user_set_list">Constructor de Sets</string>
     <string name="screen_settings">Ajustes</string>
     <string name="screen_about">Sobre</string>
 
@@ -43,6 +44,7 @@
     <string name="screen_quest_detail">Detalle de Misión</string>
     <string name="screen_skill_tree_detail">Detalle de Habilidad</string>
     <string name="screen_weapon_detail">Detalle de Arma</string>
+    <string name="screen_user_set_detail">Detalle de Set</string>
 
     <!-- Screen Title: Weapon Graph -->
     <string name="screen_weapon_great_sword">Gran Espada</string>
@@ -102,8 +104,13 @@
     <string name="tab_weapon_detail_summary">RESUMEN</string>
     <string name="tab_weapon_detail_paths">RUTAS</string>
 
+    <!-- Tab Title: User Equipment Set Detail -->
+    <string name="tab_user_set_detail_equipment">EQUIPO</string>
+    <string name="tab_user_set_detail_summary">RESUMEN</string>
+
     <!-- List Header -->
     <string name="list_armors">Piezas de Armadura</string>
+    <string name="list_active_skills">Habilidades Activas</string>
     <string name="list_skills">Habilidades</string>
     <string name="list_recipe">Materiales Requeridos</string>
     <string name="list_recipe_a">Materiales Requeridos (A)</string>
@@ -277,6 +284,22 @@
     <string name="weapon_path">Ruta</string>
     <string name="weapon_path_details">Ruta: %1$d</string>
     <string name="weapon_finals">Finales</string>
+
+    <!-- User Equipment Set -->
+    <string name="user_set_new">Nuevo Set</string>
+    <string name="user_set_nothing_equipped">Nada equipado</string>
+    <string name="user_set_none">Ninguno</string>
+    <string name="user_set_dialog_rename_title">Renombrar Set</string>
+    <string name="user_set_dialog_delete_title">¿Eliminar Set?</string>
+    <string name="user_set_dialog_confirm">Confirmar</string>
+    <string name="user_set_dialog_cancel">Cancelar</string>
+    <string name="user_set_weapon_selection">Selección de Armas</string>
+    <string name="user_set_armor_selection">Selección de Armaduras</string>
+    <string name="user_set_decoration_selection">Selección de Decoraciones</string>
+    <string name="user_set_filter_weapon_type">Tipo de Arma</string>
+    <string name="user_set_filter_element_type">Tipo de Elemento</string>
+    <string name="user_set_filter_rarity">Rareza</string>
+    <string name="user_set_filter_number_of_slots">Número de Ranuras</string>
 
     <!-- Settings -->
     <string name="settings_option_confirm">Confirmar</string>

@@ -174,4 +174,80 @@ interface WeaponDao {
     )
     suspend fun getItemsForWeapon(id: Int, recipe: String, language: String): List<ItemQuantity>
 
+    // User Equipment Set
+
+    @Query(
+        """
+        SELECT
+            weapon.id                AS id,
+            weapon_text.name         AS name,
+            weapon_text.description  AS description,
+            weapon.weapon_type       AS type,
+            weapon.rarity            AS rarity,
+            weapon.affinity          AS affinity,
+            weapon.defense           AS defense,
+            weapon.num_slots         AS numSlots,
+            weapon.attack            AS attack,
+            weapon.max_attack        AS maxAttack,
+            weapon.price_create      AS priceCreate,
+            weapon.price_upgrade     AS priceUpgrade,
+            weapon.element_1         AS element1,
+            weapon.element_1_value   AS element1Value,
+            weapon.element_2         AS element2,
+            weapon.element_2_value   AS element2Value,
+            weapon.sharpness         AS sharpness,
+            weapon.sharpness_plus    AS sharpnessPlus,
+            weapon.shelling_type     AS shellingType,
+            weapon.shelling_level    AS shellingLevel,
+            weapon.song_notes        AS songNotes,
+            weapon.reload_speed      AS reloadSpeed,
+            weapon.recoil            AS recoil
+        FROM weapon
+        JOIN weapon_text
+            ON weapon.id = weapon_text.weapon_id
+        WHERE
+            weapon_text.language = :language
+        ORDER BY weapon.weapon_type
+        """
+    )
+    suspend fun getWeaponListForUserEquipmentSet(language: String): List<Weapon>
+
+    @Query(
+        """
+        SELECT
+            weapon.id                AS id,
+            weapon_text.name         AS name,
+            weapon_text.description  AS description,
+            weapon.weapon_type       AS type,
+            weapon.rarity            AS rarity,
+            weapon.affinity          AS affinity,
+            weapon.defense           AS defense,
+            weapon.num_slots         AS numSlots,
+            weapon.attack            AS attack,
+            weapon.max_attack        AS maxAttack,
+            weapon.price_create      AS priceCreate,
+            weapon.price_upgrade     AS priceUpgrade,
+            weapon.element_1         AS element1,
+            weapon.element_1_value   AS element1Value,
+            weapon.element_2         AS element2,
+            weapon.element_2_value   AS element2Value,
+            weapon.sharpness         AS sharpness,
+            weapon.sharpness_plus    AS sharpnessPlus,
+            weapon.shelling_type     AS shellingType,
+            weapon.shelling_level    AS shellingLevel,
+            weapon.song_notes        AS songNotes,
+            weapon.reload_speed      AS reloadSpeed,
+            weapon.recoil            AS recoil
+        FROM weapon
+        JOIN weapon_text
+            ON weapon.id = weapon_text.weapon_id
+        WHERE
+            (weapon_text.name LIKE '%' || :query || '%' OR
+            weapon_text.full_name LIKE '%' || :query || '%') AND
+            weapon_text.language = :language
+        ORDER BY weapon.weapon_type
+        """
+    )
+    suspend fun getWeaponListForUserEquipmentSet(query: String, language: String): List<Weapon>
+
 }

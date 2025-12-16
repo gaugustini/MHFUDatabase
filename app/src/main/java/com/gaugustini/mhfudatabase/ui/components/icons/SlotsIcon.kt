@@ -55,7 +55,7 @@ fun SlotIcon(
         if (filled) {
             drawCircle(
                 color = color,
-                radius = radius
+                radius = radius + 1.dp.toPx(),
             )
         } else {
             drawCircle(

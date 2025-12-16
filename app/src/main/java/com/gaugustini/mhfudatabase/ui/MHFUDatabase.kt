@@ -66,6 +66,7 @@ fun MHFUDatabase(
                     navigateToQuestList = navigationActions.navigateToQuestList,
                     navigateToSkillTreeList = navigationActions.navigateToSkillTreeList,
                     navigateToWeaponList = navigationActions.navigateToWeaponTypeList,
+                    navigateToUserEquipmentSetList = navigationActions.navigateToUserEquipmentSetList,
                     navigateToSettings = navigationActions.navigateToSettings,
                     navigateToAbout = navigationActions.navigateToAbout,
                 )

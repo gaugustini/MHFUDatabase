@@ -34,4 +34,18 @@ class DecorationRepository @Inject constructor(
         )
     }
 
+    // User Equipment Set
+
+    suspend fun getDecorationListForUserEquipmentSet(
+        availableSlots: Int,
+        language: Language,
+        query: String = "",
+    ): List<Decoration> {
+        return if (query.isEmpty()) {
+            decorationDao.getDecorationListForUserEquipmentSet(availableSlots, language.code)
+        } else {
+            decorationDao.getDecorationListForUserEquipmentSet(query, availableSlots, language.code)
+        }
+    }
+
 }

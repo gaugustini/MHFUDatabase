@@ -30,6 +30,7 @@
     <string name="screen_quest_list">Quests</string>
     <string name="screen_skill_tree_list">Skills</string>
     <string name="screen_weapon_list">Weapons</string>
+    <string name="screen_user_set_list">Armor Set Builder</string>
     <string name="screen_settings">Settings</string>
     <string name="screen_about">About</string>
 
@@ -43,6 +44,7 @@
     <string name="screen_quest_detail">Quest Detail</string>
     <string name="screen_skill_tree_detail">Skill Detail</string>
     <string name="screen_weapon_detail">Weapon Detail</string>
+    <string name="screen_user_set_detail">Armor Set Detail</string>
 
     <!-- Screen Title: Weapon Graph -->
     <string name="screen_weapon_great_sword">Great Sword</string>
@@ -102,8 +104,13 @@
     <string name="tab_weapon_detail_summary">SUMMARY</string>
     <string name="tab_weapon_detail_paths">PATHS</string>
 
+    <!-- Tab Title: User Equipment Set Detail -->
+    <string name="tab_user_set_detail_equipment">EQUIPMENT</string>
+    <string name="tab_user_set_detail_summary">SUMMARY</string>
+
     <!-- List Header -->
     <string name="list_armors">Armor Pieces</string>
+    <string name="list_active_skills">Active Skills</string>
     <string name="list_skills">Skills</string>
     <string name="list_recipe">Required Materials</string>
     <string name="list_recipe_a">Required Materials (A)</string>
@@ -277,6 +284,22 @@
     <string name="weapon_path">Path</string>
     <string name="weapon_path_details">Path: %1$d</string>
     <string name="weapon_finals">Finals</string>
+
+    <!-- User Equipment Set -->
+    <string name="user_set_new">New Set</string>
+    <string name="user_set_nothing_equipped">Nothing Equipped</string>
+    <string name="user_set_none">None</string>
+    <string name="user_set_dialog_rename_title">Rename Set</string>
+    <string name="user_set_dialog_delete_title">Delete Set?</string>
+    <string name="user_set_dialog_confirm">Confirm</string>
+    <string name="user_set_dialog_cancel">Cancel</string>
+    <string name="user_set_weapon_selection">Weapon Selection</string>
+    <string name="user_set_armor_selection">Armor Selection</string>
+    <string name="user_set_decoration_selection">Decoration Selection</string>
+    <string name="user_set_filter_weapon_type">Weapon Type</string>
+    <string name="user_set_filter_element_type">Element Type</string>
+    <string name="user_set_filter_rarity">Rarity</string>
+    <string name="user_set_filter_number_of_slots">Number of Slots</string>
 
     <!-- Settings -->
     <string name="settings_option_confirm">Confirm</string>
