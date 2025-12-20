@@ -50,7 +50,8 @@ ksp {
 
 dependencies {
 
-    implementation(project(":core:domain"))
+    // implementation(project(":core:data"))
+    // implementation(project(":core:domain"))
 
     // Android
     implementation("androidx.core:core-ktx:1.17.0")

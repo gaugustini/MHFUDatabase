@@ -24,4 +24,5 @@ rootProject.name = "MHFUDatabase"
 include(
     ":app",
     ":core:domain",
+    ":core:data",
 )
