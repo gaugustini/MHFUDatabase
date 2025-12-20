@@ -1,7 +1,7 @@
 package com.gaugustini.mhfudatabase.domain.enums
 
 /**
- * Represents the quest or item rank.
+ * Represents the equipment, quest or item rank.
  */
 enum class Rank {
     /**

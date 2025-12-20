@@ -1,0 +1,16 @@
+package com.gaugustini.mhfudatabase.domain.model
+
+import com.gaugustini.mhfudatabase.domain.enums.Rank
+
+/**
+ * Represents a location in the game where quests take place and items can be gathered.
+ *
+ * @property id The unique identifier of the location.
+ * @property name The name of the location.
+ * @property items A map of items that can be gathered in this location, grouped by rank.
+ */
+data class Location(
+    val id: Int,
+    val name: String,
+    val items: Map<Rank, List<Item>>,
+)
