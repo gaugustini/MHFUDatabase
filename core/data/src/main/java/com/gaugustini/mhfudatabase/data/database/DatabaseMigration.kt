@@ -5,8 +5,17 @@ import android.util.Log
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
+/**
+ * Helper object that provides database migrations for the Room database.
+ */
 object DatabaseMigration {
 
+    /**
+     * Creates a [Migration] that executes SQL statements from a file in the `assets` folder.
+     *
+     * The SQL file is expected to be located in `database/migrations/` and named in the format
+     * `${startVersion}_${endVersion}.sql`.
+     */
     private fun fromAsset(
         context: Context,
         startVersion: Int,
@@ -33,6 +42,9 @@ object DatabaseMigration {
         }
     }
 
+    /**
+     * Returns an array of all migrations for the database.
+     */
     fun allMigrations(context: Context): Array<Migration> = arrayOf(
         // Add migrations here
     )
