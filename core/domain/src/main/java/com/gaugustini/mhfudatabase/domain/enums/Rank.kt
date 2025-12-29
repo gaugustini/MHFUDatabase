@@ -28,4 +28,22 @@ enum class Rank {
      * Training School
      */
     TRAINING;
+
+    companion object {
+
+        /**
+         * Converts a string value to a [Rank].
+         */
+        fun fromString(string: String): Rank {
+            return when (string) {
+                "LOW" -> LOW
+                "HIGH" -> HIGH
+                "G" -> G
+                "TREASURE" -> TREASURE
+                "TRAINING" -> TRAINING
+                else -> throw IllegalArgumentException("Invalid rank value: $string")
+            }
+        }
+
+    }
 }
