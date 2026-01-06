@@ -23,4 +23,21 @@ enum class QuestType {
      * A special quest, only used in Fatalis quests.
      */
     SPECIAL;
+
+    companion object {
+
+        /**
+         * Converts a string value to a [QuestType].
+         */
+        fun fromString(string: String): QuestType {
+            return when (string) {
+                "NORMAL" -> NORMAL
+                "KEY" -> KEY
+                "URGENT" -> URGENT
+                "SPECIAL" -> SPECIAL
+                else -> throw IllegalArgumentException("Invalid quest type value: $string")
+            }
+        }
+
+    }
 }
