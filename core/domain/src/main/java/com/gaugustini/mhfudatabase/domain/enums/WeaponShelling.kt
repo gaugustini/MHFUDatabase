@@ -18,4 +18,20 @@ enum class WeaponShelling {
      * Spread shelling.
      */
     SPREAD;
+
+    companion object {
+
+        /**
+         * Converts a string value to a [WeaponShelling].
+         */
+        fun fromString(string: String): WeaponShelling {
+            return when (string) {
+                "NORMAL" -> NORMAL
+                "LONG" -> LONG
+                "SPREAD" -> SPREAD
+                else -> throw IllegalArgumentException("Invalid weapon shelling value: $string")
+            }
+        }
+
+    }
 }

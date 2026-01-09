@@ -103,4 +103,37 @@ enum class WeaponAmmo {
      * Armor S
      */
     ARMOR;
+
+    companion object {
+
+        /**
+         * Converts a string value to a [WeaponAmmo].
+         */
+        fun fromString(string: String): WeaponAmmo {
+            return when (string) {
+                "NORMAL", "RAPID" -> NORMAL_RAPID
+                "PIERCE" -> PIERCE
+                "PELLET", "SCATTER" -> PELLET_SCATTER
+                "POWER" -> POWER
+                "CLOSE" -> CLOSE_RANGE
+                "CRAG" -> CRAG
+                "CLUST" -> CLUST
+                "RECOVERY" -> RECOVERY
+                "POISON" -> POISON
+                "PARALYSIS" -> PARALYSIS
+                "SLEEP" -> SLEEP
+                "FLAME" -> FLAME
+                "WATER" -> WATER
+                "THUNDER" -> THUNDER
+                "FREEZE" -> FREEZE
+                "DRAGON" -> DRAGON
+                "TRANQUILIZER" -> TRANQUILIZER
+                "PAINT" -> PAINT
+                "DEMON" -> DEMON
+                "ARMOR" -> ARMOR
+                else -> throw IllegalArgumentException("Invalid weapon ammo value: $string")
+            }
+        }
+
+    }
 }

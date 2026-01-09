@@ -73,7 +73,9 @@ class UserEquipmentSetRepository @Inject constructor(
     /**
      * Deletes a user equipment set from the database.
      */
-    suspend fun deleteEquipmentSet(equipmentSetId: Int) {
+    suspend fun deleteEquipmentSet(
+        equipmentSetId: Int,
+    ) {
         userEquipmentSetDao.deleteEquipmentSet(equipmentSetId)
     }
 

@@ -43,4 +43,25 @@ enum class WeaponElement {
      * Sleep status.
      */
     SLEEP;
+
+    companion object {
+
+        /**
+         * Converts a string value to a [WeaponElement].
+         */
+        fun fromString(string: String): WeaponElement {
+            return when (string) {
+                "FIRE" -> FIRE
+                "WATER" -> WATER
+                "THUNDER" -> THUNDER
+                "ICE" -> ICE
+                "DRAGON" -> DRAGON
+                "POISON" -> POISON
+                "PARALYSIS" -> PARALYSIS
+                "SLEEP" -> SLEEP
+                else -> throw IllegalArgumentException("Invalid weapon element value: $string")
+            }
+        }
+
+    }
 }

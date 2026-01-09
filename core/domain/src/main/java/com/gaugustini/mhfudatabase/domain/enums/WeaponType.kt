@@ -62,28 +62,28 @@ enum class WeaponType {
     companion object {
 
         /**
-         * Returns a [WeaponType] from a string.
+         * Converts a string value to a [WeaponType].
          */
-        fun getWeaponTypeFromString(name: String): WeaponType {
-            return when (name) {
-                GREAT_SWORD.name -> GREAT_SWORD
-                LONG_SWORD.name -> LONG_SWORD
-                SWORD_AND_SHIELD.name -> SWORD_AND_SHIELD
-                DUAL_BLADES.name -> DUAL_BLADES
-                HAMMER.name -> HAMMER
-                HUNTING_HORN.name -> HUNTING_HORN
-                LANCE.name -> LANCE
-                GUNLANCE.name -> GUNLANCE
-                LIGHT_BOWGUN.name -> LIGHT_BOWGUN
-                HEAVY_BOWGUN.name -> HEAVY_BOWGUN
-                BOW.name -> BOW
-                else -> GREAT_SWORD
+        fun fromString(string: String): WeaponType {
+            return when (string) {
+                "GREAT_SWORD" -> GREAT_SWORD
+                "LONG_SWORD" -> LONG_SWORD
+                "SWORD_AND_SHIELD" -> SWORD_AND_SHIELD
+                "DUAL_BLADES" -> DUAL_BLADES
+                "HAMMER" -> HAMMER
+                "HUNTING_HORN" -> HUNTING_HORN
+                "LANCE" -> LANCE
+                "GUNLANCE" -> GUNLANCE
+                "LIGHT_BOWGUN" -> LIGHT_BOWGUN
+                "HEAVY_BOWGUN" -> HEAVY_BOWGUN
+                "BOW" -> BOW
+                else -> throw IllegalArgumentException("Invalid weapon type value: $string")
             }
         }
 
         /**
          * Returns a list of related weapon types.
-         * For example, Great Sword and Long Sword share the same weapon tree.
+         * For example, Great Sword and Long Sword are related because they share the same weapon tree.
          */
         fun getRelatedWeapons(weaponType: WeaponType): List<WeaponType> {
             return when (weaponType) {
