@@ -1,11 +1,13 @@
 package com.gaugustini.mhfudatabase.data.mapper
 
 import com.gaugustini.mhfudatabase.data.database.relation.WeaponWithText
+import com.gaugustini.mhfudatabase.domain.enums.WeaponAmmo
 import com.gaugustini.mhfudatabase.domain.enums.WeaponElement
 import com.gaugustini.mhfudatabase.domain.enums.WeaponRecoil
 import com.gaugustini.mhfudatabase.domain.enums.WeaponReloadSpeed
 import com.gaugustini.mhfudatabase.domain.enums.WeaponShelling
 import com.gaugustini.mhfudatabase.domain.enums.WeaponType
+import com.gaugustini.mhfudatabase.domain.model.Item
 import com.gaugustini.mhfudatabase.domain.model.Weapon
 
 /**
@@ -13,8 +15,14 @@ import com.gaugustini.mhfudatabase.domain.model.Weapon
  */
 object WeaponMapper {
 
-    fun map(
+    fun toModel(
         weapon: WeaponWithText,
+        ammoBow: Map<WeaponAmmo, Boolean>?,
+        ammoBowgun: Map<WeaponAmmo, String>?,
+        charges: Map<WeaponAmmo, Int>?,
+        rapidFire: String?,
+        recipeCreate: List<Item>,
+        recipeUpgrade: List<Item>,
     ): Weapon {
         return Weapon(
             id = weapon.weapon.id,
@@ -40,19 +48,13 @@ object WeaponMapper {
             songNotes = weapon.weapon.songNotes,
             reloadSpeed = weapon.weapon.reloadSpeed?.let { WeaponReloadSpeed.fromString(it) },
             recoil = weapon.weapon.recoil?.let { WeaponRecoil.fromString(it) },
-            ammoBow = null,
-            ammoBowgun = null,
-            charges = null,
-            rapidFire = null,
-            recipeCreate = emptyList(),
-            recipeUpgrade = emptyList(),
+            ammoBow = ammoBow,
+            ammoBowgun = ammoBowgun,
+            charges = charges,
+            rapidFire = rapidFire,
+            recipeCreate = recipeCreate,
+            recipeUpgrade = recipeUpgrade,
         )
-    }
-
-    fun mapList(
-        weapons: List<WeaponWithText>,
-    ): List<Weapon> {
-        return weapons.map { map(it) }
     }
 
 }

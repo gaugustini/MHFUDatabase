@@ -25,7 +25,10 @@ class SkillRepository @Inject constructor(
         val skillTreeWithText = skillDao.getSkillTree(skillTreeId, language)
         val skills = getSkillsForSkillTree(skillTreeId, language)
 
-        return SkillMapper.map(skillTreeWithText, skills)
+        return SkillMapper.toModel(
+            skillTree = skillTreeWithText,
+            skills = skills,
+        )
     }
 
     /**
@@ -35,9 +38,14 @@ class SkillRepository @Inject constructor(
         language: String,
     ): List<SkillTree> {
         val skillTreesWithText = skillDao.getSkillTreeList(language)
-        val skills = getSkillList(language)
+        val skillsGroupedBySkillTree = getSkillList(language).groupBy { it.skillTreeId }
 
-        return SkillMapper.mapList(skillTreesWithText, skills)
+        return skillTreesWithText.map {
+            SkillMapper.toModel(
+                skillTree = it,
+                skills = skillsGroupedBySkillTree[it.skillTree.id] ?: emptyList(),
+            )
+        }
     }
 
     /**
@@ -48,7 +56,7 @@ class SkillRepository @Inject constructor(
     ): List<Skill> {
         val skillsWithText = skillDao.getSkillList(language)
 
-        return SkillMapper.mapList(skillsWithText)
+        return skillsWithText.map { SkillMapper.toModel(it) }
     }
 
     /**
@@ -60,7 +68,7 @@ class SkillRepository @Inject constructor(
     ): List<Skill> {
         val skillsWithText = skillDao.getSkillListBySkillTreeId(skillTreeId, language)
 
-        return SkillMapper.mapList(skillsWithText)
+        return skillsWithText.map { SkillMapper.toModel(it) }
     }
 
 }

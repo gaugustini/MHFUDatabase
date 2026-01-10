@@ -13,8 +13,10 @@ import com.gaugustini.mhfudatabase.domain.model.ItemCombination
  */
 object ItemMapper {
 
-    fun map(
+    fun toModel(
         item: ItemWithText,
+        quantity: Int? = null,
+        percentage: Int? = null,
     ): Item {
         return Item(
             id = item.item.id,
@@ -26,34 +28,26 @@ object ItemMapper {
             carryMax = item.item.carryMax,
             iconType = ItemIconType.fromString(item.item.iconType),
             iconColor = ItemIconColor.fromString(item.item.iconColor),
-            quantity = null,
-            percentage = null,
+            quantity = quantity,
+            percentage = percentage,
         )
     }
 
-    fun mapList(
-        items: List<ItemWithText>,
-    ): List<Item> {
-        return items.map { map(it) }
-    }
-
-    fun mapList(
-        items: List<ItemWithText>,
-        combinations: List<ItemCombinationEntity>,
-    ): List<ItemCombination> {
-        val itemsById = items.associateBy { it.item.id }
-
-        return combinations.map {
-            ItemCombination(
-                itemCreated = map(itemsById[it.itemCreatedId]!!),
-                itemA = map(itemsById[it.itemAId]!!),
-                itemB = map(itemsById[it.itemBId]!!),
-                type = ItemCombinationType.fromString(it.combinationType),
-                quantityMin = it.quantityMin,
-                quantityMax = it.quantityMax,
-                percentage = it.percentage,
-            )
-        }
+    fun toModel(
+        combination: ItemCombinationEntity,
+        itemCreated: Item,
+        itemA: Item,
+        itemB: Item,
+    ): ItemCombination {
+        return ItemCombination(
+            itemCreated = itemCreated,
+            itemA = itemA,
+            itemB = itemB,
+            type = ItemCombinationType.fromString(combination.combinationType),
+            quantityMin = combination.quantityMin,
+            quantityMax = combination.quantityMax,
+            percentage = combination.percentage,
+        )
     }
 
 }

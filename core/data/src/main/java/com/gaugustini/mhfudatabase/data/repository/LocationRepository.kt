@@ -24,7 +24,10 @@ class LocationRepository @Inject constructor(
     ): Location {
         val locationWithText = locationDao.getLocation(locationId, language)
 
-        return LocationMapper.map(locationWithText)
+        return LocationMapper.toModel(
+            location = locationWithText,
+            items = emptyMap(),
+        )
     }
 
     /**
@@ -35,7 +38,12 @@ class LocationRepository @Inject constructor(
     ): List<Location> {
         val locationsWithText = locationDao.getLocationList(language)
 
-        return LocationMapper.mapList(locationsWithText)
+        return locationsWithText.map {
+            LocationMapper.toModel(
+                location = it,
+                items = emptyMap(),
+            )
+        }
     }
 
 }

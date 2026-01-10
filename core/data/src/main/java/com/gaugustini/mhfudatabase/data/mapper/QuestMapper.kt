@@ -5,6 +5,7 @@ import com.gaugustini.mhfudatabase.domain.enums.HubType
 import com.gaugustini.mhfudatabase.domain.enums.QuestGoal
 import com.gaugustini.mhfudatabase.domain.enums.QuestType
 import com.gaugustini.mhfudatabase.domain.model.Location
+import com.gaugustini.mhfudatabase.domain.model.Monster
 import com.gaugustini.mhfudatabase.domain.model.Quest
 
 /**
@@ -12,8 +13,10 @@ import com.gaugustini.mhfudatabase.domain.model.Quest
  */
 object QuestMapper {
 
-    fun map(
+    fun toModel(
         quest: QuestWithText,
+        location: Location,
+        monsters: List<Monster>,
     ): Quest {
         return Quest(
             id = quest.quest.id,
@@ -28,15 +31,9 @@ object QuestMapper {
             reward = quest.quest.reward,
             fee = quest.quest.fee,
             timeLimit = quest.quest.timeLimit,
-            location = Location(quest.quest.locationId, "", mapOf()),
-            monsters = emptyList(),
+            location = location,
+            monsters = monsters,
         )
-    }
-
-    fun mapList(
-        quests: List<QuestWithText>,
-    ): List<Quest> {
-        return quests.map { map(it) }
     }
 
 }

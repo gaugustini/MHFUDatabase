@@ -14,6 +14,11 @@ import com.gaugustini.mhfudatabase.domain.enums.MonsterType
  * @property sizeSmallestMax The maximum size for a small crown.
  * @property sizeLargestMin The minimum size for a large crown.
  * @property sizeLargestMax The maximum size for a large crown.
+ * @property damageStats The list of hitzones and their corresponding values for the monster.
+ * @property ailmentStats The list of ailments and their corresponding resistances.
+ * @property itemEffectiveness The effectiveness of certain items on the monster (e.g., pitfall trap).
+ * @property rewards The list of items that the monster rewards.
+ * @property quests The list of quests the monster can be encountered in.
  */
 data class Monster(
     val id: Int,
@@ -25,4 +30,9 @@ data class Monster(
     val sizeSmallestMax: Int?,
     val sizeLargestMin: Int?,
     val sizeLargestMax: Int?,
+    val damageStats: List<MonsterDamageStats>,
+    val ailmentStats: List<MonsterAilmentStats>,
+    val itemEffectiveness: MonsterItemEffectiveness,
+    val rewards: List<Item>,
+    val quests: List<Quest>,
 )

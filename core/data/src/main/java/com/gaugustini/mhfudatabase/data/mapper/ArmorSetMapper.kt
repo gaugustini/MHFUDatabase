@@ -13,7 +13,7 @@ import com.gaugustini.mhfudatabase.domain.model.SkillTree
  */
 object ArmorSetMapper {
 
-    fun map(
+    fun toModel(
         armorSet: ArmorSetWithText,
         armors: List<Armor>,
     ): ArmorSet {
@@ -70,20 +70,6 @@ object ArmorSetMapper {
             skills = skills,
             recipe = recipe,
         )
-    }
-
-    fun mapList(
-        armorSets: List<ArmorSetWithText>,
-        armors: List<Armor>,
-    ): List<ArmorSet> {
-        val armorsGroupedByArmorSet = armors.groupBy { it.armorSetId }
-
-        return armorSets.map {
-            map(
-                armorSet = it,
-                armors = armorsGroupedByArmorSet[it.armorSet.id] ?: emptyList(),
-            )
-        }
     }
 
 }

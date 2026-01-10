@@ -2,15 +2,25 @@ package com.gaugustini.mhfudatabase.data.mapper
 
 import com.gaugustini.mhfudatabase.data.database.relation.MonsterWithText
 import com.gaugustini.mhfudatabase.domain.enums.MonsterType
+import com.gaugustini.mhfudatabase.domain.model.Item
 import com.gaugustini.mhfudatabase.domain.model.Monster
+import com.gaugustini.mhfudatabase.domain.model.MonsterAilmentStats
+import com.gaugustini.mhfudatabase.domain.model.MonsterDamageStats
+import com.gaugustini.mhfudatabase.domain.model.MonsterItemEffectiveness
+import com.gaugustini.mhfudatabase.domain.model.Quest
 
 /**
  * Mapper for Monster entities.
  */
 object MonsterMapper {
 
-    fun map(
+    fun toModel(
         monster: MonsterWithText,
+        damageStats: List<MonsterDamageStats>,
+        ailmentStats: List<MonsterAilmentStats>,
+        itemEffectiveness: MonsterItemEffectiveness,
+        rewards: List<Item>,
+        quests: List<Quest>,
     ): Monster {
         return Monster(
             id = monster.monster.id,
@@ -22,13 +32,12 @@ object MonsterMapper {
             sizeSmallestMax = monster.monster.sizeSmallestMax,
             sizeLargestMin = monster.monster.sizeLargestMin,
             sizeLargestMax = monster.monster.sizeLargestMax,
+            damageStats = damageStats,
+            ailmentStats = ailmentStats,
+            itemEffectiveness = itemEffectiveness,
+            rewards = rewards,
+            quests = quests,
         )
-    }
-
-    fun mapList(
-        monsters: List<MonsterWithText>,
-    ): List<Monster> {
-        return monsters.map { map(it) }
     }
 
 }

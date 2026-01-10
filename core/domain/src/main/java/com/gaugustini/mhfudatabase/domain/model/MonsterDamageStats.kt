@@ -14,7 +14,7 @@ package com.gaugustini.mhfudatabase.domain.model
  * @property ice The weakness to ice damage.
  * @property dragon The weakness to dragon damage.
  */
-data class MonsterHitzone(
+data class MonsterDamageStats(
     val monsterId: Int,
     val name: String,
     val cut: Int,

@@ -11,7 +11,7 @@ import com.gaugustini.mhfudatabase.domain.model.SkillTree
  */
 object SkillMapper {
 
-    fun map(
+    fun toModel(
         skillTree: SkillTreeWithText,
         skills: List<Skill>,
         points: Int? = null,
@@ -25,7 +25,7 @@ object SkillMapper {
         )
     }
 
-    fun map(
+    fun toModel(
         skill: SkillWithText,
     ): Skill {
         return Skill(
@@ -35,26 +35,6 @@ object SkillMapper {
             description = skill.skillText.description,
             requiredPoints = skill.skill.requiredPoints,
         )
-    }
-
-    fun mapList(
-        skillTrees: List<SkillTreeWithText>,
-        skills: List<Skill>,
-    ): List<SkillTree> {
-        val skillsGroupedBySkillTree = skills.groupBy { it.skillTreeId }
-
-        return skillTrees.map {
-            map(
-                skillTree = it,
-                skills = skillsGroupedBySkillTree[it.skillTree.id] ?: emptyList(),
-            )
-        }
-    }
-
-    fun mapList(
-        skills: List<SkillWithText>,
-    ): List<Skill> {
-        return skills.map { map(it) }
     }
 
 }

@@ -6,6 +6,7 @@ import com.gaugustini.mhfudatabase.domain.model.Weapon
 import javax.inject.Inject
 import javax.inject.Singleton
 
+//TODO: Add weapon remain data (ammo, charges, rapid fire, ...); Create weapon tree
 /**
  * Data repository for Weapon.
  */
@@ -23,7 +24,15 @@ class WeaponRepository @Inject constructor(
     ): Weapon {
         val weaponWithText = weaponDao.getWeapon(weaponId, language)
 
-        return WeaponMapper.map(weaponWithText)
+        return WeaponMapper.toModel(
+            weapon = weaponWithText,
+            ammoBow = null,
+            ammoBowgun = null,
+            charges = null,
+            rapidFire = null,
+            recipeCreate = emptyList(),
+            recipeUpgrade = emptyList(),
+        )
     }
 
     /**
@@ -34,7 +43,17 @@ class WeaponRepository @Inject constructor(
     ): List<Weapon> {
         val weaponsWithText = weaponDao.getWeaponList(language)
 
-        return WeaponMapper.mapList(weaponsWithText)
+        return weaponsWithText.map {
+            WeaponMapper.toModel(
+                weapon = it,
+                ammoBow = null,
+                ammoBowgun = null,
+                charges = null,
+                rapidFire = null,
+                recipeCreate = emptyList(),
+                recipeUpgrade = emptyList(),
+            )
+        }
     }
 
 }

@@ -25,7 +25,7 @@ class ItemRepository @Inject constructor(
     ): Item {
         val itemWithText = itemDao.getItem(itemId, language)
 
-        return ItemMapper.map(itemWithText)
+        return ItemMapper.toModel(itemWithText)
     }
 
     /**
@@ -36,7 +36,7 @@ class ItemRepository @Inject constructor(
     ): List<Item> {
         val itemsWithText = itemDao.getItemList(language)
 
-        return ItemMapper.mapList(itemsWithText)
+        return itemsWithText.map { ItemMapper.toModel(it) }
     }
 
     /**
@@ -50,8 +50,16 @@ class ItemRepository @Inject constructor(
             .flatMap { listOf(it.itemCreatedId, it.itemAId, it.itemBId) }
             .distinct()
         val itemsWithText = itemDao.getItemListByIds(itemIds, language)
+        val items = itemsWithText.map { ItemMapper.toModel(it) }.associateBy { it.id }
 
-        return ItemMapper.mapList(itemsWithText, itemCombinations)
+        return itemCombinations.map {
+            ItemMapper.toModel(
+                combination = it,
+                itemCreated = items[it.itemCreatedId]!!,
+                itemA = items[it.itemAId]!!,
+                itemB = items[it.itemBId]!!,
+            )
+        }
     }
 
 }

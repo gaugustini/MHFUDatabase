@@ -28,20 +28,11 @@ class ArmorRepository @Inject constructor(
     ): Armor {
         val armorWithText = armorDao.getArmor(armorId, language)
 
-        return ArmorMapper.map(armorWithText)
-    }
-
-    /**
-     * Returns the armor set with the given ID.
-     */
-    suspend fun getArmorSet(
-        armorSetId: Int,
-        language: String,
-    ): ArmorSet {
-        val armorSetWithText = armorSetDao.getArmorSet(armorSetId, language)
-        val armors = getArmorListForSet(armorSetId, language)
-
-        return ArmorSetMapper.map(armorSetWithText, armors)
+        return ArmorMapper.toModel(
+            armor = armorWithText,
+            skills = emptyList(),
+            recipe = emptyList(),
+        )
     }
 
     /**
@@ -52,19 +43,47 @@ class ArmorRepository @Inject constructor(
     ): List<Armor> {
         val armorsWithText = armorDao.getArmorList(language)
 
-        return ArmorMapper.mapList(armorsWithText)
+        return armorsWithText.map {
+            ArmorMapper.toModel(
+                armor = it,
+                skills = emptyList(),
+                recipe = emptyList(),
+            )
+        }
     }
 
     /**
      * Returns the list of armors for the given armor set ID.
      */
-    suspend fun getArmorListForSet(
+    suspend fun getArmorListForArmorSet(
         armorSetId: Int,
         language: String,
     ): List<Armor> {
         val armorsWithText = armorDao.getArmorListByArmorSetId(armorSetId, language)
 
-        return ArmorMapper.mapList(armorsWithText)
+        return armorsWithText.map {
+            ArmorMapper.toModel(
+                armor = it,
+                skills = emptyList(),
+                recipe = emptyList(),
+            )
+        }
+    }
+
+    /**
+     * Returns the armor set with the given ID.
+     */
+    suspend fun getArmorSet(
+        armorSetId: Int,
+        language: String,
+    ): ArmorSet {
+        val armorSetWithText = armorSetDao.getArmorSet(armorSetId, language)
+        val armors = getArmorListForArmorSet(armorSetId, language)
+
+        return ArmorSetMapper.toModel(
+            armorSet = armorSetWithText,
+            armors = armors,
+        )
     }
 
     /**
@@ -74,9 +93,14 @@ class ArmorRepository @Inject constructor(
         language: String,
     ): List<ArmorSet> {
         val armorSetsWithText = armorSetDao.getArmorSetList(language)
-        val armors = getArmorList(language)
+        val armorsGroupedByArmorSet = getArmorList(language).groupBy { it.armorSetId }
 
-        return ArmorSetMapper.mapList(armorSetsWithText, armors)
+        return armorSetsWithText.map {
+            ArmorSetMapper.toModel(
+                armorSet = it,
+                armors = armorsGroupedByArmorSet[it.armorSet.id] ?: emptyList(),
+            )
+        }
     }
 
 }

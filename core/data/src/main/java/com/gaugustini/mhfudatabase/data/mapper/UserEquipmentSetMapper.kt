@@ -13,7 +13,7 @@ import com.gaugustini.mhfudatabase.domain.model.Weapon
  */
 object UserEquipmentSetMapper {
 
-    fun map(
+    fun toModel(
         equipmentSet: UserEquipmentSetEntity,
         weapon: Weapon?,
         armors: List<Armor>,
@@ -44,20 +44,7 @@ object UserEquipmentSetMapper {
         )
     }
 
-    fun mapList(
-        equipmentSets: List<UserEquipmentSetEntity>,
-    ): List<UserEquipmentSet> {
-        return equipmentSets.map {
-            map(
-                equipmentSet = it,
-                weapon = null,
-                armors = emptyList(),
-                decorations = emptyList(),
-            )
-        }
-    }
-
-    fun mapToEntity(
+    fun toEntity(
         equipmentSet: UserEquipmentSet,
     ): UserEquipmentSetEntity {
         return UserEquipmentSetEntity(
@@ -67,7 +54,7 @@ object UserEquipmentSetMapper {
         )
     }
 
-    fun mapToArmorEntities(
+    fun toArmorEntities(
         equipmentSet: UserEquipmentSet,
     ): List<UserEquipmentSetArmorEntity> {
         return equipmentSet.armors.map { armor ->
@@ -78,7 +65,7 @@ object UserEquipmentSetMapper {
         }
     }
 
-    fun mapToDecorationEntities(
+    fun toDecorationEntities(
         equipmentSet: UserEquipmentSet,
     ): List<UserEquipmentSetDecorationEntity> {
         return equipmentSet.decorations.map { decoration ->

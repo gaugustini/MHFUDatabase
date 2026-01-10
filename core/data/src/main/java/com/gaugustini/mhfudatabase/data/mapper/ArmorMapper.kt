@@ -5,14 +5,18 @@ import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
 import com.gaugustini.mhfudatabase.domain.enums.Gender
 import com.gaugustini.mhfudatabase.domain.enums.HunterType
 import com.gaugustini.mhfudatabase.domain.model.Armor
+import com.gaugustini.mhfudatabase.domain.model.Item
+import com.gaugustini.mhfudatabase.domain.model.SkillTree
 
 /**
  * Mapper for Armor entities.
  */
 object ArmorMapper {
 
-    fun map(
+    fun toModel(
         armor: ArmorWithText,
+        skills: List<SkillTree>,
+        recipe: List<Item>,
     ): Armor {
         return Armor(
             id = armor.armor.id,
@@ -32,15 +36,9 @@ object ArmorMapper {
             thunder = armor.armor.thunderResistance,
             ice = armor.armor.iceResistance,
             dragon = armor.armor.dragonResistance,
-            skills = emptyList(),
-            recipe = emptyList(),
+            skills = skills,
+            recipe = recipe,
         )
-    }
-
-    fun mapList(
-        armors: List<ArmorWithText>,
-    ): List<Armor> {
-        return armors.map { map(it) }
     }
 
 }

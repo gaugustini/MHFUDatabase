@@ -24,7 +24,12 @@ class UserEquipmentSetRepository @Inject constructor(
     ): UserEquipmentSet {
         val equipmentSet = userEquipmentSetDao.getEquipmentSet(equipmentSetId)
 
-        return UserEquipmentSetMapper.map(equipmentSet, null, emptyList(), emptyList())
+        return UserEquipmentSetMapper.toModel(
+            equipmentSet = equipmentSet,
+            weapon = null,
+            armors = emptyList(),
+            decorations = emptyList(),
+        )
     }
 
     /**
@@ -33,7 +38,14 @@ class UserEquipmentSetRepository @Inject constructor(
     suspend fun getEquipmentSets(): List<UserEquipmentSet> {
         val equipmentSets = userEquipmentSetDao.getEquipmentSets()
 
-        return UserEquipmentSetMapper.mapList(equipmentSets)
+        return equipmentSets.map {
+            UserEquipmentSetMapper.toModel(
+                equipmentSet = it,
+                weapon = null,
+                armors = emptyList(),
+                decorations = emptyList(),
+            )
+        }
     }
 
     /**
@@ -42,9 +54,9 @@ class UserEquipmentSetRepository @Inject constructor(
     suspend fun insertNewEquipmentSet(
         equipmentSet: UserEquipmentSet,
     ): Int {
-        val equipmentSetEntity = UserEquipmentSetMapper.mapToEntity(equipmentSet)
-        val equipmentSetArmorsEntity = UserEquipmentSetMapper.mapToArmorEntities(equipmentSet)
-        val equipmentSetDecorationsEntity = UserEquipmentSetMapper.mapToDecorationEntities(equipmentSet)
+        val equipmentSetEntity = UserEquipmentSetMapper.toEntity(equipmentSet)
+        val equipmentSetArmorsEntity = UserEquipmentSetMapper.toArmorEntities(equipmentSet)
+        val equipmentSetDecorationsEntity = UserEquipmentSetMapper.toDecorationEntities(equipmentSet)
 
         return userEquipmentSetDao.insertNewEquipmentSet(
             equipmentSetEntity,
@@ -59,9 +71,9 @@ class UserEquipmentSetRepository @Inject constructor(
     suspend fun updateEquipmentSet(
         equipmentSet: UserEquipmentSet,
     ) {
-        val equipmentSetEntity = UserEquipmentSetMapper.mapToEntity(equipmentSet)
-        val equipmentSetArmorsEntity = UserEquipmentSetMapper.mapToArmorEntities(equipmentSet)
-        val equipmentSetDecorationsEntity = UserEquipmentSetMapper.mapToDecorationEntities(equipmentSet)
+        val equipmentSetEntity = UserEquipmentSetMapper.toEntity(equipmentSet)
+        val equipmentSetArmorsEntity = UserEquipmentSetMapper.toArmorEntities(equipmentSet)
+        val equipmentSetDecorationsEntity = UserEquipmentSetMapper.toDecorationEntities(equipmentSet)
 
         userEquipmentSetDao.updateEquipmentSet(
             equipmentSetEntity,
