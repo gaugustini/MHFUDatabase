@@ -9,12 +9,18 @@ import com.gaugustini.mhfudatabase.domain.enums.SkillCategory
  * @property name The name of the skill tree (e.g., "Attack", "Health").
  * @property category The category of the skill.
  * @property skills The list of skills that belong to this skill tree.
- * @property points The number of points contributed by a piece of equipment towards this skill tree.
  */
 data class SkillTree(
     val id: Int,
     val name: String,
     val category: SkillCategory,
     val skills: List<Skill>,
-    val points: Int?,
+)
+
+/**
+ * Represents a skill tree and the points in an equipment.
+ */
+data class SkillPoint(
+    val skillTree: SkillTree,
+    val points: Int,
 )

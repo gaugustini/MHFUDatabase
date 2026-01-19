@@ -12,4 +12,11 @@ data class ArmorSetWithText(
     val armorSet: ArmorSetEntity,
     @Embedded
     val armorSetText: ArmorSetTextEntity,
+    val defense: Int,
+    val maxDefense: Int,
+    val fire: Int,
+    val water: Int,
+    val thunder: Int,
+    val ice: Int,
+    val dragon: Int,
 )

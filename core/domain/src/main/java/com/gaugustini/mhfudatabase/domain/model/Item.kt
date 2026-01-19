@@ -15,19 +15,27 @@ import com.gaugustini.mhfudatabase.domain.enums.ItemIconType
  * @property carryMax The maximum number of this item that can be carried.
  * @property iconType The type of icon for the item.
  * @property iconColor The color of the icon for the item.
- * @property quantity The quantity of the item (used for general purposes).
- * @property percentage The percentage chance of obtaining the item (used for rewards).
+ * @property sources Where the item can be obtained.
+ * @property usages Where the item can be used.
  */
 data class Item(
     val id: Int,
     val name: String,
     val description: String,
     val rarity: Int,
-    val buyPrice: Int,
+    val buyPrice: Int?,
     val sellPrice: Int,
     val carryMax: Int,
     val iconType: ItemIconType,
     val iconColor: ItemIconColor,
-    val quantity: Int?,
-    val percentage: Int?,
+    val sources: ItemSources = ItemSources(),
+    val usages: ItemUsages = ItemUsages(),
+)
+
+/**
+ * Represents a item and quantity used to craft or upgrade an equipment.
+ */
+data class ItemQuantity(
+    val item: Item,
+    val quantity: Int,
 )

@@ -9,7 +9,6 @@ import com.gaugustini.mhfudatabase.domain.model.ArmorSet
 import javax.inject.Inject
 import javax.inject.Singleton
 
-//TODO: Add skills and recipe for armors
 /**
  * Data repository for Armor and Armor Set.
  */
@@ -26,48 +25,11 @@ class ArmorRepository @Inject constructor(
         armorId: Int,
         language: String,
     ): Armor {
-        val armorWithText = armorDao.getArmor(armorId, language)
-
         return ArmorMapper.toModel(
-            armor = armorWithText,
-            skills = emptyList(),
-            recipe = emptyList(),
+            armor = armorDao.getArmor(armorId, language),
+            skills = armorDao.getArmorSkillsByArmorId(armorId, language),
+            recipe = armorDao.getArmorRecipeByArmorId(armorId, language),
         )
-    }
-
-    /**
-     * Returns the list of all armors.
-     */
-    suspend fun getArmorList(
-        language: String,
-    ): List<Armor> {
-        val armorsWithText = armorDao.getArmorList(language)
-
-        return armorsWithText.map {
-            ArmorMapper.toModel(
-                armor = it,
-                skills = emptyList(),
-                recipe = emptyList(),
-            )
-        }
-    }
-
-    /**
-     * Returns the list of armors for the given armor set ID.
-     */
-    suspend fun getArmorListForArmorSet(
-        armorSetId: Int,
-        language: String,
-    ): List<Armor> {
-        val armorsWithText = armorDao.getArmorListByArmorSetId(armorSetId, language)
-
-        return armorsWithText.map {
-            ArmorMapper.toModel(
-                armor = it,
-                skills = emptyList(),
-                recipe = emptyList(),
-            )
-        }
     }
 
     /**
@@ -77,28 +39,30 @@ class ArmorRepository @Inject constructor(
         armorSetId: Int,
         language: String,
     ): ArmorSet {
-        val armorSetWithText = armorSetDao.getArmorSet(armorSetId, language)
-        val armors = getArmorListForArmorSet(armorSetId, language)
-
         return ArmorSetMapper.toModel(
-            armorSet = armorSetWithText,
-            armors = armors,
+            armorSet = armorSetDao.getArmorSet(armorSetId, language),
+            armors = armorDao.getArmorListByArmorSetId(armorSetId, language),
+            skills = armorSetDao.getArmorSetSkillsByArmorSetId(armorSetId, language),
+            recipe = armorSetDao.getArmorSetRecipeByArmorSetId(armorSetId, language),
         )
     }
 
     /**
      * Returns the list of all armor sets.
+     * Note: skills and recipe are not populated.
      */
     suspend fun getArmorSetList(
         language: String,
     ): List<ArmorSet> {
         val armorSetsWithText = armorSetDao.getArmorSetList(language)
-        val armorsGroupedByArmorSet = getArmorList(language).groupBy { it.armorSetId }
+        val armorsGroupedByArmorSet = armorDao.getArmorList(language).groupBy { it.armor.armorSetId }
 
         return armorSetsWithText.map {
             ArmorSetMapper.toModel(
                 armorSet = it,
                 armors = armorsGroupedByArmorSet[it.armorSet.id] ?: emptyList(),
+                skills = emptyList(),
+                recipe = emptyList(),
             )
         }
     }
