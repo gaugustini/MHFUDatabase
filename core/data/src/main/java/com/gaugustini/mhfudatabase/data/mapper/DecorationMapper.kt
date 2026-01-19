@@ -1,11 +1,10 @@
 package com.gaugustini.mhfudatabase.data.mapper
 
 import com.gaugustini.mhfudatabase.data.database.relation.DecorationWithText
-import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
+import com.gaugustini.mhfudatabase.data.database.relation.EquipmentItemQuantity
+import com.gaugustini.mhfudatabase.data.database.relation.EquipmentSkillTreePoint
 import com.gaugustini.mhfudatabase.domain.enums.ItemIconColor
 import com.gaugustini.mhfudatabase.domain.model.Decoration
-import com.gaugustini.mhfudatabase.domain.model.Item
-import com.gaugustini.mhfudatabase.domain.model.SkillTree
 
 /**
  * Mapper for Decoration entities.
@@ -14,11 +13,9 @@ object DecorationMapper {
 
     fun toModel(
         decoration: DecorationWithText,
-        skills: List<SkillTree>,
-        recipeA: List<Item>,
-        recipeB: List<Item>,
-        equipmentType: EquipmentType? = null,
-        quantity: Int? = null,
+        skills: List<EquipmentSkillTreePoint>,
+        recipeA: List<EquipmentItemQuantity>,
+        recipeB: List<EquipmentItemQuantity>,
     ): Decoration {
         return Decoration(
             id = decoration.decoration.id,
@@ -29,11 +26,9 @@ object DecorationMapper {
             sellPrice = decoration.item.sellPrice,
             requiredSlots = decoration.decoration.requiredSlots,
             color = ItemIconColor.fromString(decoration.item.iconColor),
-            skills = skills,
-            recipeA = recipeA,
-            recipeB = recipeB,
-            equipmentType = equipmentType,
-            quantity = quantity,
+            skills = skills.map { SkillMapper.toSkillPoint(it) },
+            recipeA = recipeA.map { ItemMapper.toItemQuantity(it) },
+            recipeB = recipeB.map { ItemMapper.toItemQuantity(it) },
         )
     }
 

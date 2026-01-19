@@ -2,7 +2,6 @@ package com.gaugustini.mhfudatabase.data.repository
 
 import com.gaugustini.mhfudatabase.data.database.dao.SkillDao
 import com.gaugustini.mhfudatabase.data.mapper.SkillMapper
-import com.gaugustini.mhfudatabase.domain.model.Skill
 import com.gaugustini.mhfudatabase.domain.model.SkillTree
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -22,12 +21,9 @@ class SkillRepository @Inject constructor(
         skillTreeId: Int,
         language: String,
     ): SkillTree {
-        val skillTreeWithText = skillDao.getSkillTree(skillTreeId, language)
-        val skills = getSkillsForSkillTree(skillTreeId, language)
-
         return SkillMapper.toModel(
-            skillTree = skillTreeWithText,
-            skills = skills,
+            skillTree = skillDao.getSkillTree(skillTreeId, language),
+            skills = skillDao.getSkillListBySkillTreeId(skillTreeId, language),
         )
     }
 
@@ -38,7 +34,7 @@ class SkillRepository @Inject constructor(
         language: String,
     ): List<SkillTree> {
         val skillTreesWithText = skillDao.getSkillTreeList(language)
-        val skillsGroupedBySkillTree = getSkillList(language).groupBy { it.skillTreeId }
+        val skillsGroupedBySkillTree = skillDao.getSkillList(language).groupBy { it.skill.skillTreeId }
 
         return skillTreesWithText.map {
             SkillMapper.toModel(
@@ -46,29 +42,6 @@ class SkillRepository @Inject constructor(
                 skills = skillsGroupedBySkillTree[it.skillTree.id] ?: emptyList(),
             )
         }
-    }
-
-    /**
-     * Returns the list of all skills.
-     */
-    suspend fun getSkillList(
-        language: String,
-    ): List<Skill> {
-        val skillsWithText = skillDao.getSkillList(language)
-
-        return skillsWithText.map { SkillMapper.toModel(it) }
-    }
-
-    /**
-     * Returns the list of skills of the given skill tree ID.
-     */
-    suspend fun getSkillsForSkillTree(
-        skillTreeId: Int,
-        language: String,
-    ): List<Skill> {
-        val skillsWithText = skillDao.getSkillListBySkillTreeId(skillTreeId, language)
-
-        return skillsWithText.map { SkillMapper.toModel(it) }
     }
 
 }

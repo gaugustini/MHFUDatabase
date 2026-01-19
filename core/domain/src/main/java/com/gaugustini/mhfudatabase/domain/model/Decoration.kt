@@ -1,6 +1,5 @@
 package com.gaugustini.mhfudatabase.domain.model
 
-import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
 import com.gaugustini.mhfudatabase.domain.enums.ItemIconColor
 
 /**
@@ -17,8 +16,6 @@ import com.gaugustini.mhfudatabase.domain.enums.ItemIconColor
  * @property skills The list of skill points provided by this decoration.
  * @property recipeA The first possible recipe to craft this decoration.
  * @property recipeB The second possible recipe to craft this decoration.
- * @property equipmentType The type of equipment this decoration is used (for user equipment).
- * @property quantity The quantity of the decoration (for user equipment).
  */
 data class Decoration(
     val id: Int,
@@ -29,9 +26,7 @@ data class Decoration(
     val sellPrice: Int,
     val requiredSlots: Int,
     val color: ItemIconColor,
-    val skills: List<SkillTree>,
-    val recipeA: List<Item>,
-    val recipeB: List<Item>,
-    val equipmentType: EquipmentType?,
-    val quantity: Int?,
+    val skills: List<SkillPoint>,
+    val recipeA: List<ItemQuantity>,
+    val recipeB: List<ItemQuantity>,
 )

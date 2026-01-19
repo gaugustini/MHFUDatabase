@@ -6,7 +6,6 @@ import com.gaugustini.mhfudatabase.domain.model.Decoration
 import javax.inject.Inject
 import javax.inject.Singleton
 
-//TODO: Add skills and recipe for decorations
 /**
  * Data repository for Decoration.
  */
@@ -22,18 +21,17 @@ class DecorationRepository @Inject constructor(
         decorationId: Int,
         language: String,
     ): Decoration {
-        val decorationWithText = decorationDao.getDecoration(decorationId, language)
-
         return DecorationMapper.toModel(
-            decoration = decorationWithText,
-            skills = emptyList(),
-            recipeA = emptyList(),
-            recipeB = emptyList(),
+            decoration = decorationDao.getDecoration(decorationId, language),
+            skills = decorationDao.getDecorationSkillsByDecorationId(decorationId, language),
+            recipeA = decorationDao.getDecorationRecipeByDecorationId(decorationId, 1, language),
+            recipeB = decorationDao.getDecorationRecipeByDecorationId(decorationId, 2, language),
         )
     }
 
     /**
      * Returns the list of all decorations.
+     * Note: skills and recipes are not populated.
      */
     suspend fun getDecorationList(
         language: String,

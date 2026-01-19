@@ -3,6 +3,8 @@ package com.gaugustini.mhfudatabase.data.database.dao
 import androidx.room.Dao
 import androidx.room.Query
 import com.gaugustini.mhfudatabase.data.database.relation.DecorationWithText
+import com.gaugustini.mhfudatabase.data.database.relation.EquipmentItemQuantity
+import com.gaugustini.mhfudatabase.data.database.relation.EquipmentSkillTreePoint
 
 /**
  * [Dao] for Decoration related database operations.
@@ -34,5 +36,50 @@ interface DecorationDao {
         """
     )
     suspend fun getDecorationList(language: String): List<DecorationWithText>
+
+    @Query(
+        """
+        SELECT 
+            decoration_skill.decoration_id AS equipmentId,
+            decoration_skill.point_value AS points,
+            skill_tree.*,
+            skill_tree_text.* 
+        FROM decoration_skill
+        JOIN skill_tree
+            ON decoration_skill.skill_tree_id = skill_tree.id
+        JOIN skill_tree_text
+            ON decoration_skill.skill_tree_id = skill_tree_text.skill_tree_id
+            AND skill_tree_text.language = :language
+        WHERE decoration_skill.decoration_id = :decorationId  
+        """
+    )
+    suspend fun getDecorationSkillsByDecorationId(
+        decorationId: Int,
+        language: String,
+    ): List<EquipmentSkillTreePoint>
+
+    @Query(
+        """
+        SELECT
+            decoration_recipe.decoration_id AS equipmentId,
+            decoration_recipe.quantity AS quantity,
+            item.*,
+            item_text.*
+        FROM decoration_recipe
+        JOIN item
+            ON decoration_recipe.item_id = item.id
+        JOIN item_text
+            ON decoration_recipe.item_id = item_text.item_id
+            AND item_text.language = :language
+        WHERE
+            decoration_recipe.decoration_id = :decorationId
+            AND decoration_recipe.recipe_variant = :recipeVariant
+        """
+    )
+    suspend fun getDecorationRecipeByDecorationId(
+        decorationId: Int,
+        recipeVariant: Int,
+        language: String,
+    ): List<EquipmentItemQuantity>
 
 }
