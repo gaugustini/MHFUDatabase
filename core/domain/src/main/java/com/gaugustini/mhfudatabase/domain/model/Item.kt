@@ -28,8 +28,8 @@ data class Item(
     val carryMax: Int,
     val iconType: ItemIconType,
     val iconColor: ItemIconColor,
-    val sources: ItemSources = ItemSources(),
-    val usages: ItemUsages = ItemUsages(),
+    val sources: ItemSources?,
+    val usages: ItemUsages?,
 )
 
 /**

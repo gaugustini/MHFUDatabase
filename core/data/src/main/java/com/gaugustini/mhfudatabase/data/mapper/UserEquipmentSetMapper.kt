@@ -15,16 +15,16 @@ object UserEquipmentSetMapper {
 
     fun toModel(
         equipmentSet: UserEquipmentSetEntity,
-        weapon: Weapon?,
-        armors: List<Armor>,
-        decorations: List<Decoration>,
+        weapon: Weapon? = null,
+        armors: List<Armor>? = null,
+        decorations: List<Decoration>? = null,
     ): UserEquipmentSet {
-        val defense = armors.sumOf { it.defense }
-        val fire = armors.sumOf { it.fire }
-        val water = armors.sumOf { it.water }
-        val thunder = armors.sumOf { it.thunder }
-        val ice = armors.sumOf { it.ice }
-        val dragon = armors.sumOf { it.dragon }
+        val defense = armors?.sumOf { it.defense } ?: 0
+        val fire = armors?.sumOf { it.fire } ?: 0
+        val water = armors?.sumOf { it.water } ?: 0
+        val thunder = armors?.sumOf { it.thunder } ?: 0
+        val ice = armors?.sumOf { it.ice } ?: 0
+        val dragon = armors?.sumOf { it.dragon } ?: 0
 
         return UserEquipmentSet(
             id = equipmentSet.id,
@@ -57,25 +57,25 @@ object UserEquipmentSetMapper {
     fun toArmorEntities(
         equipmentSet: UserEquipmentSet,
     ): List<UserEquipmentSetArmorEntity> {
-        return equipmentSet.armors.map { armor ->
+        return equipmentSet.armors?.map { armor ->
             UserEquipmentSetArmorEntity(
                 userSetId = equipmentSet.id,
                 armorId = armor.id,
             )
-        }
+        } ?: emptyList()
     }
 
     fun toDecorationEntities(
         equipmentSet: UserEquipmentSet,
     ): List<UserEquipmentSetDecorationEntity> {
-        return equipmentSet.decorations.map { decoration ->
+        return equipmentSet.decorations?.map { decoration ->
             UserEquipmentSetDecorationEntity(
                 userSetId = equipmentSet.id,
                 decorationId = decoration.id,
                 equipmentType = decoration.equipmentType!!.name,
                 quantity = decoration.quantity!!,
             )
-        }
+        } ?: emptyList()
     }
 
 }

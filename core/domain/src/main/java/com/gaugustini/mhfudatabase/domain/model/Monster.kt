@@ -30,9 +30,20 @@ data class Monster(
     val sizeSmallestMax: Int?,
     val sizeLargestMin: Int?,
     val sizeLargestMax: Int?,
-    val damageStats: List<MonsterDamageStats>,
-    val ailmentStats: List<MonsterAilmentStats>,
-    val itemEffectiveness: MonsterItemEffectiveness,
-    val rewards: List<Item>,
-    val quests: List<Quest>,
+    val damageStats: List<MonsterDamageStats>?,
+    val ailmentStats: List<MonsterAilmentStats>?,
+    val itemEffectiveness: MonsterItemEffectiveness?,
+    val rewards: List<MonsterReward>?,
+    val quests: List<Quest>?,
+)
+
+/**
+ * Represents a monster reward and its corresponding conditions.
+ */
+data class MonsterReward(
+    val item: Item,
+    val condition: String,
+    val rank: Int,
+    val stackSize: Int,
+    val percentage: Int?,
 )

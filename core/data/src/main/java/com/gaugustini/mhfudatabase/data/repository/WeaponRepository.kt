@@ -22,10 +22,8 @@ class WeaponRepository @Inject constructor(
         weaponId: Int,
         language: String,
     ): Weapon {
-        val weaponWithText = weaponDao.getWeapon(weaponId, language)
-
         return WeaponMapper.toModel(
-            weapon = weaponWithText,
+            weapon = weaponDao.getWeapon(weaponId, language),
             ammoBow = null,
             ammoBowgun = null,
             charges = null,
@@ -41,19 +39,7 @@ class WeaponRepository @Inject constructor(
     suspend fun getWeaponList(
         language: String,
     ): List<Weapon> {
-        val weaponsWithText = weaponDao.getWeaponList(language)
-
-        return weaponsWithText.map {
-            WeaponMapper.toModel(
-                weapon = it,
-                ammoBow = null,
-                ammoBowgun = null,
-                charges = null,
-                rapidFire = null,
-                recipeCreate = emptyList(),
-                recipeUpgrade = emptyList(),
-            )
-        }
+        return weaponDao.getWeaponList(language).map { WeaponMapper.toModel(it) }
     }
 
 }

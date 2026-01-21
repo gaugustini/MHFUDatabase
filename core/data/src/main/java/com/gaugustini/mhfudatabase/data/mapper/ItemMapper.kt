@@ -15,7 +15,6 @@ import com.gaugustini.mhfudatabase.data.database.relation.WeaponWithText
 import com.gaugustini.mhfudatabase.domain.enums.GatherType
 import com.gaugustini.mhfudatabase.domain.enums.ItemIconColor
 import com.gaugustini.mhfudatabase.domain.enums.ItemIconType
-import com.gaugustini.mhfudatabase.domain.enums.MonsterState
 import com.gaugustini.mhfudatabase.domain.enums.Rank
 import com.gaugustini.mhfudatabase.domain.model.GatheringSource
 import com.gaugustini.mhfudatabase.domain.model.Item
@@ -23,7 +22,6 @@ import com.gaugustini.mhfudatabase.domain.model.ItemCombination
 import com.gaugustini.mhfudatabase.domain.model.ItemQuantity
 import com.gaugustini.mhfudatabase.domain.model.ItemSources
 import com.gaugustini.mhfudatabase.domain.model.ItemUsages
-import com.gaugustini.mhfudatabase.domain.model.MonsterItemEffectiveness
 import com.gaugustini.mhfudatabase.domain.model.MonsterSource
 import com.gaugustini.mhfudatabase.domain.model.Usage
 
@@ -34,8 +32,8 @@ object ItemMapper {
 
     fun toModel(
         item: ItemWithText,
-        sources: ItemSources,
-        usages: ItemUsages,
+        sources: ItemSources? = null,
+        usages: ItemUsages? = null,
     ): Item {
         return Item(
             id = item.item.id,
@@ -66,6 +64,8 @@ object ItemMapper {
                 carryMax = equipmentItemQuantity.item.carryMax,
                 iconType = ItemIconType.fromString(equipmentItemQuantity.item.iconType),
                 iconColor = ItemIconColor.fromString(equipmentItemQuantity.item.iconColor),
+                sources = null,
+                usages = null,
             ),
             quantity = equipmentItemQuantity.quantity,
         )
@@ -78,9 +78,7 @@ object ItemMapper {
     ): ItemSources {
         val gatheringSources = locations.map {
             GatheringSource(
-                location = LocationMapper.toModel(
-                    LocationWithText(it.location, it.locationText), emptyMap()
-                ),
+                location = LocationMapper.toModel(LocationWithText(it.location, it.locationText)),
                 rank = Rank.fromString(it.locationItem.rank),
                 type = GatherType.fromString(it.locationItem.gatherType),
                 area = it.locationItem.area,
@@ -88,23 +86,7 @@ object ItemMapper {
         }
         val monsterSources = monsterRewards.map {
             MonsterSource(
-                monster = MonsterMapper.toModel(
-                    monster = MonsterWithText(it.monster, it.monsterText),
-                    damageStats = emptyList(),
-                    ailmentStats = emptyList(),
-                    itemEffectiveness = MonsterItemEffectiveness(
-                        monsterId = 1,
-                        monsterState = MonsterState.NORMAL,
-                        canUsePitfallTrap = false,
-                        canUseShockTrap = false,
-                        canUseFlashBomb = false,
-                        canUseSonicBomb = false,
-                        canUseDungBomb = false,
-                        canUseMeat = false,
-                    ),
-                    rewards = emptyList(),
-                    quests = emptyList(),
-                ),
+                monster = MonsterMapper.toModel(MonsterWithText(it.monster, it.monsterText)),
                 condition = it.rewardConditionText.name,
                 rank = Rank.fromString(it.monsterReward.rank),
                 stackSize = it.monsterReward.stackSize,
@@ -127,34 +109,21 @@ object ItemMapper {
     ): ItemUsages {
         val armorUsages = armors.map {
             Usage(
-                craftable = ArmorMapper.toModel(
-                    ArmorWithText(it.armor, it.armorText), emptyList(), emptyList()
-                ),
+                craftable = ArmorMapper.toModel(ArmorWithText(it.armor, it.armorText)),
                 quantity = it.quantity,
             )
         }
         val decorationUsages = decorations.map {
             Usage(
                 craftable = DecorationMapper.toModel(
-                    DecorationWithText(it.decoration, it.item, it.itemText),
-                    emptyList(),
-                    emptyList(),
-                    emptyList()
+                    DecorationWithText(it.decoration, it.item, it.itemText)
                 ),
                 quantity = it.quantity,
             )
         }
         val weaponUsages = weapons.map {
             Usage(
-                craftable = WeaponMapper.toModel(
-                    WeaponWithText(it.weapon, it.weaponText),
-                    null,
-                    null,
-                    null,
-                    null,
-                    emptyList(),
-                    emptyList()
-                ),
+                craftable = WeaponMapper.toModel(WeaponWithText(it.weapon, it.weaponText)),
                 quantity = it.quantity
             )
         }

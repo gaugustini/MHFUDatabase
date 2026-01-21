@@ -14,7 +14,7 @@ data class SkillTree(
     val id: Int,
     val name: String,
     val category: SkillCategory,
-    val skills: List<Skill>,
+    val skills: List<Skill>?,
 )
 
 /**

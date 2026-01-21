@@ -37,7 +37,7 @@ data class ArmorSet(
     val thunder: Int,
     val ice: Int,
     val dragon: Int,
-    val armors: List<Armor>,
-    val skills: List<SkillPoint>,
-    val recipe: List<ItemQuantity>,
+    val armors: List<Armor>?,
+    val skills: List<SkillPoint>?,
+    val recipe: List<ItemQuantity>?,
 )

@@ -60,9 +60,7 @@ class ArmorRepository @Inject constructor(
         return armorSetsWithText.map {
             ArmorSetMapper.toModel(
                 armorSet = it,
-                armors = armorsGroupedByArmorSet[it.armorSet.id] ?: emptyList(),
-                skills = emptyList(),
-                recipe = emptyList(),
+                armors = armorsGroupedByArmorSet[it.armorSet.id],
             )
         }
     }

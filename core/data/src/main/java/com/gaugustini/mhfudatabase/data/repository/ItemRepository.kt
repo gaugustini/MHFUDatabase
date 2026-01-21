@@ -40,13 +40,7 @@ class ItemRepository @Inject constructor(
     suspend fun getItemList(
         language: String,
     ): List<Item> {
-        return itemDao.getItemList(language).map {
-            ItemMapper.toModel(
-                item = it,
-                sources = ItemSources(),
-                usages = ItemUsages(),
-            )
-        }
+        return itemDao.getItemList(language).map { ItemMapper.toModel(it) }
     }
 
     /**
@@ -100,7 +94,7 @@ class ItemRepository @Inject constructor(
      */
     private suspend fun mapCombinationEntities(
         entities: List<ItemCombinationEntity>,
-        language: String
+        language: String,
     ): List<ItemCombination> {
         if (entities.isEmpty()) return emptyList()
 
@@ -108,10 +102,9 @@ class ItemRepository @Inject constructor(
             listOf(it.itemCreatedId, it.itemAId, it.itemBId)
         }.distinct()
 
-        val itemsById = itemDao.getItemListByItemIds(itemIds, language)
-            .associate {
-                it.item.id to ItemMapper.toModel(it, ItemSources(), ItemUsages())
-            }
+        val itemsById = itemDao.getItemListByItemIds(itemIds, language).associate {
+            it.item.id to ItemMapper.toModel(it)
+        }
 
         return entities.mapNotNull { entity ->
             val created = itemsById[entity.itemCreatedId]

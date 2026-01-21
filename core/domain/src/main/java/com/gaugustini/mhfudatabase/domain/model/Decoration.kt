@@ -26,7 +26,7 @@ data class Decoration(
     val sellPrice: Int,
     val requiredSlots: Int,
     val color: ItemIconColor,
-    val skills: List<SkillPoint>,
-    val recipeA: List<ItemQuantity>,
-    val recipeB: List<ItemQuantity>,
+    val skills: List<SkillPoint>?,
+    val recipeA: List<ItemQuantity>?,
+    val recipeB: List<ItemQuantity>?,
 )

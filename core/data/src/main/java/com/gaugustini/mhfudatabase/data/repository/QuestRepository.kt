@@ -2,7 +2,6 @@ package com.gaugustini.mhfudatabase.data.repository
 
 import com.gaugustini.mhfudatabase.data.database.dao.QuestDao
 import com.gaugustini.mhfudatabase.data.mapper.QuestMapper
-import com.gaugustini.mhfudatabase.domain.model.Location
 import com.gaugustini.mhfudatabase.domain.model.Quest
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -23,11 +22,9 @@ class QuestRepository @Inject constructor(
         questId: Int,
         language: String,
     ): Quest {
-        val questWithText = questDao.getQuest(questId, language)
-
         return QuestMapper.toModel(
-            quest = questWithText,
-            location = Location(1, "", emptyMap()),
+            quest = questDao.getQuest(questId, language),
+            location = null,
             monsters = emptyList(),
         )
     }
@@ -38,15 +35,7 @@ class QuestRepository @Inject constructor(
     suspend fun getQuestList(
         language: String,
     ): List<Quest> {
-        val questsWithText = questDao.getQuestList(language)
-
-        return questsWithText.map {
-            QuestMapper.toModel(
-                quest = it,
-                location = Location(1, "", emptyMap()),
-                monsters = emptyList(),
-            )
-        }
+        return questDao.getQuestList(language).map { QuestMapper.toModel(it) }
     }
 
 }

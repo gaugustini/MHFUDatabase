@@ -17,12 +17,12 @@ object WeaponMapper {
 
     fun toModel(
         weapon: WeaponWithText,
-        ammoBow: Map<WeaponAmmo, Boolean>?,
-        ammoBowgun: Map<WeaponAmmo, String>?,
-        charges: Map<WeaponAmmo, Int>?,
-        rapidFire: String?,
-        recipeCreate: List<Item>,
-        recipeUpgrade: List<Item>,
+        ammoBow: Map<WeaponAmmo, Boolean>? = null,
+        ammoBowgun: Map<WeaponAmmo, String>? = null,
+        charges: Map<WeaponAmmo, Int>? = null,
+        rapidFire: String? = null,
+        recipeCreate: List<Item>? = null,
+        recipeUpgrade: List<Item>? = null,
     ): Weapon {
         return Weapon(
             id = weapon.weapon.id,

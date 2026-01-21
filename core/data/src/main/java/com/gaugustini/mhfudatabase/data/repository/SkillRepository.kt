@@ -1,7 +1,7 @@
 package com.gaugustini.mhfudatabase.data.repository
 
 import com.gaugustini.mhfudatabase.data.database.dao.SkillDao
-import com.gaugustini.mhfudatabase.data.mapper.SkillMapper
+import com.gaugustini.mhfudatabase.data.mapper.SkillTreeMapper
 import com.gaugustini.mhfudatabase.domain.model.SkillTree
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -21,7 +21,7 @@ class SkillRepository @Inject constructor(
         skillTreeId: Int,
         language: String,
     ): SkillTree {
-        return SkillMapper.toModel(
+        return SkillTreeMapper.toModel(
             skillTree = skillDao.getSkillTree(skillTreeId, language),
             skills = skillDao.getSkillListBySkillTreeId(skillTreeId, language),
         )
@@ -33,15 +33,7 @@ class SkillRepository @Inject constructor(
     suspend fun getSkillTreeList(
         language: String,
     ): List<SkillTree> {
-        val skillTreesWithText = skillDao.getSkillTreeList(language)
-        val skillsGroupedBySkillTree = skillDao.getSkillList(language).groupBy { it.skill.skillTreeId }
-
-        return skillTreesWithText.map {
-            SkillMapper.toModel(
-                skillTree = it,
-                skills = skillsGroupedBySkillTree[it.skillTree.id] ?: emptyList(),
-            )
-        }
+        return skillDao.getSkillTreeList(language).map { SkillTreeMapper.toModel(it) }
     }
 
 }

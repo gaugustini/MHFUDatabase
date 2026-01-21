@@ -1,5 +1,6 @@
 package com.gaugustini.mhfudatabase.domain.model
 
+import com.gaugustini.mhfudatabase.domain.enums.GatherType
 import com.gaugustini.mhfudatabase.domain.enums.Rank
 
 /**
@@ -12,5 +13,14 @@ import com.gaugustini.mhfudatabase.domain.enums.Rank
 data class Location(
     val id: Int,
     val name: String,
-    val items: Map<Rank, List<Item>>,
+    val items: Map<Rank, List<GatheringPoint>>?,
+)
+
+/**
+ * Represents a point in the game where items can be gathered.
+ */
+data class GatheringPoint(
+    val area: Int,
+    val type: GatherType,
+    val item: Item,
 )

@@ -36,6 +36,6 @@ data class Quest(
     val reward: Int,
     val fee: Int,
     val timeLimit: Int,
-    val location: Location,
-    val monsters: List<Monster>,
+    val location: Location?,
+    val monsters: List<Monster>?,
 )

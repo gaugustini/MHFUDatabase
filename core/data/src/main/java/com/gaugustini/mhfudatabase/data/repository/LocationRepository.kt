@@ -22,28 +22,20 @@ class LocationRepository @Inject constructor(
         locationId: Int,
         language: String,
     ): Location {
-        val locationWithText = locationDao.getLocation(locationId, language)
-
         return LocationMapper.toModel(
-            location = locationWithText,
+            location = locationDao.getLocation(locationId, language),
             items = emptyMap(),
         )
     }
 
     /**
      * Returns the list of all locations.
+     * Note: Items that can be gathered in the locations are not included.
      */
     suspend fun getLocationList(
         language: String,
     ): List<Location> {
-        val locationsWithText = locationDao.getLocationList(language)
-
-        return locationsWithText.map {
-            LocationMapper.toModel(
-                location = it,
-                items = emptyMap(),
-            )
-        }
+        return locationDao.getLocationList(language).map { LocationMapper.toModel(it) }
     }
 
 }

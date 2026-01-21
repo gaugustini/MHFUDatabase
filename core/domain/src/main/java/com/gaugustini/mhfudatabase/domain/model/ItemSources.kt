@@ -37,7 +37,7 @@ data class MonsterSource(
  * @property monsterRewards The list of monsters that drop the item.
  */
 data class ItemSources(
-    val combinations: List<ItemCombination> = emptyList(),
-    val locations: List<GatheringSource> = emptyList(),
-    val monsterRewards: List<MonsterSource> = emptyList(),
+    val combinations: List<ItemCombination>,
+    val locations: List<GatheringSource>,
+    val monsterRewards: List<MonsterSource>,
 )

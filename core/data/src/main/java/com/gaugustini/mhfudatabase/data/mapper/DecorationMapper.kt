@@ -13,9 +13,9 @@ object DecorationMapper {
 
     fun toModel(
         decoration: DecorationWithText,
-        skills: List<EquipmentSkillTreePoint>,
-        recipeA: List<EquipmentItemQuantity>,
-        recipeB: List<EquipmentItemQuantity>,
+        skills: List<EquipmentSkillTreePoint>? = null,
+        recipeA: List<EquipmentItemQuantity>? = null,
+        recipeB: List<EquipmentItemQuantity>? = null,
     ): Decoration {
         return Decoration(
             id = decoration.decoration.id,
@@ -26,9 +26,9 @@ object DecorationMapper {
             sellPrice = decoration.item.sellPrice,
             requiredSlots = decoration.decoration.requiredSlots,
             color = ItemIconColor.fromString(decoration.item.iconColor),
-            skills = skills.map { SkillMapper.toSkillPoint(it) },
-            recipeA = recipeA.map { ItemMapper.toItemQuantity(it) },
-            recipeB = recipeB.map { ItemMapper.toItemQuantity(it) },
+            skills = skills?.map { SkillTreeMapper.toSkillPoint(it) },
+            recipeA = recipeA?.map { ItemMapper.toItemQuantity(it) },
+            recipeB = recipeB?.map { ItemMapper.toItemQuantity(it) },
         )
     }
 

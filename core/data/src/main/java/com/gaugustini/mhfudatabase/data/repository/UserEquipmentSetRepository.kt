@@ -22,10 +22,8 @@ class UserEquipmentSetRepository @Inject constructor(
         equipmentSetId: Int,
         language: String,
     ): UserEquipmentSet {
-        val equipmentSet = userEquipmentSetDao.getEquipmentSet(equipmentSetId)
-
         return UserEquipmentSetMapper.toModel(
-            equipmentSet = equipmentSet,
+            equipmentSet = userEquipmentSetDao.getEquipmentSet(equipmentSetId),
             weapon = null,
             armors = emptyList(),
             decorations = emptyList(),
@@ -36,16 +34,7 @@ class UserEquipmentSetRepository @Inject constructor(
      * Returns the list of all user equipment sets.
      */
     suspend fun getEquipmentSets(): List<UserEquipmentSet> {
-        val equipmentSets = userEquipmentSetDao.getEquipmentSets()
-
-        return equipmentSets.map {
-            UserEquipmentSetMapper.toModel(
-                equipmentSet = it,
-                weapon = null,
-                armors = emptyList(),
-                decorations = emptyList(),
-            )
-        }
+        return userEquipmentSetDao.getEquipmentSets().map { UserEquipmentSetMapper.toModel(it) }
     }
 
     /**
@@ -54,14 +43,10 @@ class UserEquipmentSetRepository @Inject constructor(
     suspend fun insertNewEquipmentSet(
         equipmentSet: UserEquipmentSet,
     ): Int {
-        val equipmentSetEntity = UserEquipmentSetMapper.toEntity(equipmentSet)
-        val equipmentSetArmorsEntity = UserEquipmentSetMapper.toArmorEntities(equipmentSet)
-        val equipmentSetDecorationsEntity = UserEquipmentSetMapper.toDecorationEntities(equipmentSet)
-
         return userEquipmentSetDao.insertNewEquipmentSet(
-            equipmentSetEntity,
-            equipmentSetArmorsEntity,
-            equipmentSetDecorationsEntity
+            equipmentSet = UserEquipmentSetMapper.toEntity(equipmentSet),
+            equipmentSetArmors = UserEquipmentSetMapper.toArmorEntities(equipmentSet),
+            equipmentSetDecorations = UserEquipmentSetMapper.toDecorationEntities(equipmentSet)
         )
     }
 
@@ -71,14 +56,10 @@ class UserEquipmentSetRepository @Inject constructor(
     suspend fun updateEquipmentSet(
         equipmentSet: UserEquipmentSet,
     ) {
-        val equipmentSetEntity = UserEquipmentSetMapper.toEntity(equipmentSet)
-        val equipmentSetArmorsEntity = UserEquipmentSetMapper.toArmorEntities(equipmentSet)
-        val equipmentSetDecorationsEntity = UserEquipmentSetMapper.toDecorationEntities(equipmentSet)
-
         userEquipmentSetDao.updateEquipmentSet(
-            equipmentSetEntity,
-            equipmentSetArmorsEntity,
-            equipmentSetDecorationsEntity
+            equipmentSet = UserEquipmentSetMapper.toEntity(equipmentSet),
+            equipmentSetArmors = UserEquipmentSetMapper.toArmorEntities(equipmentSet),
+            equipmentSetDecorations = UserEquipmentSetMapper.toDecorationEntities(equipmentSet)
         )
     }
 

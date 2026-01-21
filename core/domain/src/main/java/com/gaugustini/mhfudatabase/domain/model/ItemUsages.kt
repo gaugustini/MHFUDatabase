@@ -17,8 +17,8 @@ data class Usage<out T>(
  * @property weapons The list of weapons that require the item to be crafted.
  */
 data class ItemUsages(
-    val combinations: List<ItemCombination> = emptyList(),
-    val armors: List<Usage<Armor>> = emptyList(),
-    val decorations: List<Usage<Decoration>> = emptyList(),
-    val weapons: List<Usage<Weapon>> = emptyList(),
+    val combinations: List<ItemCombination>,
+    val armors: List<Usage<Armor>>,
+    val decorations: List<Usage<Decoration>>,
+    val weapons: List<Usage<Weapon>>,
 )

@@ -2,11 +2,11 @@ package com.gaugustini.mhfudatabase.data.mapper
 
 import com.gaugustini.mhfudatabase.data.database.relation.MonsterWithText
 import com.gaugustini.mhfudatabase.domain.enums.MonsterType
-import com.gaugustini.mhfudatabase.domain.model.Item
 import com.gaugustini.mhfudatabase.domain.model.Monster
 import com.gaugustini.mhfudatabase.domain.model.MonsterAilmentStats
 import com.gaugustini.mhfudatabase.domain.model.MonsterDamageStats
 import com.gaugustini.mhfudatabase.domain.model.MonsterItemEffectiveness
+import com.gaugustini.mhfudatabase.domain.model.MonsterReward
 import com.gaugustini.mhfudatabase.domain.model.Quest
 
 /**
@@ -16,11 +16,11 @@ object MonsterMapper {
 
     fun toModel(
         monster: MonsterWithText,
-        damageStats: List<MonsterDamageStats>,
-        ailmentStats: List<MonsterAilmentStats>,
-        itemEffectiveness: MonsterItemEffectiveness,
-        rewards: List<Item>,
-        quests: List<Quest>,
+        damageStats: List<MonsterDamageStats>? = null,
+        ailmentStats: List<MonsterAilmentStats>? = null,
+        itemEffectiveness: MonsterItemEffectiveness? = null,
+        rewards: List<MonsterReward>? = null,
+        quests: List<Quest>? = null,
     ): Monster {
         return Monster(
             id = monster.monster.id,

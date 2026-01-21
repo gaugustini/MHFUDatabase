@@ -15,8 +15,8 @@ object ArmorMapper {
 
     fun toModel(
         armor: ArmorWithText,
-        skills: List<EquipmentSkillTreePoint>,
-        recipe: List<EquipmentItemQuantity>,
+        skills: List<EquipmentSkillTreePoint>? = null,
+        recipe: List<EquipmentItemQuantity>? = null,
     ): Armor {
         return Armor(
             id = armor.armor.id,
@@ -36,8 +36,8 @@ object ArmorMapper {
             thunder = armor.armor.thunderResistance,
             ice = armor.armor.iceResistance,
             dragon = armor.armor.dragonResistance,
-            skills = skills.map { SkillMapper.toSkillPoint(it) },
-            recipe = recipe.map { ItemMapper.toItemQuantity(it) },
+            skills = skills?.map { SkillTreeMapper.toSkillPoint(it) },
+            recipe = recipe?.map { ItemMapper.toItemQuantity(it) },
         )
     }
 

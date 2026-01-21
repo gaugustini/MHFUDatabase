@@ -69,6 +69,6 @@ data class Weapon(
     val ammoBowgun: Map<WeaponAmmo, String>?,
     val charges: Map<WeaponAmmo, Int>?,
     val rapidFire: String?,
-    val recipeCreate: List<Item>,
-    val recipeUpgrade: List<Item>,
+    val recipeCreate: List<Item>?,
+    val recipeUpgrade: List<Item>?,
 )

@@ -36,16 +36,7 @@ class DecorationRepository @Inject constructor(
     suspend fun getDecorationList(
         language: String,
     ): List<Decoration> {
-        val decorationsWithText = decorationDao.getDecorationList(language)
-
-        return decorationsWithText.map {
-            DecorationMapper.toModel(
-                decoration = it,
-                skills = emptyList(),
-                recipeA = emptyList(),
-                recipeB = emptyList(),
-            )
-        }
+        return decorationDao.getDecorationList(language).map { DecorationMapper.toModel(it) }
     }
 
 }

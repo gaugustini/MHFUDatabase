@@ -15,8 +15,8 @@ object QuestMapper {
 
     fun toModel(
         quest: QuestWithText,
-        location: Location,
-        monsters: List<Monster>,
+        location: Location? = null,
+        monsters: List<Monster>? = null,
     ): Quest {
         return Quest(
             id = quest.quest.id,
