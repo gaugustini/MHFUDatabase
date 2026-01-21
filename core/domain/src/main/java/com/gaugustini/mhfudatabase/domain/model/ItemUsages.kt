@@ -4,7 +4,7 @@ package com.gaugustini.mhfudatabase.domain.model
  * Represents a usage of an item in the game.
  */
 data class Usage<out T>(
-    val target: T,
+    val craftable: T,
     val quantity: Int,
 )
 

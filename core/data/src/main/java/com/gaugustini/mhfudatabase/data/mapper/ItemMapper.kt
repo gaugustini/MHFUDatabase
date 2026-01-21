@@ -1,16 +1,31 @@
 package com.gaugustini.mhfudatabase.data.mapper
 
-import com.gaugustini.mhfudatabase.data.database.entity.item.ItemCombinationEntity
+import com.gaugustini.mhfudatabase.data.database.relation.ArmorItemUsage
+import com.gaugustini.mhfudatabase.data.database.relation.ArmorWithText
+import com.gaugustini.mhfudatabase.data.database.relation.DecorationItemUsage
+import com.gaugustini.mhfudatabase.data.database.relation.DecorationWithText
 import com.gaugustini.mhfudatabase.data.database.relation.EquipmentItemQuantity
 import com.gaugustini.mhfudatabase.data.database.relation.ItemWithText
-import com.gaugustini.mhfudatabase.domain.enums.ItemCombinationType
+import com.gaugustini.mhfudatabase.data.database.relation.LocationSource
+import com.gaugustini.mhfudatabase.data.database.relation.LocationWithText
+import com.gaugustini.mhfudatabase.data.database.relation.MonsterRewardSource
+import com.gaugustini.mhfudatabase.data.database.relation.MonsterWithText
+import com.gaugustini.mhfudatabase.data.database.relation.WeaponItemUsage
+import com.gaugustini.mhfudatabase.data.database.relation.WeaponWithText
+import com.gaugustini.mhfudatabase.domain.enums.GatherType
 import com.gaugustini.mhfudatabase.domain.enums.ItemIconColor
 import com.gaugustini.mhfudatabase.domain.enums.ItemIconType
+import com.gaugustini.mhfudatabase.domain.enums.MonsterState
+import com.gaugustini.mhfudatabase.domain.enums.Rank
+import com.gaugustini.mhfudatabase.domain.model.GatheringSource
 import com.gaugustini.mhfudatabase.domain.model.Item
 import com.gaugustini.mhfudatabase.domain.model.ItemCombination
 import com.gaugustini.mhfudatabase.domain.model.ItemQuantity
 import com.gaugustini.mhfudatabase.domain.model.ItemSources
 import com.gaugustini.mhfudatabase.domain.model.ItemUsages
+import com.gaugustini.mhfudatabase.domain.model.MonsterItemEffectiveness
+import com.gaugustini.mhfudatabase.domain.model.MonsterSource
+import com.gaugustini.mhfudatabase.domain.model.Usage
 
 /**
  * Mapper for Item entities.
@@ -56,20 +71,99 @@ object ItemMapper {
         )
     }
 
-    fun toItemCombination(
-        combination: ItemCombinationEntity,
-        itemCreated: Item,
-        itemA: Item,
-        itemB: Item,
-    ): ItemCombination {
-        return ItemCombination(
-            itemCreated = itemCreated,
-            itemA = itemA,
-            itemB = itemB,
-            type = ItemCombinationType.fromString(combination.combinationType),
-            quantityMin = combination.quantityMin,
-            quantityMax = combination.quantityMax,
-            percentage = combination.percentage,
+    fun toItemSources(
+        combinations: List<ItemCombination>,
+        locations: List<LocationSource>,
+        monsterRewards: List<MonsterRewardSource>,
+    ): ItemSources {
+        val gatheringSources = locations.map {
+            GatheringSource(
+                location = LocationMapper.toModel(
+                    LocationWithText(it.location, it.locationText), emptyMap()
+                ),
+                rank = Rank.fromString(it.locationItem.rank),
+                type = GatherType.fromString(it.locationItem.gatherType),
+                area = it.locationItem.area,
+            )
+        }
+        val monsterSources = monsterRewards.map {
+            MonsterSource(
+                monster = MonsterMapper.toModel(
+                    monster = MonsterWithText(it.monster, it.monsterText),
+                    damageStats = emptyList(),
+                    ailmentStats = emptyList(),
+                    itemEffectiveness = MonsterItemEffectiveness(
+                        monsterId = 1,
+                        monsterState = MonsterState.NORMAL,
+                        canUsePitfallTrap = false,
+                        canUseShockTrap = false,
+                        canUseFlashBomb = false,
+                        canUseSonicBomb = false,
+                        canUseDungBomb = false,
+                        canUseMeat = false,
+                    ),
+                    rewards = emptyList(),
+                    quests = emptyList(),
+                ),
+                condition = it.rewardConditionText.name,
+                rank = Rank.fromString(it.monsterReward.rank),
+                stackSize = it.monsterReward.stackSize,
+                percentage = it.monsterReward.percentage,
+            )
+        }
+
+        return ItemSources(
+            combinations = combinations,
+            locations = gatheringSources,
+            monsterRewards = monsterSources,
+        )
+    }
+
+    fun toItemUsages(
+        combinations: List<ItemCombination>,
+        armors: List<ArmorItemUsage>,
+        decorations: List<DecorationItemUsage>,
+        weapons: List<WeaponItemUsage>,
+    ): ItemUsages {
+        val armorUsages = armors.map {
+            Usage(
+                craftable = ArmorMapper.toModel(
+                    ArmorWithText(it.armor, it.armorText), emptyList(), emptyList()
+                ),
+                quantity = it.quantity,
+            )
+        }
+        val decorationUsages = decorations.map {
+            Usage(
+                craftable = DecorationMapper.toModel(
+                    DecorationWithText(it.decoration, it.item, it.itemText),
+                    emptyList(),
+                    emptyList(),
+                    emptyList()
+                ),
+                quantity = it.quantity,
+            )
+        }
+        val weaponUsages = weapons.map {
+            Usage(
+                craftable = WeaponMapper.toModel(
+                    WeaponWithText(it.weapon, it.weaponText),
+                    null,
+                    null,
+                    null,
+                    null,
+                    emptyList(),
+                    emptyList()
+                ),
+                quantity = it.quantity
+            )
+        }
+
+        return ItemUsages(
+            combinations = combinations,
+            armors = armorUsages,
+            decorations = decorationUsages,
+            weapons = weaponUsages,
         )
     }
 

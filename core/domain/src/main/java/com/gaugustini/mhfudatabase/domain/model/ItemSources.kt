@@ -1,6 +1,7 @@
 package com.gaugustini.mhfudatabase.domain.model
 
 import com.gaugustini.mhfudatabase.domain.enums.GatherType
+import com.gaugustini.mhfudatabase.domain.enums.Rank
 
 /**
  * Represents a source of an item.
@@ -12,18 +13,18 @@ sealed interface ItemSource
  */
 data class GatheringSource(
     val location: Location,
-    val rank: Int,
+    val rank: Rank,
     val type: GatherType,
     val area: Int,
 ) : ItemSource
 
 /**
- * Represents a monster that rewards or drops an item.
+ * Represents a monster reward or drop item.
  */
 data class MonsterSource(
     val monster: Monster,
     val condition: String,
-    val rank: Int,
+    val rank: Rank,
     val stackSize: Int,
     val percentage: Int?,
 ) : ItemSource
