@@ -17,12 +17,10 @@ object LocationMapper {
         location: LocationWithText,
         items: List<LocationItem>? = null,
     ): Location {
-        val gatheringPoints = items?.map { toGatheringPoint(it) }?.groupBy { it.rank }
-
         return Location(
             id = location.location.id,
             name = location.locationText.name,
-            gatheringPoints = gatheringPoints,
+            gatheringPoints = items?.map { toGatheringPoint(it) }?.groupBy { it.rank },
         )
     }
 

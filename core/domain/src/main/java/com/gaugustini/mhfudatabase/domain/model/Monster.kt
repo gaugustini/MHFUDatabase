@@ -1,6 +1,7 @@
 package com.gaugustini.mhfudatabase.domain.model
 
 import com.gaugustini.mhfudatabase.domain.enums.MonsterType
+import com.gaugustini.mhfudatabase.domain.enums.Rank
 
 /**
  * Represents a monster in the game.
@@ -17,7 +18,7 @@ import com.gaugustini.mhfudatabase.domain.enums.MonsterType
  * @property damageStats The list of hitzones and their corresponding values for the monster.
  * @property ailmentStats The list of ailments and their corresponding resistances.
  * @property itemEffectiveness The effectiveness of certain items on the monster (e.g., pitfall trap).
- * @property rewards The list of items that the monster rewards.
+ * @property rewards A map of rewards and their corresponding conditions, grouped by rank.
  * @property quests The list of quests the monster can be encountered in.
  */
 data class Monster(
@@ -33,7 +34,7 @@ data class Monster(
     val damageStats: List<MonsterDamageStats>?,
     val ailmentStats: List<MonsterAilmentStats>?,
     val itemEffectiveness: MonsterItemEffectiveness?,
-    val rewards: List<MonsterReward>?,
+    val rewards: Map<Rank, List<MonsterReward>>?,
     val quests: List<Quest>?,
 )
 
@@ -43,7 +44,7 @@ data class Monster(
 data class MonsterReward(
     val item: Item,
     val condition: String,
-    val rank: Int,
+    val rank: Rank,
     val stackSize: Int,
     val percentage: Int?,
 )

@@ -6,7 +6,6 @@ import com.gaugustini.mhfudatabase.domain.model.Monster
 import javax.inject.Inject
 import javax.inject.Singleton
 
-//TODO: Add monster remain data (Ailments, Hitzones, ...)
 /**
  * Data repository for Monster.
  */
@@ -24,16 +23,17 @@ class MonsterRepository @Inject constructor(
     ): Monster {
         return MonsterMapper.toModel(
             monster = monsterDao.getMonster(monsterId, language),
-            damageStats = emptyList(),
-            ailmentStats = emptyList(),
-            itemEffectiveness = null,
-            rewards = emptyList(),
-            quests = emptyList(),
+            damageStats = monsterDao.getHitzonesByMonsterId(monsterId, language),
+            ailmentStats = monsterDao.getMonsterStatusByMonsterId(monsterId),
+            itemEffectiveness = monsterDao.getMonsterItemByMonsterId(monsterId),
+            rewards = monsterDao.getMonsterRewardsByMonsterId(monsterId, language),
+            quests = monsterDao.getQuestsByMonsterId(monsterId, language),
         )
     }
 
     /**
      * Returns the list of all monsters.
+     * Note: Hitzones, ailments, item effectiveness, rewards and quests are not populated.
      */
     suspend fun getMonsterList(
         language: String,
