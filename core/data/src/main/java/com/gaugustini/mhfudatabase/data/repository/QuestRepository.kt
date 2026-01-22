@@ -6,7 +6,6 @@ import com.gaugustini.mhfudatabase.domain.model.Quest
 import javax.inject.Inject
 import javax.inject.Singleton
 
-//TODO: Add quest remain data (monsters, location)
 /**
  * Data repository for Quest.
  */
@@ -24,13 +23,14 @@ class QuestRepository @Inject constructor(
     ): Quest {
         return QuestMapper.toModel(
             quest = questDao.getQuest(questId, language),
-            location = null,
-            monsters = emptyList(),
+            location = questDao.getLocationByQuestId(questId, language),
+            monsters = questDao.getMonstersByQuestId(questId, language),
         )
     }
 
     /**
      * Returns the list of all quests.
+     * Note: Location and monsters are not populated.
      */
     suspend fun getQuestList(
         language: String,
