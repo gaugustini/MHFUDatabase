@@ -8,18 +8,19 @@ import com.gaugustini.mhfudatabase.domain.enums.Rank
  *
  * @property id The unique identifier of the location.
  * @property name The name of the location.
- * @property items A map of items that can be gathered in this location, grouped by rank.
+ * @property gatheringPoints A map of items that can be gathered in this location, grouped by rank.
  */
 data class Location(
     val id: Int,
     val name: String,
-    val items: Map<Rank, List<GatheringPoint>>?,
+    val gatheringPoints: Map<Rank, List<GatheringPoint>>?,
 )
 
 /**
  * Represents a point in the game where items can be gathered.
  */
 data class GatheringPoint(
+    val rank: Rank,
     val area: Int,
     val type: GatherType,
     val item: Item,

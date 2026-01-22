@@ -6,7 +6,6 @@ import com.gaugustini.mhfudatabase.domain.model.Location
 import javax.inject.Inject
 import javax.inject.Singleton
 
-//TODO: Add location items
 /**
  * Data repository for Location.
  */
@@ -24,13 +23,13 @@ class LocationRepository @Inject constructor(
     ): Location {
         return LocationMapper.toModel(
             location = locationDao.getLocation(locationId, language),
-            items = emptyMap(),
+            items = locationDao.getGatherableItemsByLocationId(locationId, language),
         )
     }
 
     /**
      * Returns the list of all locations.
-     * Note: Items that can be gathered in the locations are not included.
+     * Note: Items that can be gathered in the locations are not populated.
      */
     suspend fun getLocationList(
         language: String,
