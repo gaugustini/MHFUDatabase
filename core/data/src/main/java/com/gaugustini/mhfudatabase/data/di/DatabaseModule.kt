@@ -11,6 +11,7 @@ import com.gaugustini.mhfudatabase.data.database.dao.ItemDao
 import com.gaugustini.mhfudatabase.data.database.dao.LocationDao
 import com.gaugustini.mhfudatabase.data.database.dao.MonsterDao
 import com.gaugustini.mhfudatabase.data.database.dao.QuestDao
+import com.gaugustini.mhfudatabase.data.database.dao.SearchDao
 import com.gaugustini.mhfudatabase.data.database.dao.SkillDao
 import com.gaugustini.mhfudatabase.data.database.dao.UserEquipmentSetDao
 import com.gaugustini.mhfudatabase.data.database.dao.WeaponDao
@@ -56,8 +57,8 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideSkillDao(appDatabase: AppDatabase): SkillDao {
-        return appDatabase.skillDao()
+    fun provideDecorationDao(appDatabase: AppDatabase): DecorationDao {
+        return appDatabase.decorationDao()
     }
 
     @Provides
@@ -68,8 +69,8 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideDecorationDao(appDatabase: AppDatabase): DecorationDao {
-        return appDatabase.decorationDao()
+    fun provideLocationDao(appDatabase: AppDatabase): LocationDao {
+        return appDatabase.locationDao()
     }
 
     @Provides
@@ -80,14 +81,20 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideLocationDao(appDatabase: AppDatabase): LocationDao {
-        return appDatabase.locationDao()
+    fun provideQuestDao(appDatabase: AppDatabase): QuestDao {
+        return appDatabase.questDao()
     }
 
     @Provides
     @Singleton
-    fun provideQuestDao(appDatabase: AppDatabase): QuestDao {
-        return appDatabase.questDao()
+    fun provideSearchDao(appDatabase: AppDatabase): SearchDao {
+        return appDatabase.searchDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideSkillDao(appDatabase: AppDatabase): SkillDao {
+        return appDatabase.skillDao()
     }
 
     @Provides

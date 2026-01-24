@@ -9,6 +9,7 @@ import com.gaugustini.mhfudatabase.data.database.dao.ItemDao
 import com.gaugustini.mhfudatabase.data.database.dao.LocationDao
 import com.gaugustini.mhfudatabase.data.database.dao.MonsterDao
 import com.gaugustini.mhfudatabase.data.database.dao.QuestDao
+import com.gaugustini.mhfudatabase.data.database.dao.SearchDao
 import com.gaugustini.mhfudatabase.data.database.dao.SkillDao
 import com.gaugustini.mhfudatabase.data.database.dao.UserEquipmentSetDao
 import com.gaugustini.mhfudatabase.data.database.dao.WeaponDao
@@ -97,17 +98,19 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun armorSetDao(): ArmorSetDao
 
-    abstract fun skillDao(): SkillDao
+    abstract fun decorationDao(): DecorationDao
 
     abstract fun itemDao(): ItemDao
 
-    abstract fun decorationDao(): DecorationDao
+    abstract fun locationDao(): LocationDao
 
     abstract fun monsterDao(): MonsterDao
 
-    abstract fun locationDao(): LocationDao
-
     abstract fun questDao(): QuestDao
+
+    abstract fun searchDao(): SearchDao
+
+    abstract fun skillDao(): SkillDao
 
     abstract fun userEquipmentSetDao(): UserEquipmentSetDao
 
