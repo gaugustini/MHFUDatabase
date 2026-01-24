@@ -9,7 +9,7 @@ import com.gaugustini.mhfudatabase.data.database.entity.location.LocationItemEnt
  * Represents a location item entity and its associated item and text entities.
  */
 data class LocationItemWithItem(
-    @Embedded val locationItem: LocationItemEntity,
+    @Embedded(prefix = "li_") val locationItem: LocationItemEntity,
     @Embedded val item: ItemEntity,
     @Embedded val itemText: ItemTextEntity,
 )

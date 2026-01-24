@@ -10,8 +10,8 @@ import com.gaugustini.mhfudatabase.data.database.entity.userset.UserEquipmentSet
  * Represents a user set decoration entity with its associated decoration, item, and text entities.
  */
 data class UserSetDecorationWithDecoration(
-    @Embedded val userSetDecoration: UserEquipmentSetDecorationEntity,
-    @Embedded val decoration: DecorationEntity,
+    @Embedded(prefix = "usd_") val userSetDecoration: UserEquipmentSetDecorationEntity,
+    @Embedded(prefix = "dec_") val decoration: DecorationEntity,
     @Embedded val item: ItemEntity,
     @Embedded val itemText: ItemTextEntity,
 )

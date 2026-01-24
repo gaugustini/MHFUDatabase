@@ -10,8 +10,8 @@ import com.gaugustini.mhfudatabase.data.database.entity.monster.RewardConditionT
  * Represents a monster reward entity with its associated condition, monster, and text entities.
  */
 data class MonsterRewardWithMonster(
-    @Embedded val monsterReward: MonsterRewardEntity,
-    @Embedded val rewardConditionText: RewardConditionTextEntity,
+    @Embedded(prefix = "mr_") val monsterReward: MonsterRewardEntity,
+    @Embedded(prefix = "rctxt_") val rewardConditionText: RewardConditionTextEntity,
     @Embedded val monster: MonsterEntity,
     @Embedded val monsterText: MonsterTextEntity,
 )

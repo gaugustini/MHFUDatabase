@@ -60,7 +60,7 @@ interface SkillDao {
         FROM skill
         JOIN skill_text 
             ON skill.id = skill_text.skill_id
-            AND skill_text.language = :lang
+            AND skill_text.language = :language
         WHERE
             skill.skill_tree_id = :skillTreeId
             AND (
@@ -72,6 +72,6 @@ interface SkillDao {
         LIMIT 1
         """
     )
-    suspend fun getActiveSkill(skillTreeId: Int, points: Int, lang: String): SkillWithText?
+    suspend fun getActiveSkill(skillTreeId: Int, points: Int, language: String): SkillWithText?
 
 }

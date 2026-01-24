@@ -9,5 +9,5 @@ import com.gaugustini.mhfudatabase.data.database.entity.monster.MonsterHitzoneEn
  */
 data class MonsterHitzoneWithText(
     @Embedded val monsterHitzone: MonsterHitzoneEntity,
-    @Embedded val hitzoneText: HitzoneTextEntity,
+    @Embedded(prefix = "htxt_") val hitzoneText: HitzoneTextEntity,
 )

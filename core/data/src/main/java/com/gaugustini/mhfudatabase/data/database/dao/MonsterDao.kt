@@ -46,11 +46,11 @@ interface MonsterDao {
         """
         SELECT
             monster_hitzone.*,
-            hitzone_text.*
+            htxt.hitzone_id AS htxt_hitzone_id, htxt.language AS htxt_language, htxt.name AS htxt_name
         FROM monster_hitzone
-        JOIN hitzone_text
-            ON monster_hitzone.hitzone_id = hitzone_text.hitzone_id
-            AND hitzone_text.language = :language
+        JOIN hitzone_text htxt
+            ON monster_hitzone.hitzone_id = htxt.hitzone_id
+            AND htxt.language = :language
         WHERE monster_hitzone.monster_id = :monsterId
         """
     )
@@ -79,16 +79,16 @@ interface MonsterDao {
     @Query(
         """
         SELECT
-            monster_reward.*,
-            reward_condition_text.*,
+            mr.monster_id AS mr_monster_id, mr.reward_condition_id AS mr_reward_condition_id, mr.item_id AS mr_item_id, mr.rank AS mr_rank, mr.stack_size AS mr_stack_size, mr.percentage AS mr_percentage,
+            rctxt.reward_condition_id AS rctxt_reward_condition_id, rctxt.language AS rctxt_language, rctxt.name AS rctxt_name,
             item.*,
             item_text.*
-        FROM monster_reward
-        JOIN reward_condition_text
-            ON monster_reward.reward_condition_id = reward_condition_text.reward_condition_id
-            AND reward_condition_text.language = :language
+        FROM monster_reward mr
+        JOIN reward_condition_text rctxt
+            ON mr.reward_condition_id = rctxt.reward_condition_id
+            AND rctxt.language = :language
         JOIN item
-            ON monster_reward.item_id = item.id
+            ON mr.item_id = item.id
         JOIN item_text
             ON item.id = item_text.item_id
             AND item_text.language = :language

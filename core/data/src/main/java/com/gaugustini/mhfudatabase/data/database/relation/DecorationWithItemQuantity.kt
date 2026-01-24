@@ -10,7 +10,7 @@ import com.gaugustini.mhfudatabase.data.database.entity.item.ItemTextEntity
  * used to craft it.
  */
 data class DecorationWithItemQuantity(
-    @Embedded val decoration: DecorationEntity,
+    @Embedded(prefix = "dec_") val decoration: DecorationEntity,
     @Embedded val item: ItemEntity,
     @Embedded val itemText: ItemTextEntity,
     val quantity: Int,

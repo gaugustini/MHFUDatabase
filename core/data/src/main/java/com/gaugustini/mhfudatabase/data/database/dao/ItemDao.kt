@@ -74,21 +74,21 @@ interface ItemDao {
         WHERE item_combination.item_created_id = :itemId
         """
     )
-    suspend fun getCombinationSources(itemId: Int, language: String): List<ItemCombinationEntity>
+    suspend fun getCombinationSources(itemId: Int): List<ItemCombinationEntity>
 
     @Query(
         """
         SELECT 
-            location_item.*,
+            li.location_id AS li_location_id, li.item_id AS li_item_id, li.rank AS li_rank, li.gather_type AS li_gather_type, li.area AS li_area,
             location.*,
             location_text.*
-        FROM location_item
+        FROM location_item li
         JOIN location
-            ON location_item.location_id = location.id
+            ON li.location_id = location.id
         JOIN location_text
             ON location.id = location_text.location_id
             AND location_text.language = :language
-        WHERE location_item.item_id = :itemId
+        WHERE li.item_id = :itemId
         """
     )
     suspend fun getLocationSources(itemId: Int, language: String): List<LocationItemWithLocation>
@@ -96,20 +96,20 @@ interface ItemDao {
     @Query(
         """
         SELECT
-            monster_reward.*,
-            reward_condition_text.*,
+            mr.monster_id AS mr_monster_id, mr.reward_condition_id AS mr_reward_condition_id, mr.item_id AS mr_item_id, mr.rank AS mr_rank, mr.stack_size AS mr_stack_size, mr.percentage AS mr_percentage,
+            rctxt.reward_condition_id AS rctxt_reward_condition_id, rctxt.language AS rctxt_language, rctxt.name AS rctxt_name,
             monster.*,
             monster_text.*
-        FROM monster_reward
-        JOIN reward_condition_text
-            ON monster_reward.reward_condition_id = reward_condition_text.reward_condition_id
-            AND reward_condition_text.language = :language
+        FROM monster_reward mr
+        JOIN reward_condition_text rctxt
+            ON mr.reward_condition_id = rctxt.reward_condition_id
+            AND rctxt.language = :language
         JOIN monster
-            ON monster_reward.monster_id = monster.id
+            ON mr.monster_id = monster.id
         JOIN monster_text
             ON monster.id = monster_text.monster_id
             AND monster_text.language = :language
-        WHERE monster_reward.item_id = :itemId
+        WHERE mr.item_id = :itemId
         """
     )
     suspend fun getMonsterRewardSources(itemId: Int, language: String): List<MonsterRewardWithMonster>
@@ -124,7 +124,7 @@ interface ItemDao {
             OR item_combination.item_b_id = :itemId
         """
     )
-    suspend fun getCombinationUsages(itemId: Int, language: String): List<ItemCombinationEntity>
+    suspend fun getCombinationUsages(itemId: Int): List<ItemCombinationEntity>
 
     @Query(
         """
@@ -146,7 +146,7 @@ interface ItemDao {
     @Query(
         """
         SELECT
-            decoration.*,
+            decoration.id AS dec_id, decoration.required_slots AS dec_required_slots,
             item.*,
             item_text.*,
             decoration_recipe.quantity

@@ -15,7 +15,7 @@ interface DecorationDao {
     @Query(
         """
         SELECT
-            decoration.*,
+            decoration.id AS dec_id, decoration.required_slots AS dec_required_slots,
             item.*,
             item_text.*
         FROM decoration
@@ -32,7 +32,7 @@ interface DecorationDao {
     @Query(
         """
         SELECT
-            decoration.*,
+            decoration.id AS dec_id, decoration.required_slots AS dec_required_slots,
             item.*,
             item_text.*
         FROM decoration

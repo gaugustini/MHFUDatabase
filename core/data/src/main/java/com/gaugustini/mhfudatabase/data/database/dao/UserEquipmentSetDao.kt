@@ -75,19 +75,19 @@ interface UserEquipmentSetDao {
     @Query(
         """
         SELECT
-            user_set_decoration.*,
-            decoration.*,
+            usd.user_set_id AS usd_user_set_id, usd.decoration_id AS usd_decoration_id, usd.equipment_type AS usd_equipment_type, usd.quantity AS usd_quantity,
+            decoration.id AS dec_id, decoration.required_slots AS dec_required_slots,
             item.*,
             item_text.*
-        FROM user_set_decoration
+        FROM user_set_decoration usd
         JOIN decoration
-            ON user_set_decoration.decoration_id = decoration.id
+            ON usd.decoration_id = decoration.id
         JOIN item
             ON decoration.id = item.id
         JOIN item_text
             ON item.id = item_text.item_id
             AND item_text.language = :language
-        WHERE user_set_decoration.user_set_id = :equipmentSetId
+        WHERE usd.user_set_id = :equipmentSetId
         """
     )
     suspend fun getDecorationsByUserSetId(
