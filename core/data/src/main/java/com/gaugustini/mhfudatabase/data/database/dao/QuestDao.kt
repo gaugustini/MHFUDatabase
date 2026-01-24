@@ -14,7 +14,10 @@ interface QuestDao {
 
     @Query(
         """
-        SELECT quest.*, quest_text.* FROM quest
+        SELECT
+            quest.*,
+            quest_text.*
+        FROM quest
         JOIN quest_text
             ON quest.id = quest_text.quest_id
             AND quest_text.language = :language
@@ -25,7 +28,10 @@ interface QuestDao {
 
     @Query(
         """
-        SELECT quest.*, quest_text.* FROM quest
+        SELECT
+            quest.*,
+            quest_text.*
+        FROM quest
         JOIN quest_text
             ON quest.id = quest_text.quest_id
             AND quest_text.language = :language
@@ -35,7 +41,10 @@ interface QuestDao {
 
     @Query(
         """
-        SELECT location.*, location_text.* FROM quest
+        SELECT
+            location.*,
+            location_text.*
+        FROM quest
         JOIN location
             ON quest.location_id = location.id
         JOIN location_text
@@ -48,7 +57,10 @@ interface QuestDao {
 
     @Query(
         """
-        SELECT monster.*, monster_text.* FROM quest_monster
+        SELECT
+            monster.*,
+            monster_text.*
+        FROM quest_monster
         JOIN monster
             ON quest_monster.monster_id = monster.id
         JOIN monster_text

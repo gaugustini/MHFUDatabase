@@ -17,7 +17,10 @@ interface MonsterDao {
 
     @Query(
         """
-        SELECT monster.*, monster_text.* FROM monster
+        SELECT
+            monster.*,
+            monster_text.*
+        FROM monster
         JOIN monster_text
             ON monster.id = monster_text.monster_id
             AND monster_text.language = :language
@@ -28,7 +31,10 @@ interface MonsterDao {
 
     @Query(
         """
-        SELECT monster.*, monster_text.* FROM monster
+        SELECT
+            monster.*,
+            monster_text.*
+        FROM monster
         JOIN monster_text
             ON monster.id = monster_text.monster_id
             AND monster_text.language = :language
@@ -38,7 +44,10 @@ interface MonsterDao {
 
     @Query(
         """
-        SELECT monster_hitzone.*, hitzone_text.* FROM monster_hitzone
+        SELECT
+            monster_hitzone.*,
+            hitzone_text.*
+        FROM monster_hitzone
         JOIN hitzone_text
             ON monster_hitzone.hitzone_id = hitzone_text.hitzone_id
             AND hitzone_text.language = :language
@@ -47,10 +56,24 @@ interface MonsterDao {
     )
     suspend fun getHitzonesByMonsterId(monsterId: Int, language: String): List<MonsterHitzoneWithText>
 
-    @Query("SELECT * FROM monster_status WHERE monster_id = :monsterId")
+    @Query(
+        """
+        SELECT
+            monster_status.*
+        FROM monster_status
+        WHERE monster_id = :monsterId
+        """
+    )
     suspend fun getMonsterStatusByMonsterId(monsterId: Int): List<MonsterStatusEntity>
 
-    @Query("SELECT * FROM monster_item WHERE monster_id = :monsterId")
+    @Query(
+        """
+        SELECT 
+            monster_item.*
+        FROM monster_item
+        WHERE monster_id = :monsterId
+        """
+    )
     suspend fun getMonsterItemByMonsterId(monsterId: Int): MonsterItemEntity
 
     @Query(

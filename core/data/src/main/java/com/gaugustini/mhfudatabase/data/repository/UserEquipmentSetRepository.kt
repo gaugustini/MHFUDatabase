@@ -1,5 +1,6 @@
 package com.gaugustini.mhfudatabase.data.repository
 
+import com.gaugustini.mhfudatabase.data.database.dao.SkillDao
 import com.gaugustini.mhfudatabase.data.database.dao.UserEquipmentSetDao
 import com.gaugustini.mhfudatabase.data.database.relation.EquipmentItemQuantity
 import com.gaugustini.mhfudatabase.data.database.relation.EquipmentSkillTreePoint
@@ -15,6 +16,7 @@ import kotlin.math.abs
 @Singleton
 class UserEquipmentSetRepository @Inject constructor(
     private val userEquipmentSetDao: UserEquipmentSetDao,
+    private val skillDao: SkillDao,
 ) {
 
     /**
@@ -26,7 +28,7 @@ class UserEquipmentSetRepository @Inject constructor(
     ): UserEquipmentSet {
         val skillsPoint = getSkillTreePointsInSet(equipmentSetId, language)
         val activeSkills = skillsPoint.filter { abs(it.points) >= 10 }.mapNotNull {
-            userEquipmentSetDao.getActiveSkill(it.skillTree.id, it.points, language)
+            skillDao.getActiveSkill(it.skillTree.id, it.points, language)
         }
 
         return UserEquipmentSetMapper.toModel(
@@ -115,9 +117,9 @@ class UserEquipmentSetRepository @Inject constructor(
             weaponMaterials =
                 userEquipmentSetDao.getWeaponRecipeByUserSetId(equipmentSetId, "UPGRADE", language)
         }
-        val armorMaterials = userEquipmentSetDao.getArmorRecipeByUserSetId(equipmentSetId, language)
+        val armorMaterials = userEquipmentSetDao.getArmorRecipesByUserSetId(equipmentSetId, language)
         val decorationMaterials =
-            userEquipmentSetDao.getDecorationRecipeByUserSetId(equipmentSetId, language)
+            userEquipmentSetDao.getDecorationRecipesByUserSetId(equipmentSetId, language)
 
         return (weaponMaterials + armorMaterials + decorationMaterials)
             .groupBy { it.item.id }

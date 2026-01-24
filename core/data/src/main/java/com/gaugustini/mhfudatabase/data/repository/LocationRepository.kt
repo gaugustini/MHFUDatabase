@@ -23,7 +23,7 @@ class LocationRepository @Inject constructor(
     ): Location {
         return LocationMapper.toModel(
             location = locationDao.getLocation(locationId, language),
-            items = locationDao.getGatherableItemsByLocationId(locationId, language),
+            items = locationDao.getLocationItemsByLocationId(locationId, language),
         )
     }
 

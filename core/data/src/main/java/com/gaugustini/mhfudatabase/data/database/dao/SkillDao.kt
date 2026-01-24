@@ -6,14 +6,17 @@ import com.gaugustini.mhfudatabase.data.database.relation.SkillTreeWithText
 import com.gaugustini.mhfudatabase.data.database.relation.SkillWithText
 
 /**
- * [Dao] for Skill related database operations.
+ * [Dao] for Skill Tree and Skill related database operations.
  */
 @Dao
 interface SkillDao {
 
     @Query(
         """
-        SELECT skill_tree.*, skill_tree_text.* FROM skill_tree
+        SELECT
+            skill_tree.*,
+            skill_tree_text.*
+        FROM skill_tree
         JOIN skill_tree_text
             ON skill_tree.id = skill_tree_text.skill_tree_id
             AND skill_tree_text.language = :language
@@ -24,7 +27,10 @@ interface SkillDao {
 
     @Query(
         """
-        SELECT skill_tree.*, skill_tree_text.* FROM skill_tree
+        SELECT
+            skill_tree.*,
+            skill_tree_text.*
+        FROM skill_tree
         JOIN skill_tree_text
             ON skill_tree.id = skill_tree_text.skill_tree_id
             AND skill_tree_text.language = :language
@@ -34,17 +40,10 @@ interface SkillDao {
 
     @Query(
         """
-        SELECT skill.*, skill_text.* FROM skill
-        JOIN skill_text
-            ON skill.id = skill_text.skill_id
-            AND skill_text.language = :language
-        """
-    )
-    suspend fun getSkillList(language: String): List<SkillWithText>
-
-    @Query(
-        """
-        SELECT skill.*, skill_text.* FROM skill
+        SELECT
+            skill.*,
+            skill_text.*
+        FROM skill
         JOIN skill_text
             ON skill.id = skill_text.skill_id
             AND skill_text.language = :language
@@ -52,5 +51,27 @@ interface SkillDao {
         """
     )
     suspend fun getSkillListBySkillTreeId(skillTreeId: Int, language: String): List<SkillWithText>
+
+    @Query(
+        """
+        SELECT
+            skill.*,
+            skill_text.*
+        FROM skill
+        JOIN skill_text 
+            ON skill.id = skill_text.skill_id
+            AND skill_text.language = :lang
+        WHERE
+            skill.skill_tree_id = :skillTreeId
+            AND (
+              (:points >= 10 AND skill.required_points > 0 AND skill.required_points <= :points)
+              OR 
+              (:points <= -10 AND skill.required_points < 0 AND skill.required_points >= :points)
+            )
+        ORDER BY ABS(skill.required_points) DESC
+        LIMIT 1
+        """
+    )
+    suspend fun getActiveSkill(skillTreeId: Int, points: Int, lang: String): SkillWithText?
 
 }

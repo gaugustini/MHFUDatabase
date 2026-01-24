@@ -57,7 +57,7 @@ class ItemRepository @Inject constructor(
     /**
      * Returns the sources of the item with the given ID.
      */
-    suspend fun getItemSources(
+    private suspend fun getItemSources(
         itemId: Int,
         language: String,
     ): ItemSources {
@@ -74,7 +74,7 @@ class ItemRepository @Inject constructor(
     /**
      * Returns the usages of the item with the given ID.
      */
-    suspend fun getItemUsages(
+    private suspend fun getItemUsages(
         itemId: Int,
         language: String,
     ): ItemUsages {

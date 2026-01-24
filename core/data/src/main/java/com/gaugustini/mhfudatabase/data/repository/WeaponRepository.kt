@@ -52,6 +52,9 @@ class WeaponRepository @Inject constructor(
         return weaponDao.getWeaponList(language).map { WeaponMapper.toModel(it) }
     }
 
+    /**
+     * Returns a list of weapons that are related to the given weapon type.
+     */
     suspend fun getWeaponTree(
         weaponType: WeaponType,
         language: String,

@@ -63,9 +63,9 @@ interface ArmorSetDao {
         """
         SELECT
             armor_set.id AS equipmentId,
-            SUM(armor_skill.point_value) AS points,
             skill_tree.*,
-            skill_tree_text.*
+            skill_tree_text.*,
+            SUM(armor_skill.point_value) AS points
         FROM armor_set
         JOIN armor
             ON armor_set.id = armor.armor_set_id
@@ -74,11 +74,11 @@ interface ArmorSetDao {
         JOIN skill_tree
             ON armor_skill.skill_tree_id = skill_tree.id
         JOIN skill_tree_text
-            ON armor_skill.skill_tree_id = skill_tree_text.skill_tree_id
+            ON skill_tree.id = skill_tree_text.skill_tree_id
             AND skill_tree_text.language = :language
         WHERE armor_set.id = :armorSetId
         GROUP BY skill_tree.id
-        ORDER BY points DESC
+        ORDER BY armor_skill.point_value DESC
         """
     )
     suspend fun getArmorSetSkillsByArmorSetId(
@@ -90,9 +90,9 @@ interface ArmorSetDao {
         """
         SELECT
             armor_set.id AS equipmentId,
-            SUM(armor_recipe.quantity) AS quantity,
             item.*,
-            item_text.*
+            item_text.*,
+            SUM(armor_recipe.quantity) AS quantity
         FROM armor_set
         JOIN armor
             ON armor_set.id = armor.armor_set_id
@@ -101,11 +101,11 @@ interface ArmorSetDao {
         JOIN item
             ON armor_recipe.item_id = item.id
         JOIN item_text
-            ON armor_recipe.item_id = item_text.item_id
+            ON item.id = item_text.item_id
             AND item_text.language = :language
         WHERE armor_set.id = :armorSetId
         GROUP BY item.id
-        ORDER BY quantity DESC
+        ORDER BY armor_recipe.quantity DESC
         """
     )
     suspend fun getArmorSetRecipeByArmorSetId(

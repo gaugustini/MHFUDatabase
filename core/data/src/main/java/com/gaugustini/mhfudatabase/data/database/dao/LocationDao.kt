@@ -13,7 +13,10 @@ interface LocationDao {
 
     @Query(
         """
-        SELECT location.*, location_text.* FROM location
+        SELECT
+            location.*,
+            location_text.*
+        FROM location
         JOIN location_text
             ON location.id = location_text.location_id
             AND location_text.language = :language
@@ -24,7 +27,10 @@ interface LocationDao {
 
     @Query(
         """
-        SELECT location.*, location_text.* FROM location
+        SELECT
+            location.*,
+            location_text.*
+        FROM location
         JOIN location_text
             ON location.id = location_text.location_id
             AND location_text.language = :language
@@ -42,14 +48,14 @@ interface LocationDao {
         JOIN item
             ON location_item.item_id = item.id
         JOIN item_text
-            ON location_item.item_id = item_text.item_id
+            ON item.id = item_text.item_id
             AND item_text.language = :language
         WHERE location_item.location_id = :locationId
         ORDER BY
             location_item.rank, location_item.area, location_item.gather_type, item_text.name
         """
     )
-    suspend fun getGatherableItemsByLocationId(
+    suspend fun getLocationItemsByLocationId(
         locationId: Int,
         language: String
     ): List<LocationItemWithItem>

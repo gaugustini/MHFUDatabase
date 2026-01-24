@@ -14,11 +14,15 @@ interface DecorationDao {
 
     @Query(
         """
-        SELECT decoration.*, item.* ,item_text.* FROM decoration
+        SELECT
+            decoration.*,
+            item.*,
+            item_text.*
+        FROM decoration
         JOIN item
             ON decoration.id = item.id
         JOIN item_text
-            ON decoration.id = item_text.item_id
+            ON item.id = item_text.item_id
             AND item_text.language = :language
         WHERE decoration.id = :decorationId
         """
@@ -27,11 +31,15 @@ interface DecorationDao {
 
     @Query(
         """
-        SELECT decoration.*, item.* ,item_text.* FROM decoration
+        SELECT
+            decoration.*,
+            item.*,
+            item_text.*
+        FROM decoration
         JOIN item
             ON decoration.id = item.id
         JOIN item_text
-            ON decoration.id = item_text.item_id
+            ON item.id = item_text.item_id
             AND item_text.language = :language
         """
     )
@@ -41,14 +49,14 @@ interface DecorationDao {
         """
         SELECT 
             decoration_skill.decoration_id AS equipmentId,
-            decoration_skill.point_value AS points,
             skill_tree.*,
-            skill_tree_text.* 
+            skill_tree_text.*,
+            decoration_skill.point_value AS points
         FROM decoration_skill
         JOIN skill_tree
             ON decoration_skill.skill_tree_id = skill_tree.id
         JOIN skill_tree_text
-            ON decoration_skill.skill_tree_id = skill_tree_text.skill_tree_id
+            ON skill_tree.id = skill_tree_text.skill_tree_id
             AND skill_tree_text.language = :language
         WHERE decoration_skill.decoration_id = :decorationId  
         """
@@ -62,14 +70,14 @@ interface DecorationDao {
         """
         SELECT
             decoration_recipe.decoration_id AS equipmentId,
-            decoration_recipe.quantity AS quantity,
             item.*,
-            item_text.*
+            item_text.*,
+            decoration_recipe.quantity AS quantity
         FROM decoration_recipe
         JOIN item
             ON decoration_recipe.item_id = item.id
         JOIN item_text
-            ON decoration_recipe.item_id = item_text.item_id
+            ON item.id = item_text.item_id
             AND item_text.language = :language
         WHERE
             decoration_recipe.decoration_id = :decorationId

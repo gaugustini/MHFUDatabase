@@ -14,7 +14,10 @@ interface ArmorDao {
 
     @Query(
         """
-        SELECT armor.*, armor_text.* FROM armor
+        SELECT
+            armor.*,
+            armor_text.*
+        FROM armor
         JOIN armor_text
             ON armor.id = armor_text.armor_id
             AND armor_text.language = :language
@@ -25,7 +28,10 @@ interface ArmorDao {
 
     @Query(
         """
-        SELECT armor.*, armor_text.* FROM armor
+        SELECT
+            armor.*,
+            armor_text.*
+        FROM armor
         JOIN armor_text
             ON armor.id = armor_text.armor_id
             AND armor_text.language = :language
@@ -35,7 +41,10 @@ interface ArmorDao {
 
     @Query(
         """
-        SELECT armor.*, armor_text.* FROM armor
+        SELECT
+            armor.*,
+            armor_text.*
+        FROM armor
         JOIN armor_text
             ON armor.id = armor_text.armor_id
             AND armor_text.language = :language
@@ -48,14 +57,14 @@ interface ArmorDao {
         """
         SELECT 
             armor_skill.armor_id AS equipmentId,
-            armor_skill.point_value AS points,
             skill_tree.*,
-            skill_tree_text.* 
+            skill_tree_text.*,
+            armor_skill.point_value AS points
         FROM armor_skill
         JOIN skill_tree
             ON armor_skill.skill_tree_id = skill_tree.id
         JOIN skill_tree_text
-            ON armor_skill.skill_tree_id = skill_tree_text.skill_tree_id
+            ON skill_tree.id = skill_tree_text.skill_tree_id
             AND skill_tree_text.language = :language
         WHERE armor_skill.armor_id = :armorId  
         """
@@ -64,16 +73,16 @@ interface ArmorDao {
 
     @Query(
         """
-        SELECT
+        SELECT 
             armor_recipe.armor_id AS equipmentId,
-            armor_recipe.quantity AS quantity,
             item.*,
-            item_text.*
+            item_text.*,
+            armor_recipe.quantity AS quantity
         FROM armor_recipe
         JOIN item
             ON armor_recipe.item_id = item.id
         JOIN item_text
-            ON armor_recipe.item_id = item_text.item_id
+            ON item.id = item_text.item_id
             AND item_text.language = :language
         WHERE armor_recipe.armor_id = :armorId
         """

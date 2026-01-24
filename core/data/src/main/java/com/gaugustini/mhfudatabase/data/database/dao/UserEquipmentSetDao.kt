@@ -12,7 +12,6 @@ import com.gaugustini.mhfudatabase.data.database.entity.userset.UserEquipmentSet
 import com.gaugustini.mhfudatabase.data.database.relation.ArmorWithText
 import com.gaugustini.mhfudatabase.data.database.relation.EquipmentItemQuantity
 import com.gaugustini.mhfudatabase.data.database.relation.EquipmentSkillTreePoint
-import com.gaugustini.mhfudatabase.data.database.relation.SkillWithText
 import com.gaugustini.mhfudatabase.data.database.relation.UserSetDecorationWithDecoration
 import com.gaugustini.mhfudatabase.data.database.relation.WeaponWithText
 
@@ -22,10 +21,23 @@ import com.gaugustini.mhfudatabase.data.database.relation.WeaponWithText
 @Dao
 interface UserEquipmentSetDao {
 
-    @Query("SELECT * FROM user_set WHERE id = :equipmentSetId")
+    @Query(
+        """
+        SELECT
+            user_set.*
+        FROM user_set
+        WHERE id = :equipmentSetId
+        """
+    )
     suspend fun getEquipmentSet(equipmentSetId: Int): UserEquipmentSetEntity
 
-    @Query("SELECT * FROM user_set")
+    @Query(
+        """
+        SELECT
+            user_set.*
+        FROM user_set
+        """
+    )
     suspend fun getEquipmentSets(): List<UserEquipmentSetEntity>
 
     @Query(
@@ -87,9 +99,9 @@ interface UserEquipmentSetDao {
         """
         SELECT
             user_set_armor.user_set_id AS equipmentId,
-            SUM(armor_skill.point_value) AS points,
             skill_tree.*,
-            skill_tree_text.*
+            skill_tree_text.*,
+            SUM(armor_skill.point_value) AS points
         FROM user_set_armor
         JOIN armor_skill
             ON user_set_armor.armor_id = armor_skill.armor_id
@@ -100,7 +112,6 @@ interface UserEquipmentSetDao {
             AND skill_tree_text.language = :language
         WHERE user_set_armor.user_set_id = :equipmentSetId
         GROUP BY skill_tree.id
-        ORDER BY points DESC
         """
     )
     suspend fun getArmorSkillsByUserSetId(
@@ -112,9 +123,9 @@ interface UserEquipmentSetDao {
         """
         SELECT
             user_set_decoration.user_set_id AS equipmentId,
-            SUM(decoration_skill.point_value * user_set_decoration.quantity) AS points,
             skill_tree.*,
-            skill_tree_text.*
+            skill_tree_text.*,
+            SUM(decoration_skill.point_value * user_set_decoration.quantity) AS points
         FROM user_set_decoration
         JOIN decoration_skill
             ON user_set_decoration.decoration_id = decoration_skill.decoration_id
@@ -125,7 +136,6 @@ interface UserEquipmentSetDao {
             AND skill_tree_text.language = :language
         WHERE user_set_decoration.user_set_id = :equipmentSetId
         GROUP BY skill_tree.id
-        ORDER BY points DESC
         """
     )
     suspend fun getDecorationSkillsByUserSetId(
@@ -135,31 +145,11 @@ interface UserEquipmentSetDao {
 
     @Query(
         """
-        SELECT skill.*, skill_text.*
-        FROM skill
-        JOIN skill_text 
-            ON skill.id = skill_text.skill_id
-            AND skill_text.language = :lang
-        WHERE
-            skill.skill_tree_id = :skillTreeId
-            AND (
-              (:points >= 10 AND skill.required_points > 0 AND skill.required_points <= :points)
-              OR 
-              (:points <= -10 AND skill.required_points < 0 AND skill.required_points >= :points)
-            )
-        ORDER BY ABS(skill.required_points) DESC
-        LIMIT 1
-        """
-    )
-    suspend fun getActiveSkill(skillTreeId: Int, points: Int, lang: String): SkillWithText?
-
-    @Query(
-        """
         SELECT
             user_set.id AS equipmentId,
-            SUM(weapon_recipe.quantity) AS quantity,
             item.*,
-            item_text.*
+            item_text.*,
+            SUM(weapon_recipe.quantity) AS quantity
         FROM user_set
         JOIN weapon_recipe
             ON user_set.weapon_id = weapon_recipe.weapon_id
@@ -171,7 +161,6 @@ interface UserEquipmentSetDao {
             AND item_text.language = :language
         WHERE user_set.id = :equipmentSetId
         GROUP BY item.id
-        ORDER BY quantity DESC        
         """
     )
     suspend fun getWeaponRecipeByUserSetId(
@@ -184,9 +173,9 @@ interface UserEquipmentSetDao {
         """
         SELECT
             user_set_armor.user_set_id AS equipmentId,
-            SUM(armor_recipe.quantity) AS quantity,
             item.*,
-            item_text.*
+            item_text.*,
+            SUM(armor_recipe.quantity) AS quantity
         FROM user_set_armor
         JOIN armor_recipe
             ON user_set_armor.armor_id = armor_recipe.armor_id
@@ -197,10 +186,9 @@ interface UserEquipmentSetDao {
             AND item_text.language = :language
         WHERE user_set_armor.user_set_id = :equipmentSetId
         GROUP BY item.id
-        ORDER BY quantity DESC
         """
     )
-    suspend fun getArmorRecipeByUserSetId(
+    suspend fun getArmorRecipesByUserSetId(
         equipmentSetId: Int,
         language: String
     ): List<EquipmentItemQuantity>
@@ -209,9 +197,9 @@ interface UserEquipmentSetDao {
         """
         SELECT
             user_set_decoration.user_set_id AS equipmentId,
-            SUM(decoration_recipe.quantity * user_set_decoration.quantity) AS quantity,
             item.*,
-            item_text.*
+            item_text.*,
+            SUM(decoration_recipe.quantity * user_set_decoration.quantity) AS quantity
         FROM user_set_decoration
         JOIN decoration_recipe
             ON user_set_decoration.decoration_id = decoration_recipe.decoration_id
@@ -223,10 +211,9 @@ interface UserEquipmentSetDao {
             AND item_text.language = :language
         WHERE user_set_decoration.user_set_id = :equipmentSetId
         GROUP BY item.id
-        ORDER BY quantity DESC
         """
     )
-    suspend fun getDecorationRecipeByUserSetId(
+    suspend fun getDecorationRecipesByUserSetId(
         equipmentSetId: Int,
         language: String
     ): List<EquipmentItemQuantity>
@@ -247,14 +234,12 @@ interface UserEquipmentSetDao {
         equipmentSetDecorations: List<UserEquipmentSetDecorationEntity>,
     ): Int {
         val newEquipmentSetId = insertEquipmentSet(equipmentSet).toInt()
-        val armors = equipmentSetArmors.map { armor ->
-            armor.copy(userSetId = newEquipmentSetId)
-        }
-        val decorations = equipmentSetDecorations.map { decoration ->
-            decoration.copy(userSetId = newEquipmentSetId)
-        }
+        val armors = equipmentSetArmors.map { it.copy(userSetId = newEquipmentSetId) }
+        val decorations = equipmentSetDecorations.map { it.copy(userSetId = newEquipmentSetId) }
+
         insertEquipmentSetArmors(armors)
         insertEquipmentSetDecorations(decorations)
+
         return newEquipmentSetId
     }
 

@@ -18,7 +18,10 @@ interface ItemDao {
 
     @Query(
         """
-        SELECT item.*, item_text.* FROM item
+        SELECT
+            item.*,
+            item_text.*
+        FROM item
         JOIN item_text
             ON item.id = item_text.item_id
             AND item_text.language = :language
@@ -29,7 +32,10 @@ interface ItemDao {
 
     @Query(
         """
-        SELECT item.*, item_text.* FROM item
+        SELECT
+            item.*,
+            item_text.*
+        FROM item
         JOIN item_text
             ON item.id = item_text.item_id
             AND item_text.language = :language
@@ -39,7 +45,10 @@ interface ItemDao {
 
     @Query(
         """
-        SELECT item.*, item_text.* FROM item
+        SELECT
+            item.*,
+            item_text.*
+        FROM item
         JOIN item_text
             ON item.id = item_text.item_id
             AND item_text.language = :language
@@ -48,12 +57,20 @@ interface ItemDao {
     )
     suspend fun getItemListByItemIds(itemIds: List<Int>, language: String): List<ItemWithText>
 
-    @Query("SELECT item_combination.* FROM item_combination")
+    @Query(
+        """
+        SELECT
+            item_combination.*
+        FROM item_combination
+        """
+    )
     suspend fun getItemCombinationList(): List<ItemCombinationEntity>
 
     @Query(
         """
-        SELECT item_combination.* FROM item_combination
+        SELECT
+            item_combination.*
+        FROM item_combination
         WHERE item_combination.item_created_id = :itemId
         """
     )
@@ -99,8 +116,12 @@ interface ItemDao {
 
     @Query(
         """
-        SELECT item_combination.* FROM item_combination
-        WHERE item_combination.item_a_id = :itemId OR item_combination.item_b_id = :itemId
+        SELECT
+            item_combination.*
+        FROM item_combination
+        WHERE
+            item_combination.item_a_id = :itemId
+            OR item_combination.item_b_id = :itemId
         """
     )
     suspend fun getCombinationUsages(itemId: Int, language: String): List<ItemCombinationEntity>
@@ -133,7 +154,7 @@ interface ItemDao {
         JOIN item
             ON decoration.id = item.id
         JOIN item_text
-            ON decoration.id = item_text.item_id
+            ON item.id = item_text.item_id
             AND item_text.language = :language
         JOIN decoration_recipe
             ON decoration.id = decoration_recipe.decoration_id
