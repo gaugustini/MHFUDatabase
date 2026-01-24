@@ -33,12 +33,12 @@ import com.gaugustini.mhfudatabase.domain.enums.WeaponType
  * @property songNotes The notes for Hunting Horns.
  * @property reloadSpeed The reload speed for Bowguns.
  * @property recoil The recoil for Bowguns.
- * @property ammoBow The available ammo coatings for Bows.
- * @property ammoBowgun The available ammo types for Bowguns.
- * @property charges The charge levels for Bows.
- * @property rapidFire The rapid fire ammo of Bowguns.
+ * @property ammoBow The available ammo coatings and charges for Bows.
+ * @property ammoBowgun The available ammo for Bowguns.
  * @property recipeCreate The list of items required to create the weapon.
  * @property recipeUpgrade The list of items required to create the weapon after upgrading it.
+ * @property paths The list of paths to the root of the weapon tree.
+ * @property finals The list of weapons that are the finals of the weapon tree.
  */
 // TODO: Add better representation for sharpness, songNotes, ammo, rapid fire
 data class Weapon(
@@ -65,10 +65,64 @@ data class Weapon(
     val songNotes: String?,
     val reloadSpeed: WeaponReloadSpeed?,
     val recoil: WeaponRecoil?,
-    val ammoBow: Map<WeaponAmmo, Boolean>?,
-    val ammoBowgun: Map<WeaponAmmo, String>?,
-    val charges: Map<WeaponAmmo, Int>?,
+    val ammoBow: AmmoBow?,
+    val ammoBowgun: AmmoBowgun?,
+    val recipeCreate: List<ItemQuantity>?,
+    val recipeUpgrade: List<ItemQuantity>?,
+    val paths: List<List<Weapon>>?,
+    val finals: List<Weapon>?,
+)
+
+/**
+ * Represents the ammo for Bows.
+ */
+data class AmmoBow(
+    val charge1Type: WeaponAmmo,
+    val charge1Level: Int,
+    val charge2Type: WeaponAmmo,
+    val charge2Level: Int,
+    val charge3Type: WeaponAmmo,
+    val charge3Level: Int,
+    val charge4Type: WeaponAmmo?,
+    val charge4Level: Int?,
+    val power: Boolean,
+    val close: Boolean,
+    val paint: Boolean,
+    val poison: Boolean,
+    val paralysis: Boolean,
+    val sleep: Boolean,
+)
+
+/**
+ * Represents the ammo for Bowguns.
+ */
+data class AmmoBowgun(
+    val normal: String,
+    val pierce: String,
+    val pellet: String,
+    val crag: String,
+    val clust: String,
+    val recovery: String,
+    val poison: String,
+    val paralysis: String,
+    val sleep: String,
+    val flame: String,
+    val water: String,
+    val thunder: String,
+    val freeze: String,
+    val dragon: String,
+    val tranq: String,
+    val paint: String,
+    val demon: String,
+    val armor: String,
     val rapidFire: String?,
-    val recipeCreate: List<Item>?,
-    val recipeUpgrade: List<Item>?,
+)
+
+/**
+ * Represents a node in the weapon tree.
+ */
+data class WeaponNode(
+    val weapon: Weapon,
+    val parents: MutableList<WeaponNode> = mutableListOf(),
+    val children: MutableList<WeaponNode> = mutableListOf(),
 )
