@@ -8,7 +8,7 @@ import com.gaugustini.mhfudatabase.data.database.relation.DecorationWithText
 import com.gaugustini.mhfudatabase.data.database.relation.EquipmentItemQuantity
 import com.gaugustini.mhfudatabase.data.database.relation.EquipmentSkillTreePoint
 import com.gaugustini.mhfudatabase.data.database.relation.SkillWithText
-import com.gaugustini.mhfudatabase.data.database.relation.UserSetDecoration
+import com.gaugustini.mhfudatabase.data.database.relation.UserSetDecorationWithDecoration
 import com.gaugustini.mhfudatabase.data.database.relation.WeaponWithText
 import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
 import com.gaugustini.mhfudatabase.domain.model.EquipmentDecoration
@@ -23,7 +23,7 @@ object UserEquipmentSetMapper {
         equipmentSet: UserEquipmentSetEntity,
         weapon: WeaponWithText? = null,
         armors: List<ArmorWithText>? = null,
-        decorations: List<UserSetDecoration>? = null,
+        decorations: List<UserSetDecorationWithDecoration>? = null,
         activeSkills: List<SkillWithText>? = null,
         skills: List<EquipmentSkillTreePoint>? = null,
         recipe: List<EquipmentItemQuantity>? = null,
@@ -47,7 +47,7 @@ object UserEquipmentSetMapper {
     }
 
     fun toEquipmentDecoration(
-        decoration: UserSetDecoration,
+        decoration: UserSetDecorationWithDecoration,
     ): EquipmentDecoration {
         return EquipmentDecoration(
             equipmentType = EquipmentType.fromString(decoration.userSetDecoration.equipmentType),

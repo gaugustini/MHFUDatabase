@@ -6,14 +6,12 @@ import com.gaugustini.mhfudatabase.data.database.entity.item.ItemEntity
 import com.gaugustini.mhfudatabase.data.database.entity.item.ItemTextEntity
 
 /**
- * Represents a quantity of an item used to craft a decoration.
+ * Represents a decoration entity with its associated item and text values, and a quantity of a item
+ * used to craft it.
  */
-data class DecorationItemUsage(
-    @Embedded
-    val decoration: DecorationEntity,
-    @Embedded
-    val item: ItemEntity,
-    @Embedded
-    val itemText: ItemTextEntity,
+data class DecorationWithItemQuantity(
+    @Embedded val decoration: DecorationEntity,
+    @Embedded val item: ItemEntity,
+    @Embedded val itemText: ItemTextEntity,
     val quantity: Int,
 )

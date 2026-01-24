@@ -1,7 +1,7 @@
 package com.gaugustini.mhfudatabase.data.mapper
 
 import com.gaugustini.mhfudatabase.data.database.relation.ItemWithText
-import com.gaugustini.mhfudatabase.data.database.relation.LocationItem
+import com.gaugustini.mhfudatabase.data.database.relation.LocationItemWithItem
 import com.gaugustini.mhfudatabase.data.database.relation.LocationWithText
 import com.gaugustini.mhfudatabase.domain.enums.GatherType
 import com.gaugustini.mhfudatabase.domain.enums.Rank
@@ -15,7 +15,7 @@ object LocationMapper {
 
     fun toModel(
         location: LocationWithText,
-        items: List<LocationItem>? = null,
+        items: List<LocationItemWithItem>? = null,
     ): Location {
         return Location(
             id = location.location.id,
@@ -25,7 +25,7 @@ object LocationMapper {
     }
 
     fun toGatheringPoint(
-        item: LocationItem,
+        item: LocationItemWithItem,
     ): GatheringPoint {
         return GatheringPoint(
             rank = Rank.fromString(item.locationItem.rank),

@@ -9,10 +9,7 @@ import com.gaugustini.mhfudatabase.data.database.entity.item.ItemTextEntity
  * Represents a decoration entity with its associated item and text values.
  */
 data class DecorationWithText(
-    @Embedded
-    val decoration: DecorationEntity,
-    @Embedded
-    val item: ItemEntity,
-    @Embedded
-    val decorationText: ItemTextEntity,
+    @Embedded val decoration: DecorationEntity,
+    @Embedded val item: ItemEntity,
+    @Embedded val itemText: ItemTextEntity,
 )

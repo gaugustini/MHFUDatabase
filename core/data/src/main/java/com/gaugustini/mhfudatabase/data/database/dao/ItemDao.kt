@@ -3,12 +3,12 @@ package com.gaugustini.mhfudatabase.data.database.dao
 import androidx.room.Dao
 import androidx.room.Query
 import com.gaugustini.mhfudatabase.data.database.entity.item.ItemCombinationEntity
-import com.gaugustini.mhfudatabase.data.database.relation.ArmorItemUsage
-import com.gaugustini.mhfudatabase.data.database.relation.DecorationItemUsage
+import com.gaugustini.mhfudatabase.data.database.relation.ArmorWithItemQuantity
+import com.gaugustini.mhfudatabase.data.database.relation.DecorationWithItemQuantity
 import com.gaugustini.mhfudatabase.data.database.relation.ItemWithText
-import com.gaugustini.mhfudatabase.data.database.relation.LocationSource
-import com.gaugustini.mhfudatabase.data.database.relation.MonsterRewardSource
-import com.gaugustini.mhfudatabase.data.database.relation.WeaponItemUsage
+import com.gaugustini.mhfudatabase.data.database.relation.LocationItemWithLocation
+import com.gaugustini.mhfudatabase.data.database.relation.MonsterRewardWithMonster
+import com.gaugustini.mhfudatabase.data.database.relation.WeaponWithItemQuantity
 
 /**
  * [Dao] for Item related database operations.
@@ -74,7 +74,7 @@ interface ItemDao {
         WHERE location_item.item_id = :itemId
         """
     )
-    suspend fun getLocationSources(itemId: Int, language: String): List<LocationSource>
+    suspend fun getLocationSources(itemId: Int, language: String): List<LocationItemWithLocation>
 
     @Query(
         """
@@ -95,7 +95,7 @@ interface ItemDao {
         WHERE monster_reward.item_id = :itemId
         """
     )
-    suspend fun getMonsterRewardSources(itemId: Int, language: String): List<MonsterRewardSource>
+    suspend fun getMonsterRewardSources(itemId: Int, language: String): List<MonsterRewardWithMonster>
 
     @Query(
         """
@@ -120,7 +120,7 @@ interface ItemDao {
         WHERE armor_recipe.item_id = :itemId
         """
     )
-    suspend fun getArmorUsages(itemId: Int, language: String): List<ArmorItemUsage>
+    suspend fun getArmorUsages(itemId: Int, language: String): List<ArmorWithItemQuantity>
 
     @Query(
         """
@@ -140,7 +140,7 @@ interface ItemDao {
         WHERE decoration_recipe.item_id = :itemId
         """
     )
-    suspend fun getDecorationUsages(itemId: Int, language: String): List<DecorationItemUsage>
+    suspend fun getDecorationUsages(itemId: Int, language: String): List<DecorationWithItemQuantity>
 
     @Query(
         """
@@ -157,6 +157,6 @@ interface ItemDao {
         WHERE weapon_recipe.item_id = :itemId
         """
     )
-    suspend fun getWeaponsUsages(itemId: Int, language: String): List<WeaponItemUsage>
+    suspend fun getWeaponsUsages(itemId: Int, language: String): List<WeaponWithItemQuantity>
 
 }

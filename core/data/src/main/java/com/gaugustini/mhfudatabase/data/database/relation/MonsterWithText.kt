@@ -8,8 +8,6 @@ import com.gaugustini.mhfudatabase.data.database.entity.monster.MonsterTextEntit
  * Represents a monster entity with its associated text.
  */
 data class MonsterWithText(
-    @Embedded
-    val monster: MonsterEntity,
-    @Embedded
-    val monsterText: MonsterTextEntity,
+    @Embedded val monster: MonsterEntity,
+    @Embedded val monsterText: MonsterTextEntity,
 )

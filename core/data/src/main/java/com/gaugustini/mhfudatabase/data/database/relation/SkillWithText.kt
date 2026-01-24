@@ -8,8 +8,6 @@ import com.gaugustini.mhfudatabase.data.database.entity.skill.SkillTextEntity
  * Represents a skill entity with its associated text.
  */
 data class SkillWithText(
-    @Embedded
-    val skill: SkillEntity,
-    @Embedded
-    val skillText: SkillTextEntity,
+    @Embedded val skill: SkillEntity,
+    @Embedded val skillText: SkillTextEntity,
 )

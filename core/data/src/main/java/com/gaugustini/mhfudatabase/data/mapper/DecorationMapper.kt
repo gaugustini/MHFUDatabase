@@ -19,8 +19,8 @@ object DecorationMapper {
     ): Decoration {
         return Decoration(
             id = decoration.decoration.id,
-            name = decoration.decorationText.name,
-            description = decoration.decorationText.description,
+            name = decoration.itemText.name,
+            description = decoration.itemText.description,
             rarity = decoration.item.rarity,
             buyPrice = decoration.item.buyPrice ?: 0,
             sellPrice = decoration.item.sellPrice,

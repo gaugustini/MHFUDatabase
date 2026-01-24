@@ -9,9 +9,7 @@ import com.gaugustini.mhfudatabase.data.database.entity.skill.SkillTreeTextEntit
  */
 data class EquipmentSkillTreePoint(
     val equipmentId: Int,
+    @Embedded val skillTree: SkillTreeEntity,
+    @Embedded val skillTreeText: SkillTreeTextEntity,
     val points: Int,
-    @Embedded
-    val skillTree: SkillTreeEntity,
-    @Embedded
-    val skillTreeText: SkillTreeTextEntity,
 )

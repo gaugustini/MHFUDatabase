@@ -1,16 +1,16 @@
 package com.gaugustini.mhfudatabase.data.mapper
 
-import com.gaugustini.mhfudatabase.data.database.relation.ArmorItemUsage
+import com.gaugustini.mhfudatabase.data.database.relation.ArmorWithItemQuantity
 import com.gaugustini.mhfudatabase.data.database.relation.ArmorWithText
-import com.gaugustini.mhfudatabase.data.database.relation.DecorationItemUsage
+import com.gaugustini.mhfudatabase.data.database.relation.DecorationWithItemQuantity
 import com.gaugustini.mhfudatabase.data.database.relation.DecorationWithText
 import com.gaugustini.mhfudatabase.data.database.relation.EquipmentItemQuantity
 import com.gaugustini.mhfudatabase.data.database.relation.ItemWithText
-import com.gaugustini.mhfudatabase.data.database.relation.LocationSource
+import com.gaugustini.mhfudatabase.data.database.relation.LocationItemWithLocation
 import com.gaugustini.mhfudatabase.data.database.relation.LocationWithText
-import com.gaugustini.mhfudatabase.data.database.relation.MonsterRewardSource
+import com.gaugustini.mhfudatabase.data.database.relation.MonsterRewardWithMonster
 import com.gaugustini.mhfudatabase.data.database.relation.MonsterWithText
-import com.gaugustini.mhfudatabase.data.database.relation.WeaponItemUsage
+import com.gaugustini.mhfudatabase.data.database.relation.WeaponWithItemQuantity
 import com.gaugustini.mhfudatabase.data.database.relation.WeaponWithText
 import com.gaugustini.mhfudatabase.domain.enums.GatherType
 import com.gaugustini.mhfudatabase.domain.enums.ItemIconColor
@@ -73,8 +73,8 @@ object ItemMapper {
 
     fun toItemSources(
         combinations: List<ItemCombination>,
-        locations: List<LocationSource>,
-        monsterRewards: List<MonsterRewardSource>,
+        locations: List<LocationItemWithLocation>,
+        monsterRewards: List<MonsterRewardWithMonster>,
     ): ItemSources {
         val gatheringSources = locations.map {
             GatheringSource(
@@ -103,9 +103,9 @@ object ItemMapper {
 
     fun toItemUsages(
         combinations: List<ItemCombination>,
-        armors: List<ArmorItemUsage>,
-        decorations: List<DecorationItemUsage>,
-        weapons: List<WeaponItemUsage>,
+        armors: List<ArmorWithItemQuantity>,
+        decorations: List<DecorationWithItemQuantity>,
+        weapons: List<WeaponWithItemQuantity>,
     ): ItemUsages {
         val armorUsages = armors.map {
             Usage(

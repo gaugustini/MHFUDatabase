@@ -7,9 +7,7 @@ import com.gaugustini.mhfudatabase.data.database.entity.monster.MonsterHitzoneEn
 /**
  * Represents a monster hitzone entity with its associated text.
  */
-data class MonsterHitzone(
-    @Embedded
-    val monsterHitzoneEntity: MonsterHitzoneEntity,
-    @Embedded
-    val hitzoneTextEntity: HitzoneTextEntity,
+data class MonsterHitzoneWithText(
+    @Embedded val monsterHitzone: MonsterHitzoneEntity,
+    @Embedded val hitzoneText: HitzoneTextEntity,
 )

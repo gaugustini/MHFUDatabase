@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Query
 import com.gaugustini.mhfudatabase.data.database.entity.monster.MonsterItemEntity
 import com.gaugustini.mhfudatabase.data.database.entity.monster.MonsterStatusEntity
-import com.gaugustini.mhfudatabase.data.database.relation.MonsterHitzone
-import com.gaugustini.mhfudatabase.data.database.relation.MonsterRewardItem
+import com.gaugustini.mhfudatabase.data.database.relation.MonsterHitzoneWithText
+import com.gaugustini.mhfudatabase.data.database.relation.MonsterRewardWithItem
 import com.gaugustini.mhfudatabase.data.database.relation.MonsterWithText
 import com.gaugustini.mhfudatabase.data.database.relation.QuestWithText
 
@@ -45,7 +45,7 @@ interface MonsterDao {
         WHERE monster_hitzone.monster_id = :monsterId
         """
     )
-    suspend fun getHitzonesByMonsterId(monsterId: Int, language: String): List<MonsterHitzone>
+    suspend fun getHitzonesByMonsterId(monsterId: Int, language: String): List<MonsterHitzoneWithText>
 
     @Query("SELECT * FROM monster_status WHERE monster_id = :monsterId")
     suspend fun getMonsterStatusByMonsterId(monsterId: Int): List<MonsterStatusEntity>
@@ -72,7 +72,10 @@ interface MonsterDao {
         WHERE monster_id = :monsterId
         """
     )
-    suspend fun getMonsterRewardsByMonsterId(monsterId: Int, language: String): List<MonsterRewardItem>
+    suspend fun getMonsterRewardsByMonsterId(
+        monsterId: Int,
+        language: String
+    ): List<MonsterRewardWithItem>
 
     @Query(
         """

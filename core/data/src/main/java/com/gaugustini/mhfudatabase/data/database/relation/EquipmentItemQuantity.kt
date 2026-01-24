@@ -10,9 +10,7 @@ import com.gaugustini.mhfudatabase.data.database.entity.item.ItemTextEntity
  */
 data class EquipmentItemQuantity(
     val equipmentId: Int,
+    @Embedded val item: ItemEntity,
+    @Embedded val itemText: ItemTextEntity,
     val quantity: Int,
-    @Embedded
-    val item: ItemEntity,
-    @Embedded
-    val itemText: ItemTextEntity,
 )

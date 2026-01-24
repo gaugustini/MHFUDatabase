@@ -2,7 +2,7 @@ package com.gaugustini.mhfudatabase.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.gaugustini.mhfudatabase.data.database.relation.LocationItem
+import com.gaugustini.mhfudatabase.data.database.relation.LocationItemWithItem
 import com.gaugustini.mhfudatabase.data.database.relation.LocationWithText
 
 /**
@@ -49,6 +49,9 @@ interface LocationDao {
             location_item.rank, location_item.area, location_item.gather_type, item_text.name
         """
     )
-    suspend fun getGatherableItemsByLocationId(locationId: Int, language: String): List<LocationItem>
+    suspend fun getGatherableItemsByLocationId(
+        locationId: Int,
+        language: String
+    ): List<LocationItemWithItem>
 
 }

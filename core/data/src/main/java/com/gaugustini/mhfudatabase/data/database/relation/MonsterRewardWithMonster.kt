@@ -7,15 +7,11 @@ import com.gaugustini.mhfudatabase.data.database.entity.monster.MonsterTextEntit
 import com.gaugustini.mhfudatabase.data.database.entity.monster.RewardConditionTextEntity
 
 /**
- * Represents a monster reward or drop item.
+ * Represents a monster reward entity with its associated condition, monster, and text entities.
  */
-data class MonsterRewardSource(
-    @Embedded
-    val monsterReward: MonsterRewardEntity,
-    @Embedded
-    val rewardConditionText: RewardConditionTextEntity,
-    @Embedded
-    val monster: MonsterEntity,
-    @Embedded
-    val monsterText: MonsterTextEntity,
+data class MonsterRewardWithMonster(
+    @Embedded val monsterReward: MonsterRewardEntity,
+    @Embedded val rewardConditionText: RewardConditionTextEntity,
+    @Embedded val monster: MonsterEntity,
+    @Embedded val monsterText: MonsterTextEntity,
 )

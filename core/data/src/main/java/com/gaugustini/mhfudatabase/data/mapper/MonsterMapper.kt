@@ -3,8 +3,8 @@ package com.gaugustini.mhfudatabase.data.mapper
 import com.gaugustini.mhfudatabase.data.database.entity.monster.MonsterItemEntity
 import com.gaugustini.mhfudatabase.data.database.entity.monster.MonsterStatusEntity
 import com.gaugustini.mhfudatabase.data.database.relation.ItemWithText
-import com.gaugustini.mhfudatabase.data.database.relation.MonsterHitzone
-import com.gaugustini.mhfudatabase.data.database.relation.MonsterRewardItem
+import com.gaugustini.mhfudatabase.data.database.relation.MonsterHitzoneWithText
+import com.gaugustini.mhfudatabase.data.database.relation.MonsterRewardWithItem
 import com.gaugustini.mhfudatabase.data.database.relation.MonsterWithText
 import com.gaugustini.mhfudatabase.data.database.relation.QuestWithText
 import com.gaugustini.mhfudatabase.domain.enums.MonsterAilment
@@ -24,10 +24,10 @@ object MonsterMapper {
 
     fun toModel(
         monster: MonsterWithText,
-        damageStats: List<MonsterHitzone>? = null,
+        damageStats: List<MonsterHitzoneWithText>? = null,
         ailmentStats: List<MonsterStatusEntity>? = null,
         itemEffectiveness: MonsterItemEntity? = null,
-        rewards: List<MonsterRewardItem>? = null,
+        rewards: List<MonsterRewardWithItem>? = null,
         quests: List<QuestWithText>? = null,
     ): Monster {
         return Monster(
@@ -49,19 +49,19 @@ object MonsterMapper {
     }
 
     fun toMonsterDamageStats(
-        monsterHitzone: MonsterHitzone,
+        monsterHitzone: MonsterHitzoneWithText,
     ): MonsterDamageStats {
         return MonsterDamageStats(
-            monsterId = monsterHitzone.monsterHitzoneEntity.monsterId,
-            name = monsterHitzone.hitzoneTextEntity.name,
-            cut = monsterHitzone.monsterHitzoneEntity.cut,
-            impact = monsterHitzone.monsterHitzoneEntity.impact,
-            shot = monsterHitzone.monsterHitzoneEntity.shot,
-            fire = monsterHitzone.monsterHitzoneEntity.fire,
-            water = monsterHitzone.monsterHitzoneEntity.water,
-            thunder = monsterHitzone.monsterHitzoneEntity.thunder,
-            ice = monsterHitzone.monsterHitzoneEntity.ice,
-            dragon = monsterHitzone.monsterHitzoneEntity.dragon,
+            monsterId = monsterHitzone.monsterHitzone.monsterId,
+            name = monsterHitzone.hitzoneText.name,
+            cut = monsterHitzone.monsterHitzone.cut,
+            impact = monsterHitzone.monsterHitzone.impact,
+            shot = monsterHitzone.monsterHitzone.shot,
+            fire = monsterHitzone.monsterHitzone.fire,
+            water = monsterHitzone.monsterHitzone.water,
+            thunder = monsterHitzone.monsterHitzone.thunder,
+            ice = monsterHitzone.monsterHitzone.ice,
+            dragon = monsterHitzone.monsterHitzone.dragon,
         )
     }
 
@@ -95,7 +95,7 @@ object MonsterMapper {
     }
 
     fun toMonsterReward(
-        monsterRewardItem: MonsterRewardItem,
+        monsterRewardItem: MonsterRewardWithItem,
     ): MonsterReward {
         return MonsterReward(
             item = ItemMapper.toModel(ItemWithText(monsterRewardItem.item, monsterRewardItem.itemText)),

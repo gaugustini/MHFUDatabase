@@ -13,7 +13,7 @@ import com.gaugustini.mhfudatabase.data.database.relation.ArmorWithText
 import com.gaugustini.mhfudatabase.data.database.relation.EquipmentItemQuantity
 import com.gaugustini.mhfudatabase.data.database.relation.EquipmentSkillTreePoint
 import com.gaugustini.mhfudatabase.data.database.relation.SkillWithText
-import com.gaugustini.mhfudatabase.data.database.relation.UserSetDecoration
+import com.gaugustini.mhfudatabase.data.database.relation.UserSetDecorationWithDecoration
 import com.gaugustini.mhfudatabase.data.database.relation.WeaponWithText
 
 /**
@@ -78,7 +78,10 @@ interface UserEquipmentSetDao {
         WHERE user_set_decoration.user_set_id = :equipmentSetId
         """
     )
-    suspend fun getDecorationsByUserSetId(equipmentSetId: Int, language: String): List<UserSetDecoration>
+    suspend fun getDecorationsByUserSetId(
+        equipmentSetId: Int,
+        language: String
+    ): List<UserSetDecorationWithDecoration>
 
     @Query(
         """

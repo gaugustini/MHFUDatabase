@@ -7,15 +7,11 @@ import com.gaugustini.mhfudatabase.data.database.entity.item.ItemTextEntity
 import com.gaugustini.mhfudatabase.data.database.entity.userset.UserEquipmentSetDecorationEntity
 
 /**
- * Represents a decoration inserted in the equipment set.
+ * Represents a user set decoration entity with its associated decoration, item, and text entities.
  */
-data class UserSetDecoration(
-    @Embedded
-    val userSetDecoration: UserEquipmentSetDecorationEntity,
-    @Embedded
-    val decoration: DecorationEntity,
-    @Embedded
-    val item: ItemEntity,
-    @Embedded
-    val itemText: ItemTextEntity,
+data class UserSetDecorationWithDecoration(
+    @Embedded val userSetDecoration: UserEquipmentSetDecorationEntity,
+    @Embedded val decoration: DecorationEntity,
+    @Embedded val item: ItemEntity,
+    @Embedded val itemText: ItemTextEntity,
 )
