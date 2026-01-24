@@ -29,6 +29,7 @@ class SkillRepository @Inject constructor(
 
     /**
      * Returns the list of all skill trees.
+     * Note: skills are not populated.
      */
     suspend fun getSkillTreeList(
         language: String,

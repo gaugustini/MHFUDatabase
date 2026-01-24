@@ -1,5 +1,7 @@
 package com.gaugustini.mhfudatabase.domain.model
 
+import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
+
 /**
  * Represents a user-created equipment set.
  *
@@ -15,7 +17,7 @@ package com.gaugustini.mhfudatabase.domain.model
  * @property armors The list of armor pieces in the equipment set.
  * @property decorations The list of decorations in the equipment set.
  * @property activeSkills The list of active skills in the equipment set.
- * @property skills The list of skills in the equipment set.
+ * @property skills The list of skills points in the equipment set.
  * @property recipe The list of items required to craft the entire equipment set.
  */
 data class UserEquipmentSet(
@@ -29,8 +31,17 @@ data class UserEquipmentSet(
     val dragon: Int,
     val weapon: Weapon?,
     val armors: List<Armor>?,
-    val decorations: List<Decoration>?,
+    val decorations: List<EquipmentDecoration>?,
     val activeSkills: List<Skill>?,
-    val skills: List<SkillTree>?,
-    val recipe: List<Item>?,
+    val skills: List<SkillPoint>?,
+    val recipe: List<ItemQuantity>?,
+)
+
+/**
+ * Represents a decoration inserted in the equipment set.
+ */
+data class EquipmentDecoration(
+    val equipmentType: EquipmentType,
+    val decoration: Decoration,
+    val quantity: Int,
 )
