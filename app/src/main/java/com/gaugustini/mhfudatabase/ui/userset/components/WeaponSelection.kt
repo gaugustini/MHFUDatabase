@@ -39,9 +39,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.enums.ElementType
-import com.gaugustini.mhfudatabase.data.enums.WeaponType
-import com.gaugustini.mhfudatabase.data.model.Weapon
+import com.gaugustini.mhfudatabase.domain.enums.WeaponElement
+import com.gaugustini.mhfudatabase.domain.enums.WeaponType
+import com.gaugustini.mhfudatabase.domain.model.Weapon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.ui.weapon.components.WeaponListItem
@@ -51,7 +51,7 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewWeaponData
 data class WeaponSelectionFilter(
     val name: String = "",
     val weaponType: List<WeaponType> = emptyList(),
-    val elementType: List<ElementType> = emptyList(),
+    val elementType: List<WeaponElement> = emptyList(),
     val numberOfSlots: List<Int> = emptyList(),
     val rarity: List<Int> = emptyList(),
 )
@@ -223,7 +223,7 @@ fun WeaponFilterSheet(
                     .fillMaxWidth()
                     .padding(Dimension.Padding.medium)
             ) {
-                ElementType.entries.forEach { elementType ->
+                WeaponElement.entries.forEach { elementType ->
                     SelectionContainer(
                         selected = elementType in newFilter.elementType,
                         onSelected = {

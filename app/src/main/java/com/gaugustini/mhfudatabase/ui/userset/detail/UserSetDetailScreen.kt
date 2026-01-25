@@ -22,8 +22,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.enums.ArmorType
-import com.gaugustini.mhfudatabase.data.enums.EquipmentType
+import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TabbedLayout
 import com.gaugustini.mhfudatabase.ui.components.TopBar
@@ -92,7 +91,7 @@ fun UserSetDetailScreen(
     renameUserSet: (newSetName: String) -> Unit = {},
     deleteUserSet: () -> Unit = {},
     openWeaponSelection: () -> Unit = {},
-    openArmorSelection: (armorType: ArmorType) -> Unit = {},
+    openArmorSelection: (armorType: EquipmentType) -> Unit = {},
     openDecorationSelection: (equipmentType: EquipmentType, availableSlots: Int) -> Unit = { _, _ -> },
     closeSelection: () -> Unit = {},
     changeWeapon: (weaponId: Int) -> Unit = {},

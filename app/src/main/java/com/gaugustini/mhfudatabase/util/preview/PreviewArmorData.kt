@@ -1,11 +1,11 @@
 package com.gaugustini.mhfudatabase.util.preview
 
-import com.gaugustini.mhfudatabase.data.enums.ArmorType
-import com.gaugustini.mhfudatabase.data.enums.Gender
-import com.gaugustini.mhfudatabase.data.enums.HunterType
-import com.gaugustini.mhfudatabase.data.enums.Rank
-import com.gaugustini.mhfudatabase.data.model.Armor
-import com.gaugustini.mhfudatabase.data.model.ArmorSet
+import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
+import com.gaugustini.mhfudatabase.domain.enums.Gender
+import com.gaugustini.mhfudatabase.domain.enums.HunterType
+import com.gaugustini.mhfudatabase.domain.enums.Rank
+import com.gaugustini.mhfudatabase.domain.model.Armor
+import com.gaugustini.mhfudatabase.domain.model.ArmorSet
 
 object PreviewArmorData {
 
@@ -16,7 +16,7 @@ object PreviewArmorData {
         armorSetId = 1,
         name = "Armor",
         description = "Armor Description",
-        type = ArmorType.HEAD,
+        type = EquipmentType.ARMOR_HEAD,
         hunterType = HunterType.BLADE,
         gender = Gender.MALE,
         rarity = 1,
@@ -29,14 +29,16 @@ object PreviewArmorData {
         thunder = 10,
         ice = 10,
         dragon = 10,
+        skills = null,
+        recipe = null,
     )
 
     val armorList = listOf(
-        armor.copy(id = 1, name = "Armor 1", type = ArmorType.HEAD),
-        armor.copy(id = 2, name = "Armor 2", type = ArmorType.CHEST),
-        armor.copy(id = 3, name = "Armor 3", type = ArmorType.ARMS),
-        armor.copy(id = 4, name = "Armor 4", type = ArmorType.WAIST),
-        armor.copy(id = 5, name = "Armor 5", type = ArmorType.LEGS),
+        armor.copy(id = 1, name = "Armor 1", type = EquipmentType.ARMOR_HEAD),
+        armor.copy(id = 2, name = "Armor 2", type = EquipmentType.ARMOR_CHEST),
+        armor.copy(id = 3, name = "Armor 3", type = EquipmentType.ARMOR_ARMS),
+        armor.copy(id = 4, name = "Armor 4", type = EquipmentType.ARMOR_WAIST),
+        armor.copy(id = 5, name = "Armor 5", type = EquipmentType.ARMOR_LEGS),
     )
 
     // Armor Set
@@ -54,6 +56,9 @@ object PreviewArmorData {
         thunder = 10,
         ice = 10,
         dragon = 10,
+        armors = null,
+        skills = null,
+        recipe = null,
     )
 
     val armorSetList = listOf(

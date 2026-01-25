@@ -16,7 +16,6 @@ import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.theme.Theme
-import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
 import com.gaugustini.mhfudatabase.util.preview.PreviewQuestData
 
 @Composable
@@ -59,7 +58,6 @@ fun QuestDetailScreen(
         if (uiState.quest != null) {
             QuestDetailContent(
                 quest = uiState.quest,
-                monsters = uiState.monsters,
                 onLocationClick = onLocationClick,
                 onMonsterClick = onMonsterClick,
                 modifier = Modifier.padding(innerPadding)
@@ -84,7 +82,6 @@ private class QuestDetailScreenPreviewParamProvider : PreviewParameterProvider<Q
     override val values: Sequence<QuestDetailState> = sequenceOf(
         QuestDetailState(
             quest = PreviewQuestData.quest,
-            monsters = PreviewMonsterData.monsterList,
         ),
     )
 

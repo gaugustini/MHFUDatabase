@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.enums.HunterType
+import com.gaugustini.mhfudatabase.domain.enums.HunterType
 import com.gaugustini.mhfudatabase.ui.armor.components.ArmorSetList
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TabbedLayout
@@ -80,7 +80,6 @@ fun ArmorSetListScreen(
         when (ArmorSetListTab.fromIndex(tabIndex)) {
             ArmorSetListTab.BLADEMASTER -> ArmorSetList(
                 armorSets = uiState.armorSetsBlade,
-                armors = uiState.armorsBySet,
                 expandedArmorSets = uiState.expandedArmorSetsBlade,
                 onToggleExpand = { onToggleExpand(it, HunterType.BLADE) },
                 onArmorClick = onArmorClick,
@@ -88,7 +87,6 @@ fun ArmorSetListScreen(
 
             ArmorSetListTab.GUNNER -> ArmorSetList(
                 armorSets = uiState.armorSetsGunner,
-                armors = uiState.armorsBySet,
                 expandedArmorSets = uiState.expandedArmorSetsGunner,
                 onToggleExpand = { onToggleExpand(it, HunterType.GUNNER) },
                 onArmorClick = onArmorClick,
@@ -113,7 +111,6 @@ private class ArmorSetListScreenPreviewParamProvider : PreviewParameterProvider<
     override val values: Sequence<ArmorSetListState> = sequenceOf(
         ArmorSetListState(
             initialTab = ArmorSetListTab.BLADEMASTER,
-            armorsBySet = mapOf(1 to PreviewArmorData.armorList),
             armorSetsBlade = PreviewArmorData.armorSetList,
             expandedArmorSetsBlade = setOf(1),
         ),

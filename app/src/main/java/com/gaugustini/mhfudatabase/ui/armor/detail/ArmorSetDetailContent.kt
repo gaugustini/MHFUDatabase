@@ -10,10 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.model.Armor
-import com.gaugustini.mhfudatabase.data.model.ArmorSet
-import com.gaugustini.mhfudatabase.data.model.ItemQuantity
-import com.gaugustini.mhfudatabase.data.model.SkillTreePoints
+import com.gaugustini.mhfudatabase.domain.model.ArmorSet
 import com.gaugustini.mhfudatabase.ui.armor.components.ArmorList
 import com.gaugustini.mhfudatabase.ui.armor.components.ArmorSummary
 import com.gaugustini.mhfudatabase.ui.components.DetailHeader
@@ -24,15 +21,10 @@ import com.gaugustini.mhfudatabase.ui.skill.components.SkillTreePointsList
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
-import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
-import com.gaugustini.mhfudatabase.util.preview.PreviewSkillData
 
 @Composable
 fun ArmorSetDetailContent(
     armorSet: ArmorSet,
-    armors: List<Armor>,
-    skills: List<SkillTreePoints>,
-    recipe: List<ItemQuantity>,
     modifier: Modifier = Modifier,
     onArmorClick: (armorId: Int) -> Unit = {},
     onSkillClick: (skillTreeId: Int) -> Unit = {},
@@ -67,28 +59,32 @@ fun ArmorSetDetailContent(
             title = stringResource(R.string.list_armors),
         )
         ArmorList(
-            armors = armors,
+            armors = armorSet.armors ?: emptyList(),
             onArmorClick = onArmorClick,
         )
 
-        if (skills.isNotEmpty()) {
-            SectionHeader(
-                title = stringResource(R.string.list_skills),
-            )
-            SkillTreePointsList(
-                skills = skills,
-                onSkillClick = onSkillClick,
-            )
+        armorSet.skills?.let { skills ->
+            if (skills.isNotEmpty()) {
+                SectionHeader(
+                    title = stringResource(R.string.list_skills),
+                )
+                SkillTreePointsList(
+                    skills = skills,
+                    onSkillClick = onSkillClick,
+                )
+            }
         }
 
-        if (recipe.isNotEmpty()) {
-            SectionHeader(
-                title = stringResource(R.string.list_recipe),
-            )
-            ItemQuantityList(
-                items = recipe,
-                onItemClick = onItemClick,
-            )
+        armorSet.recipe?.let { recipe ->
+            if (recipe.isNotEmpty()) {
+                SectionHeader(
+                    title = stringResource(R.string.list_recipe),
+                )
+                ItemQuantityList(
+                    items = recipe,
+                    onItemClick = onItemClick,
+                )
+            }
         }
     }
 }
@@ -100,9 +96,6 @@ fun ArmorSetDetailContentPreview() {
     Theme {
         ArmorSetDetailContent(
             armorSet = PreviewArmorData.armorSet,
-            armors = PreviewArmorData.armorList,
-            skills = PreviewSkillData.skillTreePointsList,
-            recipe = PreviewItemData.itemQuantityList,
         )
     }
 }

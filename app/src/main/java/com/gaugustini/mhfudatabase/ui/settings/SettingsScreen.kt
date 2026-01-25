@@ -22,8 +22,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.Language
-import com.gaugustini.mhfudatabase.data.ThemeMode
+import com.gaugustini.mhfudatabase.domain.enums.Language
+import com.gaugustini.mhfudatabase.domain.enums.ThemeMode
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TopBar

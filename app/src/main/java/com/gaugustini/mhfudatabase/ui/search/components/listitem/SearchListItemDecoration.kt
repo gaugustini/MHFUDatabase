@@ -13,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.model.Decoration
+import com.gaugustini.mhfudatabase.domain.model.Decoration
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.DecorationIcon
 import com.gaugustini.mhfudatabase.ui.theme.Theme
@@ -31,7 +31,7 @@ fun SearchListItem(
         ListItemLayout(
             leadingContent = {
                 DecorationIcon(
-                    color = decoration.iconColor,
+                    color = decoration.color,
                     modifier = Modifier.size(SearchListItemDefaults.IconSize)
                 )
             },

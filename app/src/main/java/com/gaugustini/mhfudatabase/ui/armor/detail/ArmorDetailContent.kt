@@ -10,9 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.model.Armor
-import com.gaugustini.mhfudatabase.data.model.ItemQuantity
-import com.gaugustini.mhfudatabase.data.model.SkillTreePoints
+import com.gaugustini.mhfudatabase.domain.model.Armor
 import com.gaugustini.mhfudatabase.ui.armor.components.ArmorSummary
 import com.gaugustini.mhfudatabase.ui.components.DetailHeader
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
@@ -22,14 +20,10 @@ import com.gaugustini.mhfudatabase.ui.skill.components.SkillTreePointsList
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
-import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
-import com.gaugustini.mhfudatabase.util.preview.PreviewSkillData
 
 @Composable
 fun ArmorDetailContent(
     armor: Armor,
-    skills: List<SkillTreePoints>,
-    recipe: List<ItemQuantity>,
     modifier: Modifier = Modifier,
     onSkillClick: (skillTreeId: Int) -> Unit = {},
     onItemClick: (itemId: Int) -> Unit = {},
@@ -61,23 +55,28 @@ fun ArmorDetailContent(
             dragon = armor.dragon,
         )
 
-        if (skills.isNotEmpty()) {
-            SectionHeader(
-                title = stringResource(R.string.list_skills),
-            )
-            SkillTreePointsList(
-                skills = skills,
-                onSkillClick = onSkillClick,
-            )
+        armor.skills?.let { skills ->
+            if (skills.isNotEmpty()) {
+                SectionHeader(
+                    title = stringResource(R.string.list_skills),
+                )
+                SkillTreePointsList(
+                    skills = skills,
+                    onSkillClick = onSkillClick,
+                )
+            }
         }
-        if (recipe.isNotEmpty()) {
-            SectionHeader(
-                title = stringResource(R.string.list_recipe),
-            )
-            ItemQuantityList(
-                items = recipe,
-                onItemClick = onItemClick,
-            )
+
+        armor.recipe?.let { recipe ->
+            if (recipe.isNotEmpty()) {
+                SectionHeader(
+                    title = stringResource(R.string.list_recipe),
+                )
+                ItemQuantityList(
+                    items = recipe,
+                    onItemClick = onItemClick,
+                )
+            }
         }
     }
 }
@@ -89,8 +88,6 @@ fun ArmorDetailContentPreview() {
     Theme {
         ArmorDetailContent(
             armor = PreviewArmorData.armor,
-            skills = PreviewSkillData.skillTreePointsList,
-            recipe = PreviewItemData.itemQuantityList,
         )
     }
 }

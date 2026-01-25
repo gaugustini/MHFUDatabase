@@ -18,7 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.gaugustini.mhfudatabase.data.enums.WeaponType
+import com.gaugustini.mhfudatabase.domain.enums.WeaponType
 import com.gaugustini.mhfudatabase.ui.components.icons.WeaponIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme

@@ -9,14 +9,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.gaugustini.mhfudatabase.data.model.SkillTreePoints
+import com.gaugustini.mhfudatabase.domain.model.SkillPoint
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.preview.PreviewSkillData
 
 @Composable
 fun SkillTreePointsList(
-    skills: List<SkillTreePoints>,
+    skills: List<SkillPoint>,
     modifier: Modifier = Modifier,
     onSkillClick: (skillTreeId: Int) -> Unit = {},
 ) {
@@ -37,26 +37,26 @@ fun SkillTreePointsList(
 
 @Composable
 fun SkillTreePointsListItem(
-    skill: SkillTreePoints,
+    skill: SkillPoint,
     modifier: Modifier = Modifier,
     onSkillClick: (skillTreeId: Int) -> Unit = {},
 ) {
     ListItemLayout(
         headlineContent = {
             Text(
-                text = skill.name,
+                text = skill.skillTree.name,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
         },
         trailingContent = {
             Text(
-                text = skill.pointValue.toString(),
+                text = skill.points.toString(),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
         },
-        modifier = modifier.clickable { onSkillClick(skill.id) }
+        modifier = modifier.clickable { onSkillClick(skill.skillTree.id) }
     )
 }
 

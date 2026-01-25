@@ -3,12 +3,10 @@ package com.gaugustini.mhfudatabase.ui.decoration.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gaugustini.mhfudatabase.data.Language
-import com.gaugustini.mhfudatabase.data.UserPreferences
-import com.gaugustini.mhfudatabase.data.model.Decoration
-import com.gaugustini.mhfudatabase.data.model.ItemQuantity
-import com.gaugustini.mhfudatabase.data.model.SkillTreePoints
+import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.DecorationRepository
+import com.gaugustini.mhfudatabase.domain.enums.Language
+import com.gaugustini.mhfudatabase.domain.model.Decoration
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,9 +20,6 @@ import javax.inject.Inject
 
 data class DecorationDetailState(
     val decoration: Decoration? = null,
-    val skills: List<SkillTreePoints> = emptyList(),
-    val recipeA: List<ItemQuantity> = emptyList(),
-    val recipeB: List<ItemQuantity> = emptyList(),
 )
 
 @HiltViewModel
@@ -54,14 +49,9 @@ class DecorationDetailViewModel @Inject constructor(
 
     private fun loadDecorationDetails(language: Language) {
         viewModelScope.launch {
-            val decorationDetails = decorationRepository.getDecorationDetails(decorationId, language)
-
             _uiState.update { state ->
                 state.copy(
-                    decoration = decorationDetails.decoration,
-                    skills = decorationDetails.skills,
-                    recipeA = decorationDetails.recipeA,
-                    recipeB = decorationDetails.recipeB,
+                    decoration = decorationRepository.getDecoration(decorationId, language.code),
                 )
             }
         }

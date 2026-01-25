@@ -11,7 +11,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.gaugustini.mhfudatabase.data.ThemeMode
+import com.gaugustini.mhfudatabase.domain.enums.ThemeMode
 
 private val LightColorScheme = lightColorScheme(
     primary = primaryLight,

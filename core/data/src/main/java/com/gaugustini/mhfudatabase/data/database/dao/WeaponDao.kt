@@ -66,7 +66,7 @@ interface WeaponDao {
         WHERE weapon_ammo_bow.weapon_id = :weaponId
         """
     )
-    suspend fun getAmmoBowByWeaponId(weaponId: Int): WeaponAmmoBowEntity
+    suspend fun getAmmoBowByWeaponId(weaponId: Int): WeaponAmmoBowEntity?
 
     @Query(
         """
@@ -75,7 +75,7 @@ interface WeaponDao {
         WHERE weapon_ammo_bowgun.weapon_id = :weaponId
         """
     )
-    suspend fun getAmmoBowgunByWeaponId(weaponId: Int): WeaponAmmoBowgunEntity
+    suspend fun getAmmoBowgunByWeaponId(weaponId: Int): WeaponAmmoBowgunEntity?
 
     @Query(
         """

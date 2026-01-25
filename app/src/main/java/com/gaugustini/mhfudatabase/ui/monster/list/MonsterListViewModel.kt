@@ -2,10 +2,10 @@ package com.gaugustini.mhfudatabase.ui.monster.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gaugustini.mhfudatabase.data.Language
-import com.gaugustini.mhfudatabase.data.UserPreferences
-import com.gaugustini.mhfudatabase.data.model.Monster
+import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.MonsterRepository
+import com.gaugustini.mhfudatabase.domain.enums.Language
+import com.gaugustini.mhfudatabase.domain.model.Monster
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -47,7 +47,7 @@ class MonsterListViewModel @Inject constructor(
     private fun loadMonsters(language: Language) {
         viewModelScope.launch {
             _uiState.update { state ->
-                state.copy(monsters = monsterRepository.getMonsterList(language))
+                state.copy(monsters = monsterRepository.getMonsterList(language.code))
             }
         }
     }

@@ -61,7 +61,7 @@ class ItemRepository @Inject constructor(
         itemId: Int,
         language: String,
     ): ItemSources {
-        val combinationEntities = itemDao.getCombinationSources(itemId, language)
+        val combinationEntities = itemDao.getCombinationSources(itemId)
         val combinations = mapCombinationEntities(combinationEntities, language)
 
         return ItemMapper.toItemSources(
@@ -78,7 +78,7 @@ class ItemRepository @Inject constructor(
         itemId: Int,
         language: String,
     ): ItemUsages {
-        val combinationEntities = itemDao.getCombinationUsages(itemId, language)
+        val combinationEntities = itemDao.getCombinationUsages(itemId)
         val combinations = mapCombinationEntities(combinationEntities, language)
 
         return ItemMapper.toItemUsages(

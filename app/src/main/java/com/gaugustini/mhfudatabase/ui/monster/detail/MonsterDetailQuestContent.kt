@@ -15,8 +15,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.enums.HubType
-import com.gaugustini.mhfudatabase.data.model.Quest
+import com.gaugustini.mhfudatabase.domain.enums.HubType
+import com.gaugustini.mhfudatabase.domain.model.Quest
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.QuestIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension

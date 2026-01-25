@@ -2,10 +2,10 @@ package com.gaugustini.mhfudatabase.ui.location.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gaugustini.mhfudatabase.data.Language
-import com.gaugustini.mhfudatabase.data.UserPreferences
-import com.gaugustini.mhfudatabase.data.model.Location
+import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.LocationRepository
+import com.gaugustini.mhfudatabase.domain.enums.Language
+import com.gaugustini.mhfudatabase.domain.model.Location
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -46,7 +46,7 @@ class LocationListViewModel @Inject constructor(
     private fun loadLocations(language: Language) {
         viewModelScope.launch {
             _uiState.update { state ->
-                state.copy(locations = locationRepository.getLocationList(language))
+                state.copy(locations = locationRepository.getLocationList(language.code))
             }
         }
     }

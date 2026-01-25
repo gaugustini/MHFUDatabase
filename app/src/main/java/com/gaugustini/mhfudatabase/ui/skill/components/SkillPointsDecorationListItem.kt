@@ -9,36 +9,36 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.gaugustini.mhfudatabase.data.model.SkillPointsDecoration
+import com.gaugustini.mhfudatabase.domain.model.Decoration
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.DecorationIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
-import com.gaugustini.mhfudatabase.util.preview.PreviewSkillData
+import com.gaugustini.mhfudatabase.util.preview.PreviewDecorationData
 
 @Composable
 fun SkillPointsDecorationListItem(
-    decoration: SkillPointsDecoration,
+    decoration: Decoration,
     modifier: Modifier = Modifier,
     onDecorationClick: (decorationId: Int) -> Unit = {},
 ) {
     ListItemLayout(
         leadingContent = {
             DecorationIcon(
-                color = decoration.decorationColor,
+                color = decoration.color,
                 modifier = Modifier.size(Dimension.Size.medium)
             )
         },
         headlineContent = {
             Text(
-                text = decoration.decorationName,
+                text = decoration.name,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
         },
         trailingContent = {
             Text(
-                text = decoration.pointValue.toString(),
+                text = decoration.skills?.first().toString(),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
@@ -47,7 +47,7 @@ fun SkillPointsDecorationListItem(
             horizontal = Dimension.Spacing.large,
             vertical = Dimension.Spacing.medium
         ),
-        modifier = modifier.clickable { onDecorationClick(decoration.decorationId) }
+        modifier = modifier.clickable { onDecorationClick(decoration.id) }
     )
 }
 
@@ -57,7 +57,7 @@ fun SkillPointsDecorationListItem(
 fun SkillPointsDecorationListItemPreview() {
     Theme {
         SkillPointsDecorationListItem(
-            decoration = PreviewSkillData.skillPointsDecoration,
+            decoration = PreviewDecorationData.decoration,
         )
     }
 }

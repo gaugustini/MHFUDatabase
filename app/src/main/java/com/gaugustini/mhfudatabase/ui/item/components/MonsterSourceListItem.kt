@@ -11,36 +11,36 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.enums.Rank
-import com.gaugustini.mhfudatabase.data.model.MonsterReward
+import com.gaugustini.mhfudatabase.domain.enums.Rank
+import com.gaugustini.mhfudatabase.domain.model.MonsterSource
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.MonsterIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
-import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
+import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
 
 @Composable
-fun ItemSourceMonsterRewardListItem(
-    item: MonsterReward,
+fun MonsterSourceListItem(
+    source: MonsterSource,
     modifier: Modifier = Modifier,
     onMonsterClick: (monsterId: Int) -> Unit = {},
 ) {
     ListItemLayout(
         leadingContent = {
             MonsterIcon(
-                monsterId = item.monsterId,
+                monsterId = source.monster.id,
                 modifier = Modifier.size(Dimension.Size.medium)
             )
         },
         headlineContent = {
             Text(
-                text = item.monsterName,
+                text = source.monster.name,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
         },
         supportingContent = {
-            val rank = when (item.rank) {
+            val rank = when (source.rank) {
                 Rank.LOW -> stringResource(R.string.item_rank_low)
                 Rank.HIGH -> stringResource(R.string.item_rank_high)
                 Rank.G -> stringResource(R.string.item_rank_g)
@@ -49,15 +49,15 @@ fun ItemSourceMonsterRewardListItem(
             }
 
             Text(
-                text = "${item.condition} ($rank)",
+                text = "${source.condition} ($rank)",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
         },
         trailingContent = {
-            if (item.percentage != null) {
+            if (source.percentage != null) {
                 Text(
-                    text = "${item.percentage}%",
+                    text = "${source.percentage}%",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -67,17 +67,17 @@ fun ItemSourceMonsterRewardListItem(
             horizontal = Dimension.Padding.large,
             vertical = Dimension.Padding.medium,
         ),
-        modifier = modifier.clickable { onMonsterClick(item.monsterId) }
+        modifier = modifier.clickable { onMonsterClick(source.monster.id) }
     )
 }
 
 @Preview(showBackground = true)
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun ItemSourceMonsterRewardListItemPreview() {
+fun MonsterSourceListItemPreview() {
     Theme {
-        ItemSourceMonsterRewardListItem(
-            item = PreviewMonsterData.monsterReward,
+        MonsterSourceListItem(
+            source = PreviewItemData.monsterSource,
         )
     }
 }

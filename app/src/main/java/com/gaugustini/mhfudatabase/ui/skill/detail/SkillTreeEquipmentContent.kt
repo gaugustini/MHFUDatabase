@@ -13,19 +13,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.model.SkillPointsArmor
-import com.gaugustini.mhfudatabase.data.model.SkillPointsDecoration
+import com.gaugustini.mhfudatabase.domain.model.Armor
+import com.gaugustini.mhfudatabase.domain.model.Decoration
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.skill.components.SkillPointsArmorListItem
 import com.gaugustini.mhfudatabase.ui.skill.components.SkillPointsDecorationListItem
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
-import com.gaugustini.mhfudatabase.util.preview.PreviewSkillData
+import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
+import com.gaugustini.mhfudatabase.util.preview.PreviewDecorationData
 
 @Composable
 fun SkillTreeEquipmentContent(
-    decorations: List<SkillPointsDecoration>,
-    armors: List<SkillPointsArmor>,
+    decorations: List<Decoration>,
+    armors: List<Armor>,
     modifier: Modifier = Modifier,
     onArmorClick: (armorId: Int) -> Unit = {},
     onDecorationClick: (decorationId: Int) -> Unit = {},
@@ -95,8 +96,8 @@ fun SkillTreeEquipmentContent(
 fun SkillTreeEquipmentContentPreview() {
     Theme {
         SkillTreeEquipmentContent(
-            armors = PreviewSkillData.skillPointsArmorList,
-            decorations = PreviewSkillData.skillPointsDecorationList,
+            armors = PreviewArmorData.armorList,
+            decorations = PreviewDecorationData.decorationList,
         )
     }
 }

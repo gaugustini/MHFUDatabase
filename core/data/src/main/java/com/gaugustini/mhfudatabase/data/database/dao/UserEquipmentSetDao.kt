@@ -14,6 +14,7 @@ import com.gaugustini.mhfudatabase.data.database.relation.EquipmentItemQuantity
 import com.gaugustini.mhfudatabase.data.database.relation.EquipmentSkillTreePoint
 import com.gaugustini.mhfudatabase.data.database.relation.UserSetDecorationWithDecoration
 import com.gaugustini.mhfudatabase.data.database.relation.WeaponWithText
+import kotlinx.coroutines.flow.Flow
 
 /**
  * [Dao] for User Equipment Set related database operations.
@@ -38,7 +39,7 @@ interface UserEquipmentSetDao {
         FROM user_set
         """
     )
-    suspend fun getEquipmentSets(): List<UserEquipmentSetEntity>
+    fun getEquipmentSets(): Flow<List<UserEquipmentSetEntity>>
 
     @Query(
         """

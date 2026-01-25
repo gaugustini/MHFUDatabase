@@ -23,8 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.enums.CombinationType
-import com.gaugustini.mhfudatabase.data.model.ItemCombination
+import com.gaugustini.mhfudatabase.domain.enums.ItemCombinationType
+import com.gaugustini.mhfudatabase.domain.model.ItemCombination
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.ItemIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
@@ -59,14 +59,14 @@ fun ItemCombinationListItem(
     ListItemLayout(
         leadingContent = {
             ItemIcon(
-                type = itemCombination.itemCreatedIconType,
-                color = itemCombination.itemCreatedIconColor,
+                type = itemCombination.itemCreated.iconType,
+                color = itemCombination.itemCreated.iconColor,
                 modifier = Modifier.size(Dimension.Size.large)
             )
         },
         headlineContent = {
             Text(
-                text = itemCombination.itemCreatedName,
+                text = itemCombination.itemCreated.name,
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface,
             )
@@ -89,7 +89,7 @@ fun ItemCombinationListItem(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Spacer(modifier = Modifier.width(Dimension.Spacing.large))
-                if (itemCombination.type == CombinationType.TREASURE) {
+                if (itemCombination.type == ItemCombinationType.TREASURE) {
                     Text(
                         text = stringResource(R.string.combination_treasure),
                         style = MaterialTheme.typography.labelSmall,
@@ -102,7 +102,7 @@ fun ItemCombinationListItem(
                             .padding(Dimension.Padding.small)
                     )
                 }
-                if (itemCombination.type == CombinationType.ALCHEMY) {
+                if (itemCombination.type == ItemCombinationType.ALCHEMY) {
                     Text(
                         text = stringResource(R.string.combination_alchemy),
                         style = MaterialTheme.typography.labelSmall,
@@ -126,16 +126,16 @@ fun ItemCombinationListItem(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .requiredHeight(Dimension.Size.small)
-                        .clickable { onItemClick(itemCombination.itemAId) }
+                        .clickable { onItemClick(itemCombination.itemA.id) }
                 ) {
                     Text(
-                        text = itemCombination.itemAName,
+                        text = itemCombination.itemA.name,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     ItemIcon(
-                        type = itemCombination.itemAIconType,
-                        color = itemCombination.itemAIconColor,
+                        type = itemCombination.itemA.iconType,
+                        color = itemCombination.itemA.iconColor,
                         modifier = Modifier.size(Dimension.Size.extraSmall)
                     )
                 }
@@ -144,16 +144,16 @@ fun ItemCombinationListItem(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .requiredHeight(Dimension.Size.small)
-                        .clickable { onItemClick(itemCombination.itemBId) }
+                        .clickable { onItemClick(itemCombination.itemB.id) }
                 ) {
                     Text(
-                        text = itemCombination.itemBName,
+                        text = itemCombination.itemB.name,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     ItemIcon(
-                        type = itemCombination.itemBIconType,
-                        color = itemCombination.itemBIconColor,
+                        type = itemCombination.itemB.iconType,
+                        color = itemCombination.itemB.iconColor,
                         modifier = Modifier.size(Dimension.Size.extraSmall)
                     )
                 }
@@ -163,7 +163,7 @@ fun ItemCombinationListItem(
             horizontal = Dimension.Spacing.large,
             vertical = Dimension.Spacing.medium
         ),
-        modifier = modifier.clickable { onItemClick(itemCombination.itemCreatedId) }
+        modifier = modifier.clickable { onItemClick(itemCombination.itemCreated.id) }
     )
 }
 

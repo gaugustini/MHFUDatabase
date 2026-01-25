@@ -9,37 +9,37 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.gaugustini.mhfudatabase.data.model.SkillPointsArmor
+import com.gaugustini.mhfudatabase.domain.model.Armor
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.ArmorIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
-import com.gaugustini.mhfudatabase.util.preview.PreviewSkillData
+import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
 
 @Composable
 fun SkillPointsArmorListItem(
-    armor: SkillPointsArmor,
+    armor: Armor,
     modifier: Modifier = Modifier,
     onArmorClick: (armorId: Int) -> Unit = {},
 ) {
     ListItemLayout(
         leadingContent = {
             ArmorIcon(
-                type = armor.armorType,
+                type = armor.type,
                 rarity = armor.rarity,
                 modifier = Modifier.size(Dimension.Size.medium)
             )
         },
         headlineContent = {
             Text(
-                text = armor.armorName,
+                text = armor.name,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
         },
         trailingContent = {
             Text(
-                text = armor.pointValue.toString(),
+                text = armor.skills?.first().toString(),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
@@ -48,7 +48,7 @@ fun SkillPointsArmorListItem(
             horizontal = Dimension.Spacing.large,
             vertical = Dimension.Spacing.medium
         ),
-        modifier = modifier.clickable { onArmorClick(armor.armorId) }
+        modifier = modifier.clickable { onArmorClick(armor.id) }
     )
 }
 
@@ -58,7 +58,7 @@ fun SkillPointsArmorListItem(
 fun SkillPointsArmorListItemPreview() {
     Theme {
         SkillPointsArmorListItem(
-            armor = PreviewSkillData.skillPointsArmor,
+            armor = PreviewArmorData.armor,
         )
     }
 }

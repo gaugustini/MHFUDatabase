@@ -12,7 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.gaugustini.mhfudatabase.data.model.Monster
+import com.gaugustini.mhfudatabase.domain.model.Monster
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.MonsterIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension

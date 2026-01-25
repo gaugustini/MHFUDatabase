@@ -2,9 +2,9 @@ package com.gaugustini.mhfudatabase.ui.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gaugustini.mhfudatabase.data.Language
-import com.gaugustini.mhfudatabase.data.ThemeMode
-import com.gaugustini.mhfudatabase.data.UserPreferences
+import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
+import com.gaugustini.mhfudatabase.domain.enums.Language
+import com.gaugustini.mhfudatabase.domain.enums.ThemeMode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

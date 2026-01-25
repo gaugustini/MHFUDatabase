@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.model.AilmentStatus
+import com.gaugustini.mhfudatabase.domain.model.MonsterAilmentStats
 import com.gaugustini.mhfudatabase.ui.components.icons.StatusIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
@@ -25,7 +25,7 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
 
 @Composable
 fun MonsterAilments(
-    ailments: List<AilmentStatus>,
+    ailments: List<MonsterAilmentStats>,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -99,7 +99,7 @@ fun AilmentStatusHeader(
 
 @Composable
 fun AilmentStatusListItem(
-    ailment: AilmentStatus,
+    ailment: MonsterAilmentStats,
     modifier: Modifier = Modifier,
 ) {
     Row(

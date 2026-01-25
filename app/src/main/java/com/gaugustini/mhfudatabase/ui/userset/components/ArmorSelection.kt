@@ -37,8 +37,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.enums.ArmorType
-import com.gaugustini.mhfudatabase.data.model.Armor
+import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
+import com.gaugustini.mhfudatabase.domain.model.Armor
 import com.gaugustini.mhfudatabase.ui.armor.components.ArmorListItem
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
@@ -46,7 +46,7 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
 
 data class ArmorSelectionFilter(
     val name: String = "",
-    val armorType: ArmorType = ArmorType.HEAD,
+    val armorType: EquipmentType = EquipmentType.ARMOR_HEAD,
     val numberOfSlots: List<Int> = emptyList(),
     val rarity: List<Int> = emptyList(),
 )

@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.enums.WeaponType
+import com.gaugustini.mhfudatabase.domain.enums.WeaponType
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.theme.Theme

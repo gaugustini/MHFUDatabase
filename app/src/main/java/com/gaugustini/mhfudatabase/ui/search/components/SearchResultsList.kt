@@ -6,7 +6,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.gaugustini.mhfudatabase.data.model.SearchResults
+import com.gaugustini.mhfudatabase.domain.model.SearchResults
 import com.gaugustini.mhfudatabase.ui.search.components.listitem.SearchListItem
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData

@@ -14,10 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.enums.HubType
-import com.gaugustini.mhfudatabase.data.model.Location
-import com.gaugustini.mhfudatabase.data.model.Monster
-import com.gaugustini.mhfudatabase.data.model.Quest
+import com.gaugustini.mhfudatabase.domain.enums.HubType
+import com.gaugustini.mhfudatabase.domain.model.Quest
 import com.gaugustini.mhfudatabase.ui.components.DetailHeader
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.components.icons.QuestIcon
@@ -26,13 +24,11 @@ import com.gaugustini.mhfudatabase.ui.monster.components.MonsterListItem
 import com.gaugustini.mhfudatabase.ui.quest.components.QuestSummary
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
-import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
 import com.gaugustini.mhfudatabase.util.preview.PreviewQuestData
 
 @Composable
 fun QuestDetailContent(
     quest: Quest,
-    monsters: List<Monster>,
     modifier: Modifier = Modifier,
     onLocationClick: (locationId: Int) -> Unit = {},
     onMonsterClick: (monsterId: Int) -> Unit = {},
@@ -82,18 +78,18 @@ fun QuestDetailContent(
         SectionHeader(
             title = stringResource(R.string.quest_location),
         )
-        LocationListItem(
-            location = Location(
-                id = quest.locationId,
-                name = quest.locationName,
-            ),
-            onLocationClick = onLocationClick,
-        )
+
+        quest.location?.let { location ->
+            LocationListItem(
+                location = location,
+                onLocationClick = onLocationClick,
+            )
+        }
 
         SectionHeader(
             title = stringResource(R.string.quest_monsters),
         )
-        monsters.forEach { monster ->
+        quest.monsters?.forEach { monster ->
             MonsterListItem(
                 monster = monster,
                 onMonsterClick = onMonsterClick,
@@ -109,7 +105,6 @@ fun QuestDetailContentPreview() {
     Theme {
         QuestDetailContent(
             quest = PreviewQuestData.quest,
-            monsters = PreviewMonsterData.monsterList,
         )
     }
 }

@@ -10,23 +10,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.enums.Rank
-import com.gaugustini.mhfudatabase.data.model.ItemCombination
-import com.gaugustini.mhfudatabase.data.model.ItemLocation
-import com.gaugustini.mhfudatabase.data.model.MonsterReward
+import com.gaugustini.mhfudatabase.domain.enums.Rank
+import com.gaugustini.mhfudatabase.domain.model.GatheringSource
+import com.gaugustini.mhfudatabase.domain.model.ItemCombination
+import com.gaugustini.mhfudatabase.domain.model.MonsterSource
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
-import com.gaugustini.mhfudatabase.ui.item.components.ItemSourceItemLocationListItem
-import com.gaugustini.mhfudatabase.ui.item.components.ItemSourceMonsterRewardListItem
+import com.gaugustini.mhfudatabase.ui.item.components.GatheringSourceListItem
+import com.gaugustini.mhfudatabase.ui.item.components.MonsterSourceListItem
 import com.gaugustini.mhfudatabase.ui.itemcombination.components.ItemCombinationListItem
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
-import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
 
 @Composable
 fun ItemSourcesContent(
     combinations: List<ItemCombination>,
-    locations: List<ItemLocation>,
-    monsters: List<MonsterReward>,
+    locations: List<GatheringSource>,
+    monsters: List<MonsterSource>,
     modifier: Modifier = Modifier,
     onItemClick: (itemId: Int) -> Unit = {},
     onLocationClick: (locationId: Int) -> Unit = {},
@@ -58,7 +57,7 @@ fun ItemSourcesContent(
                     title = stringResource(R.string.item_location),
                 )
             }
-            val itemsPerLocation = locations.groupBy { it.locationName }
+            val itemsPerLocation = locations.groupBy { it.location.name }
 
             itemsPerLocation.forEach { (locationName, items) ->
                 val itemsPerRank = items.groupBy { it.rank }
@@ -79,8 +78,8 @@ fun ItemSourcesContent(
                         )
                     }
                     itemsIndexed(items) { index, location ->
-                        ItemSourceItemLocationListItem(
-                            item = location,
+                        GatheringSourceListItem(
+                            source = location,
                             onLocationClick = onLocationClick,
                         )
                         if (index != items.lastIndex) {
@@ -98,8 +97,8 @@ fun ItemSourcesContent(
                 )
             }
             itemsIndexed(monsters) { index, monster ->
-                ItemSourceMonsterRewardListItem(
-                    item = monster,
+                MonsterSourceListItem(
+                    source = monster,
                     onMonsterClick = onMonsterClick,
                 )
                 if (index != monsters.lastIndex) {
@@ -117,8 +116,8 @@ fun ItemSourcesContentPreview() {
     Theme {
         ItemSourcesContent(
             combinations = PreviewItemData.itemCombinationList,
-            locations = PreviewItemData.itemLocationList,
-            monsters = PreviewMonsterData.monsterRewardList,
+            locations = PreviewItemData.gatheringSourceList,
+            monsters = PreviewItemData.monsterSourceList,
         )
     }
 }

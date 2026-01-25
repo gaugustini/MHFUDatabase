@@ -1,9 +1,9 @@
 package com.gaugustini.mhfudatabase.util.preview
 
-import com.gaugustini.mhfudatabase.data.enums.HubType
-import com.gaugustini.mhfudatabase.data.enums.QuestGoalType
-import com.gaugustini.mhfudatabase.data.enums.QuestType
-import com.gaugustini.mhfudatabase.data.model.Quest
+import com.gaugustini.mhfudatabase.domain.enums.HubType
+import com.gaugustini.mhfudatabase.domain.enums.QuestGoal
+import com.gaugustini.mhfudatabase.domain.enums.QuestType
+import com.gaugustini.mhfudatabase.domain.model.Quest
 
 object PreviewQuestData {
 
@@ -13,7 +13,7 @@ object PreviewQuestData {
         id = 1,
         name = "Quest",
         goal = "Quest Goal",
-        goalType = QuestGoalType.HUNT,
+        goalType = QuestGoal.HUNT,
         client = "Quest Client",
         description = "Quest Description",
         hubType = HubType.VILLAGE,
@@ -22,33 +22,33 @@ object PreviewQuestData {
         reward = 1,
         fee = 1,
         timeLimit = 1,
-        locationId = 1,
-        locationName = "Location",
+        location = null,
+        monsters = null,
     )
 
     val questList = listOf(
         quest.copy(
             id = 1,
             name = "Quest 1",
-            goalType = QuestGoalType.HUNT,
+            goalType = QuestGoal.HUNT,
             questType = QuestType.NORMAL,
         ),
         quest.copy(
             id = 2,
             name = "Quest 2",
-            goalType = QuestGoalType.SLAY,
+            goalType = QuestGoal.SLAY,
             questType = QuestType.URGENT,
         ),
         quest.copy(
             id = 3,
             name = "Quest 3",
-            goalType = QuestGoalType.GATHER,
+            goalType = QuestGoal.GATHER,
             questType = QuestType.KEY,
         ),
         quest.copy(
             id = 4,
             name = "Quest 4",
-            goalType = QuestGoalType.SPECIAL,
+            goalType = QuestGoal.SPECIAL,
             questType = QuestType.SPECIAL,
         ),
     )

@@ -80,7 +80,7 @@ fun SkillTreeDetailScreen(
             when (SkillTreeDetailTab.fromIndex(tabIndex)) {
                 SkillTreeDetailTab.SKILL_TREE_SUMMARY -> {
                     SkillTreeSummaryContent(
-                        skills = uiState.skills,
+                        skills = uiState.skillTree.skills ?: emptyList(),
                     )
                 }
 
@@ -115,13 +115,10 @@ private class SkillTreeDetailScreenPreviewParameterProvider :
         SkillTreeDetailState(
             initialTab = SkillTreeDetailTab.SKILL_TREE_SUMMARY,
             skillTree = PreviewSkillData.skillTree,
-            skills = PreviewSkillData.skillList,
         ),
         SkillTreeDetailState(
             initialTab = SkillTreeDetailTab.SKILL_TREE_EQUIPMENT,
             skillTree = PreviewSkillData.skillTree,
-            decorations = PreviewSkillData.skillPointsDecorationList,
-            armors = PreviewSkillData.skillPointsArmorList,
         )
     )
 

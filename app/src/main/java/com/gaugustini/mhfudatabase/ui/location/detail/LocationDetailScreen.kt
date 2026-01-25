@@ -81,7 +81,7 @@ fun LocationDetailScreen(
             LocationDetailTab.LOW_RANK ->
                 if (uiState.itemsLowRank.isNotEmpty()) {
                     LocationDetailRankContent(
-                        items = uiState.itemsLowRank,
+                        gatheringPoints = uiState.itemsLowRank,
                         onItemClick = onItemClick,
                     )
                 } else {
@@ -91,7 +91,7 @@ fun LocationDetailScreen(
             LocationDetailTab.HIGH_RANK ->
                 if (uiState.itemsHighRank.isNotEmpty()) {
                     LocationDetailRankContent(
-                        items = uiState.itemsHighRank,
+                        gatheringPoints = uiState.itemsHighRank,
                         onItemClick = onItemClick,
                     )
                 } else {
@@ -101,7 +101,7 @@ fun LocationDetailScreen(
             LocationDetailTab.G_RANK ->
                 if (uiState.itemsGRank.isNotEmpty()) {
                     LocationDetailRankContent(
-                        items = uiState.itemsGRank,
+                        gatheringPoints = uiState.itemsGRank,
                         onItemClick = onItemClick,
                     )
                 } else {
@@ -111,7 +111,7 @@ fun LocationDetailScreen(
             LocationDetailTab.TREASURE ->
                 if (uiState.itemsTreasure.isNotEmpty()) {
                     LocationDetailRankContent(
-                        items = uiState.itemsTreasure,
+                        gatheringPoints = uiState.itemsTreasure,
                         onItemClick = onItemClick,
                     )
                 } else {

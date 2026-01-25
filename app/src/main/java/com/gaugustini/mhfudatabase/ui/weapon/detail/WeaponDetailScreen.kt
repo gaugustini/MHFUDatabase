@@ -16,7 +16,6 @@ import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TabbedLayout
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.theme.Theme
-import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
 import com.gaugustini.mhfudatabase.util.preview.PreviewWeaponData
 
 enum class WeaponDetailTab(@param:StringRes val title: Int) {
@@ -81,16 +80,12 @@ fun WeaponDetailScreen(
             when (WeaponDetailTab.fromIndex(tabIndex)) {
                 WeaponDetailTab.SUMMARY -> WeaponDetailSummaryContent(
                     weapon = uiState.weapon,
-                    ammoBow = uiState.ammoBow,
-                    ammoBowgun = uiState.ammoBowgun,
-                    recipeCreate = uiState.recipeCreate,
-                    recipeUpgrade = uiState.recipeUpgrade,
                     onItemClick = onItemClick,
                 )
 
                 WeaponDetailTab.PATHS -> WeaponDetailPathsContent(
-                    paths = uiState.paths,
-                    finals = uiState.finals,
+                    paths = uiState.weapon.paths ?: emptyList(),
+                    finals = uiState.weapon.finals ?: emptyList(),
                     onWeaponClick = onWeaponClick,
                 )
             }
@@ -117,13 +112,10 @@ private class WeaponDetailScreenPreviewParameterProvider :
         WeaponDetailState(
             initialTab = WeaponDetailTab.SUMMARY,
             weapon = PreviewWeaponData.weaponGS,
-            recipeCreate = PreviewItemData.itemQuantityList,
         ),
         WeaponDetailState(
             initialTab = WeaponDetailTab.PATHS,
             weapon = PreviewWeaponData.weaponGS,
-            paths = listOf(PreviewWeaponData.weaponList),
-            finals = PreviewWeaponData.weaponList,
         ),
     )
 

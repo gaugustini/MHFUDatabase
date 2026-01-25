@@ -3,12 +3,12 @@ package com.gaugustini.mhfudatabase.ui.item.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gaugustini.mhfudatabase.data.Language
-import com.gaugustini.mhfudatabase.data.UserPreferences
-import com.gaugustini.mhfudatabase.data.model.Item
-import com.gaugustini.mhfudatabase.data.model.ItemSources
-import com.gaugustini.mhfudatabase.data.model.ItemUsages
+import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.ItemRepository
+import com.gaugustini.mhfudatabase.domain.enums.Language
+import com.gaugustini.mhfudatabase.domain.model.Item
+import com.gaugustini.mhfudatabase.domain.model.ItemSources
+import com.gaugustini.mhfudatabase.domain.model.ItemUsages
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -54,13 +54,18 @@ class ItemDetailViewModel @Inject constructor(
 
     private fun loadItemDetails(language: Language) {
         viewModelScope.launch {
-            val itemDetails = itemRepository.getItemDetails(itemId, language)
+            val item = itemRepository.getItem(itemId, language.code)
 
             _uiState.update { state ->
                 state.copy(
-                    item = itemDetails.item,
-                    sources = itemDetails.sources,
-                    usages = itemDetails.usages,
+                    item = item,
+                    sources = item.sources ?: ItemSources(emptyList(), emptyList(), emptyList()),
+                    usages = item.usages ?: ItemUsages(
+                        emptyList(),
+                        emptyList(),
+                        emptyList(),
+                        emptyList()
+                    ),
                 )
             }
         }

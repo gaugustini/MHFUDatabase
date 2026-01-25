@@ -18,7 +18,6 @@ import com.gaugustini.mhfudatabase.ui.components.TabbedLayout
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
-import com.gaugustini.mhfudatabase.util.preview.PreviewQuestData
 
 enum class MonsterDetailTab(@param:StringRes val title: Int) {
     SUMMARY(R.string.tab_monster_detail_summary),
@@ -87,14 +86,13 @@ fun MonsterDetailScreen(
                 MonsterDetailTab.SUMMARY -> {
                     MonsterDetailSummaryContent(
                         monster = uiState.monster,
-                        items = uiState.items,
                     )
                 }
 
                 MonsterDetailTab.DAMAGE -> {
                     MonsterDetailDamageContent(
-                        damage = uiState.damage,
-                        ailments = uiState.status,
+                        damage = uiState.monster.damageStats ?: emptyList(),
+                        ailments = uiState.monster.ailmentStats ?: emptyList(),
                     )
                 }
 
@@ -132,9 +130,9 @@ fun MonsterDetailScreen(
                 }
 
                 MonsterDetailTab.QUEST -> {
-                    if (uiState.quests.isNotEmpty()) {
+                    if (uiState.monster.quests != null) {
                         MonsterDetailQuestContent(
-                            quests = uiState.quests,
+                            quests = uiState.monster.quests ?: emptyList(),
                             onQuestClick = onQuestClick,
                         )
                     } else {
@@ -163,13 +161,10 @@ private class MonsterDetailScreenPreviewParameter : PreviewParameterProvider<Mon
         MonsterDetailState(
             initialTab = MonsterDetailTab.SUMMARY,
             monster = PreviewMonsterData.monster,
-            items = PreviewMonsterData.monsterItemUsageList,
         ),
         MonsterDetailState(
             initialTab = MonsterDetailTab.DAMAGE,
             monster = PreviewMonsterData.monster,
-            damage = PreviewMonsterData.monsterHitzoneList,
-            status = PreviewMonsterData.monsterAilmentStatusList,
         ),
         MonsterDetailState(
             initialTab = MonsterDetailTab.LOW_RANK,
@@ -179,7 +174,6 @@ private class MonsterDetailScreenPreviewParameter : PreviewParameterProvider<Mon
         MonsterDetailState(
             initialTab = MonsterDetailTab.QUEST,
             monster = PreviewMonsterData.monster,
-            quests = PreviewQuestData.questList,
         )
     )
 

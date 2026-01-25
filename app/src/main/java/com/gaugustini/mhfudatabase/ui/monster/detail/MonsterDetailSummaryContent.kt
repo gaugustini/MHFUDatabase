@@ -8,8 +8,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.gaugustini.mhfudatabase.data.model.Monster
-import com.gaugustini.mhfudatabase.data.model.MonsterItemUsage
+import com.gaugustini.mhfudatabase.domain.model.Monster
 import com.gaugustini.mhfudatabase.ui.components.DetailHeader
 import com.gaugustini.mhfudatabase.ui.components.icons.MonsterIcon
 import com.gaugustini.mhfudatabase.ui.monster.components.MonsterItemUsageList
@@ -20,7 +19,6 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
 @Composable
 fun MonsterDetailSummaryContent(
     monster: Monster,
-    items: List<MonsterItemUsage>,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -40,7 +38,7 @@ fun MonsterDetailSummaryContent(
         )
 
         MonsterItemUsageList(
-            items = items,
+            items = monster.itemEffectiveness ?: emptyList(),
         )
     }
 }
@@ -52,7 +50,6 @@ fun MonsterDetailSummaryContentPreview() {
     Theme {
         MonsterDetailSummaryContent(
             monster = PreviewMonsterData.monster,
-            items = PreviewMonsterData.monsterItemUsageList,
         )
     }
 }

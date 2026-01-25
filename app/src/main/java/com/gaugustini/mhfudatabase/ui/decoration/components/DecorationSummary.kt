@@ -17,8 +17,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.enums.ItemIconColor
-import com.gaugustini.mhfudatabase.data.model.Decoration
+import com.gaugustini.mhfudatabase.domain.enums.ItemIconColor
+import com.gaugustini.mhfudatabase.domain.model.Decoration
 import com.gaugustini.mhfudatabase.ui.components.icons.SlotIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.LocalIsDarkTheme
@@ -49,10 +49,10 @@ fun DecorationSummary(
                 repeat(decoration.requiredSlots) {
                     SlotIcon(
                         filled = true,
-                        color = if (!LocalIsDarkTheme.current && decoration.iconColor == ItemIconColor.WHITE) {
+                        color = if (!LocalIsDarkTheme.current && decoration.color == ItemIconColor.WHITE) {
                             Color.Gray
                         } else {
-                            MHFUColors.getItemColor(decoration.iconColor)
+                            MHFUColors.getItemColor(decoration.color)
                         },
                         modifier = Modifier.size(Dimension.Size.extraSmall)
                     )

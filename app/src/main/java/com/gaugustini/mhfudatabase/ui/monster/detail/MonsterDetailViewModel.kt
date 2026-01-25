@@ -3,16 +3,12 @@ package com.gaugustini.mhfudatabase.ui.monster.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gaugustini.mhfudatabase.data.Language
-import com.gaugustini.mhfudatabase.data.UserPreferences
-import com.gaugustini.mhfudatabase.data.enums.Rank
-import com.gaugustini.mhfudatabase.data.model.AilmentStatus
-import com.gaugustini.mhfudatabase.data.model.Hitzone
-import com.gaugustini.mhfudatabase.data.model.Monster
-import com.gaugustini.mhfudatabase.data.model.MonsterItemUsage
-import com.gaugustini.mhfudatabase.data.model.MonsterReward
-import com.gaugustini.mhfudatabase.data.model.Quest
+import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.MonsterRepository
+import com.gaugustini.mhfudatabase.domain.enums.Language
+import com.gaugustini.mhfudatabase.domain.enums.Rank
+import com.gaugustini.mhfudatabase.domain.model.Monster
+import com.gaugustini.mhfudatabase.domain.model.MonsterReward
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,13 +23,9 @@ import javax.inject.Inject
 data class MonsterDetailState(
     val initialTab: MonsterDetailTab = MonsterDetailTab.SUMMARY,
     val monster: Monster? = null,
-    val damage: List<Hitzone> = emptyList(),
-    val status: List<AilmentStatus> = emptyList(),
-    val items: List<MonsterItemUsage> = emptyList(),
     val rewardsLowRank: List<MonsterReward> = emptyList(),
     val rewardsHighRank: List<MonsterReward> = emptyList(),
     val rewardsGRank: List<MonsterReward> = emptyList(),
-    val quests: List<Quest> = emptyList(),
 )
 
 @HiltViewModel
@@ -63,18 +55,14 @@ class MonsterDetailViewModel @Inject constructor(
 
     private fun loadMonsterDetails(language: Language) {
         viewModelScope.launch {
-            val monsterDetails = monsterRepository.getMonsterDetails(monsterId, language)
+            val monster = monsterRepository.getMonster(monsterId, language.code)
 
             _uiState.update { state ->
                 state.copy(
-                    monster = monsterDetails.monster,
-                    damage = monsterDetails.damage,
-                    status = monsterDetails.status,
-                    items = monsterDetails.item,
-                    rewardsLowRank = monsterDetails.reward.filter { it.rank == Rank.LOW },
-                    rewardsHighRank = monsterDetails.reward.filter { it.rank == Rank.HIGH },
-                    rewardsGRank = monsterDetails.reward.filter { it.rank == Rank.G },
-                    quests = monsterDetails.quest,
+                    monster = monster,
+                    rewardsLowRank = monster.rewards?.get(Rank.LOW) ?: emptyList(),
+                    rewardsHighRank = monster.rewards?.get(Rank.HIGH) ?: emptyList(),
+                    rewardsGRank = monster.rewards?.get(Rank.G) ?: emptyList(),
                 )
             }
         }

@@ -17,8 +17,6 @@ import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.preview.PreviewDecorationData
-import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
-import com.gaugustini.mhfudatabase.util.preview.PreviewSkillData
 
 @Composable
 fun DecorationDetailRoute(
@@ -61,9 +59,6 @@ fun DecorationDetailScreen(
         if (uiState.decoration != null) {
             DecorationDetailContent(
                 decoration = uiState.decoration,
-                skills = uiState.skills,
-                recipeA = uiState.recipeA,
-                recipeB = uiState.recipeB,
                 onSkillClick = onSkillClick,
                 onItemClick = onItemClick,
                 modifier = Modifier.padding(innerPadding)
@@ -89,9 +84,6 @@ private class DecorationDetailScreenPreviewParamProvider :
     override val values: Sequence<DecorationDetailState> = sequenceOf(
         DecorationDetailState(
             decoration = PreviewDecorationData.decoration,
-            skills = PreviewSkillData.skillTreePointsList,
-            recipeA = PreviewItemData.itemQuantityList,
-            recipeB = PreviewItemData.itemQuantityList,
         ),
     )
 

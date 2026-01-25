@@ -1,16 +1,14 @@
 package com.gaugustini.mhfudatabase.util.preview
 
-import com.gaugustini.mhfudatabase.data.enums.ItemIconColor
-import com.gaugustini.mhfudatabase.data.enums.ItemIconType
-import com.gaugustini.mhfudatabase.data.enums.MonsterStateType
-import com.gaugustini.mhfudatabase.data.enums.MonsterType
-import com.gaugustini.mhfudatabase.data.enums.Rank
-import com.gaugustini.mhfudatabase.data.enums.StatusType
-import com.gaugustini.mhfudatabase.data.model.AilmentStatus
-import com.gaugustini.mhfudatabase.data.model.Hitzone
-import com.gaugustini.mhfudatabase.data.model.Monster
-import com.gaugustini.mhfudatabase.data.model.MonsterItemUsage
-import com.gaugustini.mhfudatabase.data.model.MonsterReward
+import com.gaugustini.mhfudatabase.domain.enums.MonsterAilment
+import com.gaugustini.mhfudatabase.domain.enums.MonsterState
+import com.gaugustini.mhfudatabase.domain.enums.MonsterType
+import com.gaugustini.mhfudatabase.domain.enums.Rank
+import com.gaugustini.mhfudatabase.domain.model.Monster
+import com.gaugustini.mhfudatabase.domain.model.MonsterAilmentStats
+import com.gaugustini.mhfudatabase.domain.model.MonsterDamageStats
+import com.gaugustini.mhfudatabase.domain.model.MonsterItemEffectiveness
+import com.gaugustini.mhfudatabase.domain.model.MonsterReward
 
 object PreviewMonsterData {
 
@@ -26,6 +24,11 @@ object PreviewMonsterData {
         sizeSmallestMax = 200,
         sizeLargestMin = 1000,
         sizeLargestMax = 1100,
+        damageStats = null,
+        ailmentStats = null,
+        itemEffectiveness = null,
+        rewards = null,
+        quests = null,
     )
 
     val monsterList = listOf(
@@ -36,7 +39,8 @@ object PreviewMonsterData {
 
     // Monster Hitzone
 
-    val monsterHitzone = Hitzone(
+    val monsterHitzone = MonsterDamageStats(
+        monsterId = 1,
         name = "Hitzone",
         cut = 1,
         impact = 2,
@@ -56,8 +60,9 @@ object PreviewMonsterData {
 
     // Monster Ailment Status
 
-    val monsterAilmentStatus = AilmentStatus(
-        type = StatusType.KNOCKOUT,
+    val monsterAilmentStatus = MonsterAilmentStats(
+        monsterId = 1,
+        type = MonsterAilment.KNOCKOUT,
         initial = 1,
         increase = 2,
         max = 3,
@@ -66,16 +71,17 @@ object PreviewMonsterData {
     )
 
     val monsterAilmentStatusList = listOf(
-        monsterAilmentStatus.copy(type = StatusType.KNOCKOUT),
-        monsterAilmentStatus.copy(type = StatusType.PARALYSIS),
-        monsterAilmentStatus.copy(type = StatusType.POISON),
-        monsterAilmentStatus.copy(type = StatusType.SLEEP),
+        monsterAilmentStatus.copy(type = MonsterAilment.KNOCKOUT),
+        monsterAilmentStatus.copy(type = MonsterAilment.PARALYSIS),
+        monsterAilmentStatus.copy(type = MonsterAilment.POISON),
+        monsterAilmentStatus.copy(type = MonsterAilment.SLEEP),
     )
 
     // Monster Item Usage
 
-    val monsterItemUsage = MonsterItemUsage(
-        monsterState = MonsterStateType.NORMAL,
+    val monsterItemUsage = MonsterItemEffectiveness(
+        monsterId = 1,
+        monsterState = MonsterState.NORMAL,
         canUsePitfallTrap = true,
         canUseShockTrap = true,
         canUseFlashBomb = true,
@@ -85,19 +91,14 @@ object PreviewMonsterData {
     )
 
     val monsterItemUsageList = listOf(
-        monsterItemUsage.copy(monsterState = MonsterStateType.NORMAL),
-        monsterItemUsage.copy(monsterState = MonsterStateType.ENRAGED),
+        monsterItemUsage.copy(monsterState = MonsterState.NORMAL),
+        monsterItemUsage.copy(monsterState = MonsterState.ENRAGED),
     )
 
     // Monster Reward
 
     val monsterReward = MonsterReward(
-        itemId = 1,
-        itemName = "Item",
-        monsterId = 1,
-        monsterName = "Monster",
-        itemIconType = ItemIconType.BALL,
-        itemIconColor = ItemIconColor.YELLOW,
+        item = PreviewItemData.item,
         condition = "Condition",
         rank = Rank.LOW,
         stackSize = 1,
@@ -105,12 +106,9 @@ object PreviewMonsterData {
     )
 
     val monsterRewardList = listOf(
-        monsterReward.copy(itemId = 1, itemName = "Item 1", condition = "Condition 1"),
-        monsterReward.copy(itemId = 2, itemName = "Item 2", condition = "Condition 1"),
-        monsterReward.copy(itemId = 3, itemName = "Item 3", condition = "Condition 1"),
-        monsterReward.copy(itemId = 4, itemName = "Item 4", condition = "Condition 2"),
-        monsterReward.copy(itemId = 5, itemName = "Item 5", condition = "Condition 2"),
-        monsterReward.copy(itemId = 6, itemName = "Item 6", condition = "Condition 2"),
+        monsterReward.copy(condition = "Condition 1"),
+        monsterReward.copy(condition = "Condition 1"),
+        monsterReward.copy(condition = "Condition 1"),
     )
 
 }

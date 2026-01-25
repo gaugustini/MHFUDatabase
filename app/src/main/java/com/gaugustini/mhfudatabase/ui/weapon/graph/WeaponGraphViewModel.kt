@@ -3,11 +3,11 @@ package com.gaugustini.mhfudatabase.ui.weapon.graph
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gaugustini.mhfudatabase.data.Language
-import com.gaugustini.mhfudatabase.data.UserPreferences
-import com.gaugustini.mhfudatabase.data.enums.WeaponType
-import com.gaugustini.mhfudatabase.data.model.WeaponNode
+import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.WeaponRepository
+import com.gaugustini.mhfudatabase.domain.enums.Language
+import com.gaugustini.mhfudatabase.domain.enums.WeaponType
+import com.gaugustini.mhfudatabase.domain.model.WeaponNode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -32,7 +32,7 @@ class WeaponGraphViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val weaponType: WeaponType =
-        WeaponType.getWeaponTypeFromString(checkNotNull(savedStateHandle["weaponType"]))
+        WeaponType.fromString(checkNotNull(savedStateHandle["weaponType"]))
 
     private val _uiState = MutableStateFlow(WeaponGraphState())
     val uiState: StateFlow<WeaponGraphState> = _uiState.asStateFlow()
@@ -55,7 +55,7 @@ class WeaponGraphViewModel @Inject constructor(
             _uiState.update { state ->
                 state.copy(
                     weaponType = weaponType,
-                    nodes = weaponRepository.getWeaponGraph(weaponType, language),
+                    nodes = weaponRepository.getWeaponTree(weaponType, language.code),
                 )
             }
         }

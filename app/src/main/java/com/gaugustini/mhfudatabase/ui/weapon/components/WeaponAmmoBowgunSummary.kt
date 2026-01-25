@@ -21,7 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.model.AmmoBowgun
+import com.gaugustini.mhfudatabase.domain.model.AmmoBowgun
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
@@ -39,7 +39,7 @@ fun WeaponAmmoBowgunSummary(
             .background(MaterialTheme.colorScheme.surface)
     ) {
         if (ammo.rapidFire != null) {
-            val shots = ammo.rapidFire.split("|")
+            val shots = ammo.rapidFire!!.split("|")
 
             ListItemLayout(
                 leadingContent = {

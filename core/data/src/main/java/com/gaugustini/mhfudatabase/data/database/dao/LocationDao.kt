@@ -34,6 +34,7 @@ interface LocationDao {
         JOIN location_text
             ON location.id = location_text.location_id
             AND location_text.language = :language
+        ORDER BY location_text.name ASC
         """
     )
     suspend fun getLocationList(language: String): List<LocationWithText>

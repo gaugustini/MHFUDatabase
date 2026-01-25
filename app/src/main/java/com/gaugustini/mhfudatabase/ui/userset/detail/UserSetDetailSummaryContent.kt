@@ -13,12 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.model.Armor
-import com.gaugustini.mhfudatabase.data.model.ItemQuantity
-import com.gaugustini.mhfudatabase.data.model.Skill
-import com.gaugustini.mhfudatabase.data.model.SkillTreePoints
-import com.gaugustini.mhfudatabase.data.model.UserEquipmentSet
-import com.gaugustini.mhfudatabase.data.model.Weapon
+import com.gaugustini.mhfudatabase.domain.model.Armor
+import com.gaugustini.mhfudatabase.domain.model.ItemQuantity
+import com.gaugustini.mhfudatabase.domain.model.Skill
+import com.gaugustini.mhfudatabase.domain.model.SkillPoint
+import com.gaugustini.mhfudatabase.domain.model.UserEquipmentSet
+import com.gaugustini.mhfudatabase.domain.model.Weapon
 import com.gaugustini.mhfudatabase.ui.armor.components.ArmorSummary
 import com.gaugustini.mhfudatabase.ui.components.DetailHeader
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
@@ -38,7 +38,7 @@ fun UserSetDetailSummaryContent(
     weapon: Weapon?,
     armors: List<Armor>,
     activeSkills: List<Skill>,
-    skillTreePoints: List<SkillTreePoints>,
+    skillTreePoints: List<SkillPoint>,
     requiredMaterials: List<ItemQuantity>,
     modifier: Modifier = Modifier,
     onItemClick: (itemId: Int) -> Unit = {},

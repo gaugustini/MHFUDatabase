@@ -10,10 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.model.AmmoBow
-import com.gaugustini.mhfudatabase.data.model.AmmoBowgun
-import com.gaugustini.mhfudatabase.data.model.ItemQuantity
-import com.gaugustini.mhfudatabase.data.model.Weapon
+import com.gaugustini.mhfudatabase.domain.model.Weapon
 import com.gaugustini.mhfudatabase.ui.components.DetailHeader
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.components.icons.WeaponIcon
@@ -23,17 +20,12 @@ import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.ui.weapon.components.WeaponAmmoBowSummary
 import com.gaugustini.mhfudatabase.ui.weapon.components.WeaponAmmoBowgunSummary
 import com.gaugustini.mhfudatabase.ui.weapon.components.WeaponSummary
-import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
 import com.gaugustini.mhfudatabase.util.preview.PreviewWeaponData
 
 @Composable
 fun WeaponDetailSummaryContent(
     weapon: Weapon,
-    ammoBow: AmmoBow?,
-    ammoBowgun: AmmoBowgun?,
     modifier: Modifier = Modifier,
-    recipeCreate: List<ItemQuantity> = emptyList(),
-    recipeUpgrade: List<ItemQuantity> = emptyList(),
     onItemClick: (itemId: Int) -> Unit = {},
 ) {
     Column(
@@ -57,34 +49,34 @@ fun WeaponDetailSummaryContent(
             weapon = weapon,
         )
 
-        if (ammoBow != null) {
+        if (weapon.ammoBow != null) {
             WeaponAmmoBowSummary(
-                ammo = ammoBow,
+                ammo = weapon.ammoBow!!,
             )
         }
 
-        if (ammoBowgun != null) {
+        if (weapon.ammoBowgun != null) {
             WeaponAmmoBowgunSummary(
-                ammo = ammoBowgun,
+                ammo = weapon.ammoBowgun!!,
             )
         }
 
-        if (recipeCreate.isNotEmpty()) {
+        if (weapon.recipeCreate?.isNotEmpty() == true) {
             SectionHeader(
                 title = stringResource(R.string.list_recipe_create),
             )
             ItemQuantityList(
-                items = recipeCreate,
+                items = weapon.recipeCreate!!,
                 onItemClick = onItemClick,
             )
         }
 
-        if (recipeUpgrade.isNotEmpty()) {
+        if (weapon.recipeUpgrade?.isNotEmpty() == true) {
             SectionHeader(
                 title = stringResource(R.string.list_recipe_upgrade),
             )
             ItemQuantityList(
-                items = recipeUpgrade,
+                items = weapon.recipeUpgrade!!,
                 onItemClick = onItemClick,
             )
         }
@@ -98,10 +90,6 @@ fun WeaponDetailSummaryContentPreview() {
     Theme {
         WeaponDetailSummaryContent(
             weapon = PreviewWeaponData.weaponGS,
-            ammoBow = PreviewWeaponData.ammoBow,
-            ammoBowgun = PreviewWeaponData.ammoBowgun,
-            recipeCreate = PreviewItemData.itemQuantityList,
-            recipeUpgrade = PreviewItemData.itemQuantityList,
         )
     }
 }

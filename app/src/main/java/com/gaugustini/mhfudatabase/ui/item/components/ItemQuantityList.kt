@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.gaugustini.mhfudatabase.data.model.ItemQuantity
+import com.gaugustini.mhfudatabase.domain.model.ItemQuantity
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.ItemIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
@@ -48,14 +48,14 @@ fun ItemQuantityListItem(
     ListItemLayout(
         leadingContent = {
             ItemIcon(
-                type = item.iconType,
-                color = item.iconColor,
+                type = item.item.iconType,
+                color = item.item.iconColor,
                 modifier = Modifier.size(Dimension.Size.medium)
             )
         },
         headlineContent = {
             Text(
-                text = item.name,
+                text = item.item.name,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
@@ -71,7 +71,7 @@ fun ItemQuantityListItem(
             horizontal = Dimension.Spacing.large,
             vertical = Dimension.Spacing.medium
         ),
-        modifier = modifier.clickable { onItemClick(item.id) }
+        modifier = modifier.clickable { onItemClick(item.item.id) }
     )
 }
 

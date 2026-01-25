@@ -36,12 +36,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.enums.ArmorType
-import com.gaugustini.mhfudatabase.data.enums.EquipmentType
-import com.gaugustini.mhfudatabase.data.enums.WeaponType
-import com.gaugustini.mhfudatabase.data.model.Armor
-import com.gaugustini.mhfudatabase.data.model.EquipmentSetDecoration
-import com.gaugustini.mhfudatabase.data.model.Weapon
+import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
+import com.gaugustini.mhfudatabase.domain.enums.WeaponType
+import com.gaugustini.mhfudatabase.domain.model.Armor
+import com.gaugustini.mhfudatabase.domain.model.EquipmentDecoration
+import com.gaugustini.mhfudatabase.domain.model.Weapon
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.ArmorIcon
 import com.gaugustini.mhfudatabase.ui.components.icons.NoSlotIcon
@@ -58,10 +57,10 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewWeaponData
 fun UserSetDetailEquipmentContent(
     weapon: Weapon?,
     armors: List<Armor>,
-    decorations: List<EquipmentSetDecoration>,
+    decorations: List<EquipmentDecoration>,
     modifier: Modifier = Modifier,
     onWeaponClick: () -> Unit = {},
-    onArmorClick: (armorType: ArmorType) -> Unit = {},
+    onArmorClick: (armorType: EquipmentType) -> Unit = {},
     onAddDecoration: (equipmentType: EquipmentType, availableSlots: Int) -> Unit = { _, _ -> },
     onRemoveDecoration: (decorationId: Int, equipmentType: EquipmentType) -> Unit = { _, _ -> },
 ) {
@@ -78,42 +77,42 @@ fun UserSetDetailEquipmentContent(
             onRemoveDecoration = { onRemoveDecoration(it, EquipmentType.WEAPON) },
         )
         EquipmentArmorListItem(
-            armor = armors.firstOrNull { it.type == ArmorType.HEAD },
-            armorType = ArmorType.HEAD,
+            armor = armors.firstOrNull { it.type == EquipmentType.ARMOR_HEAD },
+            armorType = EquipmentType.ARMOR_HEAD,
             decorations = decorations.filter { it.equipmentType == EquipmentType.ARMOR_HEAD },
-            onArmorClick = { onArmorClick(ArmorType.HEAD) },
+            onArmorClick = { onArmorClick(EquipmentType.ARMOR_HEAD) },
             onAddDecoration = { onAddDecoration(EquipmentType.ARMOR_HEAD, it) },
             onRemoveDecoration = { onRemoveDecoration(it, EquipmentType.ARMOR_HEAD) },
         )
         EquipmentArmorListItem(
-            armor = armors.firstOrNull { it.type == ArmorType.CHEST },
-            armorType = ArmorType.CHEST,
+            armor = armors.firstOrNull { it.type == EquipmentType.ARMOR_CHEST },
+            armorType = EquipmentType.ARMOR_CHEST,
             decorations = decorations.filter { it.equipmentType == EquipmentType.ARMOR_CHEST },
-            onArmorClick = { onArmorClick(ArmorType.CHEST) },
+            onArmorClick = { onArmorClick(EquipmentType.ARMOR_CHEST) },
             onAddDecoration = { onAddDecoration(EquipmentType.ARMOR_CHEST, it) },
             onRemoveDecoration = { onRemoveDecoration(it, EquipmentType.ARMOR_CHEST) },
         )
         EquipmentArmorListItem(
-            armor = armors.firstOrNull { it.type == ArmorType.ARMS },
-            armorType = ArmorType.ARMS,
+            armor = armors.firstOrNull { it.type == EquipmentType.ARMOR_ARMS },
+            armorType = EquipmentType.ARMOR_ARMS,
             decorations = decorations.filter { it.equipmentType == EquipmentType.ARMOR_ARMS },
-            onArmorClick = { onArmorClick(ArmorType.ARMS) },
+            onArmorClick = { onArmorClick(EquipmentType.ARMOR_ARMS) },
             onAddDecoration = { onAddDecoration(EquipmentType.ARMOR_ARMS, it) },
             onRemoveDecoration = { onRemoveDecoration(it, EquipmentType.ARMOR_ARMS) },
         )
         EquipmentArmorListItem(
-            armor = armors.firstOrNull { it.type == ArmorType.WAIST },
-            armorType = ArmorType.WAIST,
+            armor = armors.firstOrNull { it.type == EquipmentType.ARMOR_WAIST },
+            armorType = EquipmentType.ARMOR_WAIST,
             decorations = decorations.filter { it.equipmentType == EquipmentType.ARMOR_WAIST },
-            onArmorClick = { onArmorClick(ArmorType.WAIST) },
+            onArmorClick = { onArmorClick(EquipmentType.ARMOR_WAIST) },
             onAddDecoration = { onAddDecoration(EquipmentType.ARMOR_WAIST, it) },
             onRemoveDecoration = { onRemoveDecoration(it, EquipmentType.ARMOR_WAIST) },
         )
         EquipmentArmorListItem(
-            armor = armors.firstOrNull { it.type == ArmorType.LEGS },
-            armorType = ArmorType.LEGS,
+            armor = armors.firstOrNull { it.type == EquipmentType.ARMOR_LEGS },
+            armorType = EquipmentType.ARMOR_LEGS,
             decorations = decorations.filter { it.equipmentType == EquipmentType.ARMOR_LEGS },
-            onArmorClick = { onArmorClick(ArmorType.LEGS) },
+            onArmorClick = { onArmorClick(EquipmentType.ARMOR_LEGS) },
             onAddDecoration = { onAddDecoration(EquipmentType.ARMOR_LEGS, it) },
             onRemoveDecoration = { onRemoveDecoration(it, EquipmentType.ARMOR_LEGS) },
         )
@@ -124,14 +123,14 @@ fun UserSetDetailEquipmentContent(
 fun EquipmentListItem(
     name: String?,
     numberOfSlots: Int,
-    decorations: List<EquipmentSetDecoration>,
+    decorations: List<EquipmentDecoration>,
     icon: @Composable () -> Unit,
     onEquipmentClick: () -> Unit,
     onAddDecoration: (availableSlots: Int) -> Unit,
     onRemoveDecoration: (decorationId: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val totalDecorationSlots = decorations.sumOf { it.requiredSlots * it.quantity }
+    val totalDecorationSlots = decorations.sumOf { it.decoration.requiredSlots * it.quantity }
     val availableSlots = numberOfSlots - totalDecorationSlots
     val expanded = rememberSaveable { mutableStateOf(false) }
 
@@ -168,10 +167,10 @@ fun EquipmentListItem(
                         ) {
                             // Add decoration first
                             decorations.forEach { decoration ->
-                                repeat(decoration.requiredSlots * decoration.quantity) {
+                                repeat(decoration.decoration.requiredSlots * decoration.quantity) {
                                     SlotIcon(
                                         filled = true,
-                                        color = MHFUColors.getItemColor(decoration.decorationColor),
+                                        color = MHFUColors.getItemColor(decoration.decoration.color),
                                         modifier = Modifier
                                             .weight(1f)
                                             .aspectRatio(1f)
@@ -260,7 +259,7 @@ fun EquipmentListItem(
 @Composable
 fun EquipmentDecorationList(
     availableSlots: Int,
-    decorations: List<EquipmentSetDecoration>,
+    decorations: List<EquipmentDecoration>,
     onAddDecoration: () -> Unit,
     onRemoveDecoration: (decorationId: Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -278,7 +277,7 @@ fun EquipmentDecorationList(
                             ),
                             contentDescription = null,
                             colorFilter = ColorFilter.tint(
-                                color = MHFUColors.getItemColor(decoration.decorationColor),
+                                color = MHFUColors.getItemColor(decoration.decoration.color),
                                 blendMode = BlendMode.Modulate
                             ),
                             modifier = Modifier.size(Dimension.Size.small)
@@ -286,7 +285,7 @@ fun EquipmentDecorationList(
                     },
                     headlineContent = {
                         Text(
-                            text = decoration.name,
+                            text = decoration.decoration.name,
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurface,
                         )
@@ -298,7 +297,7 @@ fun EquipmentDecorationList(
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier
                                 .size(Dimension.Size.extraSmall)
-                                .clickable { onRemoveDecoration(decoration.decorationId) }
+                                .clickable { onRemoveDecoration(decoration.decoration.id) }
                         )
                     },
                     backgroundColor = Color.Transparent,
@@ -330,7 +329,7 @@ fun EquipmentDecorationList(
 @Composable
 fun EquipmentWeaponListItem(
     weapon: Weapon?,
-    decorations: List<EquipmentSetDecoration>,
+    decorations: List<EquipmentDecoration>,
     onWeaponClick: () -> Unit,
     onAddDecoration: (availableSlots: Int) -> Unit,
     onRemoveDecoration: (decorationId: Int) -> Unit,
@@ -338,7 +337,7 @@ fun EquipmentWeaponListItem(
 ) {
     EquipmentListItem(
         name = weapon?.name,
-        numberOfSlots = weapon?.numSlots ?: 0,
+        numberOfSlots = weapon?.numberOfSlots ?: 0,
         decorations = decorations,
         icon = {
             WeaponIcon(
@@ -357,8 +356,8 @@ fun EquipmentWeaponListItem(
 @Composable
 fun EquipmentArmorListItem(
     armor: Armor?,
-    armorType: ArmorType,
-    decorations: List<EquipmentSetDecoration>,
+    armorType: EquipmentType,
+    decorations: List<EquipmentDecoration>,
     onArmorClick: () -> Unit,
     onAddDecoration: (availableSlots: Int) -> Unit,
     onRemoveDecoration: (decorationId: Int) -> Unit,

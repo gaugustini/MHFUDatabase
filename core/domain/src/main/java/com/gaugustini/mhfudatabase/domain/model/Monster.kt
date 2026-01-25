@@ -19,7 +19,7 @@ import com.gaugustini.mhfudatabase.domain.enums.Rank
  * @property sizeLargestMax The maximum size for a large crown.
  * @property damageStats The list of hitzones and their corresponding values for the monster.
  * @property ailmentStats The list of ailments and their corresponding resistances.
- * @property itemEffectiveness The effectiveness of certain items on the monster (e.g., pitfall trap).
+ * @property itemEffectiveness The effectiveness of certain items on the monster in different states (e.g., pitfall trap).
  * @property rewards A map of rewards and their corresponding conditions, grouped by rank.
  * @property quests The list of quests the monster can be encountered in.
  */
@@ -35,7 +35,7 @@ data class Monster(
     val sizeLargestMax: Int?,
     val damageStats: List<MonsterDamageStats>?,
     val ailmentStats: List<MonsterAilmentStats>?,
-    val itemEffectiveness: MonsterItemEffectiveness?,
+    val itemEffectiveness: List<MonsterItemEffectiveness>?,
     val rewards: Map<Rank, List<MonsterReward>>?,
     val quests: List<Quest>?,
 )

@@ -11,8 +11,8 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.enums.ItemIconColor
-import com.gaugustini.mhfudatabase.data.enums.ItemIconType
+import com.gaugustini.mhfudatabase.domain.enums.ItemIconColor
+import com.gaugustini.mhfudatabase.domain.enums.ItemIconType
 import com.gaugustini.mhfudatabase.util.MHFUColors
 import com.gaugustini.mhfudatabase.util.MHFUIcons
 

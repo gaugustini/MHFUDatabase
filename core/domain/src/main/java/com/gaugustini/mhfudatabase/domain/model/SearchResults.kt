@@ -14,13 +14,13 @@ package com.gaugustini.mhfudatabase.domain.model
  * @property weapons A list of weapons that match the search query.
  */
 data class SearchResults(
-    val armors: List<Armor>,
-    val decorations: List<Decoration>,
-    val items: List<Item>,
-    val locations: List<Location>,
-    val monsters: List<Monster>,
-    val quests: List<Quest>,
-    val skillTrees: List<SkillTree>,
-    val skills: List<Skill>,
-    val weapons: List<Weapon>,
+    val armors: List<Armor> = emptyList(),
+    val decorations: List<Decoration> = emptyList(),
+    val items: List<Item> = emptyList(),
+    val locations: List<Location> = emptyList(),
+    val monsters: List<Monster> = emptyList(),
+    val quests: List<Quest> = emptyList(),
+    val skillTrees: List<SkillTree> = emptyList(),
+    val skills: List<Skill> = emptyList(),
+    val weapons: List<Weapon> = emptyList(),
 )

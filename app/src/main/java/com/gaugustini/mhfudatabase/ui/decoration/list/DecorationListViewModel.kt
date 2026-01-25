@@ -2,10 +2,10 @@ package com.gaugustini.mhfudatabase.ui.decoration.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gaugustini.mhfudatabase.data.Language
-import com.gaugustini.mhfudatabase.data.UserPreferences
-import com.gaugustini.mhfudatabase.data.model.Decoration
+import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.DecorationRepository
+import com.gaugustini.mhfudatabase.domain.enums.Language
+import com.gaugustini.mhfudatabase.domain.model.Decoration
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -47,7 +47,7 @@ class DecorationListViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { state ->
                 state.copy(
-                    decorations = decorationRepository.getDecorationList(language),
+                    decorations = decorationRepository.getDecorationList(language.code),
                 )
             }
         }

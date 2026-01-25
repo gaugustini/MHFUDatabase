@@ -1,9 +1,8 @@
 package com.gaugustini.mhfudatabase.util.preview
 
-import com.gaugustini.mhfudatabase.data.enums.EquipmentType
-import com.gaugustini.mhfudatabase.data.enums.ItemIconColor
-import com.gaugustini.mhfudatabase.data.model.EquipmentSetDecoration
-import com.gaugustini.mhfudatabase.data.model.UserEquipmentSet
+import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
+import com.gaugustini.mhfudatabase.domain.model.EquipmentDecoration
+import com.gaugustini.mhfudatabase.domain.model.UserEquipmentSet
 
 object PreviewUserEquipmentSet {
 
@@ -12,6 +11,18 @@ object PreviewUserEquipmentSet {
     val userSet = UserEquipmentSet(
         id = 1,
         name = "Set",
+        defense = 0,
+        fire = 0,
+        water = 0,
+        thunder = 0,
+        ice = 0,
+        dragon = 0,
+        weapon = null,
+        armors = null,
+        decorations = null,
+        activeSkills = null,
+        skills = null,
+        recipe = null,
     )
 
     val userSetList = listOf(
@@ -22,32 +33,16 @@ object PreviewUserEquipmentSet {
 
     // User Equipment Decoration
 
-    val decoration = EquipmentSetDecoration(
-        setId = 1,
-        decorationId = 1,
-        name = "Decoration",
-        requiredSlots = 1,
-        decorationColor = ItemIconColor.RED,
-        equipmentType = EquipmentType.WEAPON,
-        quantity = 1,
+    val decoration = EquipmentDecoration(
+        equipmentType = EquipmentType.ARMOR_HEAD,
+        decoration = PreviewDecorationData.decoration,
+        quantity = 5,
     )
 
     val decorationList = listOf(
-        decoration.copy(
-            decorationId = 1,
-            name = "Decoration 1",
-            equipmentType = EquipmentType.ARMOR_HEAD
-        ),
-        decoration.copy(
-            decorationId = 2,
-            name = "Decoration 2",
-            equipmentType = EquipmentType.ARMOR_CHEST
-        ),
-        decoration.copy(
-            decorationId = 3,
-            name = "Decoration 3",
-            equipmentType = EquipmentType.ARMOR_LEGS
-        ),
+        decoration.copy(equipmentType = EquipmentType.ARMOR_HEAD),
+        decoration.copy(equipmentType = EquipmentType.ARMOR_CHEST),
+        decoration.copy(equipmentType = EquipmentType.ARMOR_LEGS),
     )
 
 }

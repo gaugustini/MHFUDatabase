@@ -22,9 +22,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.enums.ItemIconColor
-import com.gaugustini.mhfudatabase.data.enums.WeaponBowCharge
-import com.gaugustini.mhfudatabase.data.model.AmmoBow
+import com.gaugustini.mhfudatabase.domain.enums.ItemIconColor
+import com.gaugustini.mhfudatabase.domain.enums.WeaponAmmo
+import com.gaugustini.mhfudatabase.domain.model.AmmoBow
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
@@ -65,9 +65,10 @@ fun WeaponAmmoBowSummary(
                     Text(
                         text = stringResource(
                             when (ammo.charge1Type) {
-                                WeaponBowCharge.RAPID -> R.string.weapon_bow_charge_rapid
-                                WeaponBowCharge.PIERCE -> R.string.weapon_bow_charge_pierce
-                                WeaponBowCharge.SCATTER -> R.string.weapon_bow_charge_scatter
+                                WeaponAmmo.NORMAL_RAPID -> R.string.weapon_bow_charge_rapid
+                                WeaponAmmo.PIERCE -> R.string.weapon_bow_charge_pierce
+                                WeaponAmmo.PELLET_SCATTER -> R.string.weapon_bow_charge_scatter
+                                else -> R.string.user_set_none
                             },
                             1,
                             ammo.charge1Level
@@ -78,9 +79,10 @@ fun WeaponAmmoBowSummary(
                     Text(
                         text = stringResource(
                             when (ammo.charge2Type) {
-                                WeaponBowCharge.RAPID -> R.string.weapon_bow_charge_rapid
-                                WeaponBowCharge.PIERCE -> R.string.weapon_bow_charge_pierce
-                                WeaponBowCharge.SCATTER -> R.string.weapon_bow_charge_scatter
+                                WeaponAmmo.NORMAL_RAPID -> R.string.weapon_bow_charge_rapid
+                                WeaponAmmo.PIERCE -> R.string.weapon_bow_charge_pierce
+                                WeaponAmmo.PELLET_SCATTER -> R.string.weapon_bow_charge_scatter
+                                else -> R.string.user_set_none
                             },
                             2,
                             ammo.charge2Level
@@ -91,9 +93,10 @@ fun WeaponAmmoBowSummary(
                     Text(
                         text = stringResource(
                             when (ammo.charge3Type) {
-                                WeaponBowCharge.RAPID -> R.string.weapon_bow_charge_rapid
-                                WeaponBowCharge.PIERCE -> R.string.weapon_bow_charge_pierce
-                                WeaponBowCharge.SCATTER -> R.string.weapon_bow_charge_scatter
+                                WeaponAmmo.NORMAL_RAPID -> R.string.weapon_bow_charge_rapid
+                                WeaponAmmo.PIERCE -> R.string.weapon_bow_charge_pierce
+                                WeaponAmmo.PELLET_SCATTER -> R.string.weapon_bow_charge_scatter
+                                else -> R.string.user_set_none
                             },
                             3,
                             ammo.charge3Level
@@ -105,12 +108,13 @@ fun WeaponAmmoBowSummary(
                         Text(
                             text = stringResource(
                                 when (ammo.charge4Type) {
-                                    WeaponBowCharge.RAPID -> R.string.weapon_bow_charge_rapid
-                                    WeaponBowCharge.PIERCE -> R.string.weapon_bow_charge_pierce
-                                    WeaponBowCharge.SCATTER -> R.string.weapon_bow_charge_scatter
+                                    WeaponAmmo.NORMAL_RAPID -> R.string.weapon_bow_charge_rapid
+                                    WeaponAmmo.PIERCE -> R.string.weapon_bow_charge_pierce
+                                    WeaponAmmo.PELLET_SCATTER -> R.string.weapon_bow_charge_scatter
+                                    else -> R.string.user_set_none
                                 },
                                 4,
-                                ammo.charge4Level
+                                ammo.charge4Level!!
                             ),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurface,

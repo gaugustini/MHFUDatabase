@@ -16,8 +16,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.enums.ElementType
-import com.gaugustini.mhfudatabase.data.enums.ItemIconColor
+import com.gaugustini.mhfudatabase.domain.enums.ItemIconColor
+import com.gaugustini.mhfudatabase.domain.enums.WeaponElement
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.ElementIcon
 import com.gaugustini.mhfudatabase.ui.components.icons.SlotsIcon
@@ -106,7 +106,7 @@ fun ArmorSummary(
         ListItemLayout(
             leadingContent = {
                 ElementIcon(
-                    element = ElementType.FIRE,
+                    element = WeaponElement.FIRE,
                     modifier = Modifier.size(Dimension.Size.extraSmall)
                 )
             },
@@ -133,7 +133,7 @@ fun ArmorSummary(
         ListItemLayout(
             leadingContent = {
                 ElementIcon(
-                    element = ElementType.WATER,
+                    element = WeaponElement.WATER,
                     modifier = Modifier.size(Dimension.Size.extraSmall)
                 )
             },
@@ -160,7 +160,7 @@ fun ArmorSummary(
         ListItemLayout(
             leadingContent = {
                 ElementIcon(
-                    element = ElementType.THUNDER,
+                    element = WeaponElement.THUNDER,
                     modifier = Modifier.size(Dimension.Size.extraSmall)
                 )
             },
@@ -187,7 +187,7 @@ fun ArmorSummary(
         ListItemLayout(
             leadingContent = {
                 ElementIcon(
-                    element = ElementType.ICE,
+                    element = WeaponElement.ICE,
                     modifier = Modifier.size(Dimension.Size.extraSmall)
                 )
             },
@@ -214,7 +214,7 @@ fun ArmorSummary(
         ListItemLayout(
             leadingContent = {
                 ElementIcon(
-                    element = ElementType.DRAGON,
+                    element = WeaponElement.DRAGON,
                     modifier = Modifier.size(Dimension.Size.extraSmall)
                 )
             },

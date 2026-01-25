@@ -99,14 +99,14 @@ fun ItemDetailScreen(
                 }
 
                 ItemDetailTab.ITEM_USAGES -> {
-                    if (uiState.usages.craftRecipes.isEmpty() &&
+                    if (uiState.usages.combinations.isEmpty() &&
                         uiState.usages.armors.isEmpty() &&
                         uiState.usages.weapons.isEmpty()
                     ) {
                         EmptyContent()
                     } else {
                         ItemUsagesContent(
-                            combinations = uiState.usages.craftRecipes,
+                            combinations = uiState.usages.combinations,
                             armors = uiState.usages.armors,
                             decorations = uiState.usages.decorations,
                             weapons = uiState.usages.weapons,
@@ -119,14 +119,14 @@ fun ItemDetailScreen(
                 }
 
                 ItemDetailTab.ITEM_SOURCES -> {
-                    if (uiState.sources.craftRecipes.isEmpty() &&
+                    if (uiState.sources.combinations.isEmpty() &&
                         uiState.sources.locations.isEmpty() &&
                         uiState.sources.monsterRewards.isEmpty()
                     ) {
                         EmptyContent()
                     } else {
                         ItemSourcesContent(
-                            combinations = uiState.sources.craftRecipes,
+                            combinations = uiState.sources.combinations,
                             locations = uiState.sources.locations,
                             monsters = uiState.sources.monsterRewards,
                             onItemClick = onItemClick,

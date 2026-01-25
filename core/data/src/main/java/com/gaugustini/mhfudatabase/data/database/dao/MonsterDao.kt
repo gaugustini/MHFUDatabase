@@ -38,6 +38,7 @@ interface MonsterDao {
         JOIN monster_text
             ON monster.id = monster_text.monster_id
             AND monster_text.language = :language
+        ORDER BY monster_text.name ASC
         """
     )
     suspend fun getMonsterList(language: String): List<MonsterWithText>
@@ -74,7 +75,7 @@ interface MonsterDao {
         WHERE monster_id = :monsterId
         """
     )
-    suspend fun getMonsterItemByMonsterId(monsterId: Int): MonsterItemEntity
+    suspend fun getMonsterItemByMonsterId(monsterId: Int): List<MonsterItemEntity>
 
     @Query(
         """

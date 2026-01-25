@@ -17,8 +17,6 @@ import com.gaugustini.mhfudatabase.ui.components.TabbedLayout
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
-import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
-import com.gaugustini.mhfudatabase.util.preview.PreviewSkillData
 
 enum class ArmorDetailTab(@param:StringRes val title: Int) {
     ARMOR_DETAIL(R.string.tab_armor_detail),
@@ -85,22 +83,17 @@ fun ArmorDetailScreen(
             ArmorDetailTab.ARMOR_DETAIL -> if (uiState.armor != null) {
                 ArmorDetailContent(
                     armor = uiState.armor,
-                    skills = uiState.armorSkills,
-                    recipe = uiState.armorRecipe,
                     onSkillClick = onSkillClick,
-                    onItemClick = onItemClick
+                    onItemClick = onItemClick,
                 )
             }
 
             ArmorDetailTab.ARMOR_SET_DETAIL -> if (uiState.armorSet != null) {
                 ArmorSetDetailContent(
                     armorSet = uiState.armorSet,
-                    armors = uiState.armorSetArmors,
-                    skills = uiState.armorSetSkills,
-                    recipe = uiState.armorSetRecipe,
                     onArmorClick = onArmorClick,
                     onSkillClick = onSkillClick,
-                    onItemClick = onItemClick
+                    onItemClick = onItemClick,
                 )
             }
         }
@@ -125,15 +118,10 @@ private class ArmorDetailScreenPreviewParamProvider : PreviewParameterProvider<A
         ArmorDetailState(
             initialTab = ArmorDetailTab.ARMOR_DETAIL,
             armor = PreviewArmorData.armor,
-            armorSkills = PreviewSkillData.skillTreePointsList,
-            armorRecipe = PreviewItemData.itemQuantityList,
         ),
         ArmorDetailState(
             initialTab = ArmorDetailTab.ARMOR_SET_DETAIL,
             armorSet = PreviewArmorData.armorSet,
-            armorSetArmors = PreviewArmorData.armorList,
-            armorSetSkills = PreviewSkillData.skillTreePointsList,
-            armorSetRecipe = PreviewItemData.itemQuantityList,
         ),
     )
 

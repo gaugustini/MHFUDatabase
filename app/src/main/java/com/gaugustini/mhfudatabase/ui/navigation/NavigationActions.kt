@@ -1,7 +1,7 @@
 package com.gaugustini.mhfudatabase.ui.navigation
 
 import androidx.navigation.NavHostController
-import com.gaugustini.mhfudatabase.data.enums.WeaponType
+import com.gaugustini.mhfudatabase.domain.enums.WeaponType
 
 class NavigationActions(
     navController: NavHostController,

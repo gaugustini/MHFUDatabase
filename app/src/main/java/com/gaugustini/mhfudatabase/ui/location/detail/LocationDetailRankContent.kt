@@ -11,21 +11,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.enums.GatherType
-import com.gaugustini.mhfudatabase.data.model.ItemLocation
+import com.gaugustini.mhfudatabase.domain.enums.GatherType
+import com.gaugustini.mhfudatabase.domain.model.GatheringPoint
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
-import com.gaugustini.mhfudatabase.ui.item.components.ItemLocationList
+import com.gaugustini.mhfudatabase.ui.item.components.GatheringPointList
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
 
 @Composable
 fun LocationDetailRankContent(
-    items: List<ItemLocation>,
+    gatheringPoints: List<GatheringPoint>,
     modifier: Modifier = Modifier,
     onItemClick: (itemId: Int) -> Unit = {},
 ) {
-    val itemsPerArea = items.groupBy { it.area }
+    val itemsPerArea = gatheringPoints.groupBy { it.area }
 
     LazyColumn(
         modifier = modifier
@@ -58,8 +58,8 @@ fun LocationDetailRankContent(
                     )
                 }
                 item {
-                    ItemLocationList(
-                        items = items,
+                    GatheringPointList(
+                        gatheringPoints = items,
                         onItemClick = onItemClick,
                     )
                 }

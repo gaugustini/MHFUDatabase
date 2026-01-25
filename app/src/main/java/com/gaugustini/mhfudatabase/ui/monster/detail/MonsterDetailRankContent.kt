@@ -7,7 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.gaugustini.mhfudatabase.data.model.MonsterReward
+import com.gaugustini.mhfudatabase.domain.model.MonsterReward
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.monster.components.MonsterRewardList
 import com.gaugustini.mhfudatabase.ui.theme.Dimension

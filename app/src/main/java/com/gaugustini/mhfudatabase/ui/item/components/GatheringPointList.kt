@@ -1,60 +1,62 @@
-package com.gaugustini.mhfudatabase.ui.location.components
+package com.gaugustini.mhfudatabase.ui.item.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.gaugustini.mhfudatabase.domain.model.Location
+import com.gaugustini.mhfudatabase.domain.model.GatheringPoint
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
-import com.gaugustini.mhfudatabase.ui.components.icons.LocationIcon
+import com.gaugustini.mhfudatabase.ui.components.icons.ItemIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
-import com.gaugustini.mhfudatabase.util.preview.PreviewLocationData
+import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
 
 @Composable
-fun LocationList(
-    locations: List<Location>,
+fun GatheringPointList(
+    gatheringPoints: List<GatheringPoint>,
     modifier: Modifier = Modifier,
-    onLocationClick: (locationId: Int) -> Unit = {},
+    onItemClick: (itemId: Int) -> Unit = {},
 ) {
-    LazyColumn(
+    Column(
         modifier = modifier
     ) {
-        items(locations) { location ->
-            LocationListItem(
-                location = location,
-                onLocationClick = onLocationClick,
+        gatheringPoints.forEachIndexed { index, item ->
+            GatheringPointListItem(
+                gatheringPoint = item,
+                onItemClick = onItemClick,
             )
-            HorizontalDivider()
+            if (index != gatheringPoints.lastIndex) {
+                HorizontalDivider()
+            }
         }
     }
 }
 
 @Composable
-fun LocationListItem(
-    location: Location,
+fun GatheringPointListItem(
+    gatheringPoint: GatheringPoint,
     modifier: Modifier = Modifier,
-    onLocationClick: (locationId: Int) -> Unit = {},
+    onItemClick: (itemId: Int) -> Unit = {},
 ) {
     ListItemLayout(
         leadingContent = {
-            LocationIcon(
-                locationId = location.id,
-                modifier = Modifier.size(Dimension.Size.extraLarge)
+            ItemIcon(
+                type = gatheringPoint.item.iconType,
+                color = gatheringPoint.item.iconColor,
+                modifier = Modifier.size(Dimension.Size.medium)
             )
         },
         headlineContent = {
             Text(
-                text = location.name,
-                style = MaterialTheme.typography.bodyLarge,
+                text = gatheringPoint.item.name,
+                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
         },
@@ -62,15 +64,15 @@ fun LocationListItem(
             horizontal = Dimension.Padding.large,
             vertical = Dimension.Padding.medium,
         ),
-        modifier = modifier.clickable { onLocationClick(location.id) }
+        modifier = modifier.clickable { onItemClick(gatheringPoint.item.id) }
     )
 }
 
 @Preview(showBackground = true)
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun LocationListPreview() {
+fun GatheringPointListPreview() {
     Theme {
-        LocationList(PreviewLocationData.locationList)
+        GatheringPointList(PreviewItemData.itemLocationList)
     }
 }

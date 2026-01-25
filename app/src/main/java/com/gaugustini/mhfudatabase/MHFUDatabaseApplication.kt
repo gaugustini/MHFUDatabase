@@ -3,7 +3,7 @@ package com.gaugustini.mhfudatabase
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
-import com.gaugustini.mhfudatabase.data.UserPreferences
+import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking

@@ -3,10 +3,10 @@ package com.gaugustini.mhfudatabase.ui.search
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gaugustini.mhfudatabase.data.Language
-import com.gaugustini.mhfudatabase.data.UserPreferences
-import com.gaugustini.mhfudatabase.data.model.SearchResults
+import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.SearchRepository
+import com.gaugustini.mhfudatabase.domain.enums.Language
+import com.gaugustini.mhfudatabase.domain.model.SearchResults
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -60,7 +60,7 @@ class SearchViewModel @Inject constructor(
                     if (currentQuery.isNotBlank()) {
                         try {
                             _uiState.update {
-                                it.copy(results = searchRepository.search(currentQuery, language))
+                                it.copy(results = searchRepository.search(currentQuery, language.code))
                             }
                         } catch (e: Exception) {
                             Log.e("SearchViewModel", "Error while searching: $currentQuery", e)

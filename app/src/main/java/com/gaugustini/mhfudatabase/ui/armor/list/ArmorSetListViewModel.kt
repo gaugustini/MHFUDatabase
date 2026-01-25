@@ -2,12 +2,11 @@ package com.gaugustini.mhfudatabase.ui.armor.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gaugustini.mhfudatabase.data.Language
-import com.gaugustini.mhfudatabase.data.UserPreferences
-import com.gaugustini.mhfudatabase.data.enums.HunterType
-import com.gaugustini.mhfudatabase.data.model.Armor
-import com.gaugustini.mhfudatabase.data.model.ArmorSet
+import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.ArmorRepository
+import com.gaugustini.mhfudatabase.domain.enums.HunterType
+import com.gaugustini.mhfudatabase.domain.enums.Language
+import com.gaugustini.mhfudatabase.domain.model.ArmorSet
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,7 +20,6 @@ import javax.inject.Inject
 
 data class ArmorSetListState(
     val initialTab: ArmorSetListTab = ArmorSetListTab.BLADEMASTER,
-    val armorsBySet: Map<Int, List<Armor>> = emptyMap(),
     val armorSetsBlade: List<ArmorSet> = emptyList(),
     val armorSetsGunner: List<ArmorSet> = emptyList(),
     val expandedArmorSetsBlade: Set<Int> = emptySet(),
@@ -52,13 +50,16 @@ class ArmorSetListViewModel @Inject constructor(
 
     private fun loadArmorSets(language: Language) {
         viewModelScope.launch {
-            val armors = armorRepository.getArmorList(language)
-            val armorSetsBlade = armorRepository.getArmorSetList(HunterType.BLADE, language)
-            val armorSetsGunner = armorRepository.getArmorSetList(HunterType.GUNNER, language)
+            val armorSets = armorRepository.getArmorSetList(language.code)
+            val armorSetsBlade = armorSets.filter {
+                it.hunterType == HunterType.BLADE || it.hunterType == HunterType.BOTH
+            }
+            val armorSetsGunner = armorSets.filter {
+                it.hunterType == HunterType.GUNNER || it.hunterType == HunterType.BOTH
+            }
 
             _uiState.update { state ->
                 state.copy(
-                    armorsBySet = armors.groupBy { armor -> armor.armorSetId },
                     armorSetsBlade = armorSetsBlade,
                     armorSetsGunner = armorSetsGunner,
                 )

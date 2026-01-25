@@ -1,5 +1,6 @@
 package com.gaugustini.mhfudatabase.data.database.dao
 
+import androidx.room.Dao
 import androidx.room.Query
 import com.gaugustini.mhfudatabase.data.database.relation.ArmorWithText
 import com.gaugustini.mhfudatabase.data.database.relation.DecorationWithText
@@ -11,6 +12,10 @@ import com.gaugustini.mhfudatabase.data.database.relation.SkillTreeWithText
 import com.gaugustini.mhfudatabase.data.database.relation.SkillWithText
 import com.gaugustini.mhfudatabase.data.database.relation.WeaponWithText
 
+/**
+ * [Dao] for Search related database operations.
+ */
+@Dao
 interface SearchDao {
 
     @Query(

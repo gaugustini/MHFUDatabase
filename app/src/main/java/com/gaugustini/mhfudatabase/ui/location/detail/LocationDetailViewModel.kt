@@ -3,12 +3,12 @@ package com.gaugustini.mhfudatabase.ui.location.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gaugustini.mhfudatabase.data.Language
-import com.gaugustini.mhfudatabase.data.UserPreferences
-import com.gaugustini.mhfudatabase.data.enums.Rank
-import com.gaugustini.mhfudatabase.data.model.ItemLocation
-import com.gaugustini.mhfudatabase.data.model.Location
+import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.LocationRepository
+import com.gaugustini.mhfudatabase.domain.enums.Language
+import com.gaugustini.mhfudatabase.domain.enums.Rank
+import com.gaugustini.mhfudatabase.domain.model.GatheringPoint
+import com.gaugustini.mhfudatabase.domain.model.Location
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,10 +23,10 @@ import javax.inject.Inject
 data class LocationDetailState(
     val initialTab: LocationDetailTab = LocationDetailTab.LOW_RANK,
     val location: Location? = null,
-    val itemsLowRank: List<ItemLocation> = emptyList(),
-    val itemsHighRank: List<ItemLocation> = emptyList(),
-    val itemsGRank: List<ItemLocation> = emptyList(),
-    val itemsTreasure: List<ItemLocation> = emptyList(),
+    val itemsLowRank: List<GatheringPoint> = emptyList(),
+    val itemsHighRank: List<GatheringPoint> = emptyList(),
+    val itemsGRank: List<GatheringPoint> = emptyList(),
+    val itemsTreasure: List<GatheringPoint> = emptyList(),
 )
 
 @HiltViewModel
@@ -56,14 +56,14 @@ class LocationDetailViewModel @Inject constructor(
 
     private fun loadLocationDetails(language: Language) {
         viewModelScope.launch {
-            val locationDetails = locationRepository.getLocationDetails(locationId, language)
+            val location = locationRepository.getLocation(locationId, language.code)
             _uiState.update { state ->
                 state.copy(
-                    location = locationDetails.location,
-                    itemsLowRank = locationDetails.items.filter { it.rank == Rank.LOW },
-                    itemsHighRank = locationDetails.items.filter { it.rank == Rank.HIGH },
-                    itemsGRank = locationDetails.items.filter { it.rank == Rank.G },
-                    itemsTreasure = locationDetails.items.filter { it.rank == Rank.TREASURE },
+                    location = location,
+                    itemsLowRank = location.gatheringPoints?.get(Rank.LOW) ?: emptyList(),
+                    itemsHighRank = location.gatheringPoints?.get(Rank.HIGH) ?: emptyList(),
+                    itemsGRank = location.gatheringPoints?.get(Rank.G) ?: emptyList(),
+                    itemsTreasure = location.gatheringPoints?.get(Rank.TREASURE) ?: emptyList(),
                 )
             }
         }

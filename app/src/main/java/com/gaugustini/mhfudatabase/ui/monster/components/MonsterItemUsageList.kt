@@ -19,9 +19,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.enums.ItemIconColor
-import com.gaugustini.mhfudatabase.data.enums.MonsterStateType
-import com.gaugustini.mhfudatabase.data.model.MonsterItemUsage
+import com.gaugustini.mhfudatabase.domain.enums.ItemIconColor
+import com.gaugustini.mhfudatabase.domain.enums.MonsterState
+import com.gaugustini.mhfudatabase.domain.model.MonsterItemEffectiveness
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
@@ -30,7 +30,7 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
 
 @Composable
 fun MonsterItemUsageList(
-    items: List<MonsterItemUsage>,
+    items: List<MonsterItemEffectiveness>,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -49,7 +49,7 @@ fun MonsterItemUsageList(
 
 @Composable
 fun MonsterItemUsageListItem(
-    item: MonsterItemUsage,
+    item: MonsterItemEffectiveness,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -65,8 +65,8 @@ fun MonsterItemUsageListItem(
         Text(
             text = stringResource(
                 when (item.monsterState) {
-                    MonsterStateType.NORMAL -> R.string.monster_state_normal
-                    MonsterStateType.ENRAGED -> R.string.monster_state_enraged
+                    MonsterState.NORMAL -> R.string.monster_state_normal
+                    MonsterState.ENRAGED -> R.string.monster_state_enraged
                 }
             ),
             style = MaterialTheme.typography.bodyMedium,

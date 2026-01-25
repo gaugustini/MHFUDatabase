@@ -3,11 +3,10 @@ package com.gaugustini.mhfudatabase.ui.quest.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gaugustini.mhfudatabase.data.Language
-import com.gaugustini.mhfudatabase.data.UserPreferences
-import com.gaugustini.mhfudatabase.data.model.Monster
-import com.gaugustini.mhfudatabase.data.model.Quest
+import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.QuestRepository
+import com.gaugustini.mhfudatabase.domain.enums.Language
+import com.gaugustini.mhfudatabase.domain.model.Quest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,7 +20,6 @@ import javax.inject.Inject
 
 data class QuestDetailState(
     val quest: Quest? = null,
-    val monsters: List<Monster> = emptyList(),
 )
 
 @HiltViewModel
@@ -51,12 +49,9 @@ class QuestDetailViewModel @Inject constructor(
 
     private fun loadQuestDetails(language: Language) {
         viewModelScope.launch {
-            val questDetails = questRepository.getQuestDetails(questId, language)
-
             _uiState.update { state ->
                 state.copy(
-                    quest = questDetails.quest,
-                    monsters = questDetails.monsters,
+                    quest = questRepository.getQuest(questId, language.code)
                 )
             }
         }

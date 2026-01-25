@@ -17,8 +17,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.enums.ElementType
-import com.gaugustini.mhfudatabase.data.model.Hitzone
+import com.gaugustini.mhfudatabase.domain.enums.WeaponElement
+import com.gaugustini.mhfudatabase.domain.model.MonsterDamageStats
 import com.gaugustini.mhfudatabase.ui.components.icons.ElementIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
@@ -26,7 +26,7 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
 
 @Composable
 fun MonsterDamageElemental(
-    damage: List<Hitzone>,
+    damage: List<MonsterDamageStats>,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -69,7 +69,7 @@ fun DamageElementalHeader(
             modifier = Modifier.weight(1f)
         ) {
             ElementIcon(
-                element = ElementType.FIRE,
+                element = WeaponElement.FIRE,
                 modifier = Modifier.size(Dimension.Size.extraSmall)
             )
         }
@@ -78,7 +78,7 @@ fun DamageElementalHeader(
             modifier = Modifier.weight(1f)
         ) {
             ElementIcon(
-                element = ElementType.WATER,
+                element = WeaponElement.WATER,
                 modifier = Modifier.size(Dimension.Size.extraSmall)
             )
         }
@@ -87,7 +87,7 @@ fun DamageElementalHeader(
             modifier = Modifier.weight(1f)
         ) {
             ElementIcon(
-                element = ElementType.THUNDER,
+                element = WeaponElement.THUNDER,
                 modifier = Modifier.size(Dimension.Size.extraSmall)
             )
         }
@@ -96,7 +96,7 @@ fun DamageElementalHeader(
             modifier = Modifier.weight(1f)
         ) {
             ElementIcon(
-                element = ElementType.ICE,
+                element = WeaponElement.ICE,
                 modifier = Modifier.size(Dimension.Size.extraSmall)
             )
         }
@@ -105,7 +105,7 @@ fun DamageElementalHeader(
             modifier = Modifier.weight(1f)
         ) {
             ElementIcon(
-                element = ElementType.DRAGON,
+                element = WeaponElement.DRAGON,
                 modifier = Modifier.size(Dimension.Size.extraSmall)
             )
         }

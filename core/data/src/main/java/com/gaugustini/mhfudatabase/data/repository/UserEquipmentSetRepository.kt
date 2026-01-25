@@ -6,6 +6,8 @@ import com.gaugustini.mhfudatabase.data.database.relation.EquipmentItemQuantity
 import com.gaugustini.mhfudatabase.data.database.relation.EquipmentSkillTreePoint
 import com.gaugustini.mhfudatabase.data.mapper.UserEquipmentSetMapper
 import com.gaugustini.mhfudatabase.domain.model.UserEquipmentSet
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.abs
@@ -46,8 +48,10 @@ class UserEquipmentSetRepository @Inject constructor(
      * Returns the list of all user equipment sets.
      * Note: weapon, armors and decorations are not populated.
      */
-    suspend fun getEquipmentSets(): List<UserEquipmentSet> {
-        return userEquipmentSetDao.getEquipmentSets().map { UserEquipmentSetMapper.toModel(it) }
+    fun getEquipmentSets(): Flow<List<UserEquipmentSet>> {
+        return userEquipmentSetDao.getEquipmentSets().map {
+            it.map { entity -> UserEquipmentSetMapper.toModel(entity) }
+        }
     }
 
     /**

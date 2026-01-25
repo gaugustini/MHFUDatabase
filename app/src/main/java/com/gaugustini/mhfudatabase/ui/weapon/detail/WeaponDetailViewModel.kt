@@ -3,13 +3,10 @@ package com.gaugustini.mhfudatabase.ui.weapon.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gaugustini.mhfudatabase.data.Language
-import com.gaugustini.mhfudatabase.data.UserPreferences
-import com.gaugustini.mhfudatabase.data.model.AmmoBow
-import com.gaugustini.mhfudatabase.data.model.AmmoBowgun
-import com.gaugustini.mhfudatabase.data.model.ItemQuantity
-import com.gaugustini.mhfudatabase.data.model.Weapon
+import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.WeaponRepository
+import com.gaugustini.mhfudatabase.domain.enums.Language
+import com.gaugustini.mhfudatabase.domain.model.Weapon
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,12 +21,6 @@ import javax.inject.Inject
 data class WeaponDetailState(
     val initialTab: WeaponDetailTab = WeaponDetailTab.SUMMARY,
     val weapon: Weapon? = null,
-    val ammoBow: AmmoBow? = null,
-    val ammoBowgun: AmmoBowgun? = null,
-    val recipeCreate: List<ItemQuantity> = emptyList(),
-    val recipeUpgrade: List<ItemQuantity> = emptyList(),
-    val paths: List<List<Weapon>> = emptyList(),
-    val finals: List<Weapon> = emptyList(),
 )
 
 @HiltViewModel
@@ -59,17 +50,9 @@ class WeaponDetailViewModel @Inject constructor(
 
     private fun loadWeaponDetails(language: Language) {
         viewModelScope.launch {
-            val weaponDetails = weaponRepository.getWeaponDetails(weaponId, language)
-
             _uiState.update { state ->
                 state.copy(
-                    weapon = weaponDetails.weapon,
-                    ammoBow = weaponDetails.ammoBow,
-                    ammoBowgun = weaponDetails.ammoBowgun,
-                    recipeCreate = weaponDetails.recipeCreate,
-                    recipeUpgrade = weaponDetails.recipeUpgrade,
-                    paths = weaponDetails.paths,
-                    finals = weaponDetails.finals,
+                    weapon = weaponRepository.getWeapon(weaponId, language.code),
                 )
             }
         }

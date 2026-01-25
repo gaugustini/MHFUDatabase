@@ -5,8 +5,9 @@ import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.BuildConfig
-import com.gaugustini.mhfudatabase.data.ThemeMode
-import com.gaugustini.mhfudatabase.data.UserPreferences
+import com.gaugustini.mhfudatabase.data.preferences.AppPreferences
+import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
+import com.gaugustini.mhfudatabase.domain.enums.ThemeMode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,6 +28,7 @@ data class MainUiState(
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
+    private val appPreferences: AppPreferences,
     private val userPreferences: UserPreferences
 ) : ViewModel() {
 
@@ -70,11 +72,11 @@ class MainViewModel @Inject constructor(
 
     private fun checkFirstLaunch() {
         viewModelScope.launch {
-            if (userPreferences.isFirstLaunch()) {
+            if (appPreferences.isFirstLaunch()) {
                 _uiState.update { state ->
                     state.copy(showBetaDialog = true)
                 }
-                userPreferences.setFirstLaunchDone()
+                appPreferences.setFirstLaunchDone()
             }
         }
     }
@@ -82,11 +84,11 @@ class MainViewModel @Inject constructor(
     private fun checkAppUpdate() {
         viewModelScope.launch {
             val currentVersion = BuildConfig.VERSION_CODE
-            val lastVersion = userPreferences.getLastAppVersion()
+            val lastVersion = appPreferences.getLastAppVersion()
 
             // This avoid showing the dialog on the first launch
             if (lastVersion == -1) {
-                userPreferences.setLastAppVersion(currentVersion)
+                appPreferences.setLastAppVersion(currentVersion)
                 return@launch
             }
 
@@ -95,7 +97,7 @@ class MainViewModel @Inject constructor(
                     state.copy(showWhatsNew = true)
                 }
 
-                userPreferences.setLastAppVersion(currentVersion)
+                appPreferences.setLastAppVersion(currentVersion)
             }
         }
     }

@@ -3,13 +3,12 @@ package com.gaugustini.mhfudatabase.ui.skill.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gaugustini.mhfudatabase.data.Language
-import com.gaugustini.mhfudatabase.data.UserPreferences
-import com.gaugustini.mhfudatabase.data.model.Skill
-import com.gaugustini.mhfudatabase.data.model.SkillPointsArmor
-import com.gaugustini.mhfudatabase.data.model.SkillPointsDecoration
-import com.gaugustini.mhfudatabase.data.model.SkillTree
+import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.SkillRepository
+import com.gaugustini.mhfudatabase.domain.enums.Language
+import com.gaugustini.mhfudatabase.domain.model.Armor
+import com.gaugustini.mhfudatabase.domain.model.Decoration
+import com.gaugustini.mhfudatabase.domain.model.SkillTree
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,9 +23,8 @@ import javax.inject.Inject
 data class SkillTreeDetailState(
     val initialTab: SkillTreeDetailTab = SkillTreeDetailTab.SKILL_TREE_SUMMARY,
     val skillTree: SkillTree? = null,
-    val skills: List<Skill> = emptyList(),
-    val decorations: List<SkillPointsDecoration> = emptyList(),
-    val armors: List<SkillPointsArmor> = emptyList(),
+    val decorations: List<Decoration> = emptyList(),
+    val armors: List<Armor> = emptyList(),
 )
 
 @HiltViewModel
@@ -56,14 +54,11 @@ class SkillTreeDetailViewModel @Inject constructor(
 
     private fun loadSkillTreeDetails(language: Language) {
         viewModelScope.launch {
-            val skillTreeDetails = skillRepository.getSkillTreeDetails(skillTreeId, language)
-
             _uiState.update { state ->
                 state.copy(
-                    skillTree = skillTreeDetails.skillTree,
-                    skills = skillTreeDetails.skills,
-                    decorations = skillTreeDetails.decorations,
-                    armors = skillTreeDetails.armors,
+                    skillTree = skillRepository.getSkillTree(skillTreeId, language.code),
+//                    decorations = TODO(),
+//                    armors = TODO(),
                 )
             }
         }

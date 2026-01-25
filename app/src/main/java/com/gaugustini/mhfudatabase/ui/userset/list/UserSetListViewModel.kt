@@ -2,8 +2,8 @@ package com.gaugustini.mhfudatabase.ui.userset.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gaugustini.mhfudatabase.data.model.UserEquipmentSet
 import com.gaugustini.mhfudatabase.data.repository.UserEquipmentSetRepository
+import com.gaugustini.mhfudatabase.domain.model.UserEquipmentSet
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -14,7 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.gaugustini.mhfudatabase.data.model.MonsterReward
+import com.gaugustini.mhfudatabase.domain.model.MonsterReward
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.ItemIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
@@ -51,15 +51,15 @@ fun MonsterRewardListItem(
     ListItemLayout(
         leadingContent = {
             ItemIcon(
-                type = reward.itemIconType,
-                color = reward.itemIconColor,
+                type = reward.item.iconType,
+                color = reward.item.iconColor,
                 modifier = Modifier.size(Dimension.Size.medium)
             )
         },
         headlineContent = {
             Row {
                 Text(
-                    text = reward.itemName,
+                    text = reward.item.name,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
@@ -84,7 +84,7 @@ fun MonsterRewardListItem(
             horizontal = Dimension.Padding.large,
             vertical = Dimension.Padding.medium,
         ),
-        modifier = modifier.clickable { onItemClick(reward.itemId) }
+        modifier = modifier.clickable { onItemClick(reward.item.id) }
     )
 }
 

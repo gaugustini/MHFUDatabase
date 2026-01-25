@@ -9,14 +9,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.model.ItemCombination
-import com.gaugustini.mhfudatabase.data.model.ItemUsageArmor
-import com.gaugustini.mhfudatabase.data.model.ItemUsageDecoration
-import com.gaugustini.mhfudatabase.data.model.ItemUsageWeapon
+import com.gaugustini.mhfudatabase.domain.model.Armor
+import com.gaugustini.mhfudatabase.domain.model.Decoration
+import com.gaugustini.mhfudatabase.domain.model.ItemCombination
+import com.gaugustini.mhfudatabase.domain.model.Usage
+import com.gaugustini.mhfudatabase.domain.model.Weapon
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
-import com.gaugustini.mhfudatabase.ui.item.components.ItemUsageArmorListItem
-import com.gaugustini.mhfudatabase.ui.item.components.ItemUsageDecorationListItem
-import com.gaugustini.mhfudatabase.ui.item.components.ItemUsageWeaponListItem
+import com.gaugustini.mhfudatabase.ui.item.components.UsageArmorListItem
+import com.gaugustini.mhfudatabase.ui.item.components.UsageDecorationListItem
+import com.gaugustini.mhfudatabase.ui.item.components.UsageWeaponListItem
 import com.gaugustini.mhfudatabase.ui.itemcombination.components.ItemCombinationListItem
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
@@ -24,9 +25,9 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
 @Composable
 fun ItemUsagesContent(
     combinations: List<ItemCombination>,
-    armors: List<ItemUsageArmor>,
-    decorations: List<ItemUsageDecoration>,
-    weapons: List<ItemUsageWeapon>,
+    armors: List<Usage<Armor>>,
+    decorations: List<Usage<Decoration>>,
+    weapons: List<Usage<Weapon>>,
     modifier: Modifier = Modifier,
     onArmorClick: (armorId: Int) -> Unit = {},
     onDecorationClick: (decorationId: Int) -> Unit = {},
@@ -60,8 +61,8 @@ fun ItemUsagesContent(
                 )
             }
             itemsIndexed(armors) { index, armor ->
-                ItemUsageArmorListItem(
-                    armor = armor,
+                UsageArmorListItem(
+                    usage = armor,
                     onArmorClick = onArmorClick,
                 )
                 if (index != armors.lastIndex) {
@@ -77,8 +78,8 @@ fun ItemUsagesContent(
                 )
             }
             itemsIndexed(decorations) { index, decoration ->
-                ItemUsageDecorationListItem(
-                    decoration = decoration,
+                UsageDecorationListItem(
+                    usage = decoration,
                     onDecorationClick = onDecorationClick,
                 )
                 if (index != decorations.lastIndex) {
@@ -94,8 +95,8 @@ fun ItemUsagesContent(
                 )
             }
             itemsIndexed(weapons) { index, weapon ->
-                ItemUsageWeaponListItem(
-                    weapon = weapon,
+                UsageWeaponListItem(
+                    usage = weapon,
                     onWeaponClick = onWeaponClick,
                 )
                 if (index != weapons.lastIndex) {

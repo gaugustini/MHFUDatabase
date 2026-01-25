@@ -2,10 +2,10 @@ package com.gaugustini.mhfudatabase.ui.skill.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gaugustini.mhfudatabase.data.Language
-import com.gaugustini.mhfudatabase.data.UserPreferences
-import com.gaugustini.mhfudatabase.data.model.SkillTree
+import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.SkillRepository
+import com.gaugustini.mhfudatabase.domain.enums.Language
+import com.gaugustini.mhfudatabase.domain.model.SkillTree
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -46,7 +46,7 @@ class SkillTreeListViewModel @Inject constructor(
     private fun loadSkills(language: Language) {
         viewModelScope.launch {
             _uiState.update { state ->
-                state.copy(skills = skillRepository.getSkillTreeList(language))
+                state.copy(skills = skillRepository.getSkillTreeList(language.code))
             }
         }
     }

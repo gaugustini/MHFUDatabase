@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.gaugustini.mhfudatabase.data.model.SearchResults
+import com.gaugustini.mhfudatabase.domain.model.SearchResults
 import com.gaugustini.mhfudatabase.ui.search.components.SearchResultsList
 import com.gaugustini.mhfudatabase.ui.search.components.SearchTopBar
 import com.gaugustini.mhfudatabase.ui.theme.Theme

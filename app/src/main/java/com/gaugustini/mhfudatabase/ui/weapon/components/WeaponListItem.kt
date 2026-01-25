@@ -20,10 +20,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.enums.WeaponRecoil
-import com.gaugustini.mhfudatabase.data.enums.WeaponReloadSpeed
-import com.gaugustini.mhfudatabase.data.enums.WeaponShelling
-import com.gaugustini.mhfudatabase.data.model.Weapon
+import com.gaugustini.mhfudatabase.domain.enums.WeaponRecoil
+import com.gaugustini.mhfudatabase.domain.enums.WeaponReloadSpeed
+import com.gaugustini.mhfudatabase.domain.enums.WeaponShelling
+import com.gaugustini.mhfudatabase.domain.model.Weapon
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.ElementIcon
 import com.gaugustini.mhfudatabase.ui.components.icons.SharpnessIcon
@@ -63,7 +63,7 @@ fun WeaponListItem(
             },
             trailingContent = {
                 SlotsIcon(
-                    numberOfSlots = weapon.numSlots,
+                    numberOfSlots = weapon.numberOfSlots,
                     modifier = Modifier.size(
                         height = Dimension.Size.tiny,
                         width = Dimension.Size.tiny * 3,
@@ -97,11 +97,11 @@ fun WeaponListItem(
                     if (weapon.element1 != null && weapon.element1Value != null) {
                         Spacer(modifier = Modifier.width(Dimension.Spacing.medium))
                         ElementIcon(
-                            element = weapon.element1,
+                            element = weapon.element1!!,
                             modifier = Modifier.size(Dimension.Size.tiny)
                         )
                         Text(
-                            text = if (weapon.element1Value > 0) {
+                            text = if (weapon.element1Value!! > 0) {
                                 weapon.element1Value.toString()
                             } else {
                                 stringResource(R.string.weapon_element_add)
@@ -114,11 +114,11 @@ fun WeaponListItem(
                     if (weapon.element2 != null && weapon.element2Value != null) {
                         Spacer(modifier = Modifier.width(Dimension.Spacing.medium))
                         ElementIcon(
-                            element = weapon.element2,
+                            element = weapon.element2!!,
                             modifier = Modifier.size(Dimension.Size.tiny)
                         )
                         Text(
-                            text = if (weapon.element2Value > 0) {
+                            text = if (weapon.element2Value!! > 0) {
                                 weapon.element2Value.toString()
                             } else {
                                 stringResource(R.string.weapon_element_add)
@@ -137,12 +137,12 @@ fun WeaponListItem(
                     if (weapon.sharpness != null && weapon.sharpnessPlus != null) {
                         Column {
                             SharpnessIcon(
-                                sharpness = weapon.sharpness,
+                                sharpness = weapon.sharpness!!,
                                 height = 8.dp,
                                 width = 96.dp,
                             )
                             SharpnessIcon(
-                                sharpness = weapon.sharpnessPlus,
+                                sharpness = weapon.sharpnessPlus!!,
                                 height = 8.dp,
                                 width = 96.dp,
                             )
@@ -151,7 +151,7 @@ fun WeaponListItem(
 
                     if (weapon.songNotes != null) {
                         SongNotesIcon(
-                            songNotes = weapon.songNotes,
+                            songNotes = weapon.songNotes!!,
                             modifier = Modifier.size(
                                 height = Dimension.Size.tiny,
                                 width = Dimension.Size.tiny * 3,
@@ -166,8 +166,9 @@ fun WeaponListItem(
                                     WeaponShelling.NORMAL -> R.string.weapon_shelling_normal
                                     WeaponShelling.LONG -> R.string.weapon_shelling_long
                                     WeaponShelling.SPREAD -> R.string.weapon_shelling_spread
+                                    else -> R.string.user_set_none
                                 },
-                                weapon.shellingLevel
+                                weapon.shellingLevel!!
                             ),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurface,
@@ -185,6 +186,7 @@ fun WeaponListItem(
                                         WeaponReloadSpeed.NORMAL -> R.string.weapon_reload_speed_normal
                                         WeaponReloadSpeed.FAST -> R.string.weapon_reload_speed_fast
                                         WeaponReloadSpeed.VERY_FAST -> R.string.weapon_reload_speed_very_fast
+                                        else -> R.string.user_set_none
                                     }
                                 )
                             ),
@@ -203,6 +205,7 @@ fun WeaponListItem(
                                         WeaponRecoil.WEAK -> R.string.weapon_recoil_weak
                                         WeaponRecoil.LIGHT -> R.string.weapon_recoil_light
                                         WeaponRecoil.MODERATE -> R.string.weapon_recoil_moderate
+                                        else -> R.string.user_set_none
                                     }
                                 )
                             ),

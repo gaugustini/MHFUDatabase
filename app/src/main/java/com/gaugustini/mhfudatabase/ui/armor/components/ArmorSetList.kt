@@ -18,8 +18,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.gaugustini.mhfudatabase.data.model.Armor
-import com.gaugustini.mhfudatabase.data.model.ArmorSet
+import com.gaugustini.mhfudatabase.domain.model.Armor
+import com.gaugustini.mhfudatabase.domain.model.ArmorSet
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.ArmorSetIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
@@ -29,7 +29,6 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
 @Composable
 fun ArmorSetList(
     armorSets: List<ArmorSet>,
-    armors: Map<Int, List<Armor>>,
     expandedArmorSets: Set<Int>,
     modifier: Modifier = Modifier,
     onToggleExpand: (armorSetId: Int) -> Unit = {},
@@ -41,7 +40,7 @@ fun ArmorSetList(
         items(armorSets) { armorSet ->
             ArmorSetListItem(
                 armorSet = armorSet,
-                armors = armors[armorSet.id] ?: emptyList(),
+                armors = armorSet.armors ?: emptyList(),
                 expanded = armorSet.id in expandedArmorSets,
                 onToggleExpand = { onToggleExpand(armorSet.id) },
                 onArmorClick = onArmorClick,
@@ -120,7 +119,6 @@ fun ArmorSetListPreview() {
     Theme {
         ArmorSetList(
             armorSets = PreviewArmorData.armorSetList,
-            armors = mapOf(2 to PreviewArmorData.armorList),
             expandedArmorSets = setOf(2),
         )
     }

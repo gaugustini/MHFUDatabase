@@ -26,7 +26,7 @@ object MonsterMapper {
         monster: MonsterWithText,
         damageStats: List<MonsterHitzoneWithText>? = null,
         ailmentStats: List<MonsterStatusEntity>? = null,
-        itemEffectiveness: MonsterItemEntity? = null,
+        itemEffectiveness: List<MonsterItemEntity>? = null,
         rewards: List<MonsterRewardWithItem>? = null,
         quests: List<QuestWithText>? = null,
     ): Monster {
@@ -42,7 +42,7 @@ object MonsterMapper {
             sizeLargestMax = monster.monster.sizeLargestMax,
             damageStats = damageStats?.map { toMonsterDamageStats(it) },
             ailmentStats = ailmentStats?.map { toMonsterAilmentStats(it) },
-            itemEffectiveness = itemEffectiveness?.let { toMonsterItemEffectiveness(it) },
+            itemEffectiveness = itemEffectiveness?.map { toMonsterItemEffectiveness(it) },
             rewards = rewards?.map { toMonsterReward(it) }?.groupBy { it.rank },
             quests = quests?.map { QuestMapper.toModel(it) },
         )
