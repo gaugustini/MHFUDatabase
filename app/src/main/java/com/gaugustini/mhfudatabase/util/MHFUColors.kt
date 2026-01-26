@@ -1,8 +1,8 @@
 package com.gaugustini.mhfudatabase.util
 
 import androidx.compose.ui.graphics.Color
-import com.gaugustini.mhfudatabase.data.enums.ItemIconColor
-import com.gaugustini.mhfudatabase.data.enums.QuestGoalType
+import com.gaugustini.mhfudatabase.domain.enums.ItemIconColor
+import com.gaugustini.mhfudatabase.domain.enums.QuestGoal
 
 object MHFUColors {
 
@@ -45,12 +45,12 @@ object MHFUColors {
         }
     }
 
-    fun getQuestColor(goalType: QuestGoalType): Color {
+    fun getQuestColor(goalType: QuestGoal): Color {
         return when (goalType) {
-            QuestGoalType.GATHER -> Color(0xFF00FF00)
-            QuestGoalType.HUNT -> Color(0xFFFFFFFF)
-            QuestGoalType.SLAY -> Color(0xFFFF0000)
-            QuestGoalType.SPECIAL -> Color(0xFFFF00FF)
+            QuestGoal.GATHER -> Color(0xFF00FF00)
+            QuestGoal.HUNT -> Color(0xFFFFFFFF)
+            QuestGoal.SLAY -> Color(0xFFFF0000)
+            QuestGoal.SPECIAL -> Color(0xFFFF00FF)
         }
     }
 

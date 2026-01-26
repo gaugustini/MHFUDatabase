@@ -1,38 +1,38 @@
 package com.gaugustini.mhfudatabase.util
 
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.enums.ArmorType
-import com.gaugustini.mhfudatabase.data.enums.ElementType
-import com.gaugustini.mhfudatabase.data.enums.ItemIconType
-import com.gaugustini.mhfudatabase.data.enums.StatusType
-import com.gaugustini.mhfudatabase.data.enums.WeaponType
+import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
+import com.gaugustini.mhfudatabase.domain.enums.ItemIconType
+import com.gaugustini.mhfudatabase.domain.enums.MonsterAilment
+import com.gaugustini.mhfudatabase.domain.enums.WeaponElement
+import com.gaugustini.mhfudatabase.domain.enums.WeaponType
 
 object MHFUIcons {
 
-    val elements: Map<ElementType, Int> = mapOf(
-        ElementType.FIRE to R.drawable.ic_element_fire,
-        ElementType.WATER to R.drawable.ic_element_water,
-        ElementType.THUNDER to R.drawable.ic_element_thunder,
-        ElementType.ICE to R.drawable.ic_element_ice,
-        ElementType.DRAGON to R.drawable.ic_element_dragon,
-        ElementType.POISON to R.drawable.ic_status_poison,
-        ElementType.PARALYSIS to R.drawable.ic_status_paralysis,
-        ElementType.SLEEP to R.drawable.ic_status_sleep,
+    val elements: Map<WeaponElement, Int> = mapOf(
+        WeaponElement.FIRE to R.drawable.ic_element_fire,
+        WeaponElement.WATER to R.drawable.ic_element_water,
+        WeaponElement.THUNDER to R.drawable.ic_element_thunder,
+        WeaponElement.ICE to R.drawable.ic_element_ice,
+        WeaponElement.DRAGON to R.drawable.ic_element_dragon,
+        WeaponElement.POISON to R.drawable.ic_status_poison,
+        WeaponElement.PARALYSIS to R.drawable.ic_status_paralysis,
+        WeaponElement.SLEEP to R.drawable.ic_status_sleep,
     )
 
-    val status: Map<StatusType, Int> = mapOf(
-        StatusType.KNOCKOUT to R.drawable.ic_status_stun,
-        StatusType.PARALYSIS to R.drawable.ic_status_paralysis,
-        StatusType.POISON to R.drawable.ic_status_poison,
-        StatusType.SLEEP to R.drawable.ic_status_sleep,
+    val ailments: Map<MonsterAilment, Int> = mapOf(
+        MonsterAilment.KNOCKOUT to R.drawable.ic_status_stun,
+        MonsterAilment.PARALYSIS to R.drawable.ic_status_paralysis,
+        MonsterAilment.POISON to R.drawable.ic_status_poison,
+        MonsterAilment.SLEEP to R.drawable.ic_status_sleep,
     )
 
-    val armors: Map<ArmorType, Int> = mapOf(
-        ArmorType.HEAD to R.drawable.ic_armor_head,
-        ArmorType.CHEST to R.drawable.ic_armor_chest,
-        ArmorType.ARMS to R.drawable.ic_armor_arms,
-        ArmorType.WAIST to R.drawable.ic_armor_waist,
-        ArmorType.LEGS to R.drawable.ic_armor_legs
+    val equipments: Map<EquipmentType, Int> = mapOf(
+        EquipmentType.ARMOR_HEAD to R.drawable.ic_armor_head,
+        EquipmentType.ARMOR_CHEST to R.drawable.ic_armor_chest,
+        EquipmentType.ARMOR_ARMS to R.drawable.ic_armor_arms,
+        EquipmentType.ARMOR_WAIST to R.drawable.ic_armor_waist,
+        EquipmentType.ARMOR_LEGS to R.drawable.ic_armor_legs
     )
 
     val items: Map<ItemIconType, Int> = mapOf(

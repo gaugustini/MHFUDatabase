@@ -1,6 +1,6 @@
 package com.gaugustini.mhfudatabase.util.preview
 
-import com.gaugustini.mhfudatabase.data.model.Location
+import com.gaugustini.mhfudatabase.domain.model.Location
 
 object PreviewLocationData {
 
@@ -9,6 +9,7 @@ object PreviewLocationData {
     val location = Location(
         id = 1,
         name = "Location",
+        gatheringPoints = null,
     )
 
     val locationList = listOf(

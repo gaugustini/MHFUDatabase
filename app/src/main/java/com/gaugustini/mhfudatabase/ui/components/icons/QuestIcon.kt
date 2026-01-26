@@ -9,12 +9,12 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.enums.QuestGoalType
+import com.gaugustini.mhfudatabase.domain.enums.QuestGoal
 import com.gaugustini.mhfudatabase.util.MHFUColors
 
 @Composable
 fun QuestIcon(
-    goalType: QuestGoalType,
+    goalType: QuestGoal,
     modifier: Modifier = Modifier,
 ) {
     Image(
@@ -31,5 +31,5 @@ fun QuestIcon(
 @Preview
 @Composable
 fun QuestIconPreview() {
-    QuestIcon(QuestGoalType.HUNT)
+    QuestIcon(QuestGoal.HUNT)
 }

@@ -21,4 +21,8 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "MHFUDatabase"
-include(":app")
+include(
+    ":app",
+    ":core:domain",
+    ":core:data",
+)

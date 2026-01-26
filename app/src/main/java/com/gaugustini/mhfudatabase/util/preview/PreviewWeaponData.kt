@@ -1,16 +1,16 @@
 package com.gaugustini.mhfudatabase.util.preview
 
-import com.gaugustini.mhfudatabase.data.enums.ElementType
-import com.gaugustini.mhfudatabase.data.enums.WeaponBowCharge
-import com.gaugustini.mhfudatabase.data.enums.WeaponRecoil
-import com.gaugustini.mhfudatabase.data.enums.WeaponReloadSpeed
-import com.gaugustini.mhfudatabase.data.enums.WeaponShelling
-import com.gaugustini.mhfudatabase.data.enums.WeaponType
-import com.gaugustini.mhfudatabase.data.model.AmmoBow
-import com.gaugustini.mhfudatabase.data.model.AmmoBowgun
-import com.gaugustini.mhfudatabase.data.model.Weapon
-import com.gaugustini.mhfudatabase.data.model.WeaponGraph
-import com.gaugustini.mhfudatabase.data.model.WeaponRelation
+import com.gaugustini.mhfudatabase.data.database.entity.weapon.WeaponParentEntity
+import com.gaugustini.mhfudatabase.data.repository.WeaponGraph
+import com.gaugustini.mhfudatabase.domain.enums.WeaponAmmo
+import com.gaugustini.mhfudatabase.domain.enums.WeaponElement
+import com.gaugustini.mhfudatabase.domain.enums.WeaponRecoil
+import com.gaugustini.mhfudatabase.domain.enums.WeaponReloadSpeed
+import com.gaugustini.mhfudatabase.domain.enums.WeaponShelling
+import com.gaugustini.mhfudatabase.domain.enums.WeaponType
+import com.gaugustini.mhfudatabase.domain.model.AmmoBow
+import com.gaugustini.mhfudatabase.domain.model.AmmoBowgun
+import com.gaugustini.mhfudatabase.domain.model.Weapon
 
 object PreviewWeaponData {
 
@@ -24,14 +24,14 @@ object PreviewWeaponData {
         rarity = 1,
         affinity = 1,
         defense = 1,
-        numSlots = 1,
+        numberOfSlots = 1,
         attack = 500,
         maxAttack = 600,
         priceCreate = 1000,
         priceUpgrade = 1000,
-        element1 = ElementType.FIRE,
+        element1 = WeaponElement.FIRE,
         element1Value = 100,
-        element2 = ElementType.WATER,
+        element2 = WeaponElement.WATER,
         element2Value = 100,
         sharpness = "16-5-4",
         sharpnessPlus = "8-3-11-10-6-5-2",
@@ -40,6 +40,12 @@ object PreviewWeaponData {
         songNotes = "PYR",
         reloadSpeed = WeaponReloadSpeed.NORMAL,
         recoil = WeaponRecoil.MODERATE,
+        ammoBow = null,
+        ammoBowgun = null,
+        recipeCreate = null,
+        recipeUpgrade = null,
+        paths = null,
+        finals = null,
     )
 
     val weaponGS = Weapon(
@@ -50,14 +56,14 @@ object PreviewWeaponData {
         rarity = 1,
         affinity = 1,
         defense = 1,
-        numSlots = 1,
+        numberOfSlots = 1,
         attack = 500,
         maxAttack = null,
         priceCreate = 1000,
         priceUpgrade = 1000,
-        element1 = ElementType.FIRE,
+        element1 = WeaponElement.FIRE,
         element1Value = 100,
-        element2 = ElementType.WATER,
+        element2 = WeaponElement.WATER,
         element2Value = 100,
         sharpness = "16-5-4",
         sharpnessPlus = "8-3-11-10-6-5-2",
@@ -66,6 +72,12 @@ object PreviewWeaponData {
         songNotes = null,
         reloadSpeed = null,
         recoil = null,
+        ammoBow = null,
+        ammoBowgun = null,
+        recipeCreate = null,
+        recipeUpgrade = null,
+        paths = null,
+        finals = null,
     )
 
     val weaponHH = Weapon(
@@ -76,14 +88,14 @@ object PreviewWeaponData {
         rarity = 1,
         affinity = 1,
         defense = 1,
-        numSlots = 1,
+        numberOfSlots = 1,
         attack = 500,
         maxAttack = null,
         priceCreate = null,
         priceUpgrade = null,
-        element1 = ElementType.FIRE,
+        element1 = WeaponElement.FIRE,
         element1Value = 100,
-        element2 = ElementType.WATER,
+        element2 = WeaponElement.WATER,
         element2Value = 100,
         sharpness = "16-5-4",
         sharpnessPlus = "8-3-11-10-6-5-2",
@@ -92,6 +104,12 @@ object PreviewWeaponData {
         songNotes = "PYR",
         reloadSpeed = null,
         recoil = null,
+        ammoBow = null,
+        ammoBowgun = null,
+        recipeCreate = null,
+        recipeUpgrade = null,
+        paths = null,
+        finals = null,
     )
 
     val weaponGL = Weapon(
@@ -102,14 +120,14 @@ object PreviewWeaponData {
         rarity = 1,
         affinity = 1,
         defense = 1,
-        numSlots = 1,
+        numberOfSlots = 1,
         attack = 500,
         maxAttack = null,
         priceCreate = null,
         priceUpgrade = null,
-        element1 = ElementType.FIRE,
+        element1 = WeaponElement.FIRE,
         element1Value = 100,
-        element2 = ElementType.WATER,
+        element2 = WeaponElement.WATER,
         element2Value = 100,
         sharpness = "16-5-4",
         sharpnessPlus = "8-3-11-10-6-5-2",
@@ -118,6 +136,12 @@ object PreviewWeaponData {
         songNotes = null,
         reloadSpeed = null,
         recoil = null,
+        ammoBow = null,
+        ammoBowgun = null,
+        recipeCreate = null,
+        recipeUpgrade = null,
+        paths = null,
+        finals = null,
     )
 
     val weaponHBG = Weapon(
@@ -128,7 +152,7 @@ object PreviewWeaponData {
         rarity = 1,
         affinity = 1,
         defense = 1,
-        numSlots = 1,
+        numberOfSlots = 1,
         attack = 500,
         maxAttack = 600,
         priceCreate = null,
@@ -144,6 +168,12 @@ object PreviewWeaponData {
         songNotes = null,
         reloadSpeed = WeaponReloadSpeed.SLOW,
         recoil = WeaponRecoil.WEAK,
+        ammoBow = null,
+        ammoBowgun = null,
+        recipeCreate = null,
+        recipeUpgrade = null,
+        paths = null,
+        finals = null,
     )
 
     val weaponBow = Weapon(
@@ -154,7 +184,7 @@ object PreviewWeaponData {
         rarity = 1,
         affinity = 1,
         defense = 1,
-        numSlots = 1,
+        numberOfSlots = 1,
         attack = 500,
         maxAttack = null,
         priceCreate = null,
@@ -170,6 +200,12 @@ object PreviewWeaponData {
         songNotes = null,
         reloadSpeed = null,
         recoil = null,
+        ammoBow = null,
+        ammoBowgun = null,
+        recipeCreate = null,
+        recipeUpgrade = null,
+        paths = null,
+        finals = null,
     )
 
     val weaponList = listOf(
@@ -183,13 +219,13 @@ object PreviewWeaponData {
     // Weapon Ammo Bow
 
     val ammoBow = AmmoBow(
-        charge1Type = WeaponBowCharge.RAPID,
+        charge1Type = WeaponAmmo.NORMAL_RAPID,
         charge1Level = 1,
-        charge2Type = WeaponBowCharge.PIERCE,
+        charge2Type = WeaponAmmo.PIERCE,
         charge2Level = 2,
-        charge3Type = WeaponBowCharge.SCATTER,
+        charge3Type = WeaponAmmo.PELLET_SCATTER,
         charge3Level = 3,
-        charge4Type = WeaponBowCharge.RAPID,
+        charge4Type = WeaponAmmo.NORMAL_RAPID,
         charge4Level = 4,
         power = false,
         close = true,
@@ -237,11 +273,11 @@ object PreviewWeaponData {
     val graph = WeaponGraph(
         weapons = weaponsGraph,
         relations = listOf(
-            WeaponRelation(2, 1),
-            WeaponRelation(3, 2),
-            WeaponRelation(4, 3),
-            WeaponRelation(5, 3),
-            WeaponRelation(6, 2),
+            WeaponParentEntity(2, 1),
+            WeaponParentEntity(3, 2),
+            WeaponParentEntity(4, 3),
+            WeaponParentEntity(5, 3),
+            WeaponParentEntity(6, 2),
         )
     ).buildGraphByType(WeaponType.GREAT_SWORD)
 

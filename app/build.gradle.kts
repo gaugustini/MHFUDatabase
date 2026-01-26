@@ -44,16 +44,14 @@ android {
     }
 }
 
-ksp {
-    arg("room.schemaLocation", "$projectDir/schemas")
-}
-
 dependencies {
+
+    implementation(project(":core:data"))
+    implementation(project(":core:domain"))
 
     // Android
     implementation("androidx.core:core-ktx:1.17.0")
     implementation("androidx.core:core-splashscreen:1.0.1")
-    implementation("androidx.datastore:datastore-preferences:1.1.7")
     implementation("androidx.appcompat:appcompat:1.7.1")
 
     // Compose
@@ -67,11 +65,6 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.11.0")
     implementation("androidx.navigation:navigation-compose:2.9.5")
     implementation("androidx.hilt:hilt-navigation-compose:1.3.0")
-
-    // Room
-    implementation("androidx.room:room-runtime:2.8.2")
-    implementation("androidx.room:room-ktx:2.8.2")
-    ksp("androidx.room:room-compiler:2.8.2")
 
     // Hilt
     implementation("com.google.dagger:hilt-android:2.57.2")

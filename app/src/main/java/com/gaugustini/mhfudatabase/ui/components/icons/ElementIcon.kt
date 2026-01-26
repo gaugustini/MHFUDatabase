@@ -6,12 +6,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.enums.ElementType
+import com.gaugustini.mhfudatabase.domain.enums.WeaponElement
 import com.gaugustini.mhfudatabase.util.MHFUIcons
 
 @Composable
 fun ElementIcon(
-    element: ElementType,
+    element: WeaponElement,
     modifier: Modifier = Modifier,
 ) {
     Image(
@@ -26,5 +26,5 @@ fun ElementIcon(
 @Preview
 @Composable
 fun ElementIconPreview() {
-    ElementIcon(ElementType.FIRE)
+    ElementIcon(WeaponElement.FIRE)
 }

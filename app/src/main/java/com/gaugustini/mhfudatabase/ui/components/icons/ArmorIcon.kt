@@ -11,13 +11,13 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.data.enums.ArmorType
+import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
 import com.gaugustini.mhfudatabase.util.MHFUColors
 import com.gaugustini.mhfudatabase.util.MHFUIcons
 
 @Composable
 fun ArmorIcon(
-    type: ArmorType,
+    type: EquipmentType,
     rarity: Int,
     modifier: Modifier = Modifier,
 ) {
@@ -30,7 +30,7 @@ fun ArmorIcon(
         )
         Image(
             painter = painterResource(
-                id = MHFUIcons.armors[type] ?: R.drawable.ic_ui_unknown
+                id = MHFUIcons.equipments[type] ?: R.drawable.ic_ui_unknown
             ),
             contentDescription = null,
             colorFilter = ColorFilter.tint(
@@ -46,7 +46,7 @@ fun ArmorIcon(
 @Composable
 fun ArmorIconPreview() {
     ArmorIcon(
-        type = ArmorType.HEAD,
+        type = EquipmentType.ARMOR_HEAD,
         rarity = 10
     )
 }
