@@ -22,7 +22,7 @@ import com.gaugustini.mhfudatabase.domain.model.Weapon
 import com.gaugustini.mhfudatabase.ui.components.DetailHeader
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.components.icons.ArmorSetIcon
-import com.gaugustini.mhfudatabase.ui.features.armor.components.ArmorSummary
+import com.gaugustini.mhfudatabase.ui.features.armor.components.EquipmentStats
 import com.gaugustini.mhfudatabase.ui.features.item.components.ItemQuantityList
 import com.gaugustini.mhfudatabase.ui.features.skill.components.SkillTreePointsList
 import com.gaugustini.mhfudatabase.ui.features.userset.components.ActiveSkillList
@@ -58,7 +58,7 @@ fun UserSetDetailSummaryContent(
             title = set?.name ?: stringResource(R.string.user_set_new),
         )
 
-        ArmorSummary(
+        EquipmentStats(
             defense = armors.sumOf { it.defense } + (weapon?.defense ?: 0),
             numberOfSlots = null,
             fire = armors.sumOf { it.fire },

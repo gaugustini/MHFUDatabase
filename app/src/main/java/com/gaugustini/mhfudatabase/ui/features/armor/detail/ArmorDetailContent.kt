@@ -1,6 +1,5 @@
 package com.gaugustini.mhfudatabase.ui.features.armor.detail
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -8,17 +7,17 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.model.Armor
 import com.gaugustini.mhfudatabase.ui.components.DetailHeader
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.components.icons.ArmorIcon
-import com.gaugustini.mhfudatabase.ui.features.armor.components.ArmorSummary
+import com.gaugustini.mhfudatabase.ui.features.armor.components.EquipmentStats
 import com.gaugustini.mhfudatabase.ui.features.item.components.ItemQuantityList
 import com.gaugustini.mhfudatabase.ui.features.skill.components.SkillTreePointsList
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
 
 @Composable
@@ -45,9 +44,9 @@ fun ArmorDetailContent(
             description = armor.description,
         )
 
-        ArmorSummary(
-            defense = armor.defense,
+        EquipmentStats(
             numberOfSlots = armor.numberOfSlots,
+            defense = armor.defense,
             fire = armor.fire,
             water = armor.water,
             thunder = armor.thunder,
@@ -81,8 +80,7 @@ fun ArmorDetailContent(
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
 fun ArmorDetailContentPreview() {
     Theme {
