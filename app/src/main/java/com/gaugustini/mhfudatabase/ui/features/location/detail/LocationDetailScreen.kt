@@ -70,8 +70,8 @@ fun LocationDetailScreen(
         if (uiState.location != null) {
             when (LocationDetailTab.entries[tabIndex]) {
                 LocationDetailTab.LOW_RANK -> {
-                    uiState.location.gatheringPoints?.get(Rank.LOW)?.let { points ->
-                        if (points.isEmpty()) {
+                    uiState.location.gatheringPoints?.get(Rank.LOW).let { points ->
+                        if (points?.isEmpty() ?: true) {
                             EmptyContent()
                         } else {
                             LocationDetailRankContent(
@@ -83,8 +83,8 @@ fun LocationDetailScreen(
                 }
 
                 LocationDetailTab.HIGH_RANK -> {
-                    uiState.location.gatheringPoints?.get(Rank.HIGH)?.let { points ->
-                        if (points.isEmpty()) {
+                    uiState.location.gatheringPoints?.get(Rank.HIGH).let { points ->
+                        if (points?.isEmpty() ?: true) {
                             EmptyContent()
                         } else {
                             LocationDetailRankContent(
@@ -96,8 +96,8 @@ fun LocationDetailScreen(
                 }
 
                 LocationDetailTab.G_RANK -> {
-                    uiState.location.gatheringPoints?.get(Rank.G)?.let { points ->
-                        if (points.isEmpty()) {
+                    uiState.location.gatheringPoints?.get(Rank.G).let { points ->
+                        if (points?.isEmpty() ?: true) {
                             EmptyContent()
                         } else {
                             LocationDetailRankContent(
@@ -109,8 +109,8 @@ fun LocationDetailScreen(
                 }
 
                 LocationDetailTab.TREASURE -> {
-                    uiState.location.gatheringPoints?.get(Rank.TREASURE)?.let { points ->
-                        if (points.isEmpty()) {
+                    uiState.location.gatheringPoints?.get(Rank.TREASURE).let { points ->
+                        if (points?.isEmpty() ?: true) {
                             EmptyContent()
                         } else {
                             LocationDetailRankContent(

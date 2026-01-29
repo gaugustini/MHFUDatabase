@@ -6,9 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.MonsterRepository
 import com.gaugustini.mhfudatabase.domain.enums.Language
-import com.gaugustini.mhfudatabase.domain.enums.Rank
 import com.gaugustini.mhfudatabase.domain.model.Monster
-import com.gaugustini.mhfudatabase.domain.model.MonsterReward
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,9 +21,6 @@ import javax.inject.Inject
 data class MonsterDetailState(
     val initialTab: MonsterDetailTab = MonsterDetailTab.SUMMARY,
     val monster: Monster? = null,
-    val rewardsLowRank: List<MonsterReward> = emptyList(),
-    val rewardsHighRank: List<MonsterReward> = emptyList(),
-    val rewardsGRank: List<MonsterReward> = emptyList(),
 )
 
 @HiltViewModel
@@ -55,14 +50,9 @@ class MonsterDetailViewModel @Inject constructor(
 
     private fun loadMonsterDetails(language: Language) {
         viewModelScope.launch {
-            val monster = monsterRepository.getMonster(monsterId, language.code)
-
             _uiState.update { state ->
                 state.copy(
-                    monster = monster,
-                    rewardsLowRank = monster.rewards?.get(Rank.LOW) ?: emptyList(),
-                    rewardsHighRank = monster.rewards?.get(Rank.HIGH) ?: emptyList(),
-                    rewardsGRank = monster.rewards?.get(Rank.G) ?: emptyList(),
+                    monster = monsterRepository.getMonster(monsterId, language.code),
                 )
             }
         }

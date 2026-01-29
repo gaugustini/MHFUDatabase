@@ -47,7 +47,9 @@ class MonsterListViewModel @Inject constructor(
     private fun loadMonsters(language: Language) {
         viewModelScope.launch {
             _uiState.update { state ->
-                state.copy(monsters = monsterRepository.getMonsterList(language.code))
+                state.copy(
+                    monsters = monsterRepository.getMonsterList(language.code),
+                )
             }
         }
     }

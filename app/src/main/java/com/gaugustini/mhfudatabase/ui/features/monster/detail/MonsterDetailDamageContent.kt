@@ -1,13 +1,11 @@
 package com.gaugustini.mhfudatabase.ui.features.monster.detail
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.domain.model.MonsterAilmentStats
 import com.gaugustini.mhfudatabase.domain.model.MonsterDamageStats
 import com.gaugustini.mhfudatabase.ui.features.monster.components.MonsterAilments
@@ -15,6 +13,7 @@ import com.gaugustini.mhfudatabase.ui.features.monster.components.MonsterDamageE
 import com.gaugustini.mhfudatabase.ui.features.monster.components.MonsterDamagePhysical
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
 
 @Composable
@@ -47,8 +46,7 @@ fun MonsterDetailDamageContent(
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
 fun MonsterDetailDamageContentPreview() {
     Theme {

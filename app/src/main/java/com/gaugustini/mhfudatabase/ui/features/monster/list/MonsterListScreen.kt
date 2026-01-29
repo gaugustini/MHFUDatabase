@@ -1,37 +1,32 @@
 package com.gaugustini.mhfudatabase.ui.features.monster.list
 
-import android.content.res.Configuration
 import androidx.annotation.StringRes
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.MonsterType
+import com.gaugustini.mhfudatabase.domain.model.Monster
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TabbedLayout
 import com.gaugustini.mhfudatabase.ui.components.TopBar
-import com.gaugustini.mhfudatabase.ui.features.monster.components.MonsterList
+import com.gaugustini.mhfudatabase.ui.features.monster.components.MonsterListItem
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
 
-enum class MonsterListTab(@param:StringRes val title: Int) {
+enum class MonsterListTab(@get:StringRes val title: Int) {
     LARGE(R.string.tab_monster_large),
     SMALL(R.string.tab_monster_small);
-
-    companion object {
-        val all = MonsterListTab.entries
-
-        fun fromIndex(index: Int): MonsterListTab = all.getOrElse(index) { LARGE }
-
-        fun toIndex(tab: MonsterListTab): Int = all.indexOf(tab)
-
-    }
 }
 
 @Composable
@@ -59,12 +54,12 @@ fun MonsterListScreen(
     onMonsterClick: (monsterId: Int) -> Unit = {},
 ) {
     val pagerState = rememberPagerState(
-        initialPage = MonsterListTab.toIndex(uiState.initialTab),
-        pageCount = { MonsterListTab.all.size },
+        initialPage = uiState.initialTab.ordinal,
+        pageCount = { MonsterListTab.entries.size },
     )
     TabbedLayout(
         pagerState = pagerState,
-        tabTitles = MonsterListTab.all.map { stringResource(it.title) },
+        tabTitles = MonsterListTab.entries.map { stringResource(it.title) },
         topBar = {
             TopBar(
                 title = stringResource(R.string.screen_monster_list),
@@ -74,22 +69,44 @@ fun MonsterListScreen(
             )
         },
     ) { tabIndex ->
-        when (MonsterListTab.fromIndex(tabIndex)) {
-            MonsterListTab.LARGE -> MonsterList(
-                monsters = uiState.monsters.filter { it.type == MonsterType.LARGE },
-                onMonsterClick = onMonsterClick,
-            )
+        when (MonsterListTab.entries[tabIndex]) {
+            MonsterListTab.LARGE -> {
+                MonsterList(
+                    monsters = uiState.monsters.filter { it.type == MonsterType.LARGE },
+                    onMonsterClick = onMonsterClick,
+                )
+            }
 
-            MonsterListTab.SMALL -> MonsterList(
-                monsters = uiState.monsters.filter { it.type == MonsterType.SMALL },
-                onMonsterClick = onMonsterClick,
-            )
+            MonsterListTab.SMALL -> {
+                MonsterList(
+                    monsters = uiState.monsters.filter { it.type == MonsterType.SMALL },
+                    onMonsterClick = onMonsterClick,
+                )
+            }
         }
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun MonsterList(
+    monsters: List<Monster>,
+    modifier: Modifier = Modifier,
+    onMonsterClick: (monsterId: Int) -> Unit = {},
+) {
+    LazyColumn(
+        modifier = modifier
+    ) {
+        items(monsters) { monster ->
+            MonsterListItem(
+                monster = monster,
+                onMonsterClick = onMonsterClick,
+            )
+            HorizontalDivider()
+        }
+    }
+}
+
+@DevicePreviews
 @Composable
 fun MonsterListScreenPreview(
     @PreviewParameter(MonsterListScreenPreviewParamProvider::class) uiState: MonsterListState
