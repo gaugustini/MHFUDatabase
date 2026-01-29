@@ -37,7 +37,7 @@ fun ItemSourcesContent(
             }
             itemsIndexed(sources.combinations) { index, combination ->
                 ItemCombinationListItem(
-                    itemCombination = combination,
+                    combination = combination,
                     onItemClick = onItemClick,
                 )
                 if (index != sources.combinations.lastIndex) {
