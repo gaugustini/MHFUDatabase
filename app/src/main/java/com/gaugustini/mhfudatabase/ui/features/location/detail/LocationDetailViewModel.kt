@@ -6,8 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.LocationRepository
 import com.gaugustini.mhfudatabase.domain.enums.Language
-import com.gaugustini.mhfudatabase.domain.enums.Rank
-import com.gaugustini.mhfudatabase.domain.model.GatheringPoint
 import com.gaugustini.mhfudatabase.domain.model.Location
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,10 +21,6 @@ import javax.inject.Inject
 data class LocationDetailState(
     val initialTab: LocationDetailTab = LocationDetailTab.LOW_RANK,
     val location: Location? = null,
-    val itemsLowRank: List<GatheringPoint> = emptyList(),
-    val itemsHighRank: List<GatheringPoint> = emptyList(),
-    val itemsGRank: List<GatheringPoint> = emptyList(),
-    val itemsTreasure: List<GatheringPoint> = emptyList(),
 )
 
 @HiltViewModel
@@ -56,14 +50,9 @@ class LocationDetailViewModel @Inject constructor(
 
     private fun loadLocationDetails(language: Language) {
         viewModelScope.launch {
-            val location = locationRepository.getLocation(locationId, language.code)
             _uiState.update { state ->
                 state.copy(
-                    location = location,
-                    itemsLowRank = location.gatheringPoints?.get(Rank.LOW) ?: emptyList(),
-                    itemsHighRank = location.gatheringPoints?.get(Rank.HIGH) ?: emptyList(),
-                    itemsGRank = location.gatheringPoints?.get(Rank.G) ?: emptyList(),
-                    itemsTreasure = location.gatheringPoints?.get(Rank.TREASURE) ?: emptyList(),
+                    location = locationRepository.getLocation(locationId, language.code),
                 )
             }
         }

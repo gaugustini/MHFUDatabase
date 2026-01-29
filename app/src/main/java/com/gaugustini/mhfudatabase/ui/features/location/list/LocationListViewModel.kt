@@ -46,7 +46,9 @@ class LocationListViewModel @Inject constructor(
     private fun loadLocations(language: Language) {
         viewModelScope.launch {
             _uiState.update { state ->
-                state.copy(locations = locationRepository.getLocationList(language.code))
+                state.copy(
+                    locations = locationRepository.getLocationList(language.code),
+                )
             }
         }
     }

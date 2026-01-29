@@ -1,39 +1,29 @@
 package com.gaugustini.mhfudatabase.ui.features.location.detail
 
-import android.content.res.Configuration
 import androidx.annotation.StringRes
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
+import com.gaugustini.mhfudatabase.domain.enums.Rank
 import com.gaugustini.mhfudatabase.ui.components.EmptyContent
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TabbedLayout
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.theme.Theme
-import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewLocationData
 
-enum class LocationDetailTab(@param:StringRes val title: Int) {
+enum class LocationDetailTab(@get:StringRes val title: Int) {
     LOW_RANK(R.string.tab_location_low_rank),
     HIGH_RANK(R.string.tab_location_high_rank),
     G_RANK(R.string.tab_location_g_rank),
     TREASURE(R.string.tab_location_treasure);
-
-    companion object {
-        val all = LocationDetailTab.entries
-
-        fun fromIndex(index: Int): LocationDetailTab = all.getOrElse(index) { LOW_RANK }
-
-        fun toIndex(tab: LocationDetailTab): Int = all.indexOf(tab)
-
-    }
 }
 
 @Composable
@@ -61,13 +51,13 @@ fun LocationDetailScreen(
     onItemClick: (itemId: Int) -> Unit = {},
 ) {
     val pagerState = rememberPagerState(
-        initialPage = LocationDetailTab.toIndex(uiState.initialTab),
-        pageCount = { LocationDetailTab.all.size },
+        initialPage = uiState.initialTab.ordinal,
+        pageCount = { LocationDetailTab.entries.size },
     )
 
     TabbedLayout(
         pagerState = pagerState,
-        tabTitles = LocationDetailTab.all.map { stringResource(it.title) },
+        tabTitles = LocationDetailTab.entries.map { stringResource(it.title) },
         topBar = {
             TopBar(
                 title = uiState.location?.name ?: stringResource(R.string.screen_location_detail),
@@ -77,52 +67,65 @@ fun LocationDetailScreen(
             )
         },
     ) { tabIndex ->
-        when (LocationDetailTab.fromIndex(tabIndex)) {
-            LocationDetailTab.LOW_RANK ->
-                if (uiState.itemsLowRank.isNotEmpty()) {
-                    LocationDetailRankContent(
-                        gatheringPoints = uiState.itemsLowRank,
-                        onItemClick = onItemClick,
-                    )
-                } else {
-                    EmptyContent()
+        if (uiState.location != null) {
+            when (LocationDetailTab.entries[tabIndex]) {
+                LocationDetailTab.LOW_RANK -> {
+                    uiState.location.gatheringPoints?.get(Rank.LOW)?.let { points ->
+                        if (points.isEmpty()) {
+                            EmptyContent()
+                        } else {
+                            LocationDetailRankContent(
+                                gatheringPoints = points,
+                                onItemClick = onItemClick,
+                            )
+                        }
+                    }
                 }
 
-            LocationDetailTab.HIGH_RANK ->
-                if (uiState.itemsHighRank.isNotEmpty()) {
-                    LocationDetailRankContent(
-                        gatheringPoints = uiState.itemsHighRank,
-                        onItemClick = onItemClick,
-                    )
-                } else {
-                    EmptyContent()
+                LocationDetailTab.HIGH_RANK -> {
+                    uiState.location.gatheringPoints?.get(Rank.HIGH)?.let { points ->
+                        if (points.isEmpty()) {
+                            EmptyContent()
+                        } else {
+                            LocationDetailRankContent(
+                                gatheringPoints = points,
+                                onItemClick = onItemClick,
+                            )
+                        }
+                    }
                 }
 
-            LocationDetailTab.G_RANK ->
-                if (uiState.itemsGRank.isNotEmpty()) {
-                    LocationDetailRankContent(
-                        gatheringPoints = uiState.itemsGRank,
-                        onItemClick = onItemClick,
-                    )
-                } else {
-                    EmptyContent()
+                LocationDetailTab.G_RANK -> {
+                    uiState.location.gatheringPoints?.get(Rank.G)?.let { points ->
+                        if (points.isEmpty()) {
+                            EmptyContent()
+                        } else {
+                            LocationDetailRankContent(
+                                gatheringPoints = points,
+                                onItemClick = onItemClick,
+                            )
+                        }
+                    }
                 }
 
-            LocationDetailTab.TREASURE ->
-                if (uiState.itemsTreasure.isNotEmpty()) {
-                    LocationDetailRankContent(
-                        gatheringPoints = uiState.itemsTreasure,
-                        onItemClick = onItemClick,
-                    )
-                } else {
-                    EmptyContent()
+                LocationDetailTab.TREASURE -> {
+                    uiState.location.gatheringPoints?.get(Rank.TREASURE)?.let { points ->
+                        if (points.isEmpty()) {
+                            EmptyContent()
+                        } else {
+                            LocationDetailRankContent(
+                                gatheringPoints = points,
+                                onItemClick = onItemClick,
+                            )
+                        }
+                    }
                 }
+            }
         }
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
 fun LocationDetailScreenPreview(
     @PreviewParameter(LocationDetailScreenPreviewParamProvider::class) uiState: LocationDetailState
@@ -132,14 +135,12 @@ fun LocationDetailScreenPreview(
     }
 }
 
-private class LocationDetailScreenPreviewParamProvider :
-    PreviewParameterProvider<LocationDetailState> {
+private class LocationDetailScreenPreviewParamProvider : PreviewParameterProvider<LocationDetailState> {
 
     override val values: Sequence<LocationDetailState> = sequenceOf(
         LocationDetailState(
             initialTab = LocationDetailTab.LOW_RANK,
             location = PreviewLocationData.location,
-            itemsLowRank = PreviewItemData.itemLocationList,
         ),
     )
 

@@ -146,7 +146,7 @@ fun ItemCombinationListItem(
 
 @DevicePreviews
 @Composable
-fun ItemCombinationListPreview() {
+fun ItemCombinationListItemPreview() {
     Theme {
         ItemCombinationListItem(
             combination = PreviewItemData.itemCombination,

@@ -5,7 +5,6 @@ import com.gaugustini.mhfudatabase.domain.enums.ItemCombinationType
 import com.gaugustini.mhfudatabase.domain.enums.ItemIconColor
 import com.gaugustini.mhfudatabase.domain.enums.ItemIconType
 import com.gaugustini.mhfudatabase.domain.enums.Rank
-import com.gaugustini.mhfudatabase.domain.model.GatheringPoint
 import com.gaugustini.mhfudatabase.domain.model.GatheringSource
 import com.gaugustini.mhfudatabase.domain.model.Item
 import com.gaugustini.mhfudatabase.domain.model.ItemCombination
@@ -65,22 +64,6 @@ object PreviewItemData {
     )
 
     val itemQuantityList = listOf(itemQuantity, itemQuantity, itemQuantity)
-
-    // Item Location
-
-    val itemLocation = GatheringPoint(
-        rank = Rank.LOW,
-        area = 1,
-        type = GatherType.COLLECT,
-        item = item
-    )
-
-    val itemLocationList = listOf(
-        itemLocation.copy(type = GatherType.COLLECT),
-        itemLocation.copy(type = GatherType.BUG),
-        itemLocation.copy(type = GatherType.FISH),
-        itemLocation.copy(type = GatherType.MINE),
-    )
 
     /// Item Sources
 
