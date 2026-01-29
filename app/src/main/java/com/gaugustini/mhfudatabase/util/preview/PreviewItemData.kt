@@ -10,6 +10,8 @@ import com.gaugustini.mhfudatabase.domain.model.GatheringSource
 import com.gaugustini.mhfudatabase.domain.model.Item
 import com.gaugustini.mhfudatabase.domain.model.ItemCombination
 import com.gaugustini.mhfudatabase.domain.model.ItemQuantity
+import com.gaugustini.mhfudatabase.domain.model.ItemSources
+import com.gaugustini.mhfudatabase.domain.model.ItemUsages
 import com.gaugustini.mhfudatabase.domain.model.MonsterSource
 import com.gaugustini.mhfudatabase.domain.model.Usage
 
@@ -112,6 +114,12 @@ object PreviewItemData {
         monsterSource.copy(rank = Rank.TRAINING),
     )
 
+    val itemSources = ItemSources(
+        combinations = itemCombinationList,
+        locations = gatheringSourceList,
+        monsterRewards = monsterSourceList,
+    )
+
     // Item Usages
 
     val itemUsageArmor = Usage(
@@ -145,6 +153,13 @@ object PreviewItemData {
         itemUsageWeapon.copy(quantity = 1),
         itemUsageWeapon.copy(quantity = 2),
         itemUsageWeapon.copy(quantity = 3),
+    )
+
+    val itemUsages = ItemUsages(
+        combinations = itemCombinationList,
+        armors = itemUsageArmorList,
+        decorations = itemUsageDecorationList,
+        weapons = itemUsageWeaponList,
     )
 
 }

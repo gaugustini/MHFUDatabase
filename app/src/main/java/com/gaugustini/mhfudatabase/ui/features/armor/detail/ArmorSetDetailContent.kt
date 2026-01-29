@@ -14,7 +14,7 @@ import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.components.icons.ArmorSetIcon
 import com.gaugustini.mhfudatabase.ui.features.armor.components.ArmorListItem
 import com.gaugustini.mhfudatabase.ui.features.armor.components.EquipmentStats
-import com.gaugustini.mhfudatabase.ui.features.item.components.ItemQuantityList
+import com.gaugustini.mhfudatabase.ui.features.item.components.ItemQuantityListItem
 import com.gaugustini.mhfudatabase.ui.features.skill.components.SkillTreePointsList
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
@@ -88,10 +88,14 @@ fun ArmorSetDetailContent(
                 SectionHeader(
                     title = stringResource(R.string.list_recipe),
                 )
-                ItemQuantityList(
-                    items = recipe,
-                    onItemClick = onItemClick,
-                )
+                Column {
+                    recipe.ForEachWithDivider { item ->
+                        ItemQuantityListItem(
+                            item = item,
+                            onItemClick = onItemClick,
+                        )
+                    }
+                }
             }
         }
     }

@@ -1,60 +1,44 @@
 package com.gaugustini.mhfudatabase.ui.features.item.components
 
-import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.gaugustini.mhfudatabase.domain.model.Item
+import com.gaugustini.mhfudatabase.domain.model.ItemQuantity
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.ItemIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
 
 @Composable
-fun ItemList(
-    items: List<Item>,
-    modifier: Modifier = Modifier,
-    onItemClick: (itemId: Int) -> Unit = {},
-) {
-    LazyColumn(
-        modifier = modifier
-    ) {
-        items(items) { item ->
-            ItemListItem(
-                item = item,
-                onItemClick = onItemClick,
-            )
-            HorizontalDivider()
-        }
-    }
-}
-
-@Composable
-fun ItemListItem(
-    item: Item,
+fun ItemQuantityListItem(
+    item: ItemQuantity,
     modifier: Modifier = Modifier,
     onItemClick: (itemId: Int) -> Unit = {},
 ) {
     ListItemLayout(
         leadingContent = {
             ItemIcon(
-                type = item.iconType,
-                color = item.iconColor,
+                type = item.item.iconType,
+                color = item.item.iconColor,
                 modifier = Modifier.size(Dimension.Size.medium)
             )
         },
         headlineContent = {
             Text(
-                text = item.name,
+                text = item.item.name,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+        },
+        trailingContent = {
+            Text(
+                text = item.quantity.toString(),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
@@ -63,15 +47,16 @@ fun ItemListItem(
             horizontal = Dimension.Spacing.large,
             vertical = Dimension.Spacing.medium
         ),
-        modifier = modifier.clickable { onItemClick(item.id) }
+        modifier = modifier.clickable { onItemClick(item.item.id) }
     )
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
-fun ItemListPreview() {
+fun ItemQuantityListItemPreview() {
     Theme {
-        ItemList(PreviewItemData.itemList)
+        ItemQuantityListItem(
+            item = PreviewItemData.itemQuantity,
+        )
     }
 }

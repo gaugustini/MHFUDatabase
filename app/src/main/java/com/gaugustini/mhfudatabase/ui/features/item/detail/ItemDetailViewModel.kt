@@ -7,8 +7,6 @@ import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.ItemRepository
 import com.gaugustini.mhfudatabase.domain.enums.Language
 import com.gaugustini.mhfudatabase.domain.model.Item
-import com.gaugustini.mhfudatabase.domain.model.ItemSources
-import com.gaugustini.mhfudatabase.domain.model.ItemUsages
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,8 +21,6 @@ import javax.inject.Inject
 data class ItemDetailState(
     val initialTab: ItemDetailTab = ItemDetailTab.ITEM_SUMMARY,
     val item: Item? = null,
-    val sources: ItemSources = ItemSources(emptyList(), emptyList(), emptyList()),
-    val usages: ItemUsages = ItemUsages(emptyList(), emptyList(), emptyList(), emptyList()),
 )
 
 @HiltViewModel
@@ -54,18 +50,9 @@ class ItemDetailViewModel @Inject constructor(
 
     private fun loadItemDetails(language: Language) {
         viewModelScope.launch {
-            val item = itemRepository.getItem(itemId, language.code)
-
             _uiState.update { state ->
                 state.copy(
-                    item = item,
-                    sources = item.sources ?: ItemSources(emptyList(), emptyList(), emptyList()),
-                    usages = item.usages ?: ItemUsages(
-                        emptyList(),
-                        emptyList(),
-                        emptyList(),
-                        emptyList()
-                    ),
+                    item = itemRepository.getItem(itemId, language.code),
                 )
             }
         }

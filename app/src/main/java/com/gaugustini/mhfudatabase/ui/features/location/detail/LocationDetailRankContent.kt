@@ -14,7 +14,7 @@ import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.GatherType
 import com.gaugustini.mhfudatabase.domain.model.GatheringPoint
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
-import com.gaugustini.mhfudatabase.ui.features.item.components.GatheringPointList
+import com.gaugustini.mhfudatabase.ui.features.location.components.GatheringPointList
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.preview.PreviewItemData

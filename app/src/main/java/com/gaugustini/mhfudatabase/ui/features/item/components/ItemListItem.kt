@@ -7,38 +7,31 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.gaugustini.mhfudatabase.domain.model.Decoration
-import com.gaugustini.mhfudatabase.domain.model.Usage
+import com.gaugustini.mhfudatabase.domain.model.Item
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
-import com.gaugustini.mhfudatabase.ui.components.icons.DecorationIcon
+import com.gaugustini.mhfudatabase.ui.components.icons.ItemIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
 
 @Composable
-fun UsageDecorationListItem(
-    usage: Usage<Decoration>,
+fun ItemListItem(
+    item: Item,
     modifier: Modifier = Modifier,
-    onDecorationClick: (decorationId: Int) -> Unit = {},
+    onItemClick: (itemId: Int) -> Unit = {},
 ) {
     ListItemLayout(
         leadingContent = {
-            DecorationIcon(
-                color = usage.craftable.color,
+            ItemIcon(
+                type = item.iconType,
+                color = item.iconColor,
                 modifier = Modifier.size(Dimension.Size.medium)
             )
         },
         headlineContent = {
             Text(
-                text = usage.craftable.name,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
-        },
-        trailingContent = {
-            Text(
-                text = usage.quantity.toString(),
+                text = item.name,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
@@ -47,16 +40,16 @@ fun UsageDecorationListItem(
             horizontal = Dimension.Spacing.large,
             vertical = Dimension.Spacing.medium
         ),
-        modifier = modifier.clickable { onDecorationClick(usage.craftable.id) }
+        modifier = modifier.clickable { onItemClick(item.id) }
     )
 }
 
 @DevicePreviews
 @Composable
-fun UsageDecorationListItemPreview() {
+fun ItemListItemPreview() {
     Theme {
-        UsageDecorationListItem(
-            usage = PreviewItemData.itemUsageDecoration,
+        ItemListItem(
+            item = PreviewItemData.item,
         )
     }
 }

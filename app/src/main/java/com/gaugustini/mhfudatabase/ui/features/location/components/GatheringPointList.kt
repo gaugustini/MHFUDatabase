@@ -1,4 +1,4 @@
-package com.gaugustini.mhfudatabase.ui.features.item.components
+package com.gaugustini.mhfudatabase.ui.features.location.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.clickable

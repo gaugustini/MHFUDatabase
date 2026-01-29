@@ -1,11 +1,9 @@
 package com.gaugustini.mhfudatabase.ui.features.decoration.detail
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -15,11 +13,12 @@ import com.gaugustini.mhfudatabase.ui.components.DetailHeader
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.components.icons.DecorationIcon
 import com.gaugustini.mhfudatabase.ui.features.decoration.components.DecorationSummary
-import com.gaugustini.mhfudatabase.ui.features.item.components.ItemQuantityList
+import com.gaugustini.mhfudatabase.ui.features.item.components.ItemQuantityListItem
 import com.gaugustini.mhfudatabase.ui.features.skill.components.SkillTreePointsList
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
+import com.gaugustini.mhfudatabase.util.ForEachWithDivider
 import com.gaugustini.mhfudatabase.util.preview.PreviewDecorationData
 
 @Composable
@@ -72,10 +71,14 @@ fun DecorationDetailContent(
                         }
                     ),
                 )
-                ItemQuantityList(
-                    items = recipeA,
-                    onItemClick = onItemClick,
-                )
+                Column {
+                    recipeA.ForEachWithDivider { item ->
+                        ItemQuantityListItem(
+                            item = item,
+                            onItemClick = onItemClick,
+                        )
+                    }
+                }
             }
         }
 
@@ -84,10 +87,14 @@ fun DecorationDetailContent(
                 SectionHeader(
                     title = stringResource(R.string.list_recipe_b),
                 )
-                ItemQuantityList(
-                    items = recipeB,
-                    onItemClick = onItemClick,
-                )
+                Column {
+                    recipeB.ForEachWithDivider { item ->
+                        ItemQuantityListItem(
+                            item = item,
+                            onItemClick = onItemClick,
+                        )
+                    }
+                }
             }
         }
     }
@@ -99,7 +106,6 @@ fun DecorationDetailContentPreview() {
     Theme {
         DecorationDetailContent(
             decoration = PreviewDecorationData.decoration,
-            modifier = Modifier.background(MaterialTheme.colorScheme.background),
         )
     }
 }
