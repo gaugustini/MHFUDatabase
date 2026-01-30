@@ -1,6 +1,5 @@
 package com.gaugustini.mhfudatabase.ui.features.settings.components
 
-import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,10 +15,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 
 @Composable
 fun SettingsDialogOptions(
@@ -86,8 +85,7 @@ fun SettingsDialogOptions(
     )
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
 fun SettingsDialogOptionsPreview() {
     Theme {
