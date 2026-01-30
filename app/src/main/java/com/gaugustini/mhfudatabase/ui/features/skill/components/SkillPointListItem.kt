@@ -1,42 +1,18 @@
 package com.gaugustini.mhfudatabase.ui.features.skill.components
 
-import android.content.res.Configuration
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.domain.model.SkillPoint
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewSkillData
 
 @Composable
-fun SkillTreePointsList(
-    skills: List<SkillPoint>,
-    modifier: Modifier = Modifier,
-    onSkillClick: (skillTreeId: Int) -> Unit = {},
-) {
-    Column(
-        modifier = modifier
-    ) {
-        skills.forEachIndexed { index, skill ->
-            SkillTreePointsListItem(
-                skill = skill,
-                onSkillClick = onSkillClick,
-            )
-            if (index != skills.lastIndex) {
-                HorizontalDivider()
-            }
-        }
-    }
-}
-
-@Composable
-fun SkillTreePointsListItem(
+fun SkillPointListItem(
     skill: SkillPoint,
     modifier: Modifier = Modifier,
     onSkillClick: (skillTreeId: Int) -> Unit = {},
@@ -60,11 +36,12 @@ fun SkillTreePointsListItem(
     )
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
-fun SkillTreePointsListPreview() {
+fun SkillPointListItemPreview() {
     Theme {
-        SkillTreePointsList(PreviewSkillData.skillTreePointsList)
+        SkillPointListItem(
+            skill = PreviewSkillData.skillTreePoints,
+        )
     }
 }

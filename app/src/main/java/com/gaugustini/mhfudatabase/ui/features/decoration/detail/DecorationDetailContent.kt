@@ -14,7 +14,7 @@ import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.components.icons.DecorationIcon
 import com.gaugustini.mhfudatabase.ui.features.decoration.components.DecorationSummary
 import com.gaugustini.mhfudatabase.ui.features.item.components.ItemQuantityListItem
-import com.gaugustini.mhfudatabase.ui.features.skill.components.SkillTreePointsList
+import com.gaugustini.mhfudatabase.ui.features.skill.components.SkillPointListItem
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
@@ -53,10 +53,14 @@ fun DecorationDetailContent(
                 SectionHeader(
                     title = stringResource(R.string.list_skills),
                 )
-                SkillTreePointsList(
-                    skills = skills,
-                    onSkillClick = onSkillClick,
-                )
+                Column {
+                    skills.ForEachWithDivider { skill ->
+                        SkillPointListItem(
+                            skill = skill,
+                            onSkillClick = onSkillClick,
+                        )
+                    }
+                }
             }
         }
 

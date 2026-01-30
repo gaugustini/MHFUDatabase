@@ -15,7 +15,7 @@ import com.gaugustini.mhfudatabase.ui.components.icons.ArmorSetIcon
 import com.gaugustini.mhfudatabase.ui.features.armor.components.ArmorListItem
 import com.gaugustini.mhfudatabase.ui.features.armor.components.EquipmentStats
 import com.gaugustini.mhfudatabase.ui.features.item.components.ItemQuantityListItem
-import com.gaugustini.mhfudatabase.ui.features.skill.components.SkillTreePointsList
+import com.gaugustini.mhfudatabase.ui.features.skill.components.SkillPointListItem
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
@@ -76,10 +76,14 @@ fun ArmorSetDetailContent(
                 SectionHeader(
                     title = stringResource(R.string.list_skills),
                 )
-                SkillTreePointsList(
-                    skills = skills,
-                    onSkillClick = onSkillClick,
-                )
+                Column {
+                    skills.ForEachWithDivider { skill ->
+                        SkillPointListItem(
+                            skill = skill,
+                            onSkillClick = onSkillClick,
+                        )
+                    }
+                }
             }
         }
 

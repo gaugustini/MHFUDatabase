@@ -46,7 +46,9 @@ class SkillTreeListViewModel @Inject constructor(
     private fun loadSkills(language: Language) {
         viewModelScope.launch {
             _uiState.update { state ->
-                state.copy(skills = skillRepository.getSkillTreeList(language.code))
+                state.copy(
+                    skills = skillRepository.getSkillTreeList(language.code),
+                )
             }
         }
     }

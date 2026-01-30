@@ -24,7 +24,7 @@ import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.components.icons.ArmorSetIcon
 import com.gaugustini.mhfudatabase.ui.features.armor.components.EquipmentStats
 import com.gaugustini.mhfudatabase.ui.features.item.components.ItemQuantityListItem
-import com.gaugustini.mhfudatabase.ui.features.skill.components.SkillTreePointsList
+import com.gaugustini.mhfudatabase.ui.features.skill.components.SkillPointListItem
 import com.gaugustini.mhfudatabase.ui.features.userset.components.ActiveSkillList
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
@@ -107,10 +107,14 @@ fun UserSetDetailSummaryContent(
                     )
             )
         } else {
-            SkillTreePointsList(
-                skills = skillTreePoints,
-                onSkillClick = onSkillClick,
-            )
+            Column {
+                skillTreePoints.ForEachWithDivider { skill ->
+                    SkillPointListItem(
+                        skill = skill,
+                        onSkillClick = onSkillClick,
+                    )
+                }
+            }
         }
 
         SectionHeader(
