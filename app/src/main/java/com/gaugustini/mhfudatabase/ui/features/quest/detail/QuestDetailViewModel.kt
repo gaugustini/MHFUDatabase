@@ -51,7 +51,7 @@ class QuestDetailViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { state ->
                 state.copy(
-                    quest = questRepository.getQuest(questId, language.code)
+                    quest = questRepository.getQuest(questId, language.code),
                 )
             }
         }
