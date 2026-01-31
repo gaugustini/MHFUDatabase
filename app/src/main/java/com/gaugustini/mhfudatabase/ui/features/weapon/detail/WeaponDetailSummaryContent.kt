@@ -1,6 +1,5 @@
 package com.gaugustini.mhfudatabase.ui.features.weapon.detail
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -8,7 +7,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.model.Weapon
 import com.gaugustini.mhfudatabase.ui.components.DetailHeader
@@ -20,6 +18,7 @@ import com.gaugustini.mhfudatabase.ui.features.weapon.components.WeaponAmmoBowgu
 import com.gaugustini.mhfudatabase.ui.features.weapon.components.WeaponSummary
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.ForEachWithDivider
 import com.gaugustini.mhfudatabase.util.preview.PreviewWeaponData
 
@@ -50,50 +49,53 @@ fun WeaponDetailSummaryContent(
             weapon = weapon,
         )
 
-        if (weapon.ammoBow != null) {
+        weapon.ammoBow?.let { ammoBow ->
             WeaponAmmoBowSummary(
-                ammo = weapon.ammoBow!!,
+                ammo = ammoBow,
             )
         }
 
-        if (weapon.ammoBowgun != null) {
+        weapon.ammoBowgun?.let { ammoBowgun ->
             WeaponAmmoBowgunSummary(
-                ammo = weapon.ammoBowgun!!,
+                ammo = ammoBowgun,
             )
         }
 
-        if (weapon.recipeCreate?.isNotEmpty() == true) {
-            SectionHeader(
-                title = stringResource(R.string.list_recipe_create),
-            )
-            Column {
-                weapon.recipeCreate!!.ForEachWithDivider { item ->
-                    ItemQuantityListItem(
-                        item = item,
-                        onItemClick = onItemClick,
-                    )
+        weapon.recipeCreate?.let { recipe ->
+            if (recipe.isNotEmpty()) {
+                SectionHeader(
+                    title = stringResource(R.string.list_recipe_create),
+                )
+                Column {
+                    recipe.ForEachWithDivider { item ->
+                        ItemQuantityListItem(
+                            item = item,
+                            onItemClick = onItemClick,
+                        )
+                    }
                 }
             }
         }
 
-        if (weapon.recipeUpgrade?.isNotEmpty() == true) {
-            SectionHeader(
-                title = stringResource(R.string.list_recipe_upgrade),
-            )
-            Column {
-                weapon.recipeUpgrade!!.ForEachWithDivider { item ->
-                    ItemQuantityListItem(
-                        item = item,
-                        onItemClick = onItemClick,
-                    )
+        weapon.recipeUpgrade?.let { recipe ->
+            if (recipe.isNotEmpty()) {
+                SectionHeader(
+                    title = stringResource(R.string.list_recipe_upgrade),
+                )
+                Column {
+                    recipe.ForEachWithDivider { item ->
+                        ItemQuantityListItem(
+                            item = item,
+                            onItemClick = onItemClick,
+                        )
+                    }
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
 fun WeaponDetailSummaryContentPreview() {
     Theme {

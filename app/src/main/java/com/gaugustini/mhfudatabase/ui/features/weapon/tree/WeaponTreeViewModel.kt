@@ -1,4 +1,4 @@
-package com.gaugustini.mhfudatabase.ui.features.weapon.graph
+package com.gaugustini.mhfudatabase.ui.features.weapon.tree
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -19,23 +19,22 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class WeaponGraphState(
+data class WeaponTreeState(
     val weaponType: WeaponType = WeaponType.GREAT_SWORD,
     val nodes: List<WeaponNode> = emptyList(),
 )
 
 @HiltViewModel
-class WeaponGraphViewModel @Inject constructor(
+class WeaponTreeViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val userPreferences: UserPreferences,
     private val weaponRepository: WeaponRepository,
 ) : ViewModel() {
 
-    private val weaponType: WeaponType =
-        WeaponType.fromString(checkNotNull(savedStateHandle["weaponType"]))
+    private val weaponType = WeaponType.fromString(checkNotNull(savedStateHandle["weaponType"]))
 
-    private val _uiState = MutableStateFlow(WeaponGraphState())
-    val uiState: StateFlow<WeaponGraphState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(WeaponTreeState())
+    val uiState: StateFlow<WeaponTreeState> = _uiState.asStateFlow()
 
     init {
         observeLanguage()
@@ -45,12 +44,12 @@ class WeaponGraphViewModel @Inject constructor(
         userPreferences.getLanguage()
             .distinctUntilChanged()
             .onEach { language ->
-                loadWeaponGraph(language)
+                loadWeaponTree(language)
             }
             .launchIn(viewModelScope)
     }
 
-    private fun loadWeaponGraph(language: Language) {
+    private fun loadWeaponTree(language: Language) {
         viewModelScope.launch {
             _uiState.update { state ->
                 state.copy(
