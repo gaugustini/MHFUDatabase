@@ -1,8 +1,9 @@
 package com.gaugustini.mhfudatabase.ui.features.userset.list
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExtendedFloatingActionButton
@@ -14,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -22,14 +22,16 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TopBar
-import com.gaugustini.mhfudatabase.ui.features.userset.components.UserSetList
+import com.gaugustini.mhfudatabase.ui.features.userset.components.UserSetListItem
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
+import com.gaugustini.mhfudatabase.util.preview.PreviewUserEquipmentSet
 
 @Composable
 fun UserSetListRoute(
     openDrawer: () -> Unit,
     openSearch: () -> Unit,
-    onSetClick: (setId: Int) -> Unit,
+    onEquipmentSetClick: (setId: Int) -> Unit,
     viewModel: UserSetListViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -38,7 +40,7 @@ fun UserSetListRoute(
         uiState = uiState,
         openDrawer = openDrawer,
         openSearch = openSearch,
-        onSetClick = onSetClick,
+        onEquipmentSetClick = onEquipmentSetClick,
     )
 }
 
@@ -47,7 +49,7 @@ fun UserSetListScreen(
     uiState: UserSetListState = UserSetListState(),
     openDrawer: () -> Unit = {},
     openSearch: () -> Unit = {},
-    onSetClick: (setId: Int) -> Unit = {},
+    onEquipmentSetClick: (setId: Int) -> Unit = {},
 ) {
     Scaffold(
         topBar = {
@@ -60,7 +62,7 @@ fun UserSetListScreen(
         },
         floatingActionButton = {
             ExtendedFloatingActionButton(
-                onClick = { onSetClick(0) },
+                onClick = { onEquipmentSetClick(0) },
                 icon = {
                     Icon(
                         imageVector = Icons.Filled.Add,
@@ -77,18 +79,22 @@ fun UserSetListScreen(
             )
         },
     ) { innerPadding ->
-        UserSetList(
-            sets = uiState.sets,
-            onSetClick = onSetClick,
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-        )
+        ) {
+            items(uiState.equipmentSets) { set ->
+                UserSetListItem(
+                    equipmentSet = set,
+                    onEquipmentSetClick = onEquipmentSetClick,
+                )
+            }
+        }
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
 fun UserSetListScreenPreview(
     @PreviewParameter(UserSetListScreenPreviewParamProvider::class) uiState: UserSetListState
@@ -102,7 +108,7 @@ private class UserSetListScreenPreviewParamProvider : PreviewParameterProvider<U
 
     override val values: Sequence<UserSetListState> = sequenceOf(
         UserSetListState(
-            sets = listOf(),
+            equipmentSets = PreviewUserEquipmentSet.userSetList,
         ),
     )
 

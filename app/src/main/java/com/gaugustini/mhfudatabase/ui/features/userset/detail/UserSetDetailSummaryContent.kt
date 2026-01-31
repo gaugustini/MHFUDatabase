@@ -1,6 +1,5 @@
 package com.gaugustini.mhfudatabase.ui.features.userset.detail
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,40 +10,42 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.domain.model.Armor
-import com.gaugustini.mhfudatabase.domain.model.ItemQuantity
-import com.gaugustini.mhfudatabase.domain.model.Skill
-import com.gaugustini.mhfudatabase.domain.model.SkillPoint
 import com.gaugustini.mhfudatabase.domain.model.UserEquipmentSet
-import com.gaugustini.mhfudatabase.domain.model.Weapon
 import com.gaugustini.mhfudatabase.ui.components.DetailHeader
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.components.icons.ArmorSetIcon
 import com.gaugustini.mhfudatabase.ui.features.armor.components.EquipmentStats
 import com.gaugustini.mhfudatabase.ui.features.item.components.ItemQuantityListItem
 import com.gaugustini.mhfudatabase.ui.features.skill.components.SkillPointListItem
-import com.gaugustini.mhfudatabase.ui.features.userset.components.ActiveSkillList
+import com.gaugustini.mhfudatabase.ui.features.userset.components.ActiveSkillListItem
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.ForEachWithDivider
-import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
 import com.gaugustini.mhfudatabase.util.preview.PreviewUserEquipmentSet
-import com.gaugustini.mhfudatabase.util.preview.PreviewWeaponData
 
 @Composable
 fun UserSetDetailSummaryContent(
-    set: UserEquipmentSet?,
-    weapon: Weapon?,
-    armors: List<Armor>,
-    activeSkills: List<Skill>,
-    skillTreePoints: List<SkillPoint>,
-    requiredMaterials: List<ItemQuantity>,
+    equipmentSet: UserEquipmentSet,
     modifier: Modifier = Modifier,
     onItemClick: (itemId: Int) -> Unit = {},
     onSkillClick: (skillTreeId: Int) -> Unit = {},
 ) {
+    val noneText = @Composable {
+        Text(
+            text = stringResource(R.string.user_set_none),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    horizontal = Dimension.Spacing.large,
+                    vertical = Dimension.Spacing.medium
+                )
+        )
+    }
+
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
@@ -56,63 +57,53 @@ fun UserSetDetailSummaryContent(
                     rarity = 0,
                 )
             },
-            title = set?.name ?: stringResource(R.string.user_set_new),
+            title = equipmentSet.name,
         )
 
-        EquipmentStats(
-            defense = armors.sumOf { it.defense } + (weapon?.defense ?: 0),
-            numberOfSlots = null,
-            fire = armors.sumOf { it.fire },
-            water = armors.sumOf { it.water },
-            thunder = armors.sumOf { it.thunder },
-            ice = armors.sumOf { it.ice },
-            dragon = armors.sumOf { it.dragon },
-        )
+        equipmentSet.armors.let { armors ->
+            EquipmentStats(
+                defense = (armors?.sumOf { it.defense } ?: 0) + (equipmentSet.weapon?.defense ?: 0),
+                numberOfSlots = null,
+                fire = armors?.sumOf { it.fire } ?: 0,
+                water = armors?.sumOf { it.water } ?: 0,
+                thunder = armors?.sumOf { it.thunder } ?: 0,
+                ice = armors?.sumOf { it.ice } ?: 0,
+                dragon = armors?.sumOf { it.dragon } ?: 0,
+            )
+        }
 
         SectionHeader(
             title = stringResource(R.string.list_active_skills),
         )
-        if (activeSkills.isEmpty()) {
-            Text(
-                text = stringResource(R.string.user_set_none),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        horizontal = Dimension.Spacing.large,
-                        vertical = Dimension.Spacing.medium
-                    )
-            )
-        } else {
-            ActiveSkillList(
-                skills = activeSkills,
-                onSkillClick = onSkillClick,
-            )
+        equipmentSet.activeSkills.let { activeSkills ->
+            if (activeSkills?.isEmpty() ?: true) {
+                noneText()
+            } else {
+                Column {
+                    activeSkills.ForEachWithDivider { skill ->
+                        ActiveSkillListItem(
+                            skill = skill,
+                            onSkillClick = onSkillClick,
+                        )
+                    }
+                }
+            }
         }
 
         SectionHeader(
             title = stringResource(R.string.list_skills),
         )
-        if (skillTreePoints.isEmpty()) {
-            Text(
-                text = stringResource(R.string.user_set_none),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        horizontal = Dimension.Spacing.large,
-                        vertical = Dimension.Spacing.medium
-                    )
-            )
-        } else {
-            Column {
-                skillTreePoints.ForEachWithDivider { skill ->
-                    SkillPointListItem(
-                        skill = skill,
-                        onSkillClick = onSkillClick,
-                    )
+        equipmentSet.skills.let { skillPoints ->
+            if (skillPoints?.isEmpty() ?: true) {
+                noneText()
+            } else {
+                Column {
+                    skillPoints.ForEachWithDivider { skill ->
+                        SkillPointListItem(
+                            skill = skill,
+                            onSkillClick = onSkillClick,
+                        )
+                    }
                 }
             }
         }
@@ -120,43 +111,29 @@ fun UserSetDetailSummaryContent(
         SectionHeader(
             title = stringResource(R.string.list_recipe),
         )
-        if (requiredMaterials.isEmpty()) {
-            Text(
-                text = stringResource(R.string.user_set_none),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        horizontal = Dimension.Spacing.large,
-                        vertical = Dimension.Spacing.medium
-                    )
-            )
-        } else {
-            Column {
-                requiredMaterials.ForEachWithDivider { item ->
-                    ItemQuantityListItem(
-                        item = item,
-                        onItemClick = onItemClick,
-                    )
+        equipmentSet.recipe.let { materials ->
+            if (materials?.isEmpty() ?: true) {
+                noneText()
+            } else {
+                Column {
+                    materials.ForEachWithDivider { item ->
+                        ItemQuantityListItem(
+                            item = item,
+                            onItemClick = onItemClick,
+                        )
+                    }
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
 fun UserSetDetailSummaryContentPreview() {
     Theme {
         UserSetDetailSummaryContent(
-            set = PreviewUserEquipmentSet.userSet,
-            weapon = PreviewWeaponData.weapon,
-            armors = PreviewArmorData.armorList,
-            activeSkills = emptyList(),
-            skillTreePoints = emptyList(),
-            requiredMaterials = emptyList(),
+            equipmentSet = PreviewUserEquipmentSet.userSet,
         )
     }
 }

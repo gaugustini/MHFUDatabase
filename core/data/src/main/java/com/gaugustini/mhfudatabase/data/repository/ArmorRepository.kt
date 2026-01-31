@@ -48,6 +48,16 @@ class ArmorRepository @Inject constructor(
     }
 
     /**
+     * Returns the list of all armor.
+     * Note: skills and recipe are not populated.
+     */
+    suspend fun getArmorList(
+        language: String,
+    ): List<Armor> {
+        return armorDao.getArmorList(language).map { ArmorMapper.toModel(it) }
+    }
+
+    /**
      * Returns the list of all armor sets.
      * Note: skills and recipe are not populated.
      */

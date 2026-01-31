@@ -156,7 +156,7 @@ fun NavigationGraph(
             UserSetListRoute(
                 openDrawer = openDrawer,
                 openSearch = navigationActions.navigateToSearch,
-                onSetClick = navigationActions.navigateToUserEquipmentSetDetail,
+                onEquipmentSetClick = navigationActions.navigateToUserEquipmentSetDetail,
             )
         }
         composable(Destinations.SETTINGS) {

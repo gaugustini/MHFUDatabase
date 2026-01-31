@@ -1,6 +1,5 @@
 package com.gaugustini.mhfudatabase.ui.features.userset.components
 
-import android.content.res.Configuration
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -15,9 +14,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 
 @Composable
 fun RenameDialog(
@@ -68,11 +67,12 @@ fun RenameDialog(
     )
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
 fun RenameDialogPreview() {
     Theme {
-        RenameDialog("New Set")
+        RenameDialog(
+            setName = "New Set",
+        )
     }
 }

@@ -1,6 +1,5 @@
 package com.gaugustini.mhfudatabase.ui.features.userset.detail
 
-import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -34,12 +33,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
 import com.gaugustini.mhfudatabase.domain.enums.WeaponType
 import com.gaugustini.mhfudatabase.domain.model.Armor
 import com.gaugustini.mhfudatabase.domain.model.EquipmentDecoration
+import com.gaugustini.mhfudatabase.domain.model.UserEquipmentSet
 import com.gaugustini.mhfudatabase.domain.model.Weapon
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.ArmorIcon
@@ -48,20 +47,17 @@ import com.gaugustini.mhfudatabase.ui.components.icons.SlotIcon
 import com.gaugustini.mhfudatabase.ui.components.icons.WeaponIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.MHFUColors
-import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
 import com.gaugustini.mhfudatabase.util.preview.PreviewUserEquipmentSet
-import com.gaugustini.mhfudatabase.util.preview.PreviewWeaponData
 
 @Composable
 fun UserSetDetailEquipmentContent(
-    weapon: Weapon?,
-    armors: List<Armor>,
-    decorations: List<EquipmentDecoration>,
+    equipmentSet: UserEquipmentSet,
     modifier: Modifier = Modifier,
-    onWeaponClick: () -> Unit = {},
-    onArmorClick: (armorType: EquipmentType) -> Unit = {},
-    onAddDecoration: (equipmentType: EquipmentType, availableSlots: Int) -> Unit = { _, _ -> },
+    openWeaponSelection: () -> Unit = {},
+    openArmorSelection: (armorType: EquipmentType) -> Unit = {},
+    openDecorationSelection: (equipmentType: EquipmentType, availableSlots: Int) -> Unit = { _, _ -> },
     onRemoveDecoration: (decorationId: Int, equipmentType: EquipmentType) -> Unit = { _, _ -> },
 ) {
     Column(
@@ -70,50 +66,56 @@ fun UserSetDetailEquipmentContent(
             .padding(bottom = Dimension.Padding.endContent)
     ) {
         EquipmentWeaponListItem(
-            weapon = weapon,
-            decorations = decorations.filter { it.equipmentType == EquipmentType.WEAPON },
-            onWeaponClick = onWeaponClick,
-            onAddDecoration = { onAddDecoration(EquipmentType.WEAPON, it) },
+            weapon = equipmentSet.weapon,
+            decorations = equipmentSet.decorations?.filter { it.equipmentType == EquipmentType.WEAPON }
+                ?: emptyList(),
+            onWeaponClick = openWeaponSelection,
+            onAddDecoration = { openDecorationSelection(EquipmentType.WEAPON, it) },
             onRemoveDecoration = { onRemoveDecoration(it, EquipmentType.WEAPON) },
         )
         EquipmentArmorListItem(
-            armor = armors.firstOrNull { it.type == EquipmentType.ARMOR_HEAD },
+            armor = equipmentSet.armors?.firstOrNull { it.type == EquipmentType.ARMOR_HEAD },
             armorType = EquipmentType.ARMOR_HEAD,
-            decorations = decorations.filter { it.equipmentType == EquipmentType.ARMOR_HEAD },
-            onArmorClick = { onArmorClick(EquipmentType.ARMOR_HEAD) },
-            onAddDecoration = { onAddDecoration(EquipmentType.ARMOR_HEAD, it) },
+            decorations = equipmentSet.decorations?.filter { it.equipmentType == EquipmentType.ARMOR_HEAD }
+                ?: emptyList(),
+            onArmorClick = { openArmorSelection(EquipmentType.ARMOR_HEAD) },
+            onAddDecoration = { openDecorationSelection(EquipmentType.ARMOR_HEAD, it) },
             onRemoveDecoration = { onRemoveDecoration(it, EquipmentType.ARMOR_HEAD) },
         )
         EquipmentArmorListItem(
-            armor = armors.firstOrNull { it.type == EquipmentType.ARMOR_CHEST },
+            armor = equipmentSet.armors?.firstOrNull { it.type == EquipmentType.ARMOR_CHEST },
             armorType = EquipmentType.ARMOR_CHEST,
-            decorations = decorations.filter { it.equipmentType == EquipmentType.ARMOR_CHEST },
-            onArmorClick = { onArmorClick(EquipmentType.ARMOR_CHEST) },
-            onAddDecoration = { onAddDecoration(EquipmentType.ARMOR_CHEST, it) },
+            decorations = equipmentSet.decorations?.filter { it.equipmentType == EquipmentType.ARMOR_CHEST }
+                ?: emptyList(),
+            onArmorClick = { openArmorSelection(EquipmentType.ARMOR_CHEST) },
+            onAddDecoration = { openDecorationSelection(EquipmentType.ARMOR_CHEST, it) },
             onRemoveDecoration = { onRemoveDecoration(it, EquipmentType.ARMOR_CHEST) },
         )
         EquipmentArmorListItem(
-            armor = armors.firstOrNull { it.type == EquipmentType.ARMOR_ARMS },
+            armor = equipmentSet.armors?.firstOrNull { it.type == EquipmentType.ARMOR_ARMS },
             armorType = EquipmentType.ARMOR_ARMS,
-            decorations = decorations.filter { it.equipmentType == EquipmentType.ARMOR_ARMS },
-            onArmorClick = { onArmorClick(EquipmentType.ARMOR_ARMS) },
-            onAddDecoration = { onAddDecoration(EquipmentType.ARMOR_ARMS, it) },
+            decorations = equipmentSet.decorations?.filter { it.equipmentType == EquipmentType.ARMOR_ARMS }
+                ?: emptyList(),
+            onArmorClick = { openArmorSelection(EquipmentType.ARMOR_ARMS) },
+            onAddDecoration = { openDecorationSelection(EquipmentType.ARMOR_ARMS, it) },
             onRemoveDecoration = { onRemoveDecoration(it, EquipmentType.ARMOR_ARMS) },
         )
         EquipmentArmorListItem(
-            armor = armors.firstOrNull { it.type == EquipmentType.ARMOR_WAIST },
+            armor = equipmentSet.armors?.firstOrNull { it.type == EquipmentType.ARMOR_WAIST },
             armorType = EquipmentType.ARMOR_WAIST,
-            decorations = decorations.filter { it.equipmentType == EquipmentType.ARMOR_WAIST },
-            onArmorClick = { onArmorClick(EquipmentType.ARMOR_WAIST) },
-            onAddDecoration = { onAddDecoration(EquipmentType.ARMOR_WAIST, it) },
+            decorations = equipmentSet.decorations?.filter { it.equipmentType == EquipmentType.ARMOR_WAIST }
+                ?: emptyList(),
+            onArmorClick = { openArmorSelection(EquipmentType.ARMOR_WAIST) },
+            onAddDecoration = { openDecorationSelection(EquipmentType.ARMOR_WAIST, it) },
             onRemoveDecoration = { onRemoveDecoration(it, EquipmentType.ARMOR_WAIST) },
         )
         EquipmentArmorListItem(
-            armor = armors.firstOrNull { it.type == EquipmentType.ARMOR_LEGS },
+            armor = equipmentSet.armors?.firstOrNull { it.type == EquipmentType.ARMOR_LEGS },
             armorType = EquipmentType.ARMOR_LEGS,
-            decorations = decorations.filter { it.equipmentType == EquipmentType.ARMOR_LEGS },
-            onArmorClick = { onArmorClick(EquipmentType.ARMOR_LEGS) },
-            onAddDecoration = { onAddDecoration(EquipmentType.ARMOR_LEGS, it) },
+            decorations = equipmentSet.decorations?.filter { it.equipmentType == EquipmentType.ARMOR_LEGS }
+                ?: emptyList(),
+            onArmorClick = { openArmorSelection(EquipmentType.ARMOR_LEGS) },
+            onAddDecoration = { openDecorationSelection(EquipmentType.ARMOR_LEGS, it) },
             onRemoveDecoration = { onRemoveDecoration(it, EquipmentType.ARMOR_LEGS) },
         )
     }
@@ -381,15 +383,12 @@ fun EquipmentArmorListItem(
     )
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
 fun UserSetDetailEquipmentContentPreview() {
     Theme {
         UserSetDetailEquipmentContent(
-            weapon = PreviewWeaponData.weapon,
-            armors = PreviewArmorData.armorList,
-            decorations = PreviewUserEquipmentSet.decorationList,
+            equipmentSet = PreviewUserEquipmentSet.userSet,
         )
     }
 }
