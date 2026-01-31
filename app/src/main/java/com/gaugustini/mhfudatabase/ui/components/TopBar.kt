@@ -1,6 +1,5 @@
 package com.gaugustini.mhfudatabase.ui.components
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -15,13 +14,13 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 
 enum class NavigationType {
     MENU,
-    BACK
+    BACK;
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -73,8 +72,7 @@ fun TopBar(
     )
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
 fun TopBarDrawerPreview() {
     Theme {
@@ -85,8 +83,7 @@ fun TopBarDrawerPreview() {
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
 fun TopBarBackPreview() {
     Theme {

@@ -1,6 +1,5 @@
 package com.gaugustini.mhfudatabase.ui.components
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -9,17 +8,17 @@ import androidx.compose.foundation.pager.PagerScope
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.ScrollableTabRow
+import androidx.compose.material3.SecondaryScrollableTabRow
+import androidx.compose.material3.SecondaryTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import kotlinx.coroutines.launch
 
 @Composable
@@ -43,7 +42,7 @@ fun TabbedLayout(
                 .padding(innerPadding)
         ) {
             if (scrollableTabs) {
-                ScrollableTabRow(
+                SecondaryScrollableTabRow(
                     selectedTabIndex = pagerState.currentPage,
                     edgePadding = 0.dp,
                 ) {
@@ -58,7 +57,7 @@ fun TabbedLayout(
                     }
                 }
             } else {
-                TabRow(
+                SecondaryTabRow(
                     selectedTabIndex = pagerState.currentPage,
                 ) {
                     tabTitles.forEachIndexed { index, title ->
@@ -82,8 +81,7 @@ fun TabbedLayout(
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
 fun TabbedLayoutPreview() {
     Theme {
@@ -94,8 +92,7 @@ fun TabbedLayoutPreview() {
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
 fun TabbedLayoutScrollablePreview() {
     Theme {
