@@ -163,7 +163,7 @@ fun AilmentStatusListItem(
 fun MonsterAilmentsPreview() {
     Theme {
         MonsterAilments(
-            ailments = PreviewMonsterData.monsterAilmentStatusList,
+            ailments = PreviewMonsterData.monsterAilmentStatsList,
         )
     }
 }

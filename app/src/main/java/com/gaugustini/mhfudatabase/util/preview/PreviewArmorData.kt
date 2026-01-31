@@ -29,8 +29,8 @@ object PreviewArmorData {
         thunder = 10,
         ice = 10,
         dragon = 10,
-        skills = null,
-        recipe = null,
+        skills = PreviewSkillData.skillPointList,
+        recipe = PreviewItemData.itemQuantityList,
     )
 
     val armorList = listOf(
@@ -56,9 +56,9 @@ object PreviewArmorData {
         thunder = 10,
         ice = 10,
         dragon = 10,
-        armors = null,
-        skills = null,
-        recipe = null,
+        armors = armorList,
+        skills = PreviewSkillData.skillPointList,
+        recipe = PreviewItemData.itemQuantityList,
     )
 
     val armorSetList = listOf(

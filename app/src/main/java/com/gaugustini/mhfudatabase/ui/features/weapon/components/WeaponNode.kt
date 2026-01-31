@@ -54,7 +54,7 @@ fun WeaponNode(
 fun WeaponNodePreview() {
     Theme {
         WeaponNode(
-            node = PreviewWeaponData.graph.first(),
+            node = PreviewWeaponData.weaponNodeList.first(),
         )
     }
 }

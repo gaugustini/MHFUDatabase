@@ -51,8 +51,8 @@ fun MonsterDetailDamageContent(
 fun MonsterDetailDamageContentPreview() {
     Theme {
         MonsterDetailDamageContent(
-            damage = PreviewMonsterData.monsterHitzoneList,
-            ailments = PreviewMonsterData.monsterAilmentStatusList,
+            damage = PreviewMonsterData.monsterDamageStatsList,
+            ailments = PreviewMonsterData.monsterAilmentStatsList,
         )
     }
 }

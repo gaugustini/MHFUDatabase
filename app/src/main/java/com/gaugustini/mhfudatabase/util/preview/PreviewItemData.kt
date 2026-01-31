@@ -63,9 +63,13 @@ object PreviewItemData {
         quantity = 5,
     )
 
-    val itemQuantityList = listOf(itemQuantity, itemQuantity, itemQuantity)
+    val itemQuantityList = listOf(
+        itemQuantity.copy(quantity = 1),
+        itemQuantity.copy(quantity = 2),
+        itemQuantity.copy(quantity = 3),
+    )
 
-    /// Item Sources
+    // Item Sources
 
     val gatheringSource = GatheringSource(
         location = PreviewLocationData.location,

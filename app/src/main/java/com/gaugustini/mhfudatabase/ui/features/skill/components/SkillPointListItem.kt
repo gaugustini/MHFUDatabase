@@ -41,7 +41,7 @@ fun SkillPointListItem(
 fun SkillPointListItemPreview() {
     Theme {
         SkillPointListItem(
-            skill = PreviewSkillData.skillTreePoints,
+            skill = PreviewSkillData.skillPoint,
         )
     }
 }

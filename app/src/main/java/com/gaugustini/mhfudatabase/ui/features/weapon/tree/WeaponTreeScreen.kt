@@ -100,7 +100,7 @@ private class WeaponTreeScreenPreviewParameterProvider : PreviewParameterProvide
     override val values: Sequence<WeaponTreeState> = sequenceOf(
         WeaponTreeState(
             weaponType = WeaponType.GREAT_SWORD,
-            nodes = PreviewWeaponData.graph,
+            nodes = PreviewWeaponData.weaponNodeList,
         ),
     )
 

@@ -144,7 +144,7 @@ fun MonsterItemEffectivenessListItem(
 fun MonsterItemEffectivenessItemPreview() {
     Theme {
         MonsterItemEffectivenessListItem(
-            item = PreviewMonsterData.monsterItemUsage,
+            item = PreviewMonsterData.monsterItemEffectiveness,
         )
     }
 }

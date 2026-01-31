@@ -38,17 +38,17 @@ object PreviewSkillData {
         skillTree.copy(id = 3, name = "Skill Tree 3"),
     )
 
-    // Skill Tree Points
+    // Skill Point
 
-    val skillTreePoints = SkillPoint(
+    val skillPoint = SkillPoint(
         skillTree = skillTree,
         points = 5,
     )
 
-    val skillTreePointsList = listOf(
-        skillTreePoints.copy(points = -5),
-        skillTreePoints.copy(points = 1),
-        skillTreePoints.copy(points = 5),
+    val skillPointList = listOf(
+        skillPoint.copy(points = -5),
+        skillPoint.copy(points = 1),
+        skillPoint.copy(points = 5),
     )
 
 }

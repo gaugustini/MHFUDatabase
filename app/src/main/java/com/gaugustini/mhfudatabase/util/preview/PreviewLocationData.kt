@@ -28,7 +28,7 @@ object PreviewLocationData {
         rank = Rank.LOW,
         area = 1,
         type = GatherType.COLLECT,
-        item = item
+        item = item,
     )
 
     val gatheringPointList = listOf(

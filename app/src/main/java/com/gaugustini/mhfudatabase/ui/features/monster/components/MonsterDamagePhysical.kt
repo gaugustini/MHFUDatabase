@@ -147,7 +147,7 @@ fun DamagePhysicalListItem(
 fun MonsterDamagePhysicalPreview() {
     Theme {
         MonsterDamagePhysical(
-            damage = PreviewMonsterData.monsterHitzoneList,
+            damage = PreviewMonsterData.monsterDamageStatsList,
         )
     }
 }

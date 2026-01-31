@@ -180,7 +180,7 @@ fun DamageElementalListItem(
 fun MonsterDamageElementalPreview() {
     Theme {
         MonsterDamageElemental(
-            damage = PreviewMonsterData.monsterHitzoneList,
+            damage = PreviewMonsterData.monsterDamageStatsList,
         )
     }
 }
