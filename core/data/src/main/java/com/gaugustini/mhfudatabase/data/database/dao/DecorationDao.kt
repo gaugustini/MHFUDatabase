@@ -58,7 +58,8 @@ interface DecorationDao {
         JOIN skill_tree_text
             ON skill_tree.id = skill_tree_text.skill_tree_id
             AND skill_tree_text.language = :language
-        WHERE decoration_skill.decoration_id = :decorationId  
+        WHERE decoration_skill.decoration_id = :decorationId
+        ORDER BY points DESC
         """
     )
     suspend fun getDecorationSkillsByDecorationId(
@@ -82,6 +83,7 @@ interface DecorationDao {
         WHERE
             decoration_recipe.decoration_id = :decorationId
             AND decoration_recipe.recipe_variant = :recipeVariant
+        ORDER BY quantity DESC
         """
     )
     suspend fun getDecorationRecipeByDecorationId(

@@ -35,6 +35,7 @@ interface ArmorDao {
         JOIN armor_text
             ON armor.id = armor_text.armor_id
             AND armor_text.language = :language
+        ORDER BY armor.armor_set_id ASC
         """
     )
     suspend fun getArmorList(language: String): List<ArmorWithText>
@@ -66,7 +67,8 @@ interface ArmorDao {
         JOIN skill_tree_text
             ON skill_tree.id = skill_tree_text.skill_tree_id
             AND skill_tree_text.language = :language
-        WHERE armor_skill.armor_id = :armorId  
+        WHERE armor_skill.armor_id = :armorId
+        ORDER BY points DESC
         """
     )
     suspend fun getArmorSkillsByArmorId(armorId: Int, language: String): List<EquipmentSkillTreePoint>
@@ -85,6 +87,7 @@ interface ArmorDao {
             ON item.id = item_text.item_id
             AND item_text.language = :language
         WHERE armor_recipe.armor_id = :armorId
+        ORDER BY quantity DESC
         """
     )
     suspend fun getArmorRecipeByArmorId(armorId: Int, language: String): List<EquipmentItemQuantity>

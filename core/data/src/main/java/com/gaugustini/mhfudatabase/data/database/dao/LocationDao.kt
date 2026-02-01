@@ -52,8 +52,7 @@ interface LocationDao {
             ON item.id = item_text.item_id
             AND item_text.language = :language
         WHERE li.location_id = :locationId
-        ORDER BY
-            li.rank, li.area, li.gather_type, item_text.name
+        ORDER BY li.area ASC, li.gather_type ASC, item_text.name ASC
         """
     )
     suspend fun getLocationItemsByLocationId(
