@@ -93,6 +93,7 @@ interface WeaponDao {
         WHERE
             weapon_recipe.weapon_id = :weaponId
             AND weapon_recipe.recipe_type = :recipeType
+        ORDER BY quantity DESC
         """
     )
     suspend fun getWeaponRecipeByWeaponId(

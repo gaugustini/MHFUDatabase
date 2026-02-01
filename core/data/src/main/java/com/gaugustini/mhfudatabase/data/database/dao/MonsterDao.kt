@@ -73,6 +73,7 @@ interface MonsterDao {
             monster_item.*
         FROM monster_item
         WHERE monster_id = :monsterId
+        ORDER BY monster_item.state DESC
         """
     )
     suspend fun getMonsterItemByMonsterId(monsterId: Int): List<MonsterItemEntity>
@@ -94,6 +95,7 @@ interface MonsterDao {
             ON item.id = item_text.item_id
             AND item_text.language = :language
         WHERE monster_id = :monsterId
+        ORDER BY rctxt.reward_condition_id ASC, mr.percentage DESC
         """
     )
     suspend fun getMonsterRewardsByMonsterId(

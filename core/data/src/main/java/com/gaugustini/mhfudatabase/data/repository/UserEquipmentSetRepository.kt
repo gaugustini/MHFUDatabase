@@ -106,6 +106,7 @@ class UserEquipmentSetRepository @Inject constructor(
             .map { (_, skills) ->
                 skills.first().copy(points = skills.sumOf { it.points })
             }
+            .sortedByDescending { it.points }
     }
 
     /**
@@ -130,6 +131,7 @@ class UserEquipmentSetRepository @Inject constructor(
             .map { (_, items) ->
                 items.first().copy(quantity = items.sumOf { it.quantity })
             }
+            .sortedByDescending { it.quantity }
     }
 
 }

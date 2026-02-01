@@ -89,6 +89,7 @@ interface ItemDao {
             ON location.id = location_text.location_id
             AND location_text.language = :language
         WHERE li.item_id = :itemId
+        ORDER BY location_text.name ASC, li.area ASC, li.gather_type ASC
         """
     )
     suspend fun getLocationSources(itemId: Int, language: String): List<LocationItemWithLocation>
@@ -110,6 +111,7 @@ interface ItemDao {
             ON monster.id = monster_text.monster_id
             AND monster_text.language = :language
         WHERE mr.item_id = :itemId
+        ORDER BY monster_text.name ASC, mr.percentage DESC
         """
     )
     suspend fun getMonsterRewardSources(itemId: Int, language: String): List<MonsterRewardWithMonster>
@@ -139,6 +141,7 @@ interface ItemDao {
         JOIN armor_recipe
             ON armor.id = armor_recipe.armor_id
         WHERE armor_recipe.item_id = :itemId
+        ORDER BY armor_recipe.quantity ASC, armor.rarity ASC
         """
     )
     suspend fun getArmorUsages(itemId: Int, language: String): List<ArmorWithItemQuantity>
@@ -159,6 +162,7 @@ interface ItemDao {
         JOIN decoration_recipe
             ON decoration.id = decoration_recipe.decoration_id
         WHERE decoration_recipe.item_id = :itemId
+        ORDER BY decoration_recipe.quantity ASC
         """
     )
     suspend fun getDecorationUsages(itemId: Int, language: String): List<DecorationWithItemQuantity>
@@ -176,6 +180,7 @@ interface ItemDao {
         JOIN weapon_recipe
             ON weapon.id = weapon_recipe.weapon_id
         WHERE weapon_recipe.item_id = :itemId
+        ORDER BY weapon_recipe.quantity ASC, weapon.rarity ASC
         """
     )
     suspend fun getWeaponsUsages(itemId: Int, language: String): List<WeaponWithItemQuantity>

@@ -1,7 +1,14 @@
 package com.gaugustini.mhfudatabase.data.repository
 
 import com.gaugustini.mhfudatabase.data.database.dao.SkillDao
+import com.gaugustini.mhfudatabase.data.database.relation.ArmorWithText
+import com.gaugustini.mhfudatabase.data.database.relation.DecorationWithText
+import com.gaugustini.mhfudatabase.data.database.relation.EquipmentSkillTreePoint
+import com.gaugustini.mhfudatabase.data.mapper.ArmorMapper
+import com.gaugustini.mhfudatabase.data.mapper.DecorationMapper
 import com.gaugustini.mhfudatabase.data.mapper.SkillTreeMapper
+import com.gaugustini.mhfudatabase.domain.model.Armor
+import com.gaugustini.mhfudatabase.domain.model.Decoration
 import com.gaugustini.mhfudatabase.domain.model.SkillTree
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -35,6 +42,50 @@ class SkillRepository @Inject constructor(
         language: String,
     ): List<SkillTree> {
         return skillDao.getSkillTreeList(language).map { SkillTreeMapper.toModel(it) }
+    }
+
+    /**
+     * Returns a list of armors with the given skill tree ID.
+     */
+    suspend fun getArmorListWithSkill(
+        skillTreeId: Int,
+        language: String,
+    ): List<Armor> {
+        return skillDao.getArmorListWithSkill(skillTreeId, language).map {
+            ArmorMapper.toModel(
+                armor = ArmorWithText(it.armor, it.armorText),
+                skills = listOf(
+                    EquipmentSkillTreePoint(
+                        equipmentId = it.armor.id,
+                        skillTree = it.skillTree,
+                        skillTreeText = it.skillTreeText,
+                        points = it.points,
+                    ),
+                ),
+            )
+        }
+    }
+
+    /**
+     * Returns a list of decorations with the given skill tree ID.
+     */
+    suspend fun getDecorationListWithSkill(
+        skillTreeId: Int,
+        language: String,
+    ): List<Decoration> {
+        return skillDao.getDecorationListWithSkill(skillTreeId, language).map {
+            DecorationMapper.toModel(
+                decoration = DecorationWithText(it.decoration, it.item, it.itemText),
+                skills = listOf(
+                    EquipmentSkillTreePoint(
+                        equipmentId = it.decoration.id,
+                        skillTree = it.skillTree,
+                        skillTreeText = it.skillTreeText,
+                        points = it.points,
+                    ),
+                ),
+            )
+        }
     }
 
 }

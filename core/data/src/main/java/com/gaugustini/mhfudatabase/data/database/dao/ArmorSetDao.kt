@@ -78,7 +78,7 @@ interface ArmorSetDao {
             AND skill_tree_text.language = :language
         WHERE armor_set.id = :armorSetId
         GROUP BY skill_tree.id
-        ORDER BY armor_skill.point_value DESC
+        ORDER BY points DESC
         """
     )
     suspend fun getArmorSetSkillsByArmorSetId(
@@ -105,7 +105,7 @@ interface ArmorSetDao {
             AND item_text.language = :language
         WHERE armor_set.id = :armorSetId
         GROUP BY item.id
-        ORDER BY armor_recipe.quantity DESC
+        ORDER BY quantity DESC
         """
     )
     suspend fun getArmorSetRecipeByArmorSetId(
