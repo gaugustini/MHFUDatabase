@@ -37,7 +37,7 @@ fun SkillPointDecorationListItem(
         },
         trailingContent = {
             Text(
-                text = decoration.skills?.first().toString(),
+                text = decoration.skills?.first()?.points.toString(),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )

@@ -38,7 +38,7 @@ fun SkillPointArmorListItem(
         },
         trailingContent = {
             Text(
-                text = armor.skills?.first().toString(),
+                text = armor.skills?.first()?.points.toString(),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )

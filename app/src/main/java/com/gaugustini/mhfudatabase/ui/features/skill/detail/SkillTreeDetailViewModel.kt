@@ -57,8 +57,8 @@ class SkillTreeDetailViewModel @Inject constructor(
             _uiState.update { state ->
                 state.copy(
                     skillTree = skillRepository.getSkillTree(skillTreeId, language.code),
-//                    decorations = TODO(),
-//                    armors = TODO(),
+                    decorations = skillRepository.getDecorationListWithSkill(skillTreeId, language.code),
+                    armors = skillRepository.getArmorListWithSkill(skillTreeId, language.code),
                 )
             }
         }
