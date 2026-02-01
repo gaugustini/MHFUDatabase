@@ -1,40 +1,31 @@
 package com.gaugustini.mhfudatabase.ui.features.monster.detail
 
-import android.content.res.Configuration
 import androidx.annotation.StringRes
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
+import com.gaugustini.mhfudatabase.domain.enums.Rank
 import com.gaugustini.mhfudatabase.ui.components.EmptyContent
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TabbedLayout
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
 
-enum class MonsterDetailTab(@param:StringRes val title: Int) {
+enum class MonsterDetailTab(@get:StringRes val title: Int) {
     SUMMARY(R.string.tab_monster_detail_summary),
     DAMAGE(R.string.tab_monster_detail_damage),
     LOW_RANK(R.string.tab_monster_detail_low_rank),
     HIGH_RANK(R.string.tab_monster_detail_high_rank),
     G_RANK(R.string.tab_monster_detail_g_rank),
     QUEST(R.string.tab_monster_detail_quest);
-
-    companion object {
-        val all = MonsterDetailTab.entries
-
-        fun fromIndex(index: Int): MonsterDetailTab = all.getOrElse(index) { SUMMARY }
-
-        fun toIndex(tab: MonsterDetailTab): Int = all.indexOf(tab)
-
-    }
 }
 
 @Composable
@@ -65,13 +56,13 @@ fun MonsterDetailScreen(
     onQuestClick: (questId: Int) -> Unit = {},
 ) {
     val pagerState = rememberPagerState(
-        initialPage = MonsterDetailTab.toIndex(uiState.initialTab),
-        pageCount = { MonsterDetailTab.all.size },
+        initialPage = uiState.initialTab.ordinal,
+        pageCount = { MonsterDetailTab.entries.size },
     )
 
     TabbedLayout(
         pagerState = pagerState,
-        tabTitles = MonsterDetailTab.all.map { stringResource(it.title) },
+        tabTitles = MonsterDetailTab.entries.map { stringResource(it.title) },
         topBar = {
             TopBar(
                 title = uiState.monster?.name ?: stringResource(R.string.screen_monster_detail),
@@ -82,7 +73,7 @@ fun MonsterDetailScreen(
         },
     ) { tabIndex ->
         if (uiState.monster != null) {
-            when (MonsterDetailTab.fromIndex(tabIndex)) {
+            when (MonsterDetailTab.entries[tabIndex]) {
                 MonsterDetailTab.SUMMARY -> {
                     MonsterDetailSummaryContent(
                         monster = uiState.monster,
@@ -97,46 +88,54 @@ fun MonsterDetailScreen(
                 }
 
                 MonsterDetailTab.LOW_RANK -> {
-                    if (uiState.rewardsLowRank.isNotEmpty()) {
-                        MonsterDetailRankContent(
-                            rewards = uiState.rewardsLowRank,
-                            onItemClick = onItemClick,
-                        )
-                    } else {
-                        EmptyContent()
+                    uiState.monster.rewards?.get(Rank.LOW).let { rewards ->
+                        if (rewards?.isEmpty() ?: true) {
+                            EmptyContent()
+                        } else {
+                            MonsterDetailRankContent(
+                                rewards = rewards,
+                                onItemClick = onItemClick,
+                            )
+                        }
                     }
                 }
 
                 MonsterDetailTab.HIGH_RANK -> {
-                    if (uiState.rewardsHighRank.isNotEmpty()) {
-                        MonsterDetailRankContent(
-                            rewards = uiState.rewardsHighRank,
-                            onItemClick = onItemClick,
-                        )
-                    } else {
-                        EmptyContent()
+                    uiState.monster.rewards?.get(Rank.HIGH).let { rewards ->
+                        if (rewards?.isEmpty() ?: true) {
+                            EmptyContent()
+                        } else {
+                            MonsterDetailRankContent(
+                                rewards = rewards,
+                                onItemClick = onItemClick,
+                            )
+                        }
                     }
                 }
 
                 MonsterDetailTab.G_RANK -> {
-                    if (uiState.rewardsGRank.isNotEmpty()) {
-                        MonsterDetailRankContent(
-                            rewards = uiState.rewardsGRank,
-                            onItemClick = onItemClick,
-                        )
-                    } else {
-                        EmptyContent()
+                    uiState.monster.rewards?.get(Rank.G).let { rewards ->
+                        if (rewards?.isEmpty() ?: true) {
+                            EmptyContent()
+                        } else {
+                            MonsterDetailRankContent(
+                                rewards = rewards,
+                                onItemClick = onItemClick,
+                            )
+                        }
                     }
                 }
 
                 MonsterDetailTab.QUEST -> {
-                    if (uiState.monster.quests != null) {
-                        MonsterDetailQuestContent(
-                            quests = uiState.monster.quests ?: emptyList(),
-                            onQuestClick = onQuestClick,
-                        )
-                    } else {
-                        EmptyContent()
+                    uiState.monster.quests.let { quests ->
+                        if (quests?.isEmpty() ?: true) {
+                            EmptyContent()
+                        } else {
+                            MonsterDetailQuestContent(
+                                quests = quests,
+                                onQuestClick = onQuestClick,
+                            )
+                        }
                     }
                 }
             }
@@ -144,11 +143,10 @@ fun MonsterDetailScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
 fun MonsterDetailScreenPreview(
-    @PreviewParameter(MonsterDetailScreenPreviewParameter::class) uiState: MonsterDetailState,
+    @PreviewParameter(MonsterDetailScreenPreviewParameter::class) uiState: MonsterDetailState
 ) {
     Theme {
         MonsterDetailScreen(uiState)
@@ -169,12 +167,11 @@ private class MonsterDetailScreenPreviewParameter : PreviewParameterProvider<Mon
         MonsterDetailState(
             initialTab = MonsterDetailTab.LOW_RANK,
             monster = PreviewMonsterData.monster,
-            rewardsLowRank = PreviewMonsterData.monsterRewardList,
         ),
         MonsterDetailState(
             initialTab = MonsterDetailTab.QUEST,
             monster = PreviewMonsterData.monster,
-        )
+        ),
     )
 
 }

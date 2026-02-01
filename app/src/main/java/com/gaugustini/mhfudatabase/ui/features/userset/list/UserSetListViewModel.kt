@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 data class UserSetListState(
-    val sets: List<UserEquipmentSet> = emptyList(),
+    val equipmentSets: List<UserEquipmentSet> = emptyList(),
 )
 
 @HiltViewModel
@@ -27,15 +27,15 @@ class UserSetListViewModel @Inject constructor(
     val uiState: StateFlow<UserSetListState> = _uiState.asStateFlow()
 
     init {
-        observeEquipmentSets()
+        loadEquipmentSets()
     }
 
-    private fun observeEquipmentSets() {
+    private fun loadEquipmentSets() {
         userEquipmentSetRepository.getEquipmentSets()
             .distinctUntilChanged()
             .onEach { sets ->
                 _uiState.update { state ->
-                    state.copy(sets = sets)
+                    state.copy(equipmentSets = sets)
                 }
             }
             .launchIn(viewModelScope)

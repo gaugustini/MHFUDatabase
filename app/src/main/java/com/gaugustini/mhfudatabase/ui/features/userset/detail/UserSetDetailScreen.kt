@@ -1,6 +1,5 @@
 package com.gaugustini.mhfudatabase.ui.features.userset.detail
 
-import android.content.res.Configuration
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.rememberPagerState
@@ -16,39 +15,27 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TabbedLayout
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.features.userset.components.ArmorSelection
-import com.gaugustini.mhfudatabase.ui.features.userset.components.ArmorSelectionFilter
 import com.gaugustini.mhfudatabase.ui.features.userset.components.DecorationSelection
-import com.gaugustini.mhfudatabase.ui.features.userset.components.DecorationSelectionFilter
 import com.gaugustini.mhfudatabase.ui.features.userset.components.DeleteConfirmationDialog
 import com.gaugustini.mhfudatabase.ui.features.userset.components.RenameDialog
 import com.gaugustini.mhfudatabase.ui.features.userset.components.WeaponSelection
-import com.gaugustini.mhfudatabase.ui.features.userset.components.WeaponSelectionFilter
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
+import com.gaugustini.mhfudatabase.util.preview.PreviewUserEquipmentSet
 
-enum class UserSetDetailTab(@param:StringRes val title: Int) {
+enum class UserSetDetailTab(@get:StringRes val title: Int) {
     EQUIPMENT(R.string.tab_user_set_detail_equipment),
     SUMMARY(R.string.tab_user_set_detail_summary);
-
-    companion object {
-        val all = UserSetDetailTab.entries
-
-        fun fromIndex(index: Int): UserSetDetailTab = all.getOrElse(index) { EQUIPMENT }
-
-        fun toIndex(tab: UserSetDetailTab): Int = all.indexOf(tab)
-
-    }
 }
 
 @Composable
@@ -65,21 +52,9 @@ fun UserSetDetailRoute(
         uiState = uiState,
         navigateBack = navigateBack,
         openSearch = openSearch,
-        renameUserSet = viewModel::renameUserSet,
-        deleteUserSet = viewModel::deleteUserSet,
-        openWeaponSelection = viewModel::openWeaponSelection,
-        openArmorSelection = viewModel::openArmorSelection,
-        openDecorationSelection = viewModel::openDecorationSelection,
-        closeSelection = viewModel::closeSelection,
-        changeWeapon = viewModel::changeWeapon,
-        changeArmor = viewModel::changeArmor,
-        addDecoration = viewModel::addDecoration,
-        removeDecoration = viewModel::removeDecoration,
+        onEvent = viewModel::onEvent,
         onItemClick = onItemClick,
         onSkillClick = onSkillClick,
-        onWeaponFilterChange = viewModel::applyWeaponFilter,
-        onArmorFilterChange = viewModel::applyArmorFilter,
-        onDecorationFilterChange = viewModel::applyDecorationFilter,
     )
 }
 
@@ -88,37 +63,25 @@ fun UserSetDetailScreen(
     uiState: UserSetDetailState = UserSetDetailState(),
     navigateBack: () -> Unit = {},
     openSearch: () -> Unit = {},
-    renameUserSet: (newSetName: String) -> Unit = {},
-    deleteUserSet: () -> Unit = {},
-    openWeaponSelection: () -> Unit = {},
-    openArmorSelection: (armorType: EquipmentType) -> Unit = {},
-    openDecorationSelection: (equipmentType: EquipmentType, availableSlots: Int) -> Unit = { _, _ -> },
-    closeSelection: () -> Unit = {},
-    changeWeapon: (weaponId: Int) -> Unit = {},
-    changeArmor: (armorId: Int) -> Unit = {},
-    addDecoration: (decorationId: Int) -> Unit = {},
-    removeDecoration: (decorationId: Int, equipmentType: EquipmentType) -> Unit = { _, _ -> },
+    onEvent: (UserSetEvent) -> Unit = {},
     onItemClick: (itemId: Int) -> Unit = {},
     onSkillClick: (skillTreeId: Int) -> Unit = {},
-    onWeaponFilterChange: (filter: WeaponSelectionFilter) -> Unit = {},
-    onArmorFilterChange: (filter: ArmorSelectionFilter) -> Unit = {},
-    onDecorationFilterChange: (filter: DecorationSelectionFilter) -> Unit = {},
 ) {
     var showRenameDialog by rememberSaveable { mutableStateOf(false) }
     var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
 
     if (!uiState.openSelectionEquipment) {
         val pagerState = rememberPagerState(
-            initialPage = UserSetDetailTab.toIndex(uiState.initialTab),
-            pageCount = { UserSetDetailTab.all.size },
+            initialPage = uiState.initialTab.ordinal,
+            pageCount = { UserSetDetailTab.entries.size },
         )
 
         TabbedLayout(
             pagerState = pagerState,
-            tabTitles = UserSetDetailTab.all.map { stringResource(it.title) },
+            tabTitles = UserSetDetailTab.entries.map { stringResource(it.title) },
             topBar = {
                 TopBar(
-                    title = uiState.set?.name ?: stringResource(R.string.user_set_new),
+                    title = uiState.equipmentSet.name.ifBlank { stringResource(R.string.user_set_new) },
                     navigationType = NavigationType.BACK,
                     navigation = navigateBack,
                     openSearch = openSearch,
@@ -145,27 +108,38 @@ fun UserSetDetailScreen(
                 )
             },
         ) { tabIndex ->
-            when (UserSetDetailTab.fromIndex(tabIndex)) {
-                UserSetDetailTab.EQUIPMENT -> UserSetDetailEquipmentContent(
-                    weapon = uiState.setWeapon,
-                    armors = uiState.setArmors,
-                    decorations = uiState.setDecorations,
-                    onWeaponClick = openWeaponSelection,
-                    onArmorClick = openArmorSelection,
-                    onAddDecoration = openDecorationSelection,
-                    onRemoveDecoration = removeDecoration,
-                )
+            when (UserSetDetailTab.entries[tabIndex]) {
+                UserSetDetailTab.EQUIPMENT -> {
+                    UserSetDetailEquipmentContent(
+                        equipmentSet = uiState.equipmentSet,
+                        openWeaponSelection = {
+                            onEvent(UserSetEvent.OpenSelection(SelectionType.WEAPON))
+                        },
+                        openArmorSelection = { armorType ->
+                            onEvent(UserSetEvent.OpenSelection(SelectionType.ARMOR, armorType))
+                        },
+                        openDecorationSelection = { equipmentType, availableSlots ->
+                            onEvent(
+                                UserSetEvent.OpenSelection(
+                                    type = SelectionType.DECORATION,
+                                    equipmentType = equipmentType,
+                                    availableSlots = availableSlots
+                                )
+                            )
+                        },
+                        onRemoveDecoration = { decorationId, equipmentType ->
+                            onEvent(UserSetEvent.RemoveDecoration(decorationId, equipmentType))
+                        },
+                    )
+                }
 
-                UserSetDetailTab.SUMMARY -> UserSetDetailSummaryContent(
-                    set = uiState.set,
-                    weapon = uiState.setWeapon,
-                    armors = uiState.setArmors,
-                    activeSkills = uiState.setActiveSkills,
-                    skillTreePoints = uiState.setSkillTreePoints,
-                    requiredMaterials = uiState.setRequiredMaterials,
-                    onItemClick = onItemClick,
-                    onSkillClick = onSkillClick,
-                )
+                UserSetDetailTab.SUMMARY -> {
+                    UserSetDetailSummaryContent(
+                        equipmentSet = uiState.equipmentSet,
+                        onItemClick = onItemClick,
+                        onSkillClick = onSkillClick,
+                    )
+                }
             }
         }
     } else {
@@ -174,12 +148,12 @@ fun UserSetDetailScreen(
                 WeaponSelection(
                     weapons = uiState.weapons,
                     filter = uiState.weaponSelectionFilter,
-                    onWeaponClick = {
-                        changeWeapon(it)
-                        closeSelection()
+                    onWeaponClick = { weaponId ->
+                        onEvent(UserSetEvent.ChangeWeapon(weaponId))
+                        onEvent(UserSetEvent.CloseSelection)
                     },
-                    onFilterChange = onWeaponFilterChange,
-                    onBack = closeSelection,
+                    onFilterChange = { onEvent(UserSetEvent.ApplyWeaponFilter(it)) },
+                    onBack = { onEvent(UserSetEvent.CloseSelection) },
                 )
             }
 
@@ -187,12 +161,12 @@ fun UserSetDetailScreen(
                 ArmorSelection(
                     armors = uiState.armors,
                     filter = uiState.armorSelectionFilter,
-                    onArmorClick = {
-                        changeArmor(it)
-                        closeSelection()
+                    onArmorClick = { armorId ->
+                        onEvent(UserSetEvent.ChangeArmor(armorId))
+                        onEvent(UserSetEvent.CloseSelection)
                     },
-                    onFilterChange = onArmorFilterChange,
-                    onBack = closeSelection,
+                    onFilterChange = { onEvent(UserSetEvent.ApplyArmorFilter(it)) },
+                    onBack = { onEvent(UserSetEvent.CloseSelection) },
                 )
             }
 
@@ -200,12 +174,12 @@ fun UserSetDetailScreen(
                 DecorationSelection(
                     decorations = uiState.decorations,
                     filter = uiState.decorationSelectionFilter,
-                    onDecorationClick = {
-                        addDecoration(it)
-                        closeSelection()
+                    onDecorationClick = { decorationId ->
+                        onEvent(UserSetEvent.AddDecoration(decorationId))
+                        onEvent(UserSetEvent.CloseSelection)
                     },
-                    onFilterChange = onDecorationFilterChange,
-                    onBack = closeSelection,
+                    onFilterChange = { onEvent(UserSetEvent.ApplyDecorationFilter(it)) },
+                    onBack = { onEvent(UserSetEvent.CloseSelection) },
                 )
             }
 
@@ -215,9 +189,9 @@ fun UserSetDetailScreen(
 
     if (showRenameDialog) {
         RenameDialog(
-            setName = uiState.set?.name ?: stringResource(R.string.user_set_new),
+            setName = uiState.equipmentSet.name.ifBlank { stringResource(R.string.user_set_new) },
             onConfirm = { newName ->
-                renameUserSet(newName)
+                onEvent(UserSetEvent.Rename(newName))
                 showRenameDialog = false
             },
             onDismiss = { showRenameDialog = false },
@@ -227,7 +201,7 @@ fun UserSetDetailScreen(
     if (showDeleteDialog) {
         DeleteConfirmationDialog(
             onConfirm = {
-                deleteUserSet()
+                onEvent(UserSetEvent.Delete)
                 showDeleteDialog = false
                 navigateBack()
             },
@@ -236,8 +210,7 @@ fun UserSetDetailScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
 fun UserSetDetailScreenPreview(
     @PreviewParameter(UserSetDetailScreenPreviewParamProvider::class) uiState: UserSetDetailState
@@ -251,10 +224,12 @@ private class UserSetDetailScreenPreviewParamProvider : PreviewParameterProvider
 
     override val values: Sequence<UserSetDetailState> = sequenceOf(
         UserSetDetailState(
-            set = null,
-            setWeapon = null,
-            setArmors = listOf(),
-            setDecorations = listOf(),
+            initialTab = UserSetDetailTab.EQUIPMENT,
+            equipmentSet = PreviewUserEquipmentSet.userSet,
+        ),
+        UserSetDetailState(
+            initialTab = UserSetDetailTab.SUMMARY,
+            equipmentSet = PreviewUserEquipmentSet.userSet,
         ),
     )
 

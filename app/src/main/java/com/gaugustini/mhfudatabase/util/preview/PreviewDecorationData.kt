@@ -16,9 +16,9 @@ object PreviewDecorationData {
         buyPrice = 100,
         sellPrice = 100,
         color = ItemIconColor.RED,
-        skills = null,
-        recipeA = null,
-        recipeB = null,
+        skills = PreviewSkillData.skillPointList,
+        recipeA = PreviewItemData.itemQuantityList,
+        recipeB = PreviewItemData.itemQuantityList,
     )
 
     val decorationList = listOf(

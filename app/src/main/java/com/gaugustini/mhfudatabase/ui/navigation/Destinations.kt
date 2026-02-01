@@ -27,7 +27,7 @@ object Destinations {
     const val MONSTER_DETAIL = "monster_detail/{monsterId}"
     const val QUEST_DETAIL = "quest_detail/{questId}"
     const val SKILL_TREE_DETAIL = "skill_tree_detail/{skillTreeId}"
-    const val WEAPON_GRAPH = "weapon_graph/{weaponType}"
+    const val WEAPON_TREE = "weapon_tree/{weaponType}"
     const val WEAPON_DETAIL = "weapon_detail/{weaponId}"
     const val USER_EQUIPMENT_SET_DETAIL = "user_equipment_set_detail/{setId}"
 
@@ -38,7 +38,7 @@ object Destinations {
     fun monsterDetailRoute(monsterId: Int): String = "monster_detail/$monsterId"
     fun questDetailRoute(questId: Int): String = "quest_detail/$questId"
     fun skillTreeDetailRoute(skillTreeId: Int): String = "skill_tree_detail/$skillTreeId"
-    fun weaponGraphRoute(weaponType: String): String = "weapon_graph/$weaponType"
+    fun weaponTreeRoute(weaponType: String): String = "weapon_tree/$weaponType"
     fun weaponDetailRoute(weaponId: Int): String = "weapon_detail/$weaponId"
     fun userEquipmentSetDetailRoute(setId: Int): String = "user_equipment_set_detail/$setId"
 

@@ -1,6 +1,5 @@
 package com.gaugustini.mhfudatabase.ui.features.skill.detail
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,15 +10,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.model.Armor
 import com.gaugustini.mhfudatabase.domain.model.Decoration
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
-import com.gaugustini.mhfudatabase.ui.features.skill.components.SkillPointsArmorListItem
-import com.gaugustini.mhfudatabase.ui.features.skill.components.SkillPointsDecorationListItem
+import com.gaugustini.mhfudatabase.ui.features.skill.components.SkillPointArmorListItem
+import com.gaugustini.mhfudatabase.ui.features.skill.components.SkillPointDecorationListItem
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
 import com.gaugustini.mhfudatabase.util.preview.PreviewDecorationData
 
@@ -51,7 +50,7 @@ fun SkillTreeEquipmentContent(
             }
         } else {
             itemsIndexed(decorations) { index, decoration ->
-                SkillPointsDecorationListItem(
+                SkillPointDecorationListItem(
                     decoration = decoration,
                     onDecorationClick = onDecorationClick,
                 )
@@ -78,7 +77,7 @@ fun SkillTreeEquipmentContent(
             }
         } else {
             itemsIndexed(armors) { index, armor ->
-                SkillPointsArmorListItem(
+                SkillPointArmorListItem(
                     armor = armor,
                     onArmorClick = onArmorClick,
                 )
@@ -90,14 +89,13 @@ fun SkillTreeEquipmentContent(
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
 fun SkillTreeEquipmentContentPreview() {
     Theme {
         SkillTreeEquipmentContent(
-            armors = PreviewArmorData.armorList,
             decorations = PreviewDecorationData.decorationList,
+            armors = PreviewArmorData.armorList,
         )
     }
 }

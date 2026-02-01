@@ -1,6 +1,5 @@
 package com.gaugustini.mhfudatabase.ui.features.item.components
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,11 +12,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.model.Item
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
 
 @Composable
@@ -55,9 +54,7 @@ fun ItemSummary(
             modifier = Modifier.weight(1f)
         ) {
             Text(
-                text = if (item.buyPrice == 0) {
-                    "-"
-                } else "${item.buyPrice}z",
+                text = if (item.buyPrice != null) "${item.buyPrice}z" else "-",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
@@ -67,7 +64,6 @@ fun ItemSummary(
                 color = MaterialTheme.colorScheme.onSurface,
             )
         }
-
 
         Column(
             verticalArrangement = Arrangement.spacedBy(Dimension.Padding.small),
@@ -88,14 +84,12 @@ fun ItemSummary(
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
 fun ItemSummaryPreview() {
     Theme {
         ItemSummary(
             item = PreviewItemData.item,
-            modifier = Modifier.background(MaterialTheme.colorScheme.background)
         )
     }
 }

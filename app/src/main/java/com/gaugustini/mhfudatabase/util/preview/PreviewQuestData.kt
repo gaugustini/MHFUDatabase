@@ -22,8 +22,8 @@ object PreviewQuestData {
         reward = 1,
         fee = 1,
         timeLimit = 1,
-        location = null,
-        monsters = null,
+        location = PreviewLocationData.location,
+        monsters = PreviewMonsterData.monsterList,
     )
 
     val questList = listOf(

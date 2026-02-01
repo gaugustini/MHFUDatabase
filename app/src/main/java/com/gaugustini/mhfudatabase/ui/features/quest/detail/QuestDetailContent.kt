@@ -1,9 +1,7 @@
 package com.gaugustini.mhfudatabase.ui.features.quest.detail
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -12,7 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.HubType
 import com.gaugustini.mhfudatabase.domain.model.Quest
@@ -24,6 +21,7 @@ import com.gaugustini.mhfudatabase.ui.features.monster.components.MonsterListIte
 import com.gaugustini.mhfudatabase.ui.features.quest.components.QuestSummary
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewQuestData
 
 @Composable
@@ -36,7 +34,6 @@ fun QuestDetailContent(
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
-            .fillMaxSize()
             .background(MaterialTheme.colorScheme.surface)
             .padding(bottom = Dimension.Padding.endContent)
     ) {
@@ -78,7 +75,6 @@ fun QuestDetailContent(
         SectionHeader(
             title = stringResource(R.string.quest_location),
         )
-
         quest.location?.let { location ->
             LocationListItem(
                 location = location,
@@ -98,8 +94,7 @@ fun QuestDetailContent(
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
 fun QuestDetailContentPreview() {
     Theme {

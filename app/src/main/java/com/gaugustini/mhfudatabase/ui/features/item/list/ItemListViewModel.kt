@@ -46,7 +46,9 @@ class ItemListViewModel @Inject constructor(
     private fun loadItems(language: Language) {
         viewModelScope.launch {
             _uiState.update { state ->
-                state.copy(items = itemRepository.getItemList(language.code))
+                state.copy(
+                    items = itemRepository.getItemList(language.code),
+                )
             }
         }
     }

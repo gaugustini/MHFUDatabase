@@ -1,14 +1,14 @@
-package com.gaugustini.mhfudatabase.ui.features.weapon.graph
+package com.gaugustini.mhfudatabase.ui.features.weapon.tree
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -17,20 +17,21 @@ import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.WeaponType
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TopBar
-import com.gaugustini.mhfudatabase.ui.features.weapon.components.WeaponGraph
+import com.gaugustini.mhfudatabase.ui.features.weapon.components.WeaponNode
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewWeaponData
 
 @Composable
-fun WeaponGraphRoute(
+fun WeaponTreeRoute(
     navigateBack: () -> Unit,
     openSearch: () -> Unit,
     onWeaponClick: (weaponId: Int) -> Unit,
-    viewModel: WeaponGraphViewModel = hiltViewModel(),
+    viewModel: WeaponTreeViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    WeaponGraphScreen(
+    WeaponTreeScreen(
         uiState = uiState,
         navigateBack = navigateBack,
         openSearch = openSearch,
@@ -39,8 +40,8 @@ fun WeaponGraphRoute(
 }
 
 @Composable
-fun WeaponGraphScreen(
-    uiState: WeaponGraphState = WeaponGraphState(),
+fun WeaponTreeScreen(
+    uiState: WeaponTreeState = WeaponTreeState(),
     navigateBack: () -> Unit = {},
     openSearch: () -> Unit = {},
     onWeaponClick: (weaponId: Int) -> Unit = {},
@@ -69,34 +70,37 @@ fun WeaponGraphScreen(
             )
         },
     ) { innerPadding ->
-        WeaponGraph(
-            graph = uiState.nodes,
-            onWeaponClick = onWeaponClick,
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-        )
+        ) {
+            items(uiState.nodes) { root ->
+                WeaponNode(
+                    node = root,
+                    onWeaponClick = onWeaponClick,
+                )
+            }
+        }
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
-fun WeaponGraphScreenPreview(
-    @PreviewParameter(WeaponGraphScreenPreviewParameterProvider::class) uiState: WeaponGraphState
+fun WeaponTreeScreenPreview(
+    @PreviewParameter(WeaponTreeScreenPreviewParameterProvider::class) uiState: WeaponTreeState
 ) {
     Theme {
-        WeaponGraphScreen(uiState)
+        WeaponTreeScreen(uiState)
     }
 }
 
-private class WeaponGraphScreenPreviewParameterProvider :
-    PreviewParameterProvider<WeaponGraphState> {
+private class WeaponTreeScreenPreviewParameterProvider : PreviewParameterProvider<WeaponTreeState> {
 
-    override val values: Sequence<WeaponGraphState> = sequenceOf(
-        WeaponGraphState(
+    override val values: Sequence<WeaponTreeState> = sequenceOf(
+        WeaponTreeState(
             weaponType = WeaponType.GREAT_SWORD,
-            nodes = PreviewWeaponData.graph,
+            nodes = PreviewWeaponData.weaponNodeList,
         ),
     )
 

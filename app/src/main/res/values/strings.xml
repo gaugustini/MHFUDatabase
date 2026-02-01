@@ -180,8 +180,8 @@
     <string name="location_gather_fish">Fishing</string>
 
     <!-- Monster -->
-    <string name="monster_item_usage">Items</string>
-    <string name="monster_item_usage_none">None</string>
+    <string name="monster_item_effectiveness">Items Effectiveness</string>
+    <string name="monster_item_effectiveness_none">None</string>
     <string name="monster_state_normal">Normal</string>
     <string name="monster_state_enraged">Enraged</string>
     <string name="monster_physical_damage">Physical</string>

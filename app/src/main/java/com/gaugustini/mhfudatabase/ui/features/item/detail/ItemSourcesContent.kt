@@ -1,6 +1,5 @@
 package com.gaugustini.mhfudatabase.ui.features.item.detail
 
-import android.content.res.Configuration
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.HorizontalDivider
@@ -8,24 +7,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.Rank
-import com.gaugustini.mhfudatabase.domain.model.GatheringSource
-import com.gaugustini.mhfudatabase.domain.model.ItemCombination
-import com.gaugustini.mhfudatabase.domain.model.MonsterSource
+import com.gaugustini.mhfudatabase.domain.model.ItemSources
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.features.item.components.GatheringSourceListItem
 import com.gaugustini.mhfudatabase.ui.features.item.components.MonsterSourceListItem
 import com.gaugustini.mhfudatabase.ui.features.itemcombination.components.ItemCombinationListItem
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
 
 @Composable
 fun ItemSourcesContent(
-    combinations: List<ItemCombination>,
-    locations: List<GatheringSource>,
-    monsters: List<MonsterSource>,
+    sources: ItemSources,
     modifier: Modifier = Modifier,
     onItemClick: (itemId: Int) -> Unit = {},
     onLocationClick: (locationId: Int) -> Unit = {},
@@ -34,30 +29,30 @@ fun ItemSourcesContent(
     LazyColumn(
         modifier = modifier
     ) {
-        if (combinations.isNotEmpty()) {
+        if (sources.combinations.isNotEmpty()) {
             item {
                 SectionHeader(
                     title = stringResource(R.string.item_crafting),
                 )
             }
-            itemsIndexed(combinations) { index, combination ->
+            itemsIndexed(sources.combinations) { index, combination ->
                 ItemCombinationListItem(
-                    itemCombination = combination,
+                    combination = combination,
                     onItemClick = onItemClick,
                 )
-                if (index != combinations.lastIndex) {
+                if (index != sources.combinations.lastIndex) {
                     HorizontalDivider()
                 }
             }
         }
 
-        if (locations.isNotEmpty()) {
+        if (sources.locations.isNotEmpty()) {
             item {
                 SectionHeader(
                     title = stringResource(R.string.item_location),
                 )
             }
-            val itemsPerLocation = locations.groupBy { it.location.name }
+            val itemsPerLocation = sources.locations.groupBy { it.location.name }
 
             itemsPerLocation.forEach { (locationName, items) ->
                 val itemsPerRank = items.groupBy { it.rank }
@@ -90,18 +85,18 @@ fun ItemSourcesContent(
             }
         }
 
-        if (monsters.isNotEmpty()) {
+        if (sources.monsterRewards.isNotEmpty()) {
             item {
                 SectionHeader(
                     title = stringResource(R.string.item_monster),
                 )
             }
-            itemsIndexed(monsters) { index, monster ->
+            itemsIndexed(sources.monsterRewards) { index, monster ->
                 MonsterSourceListItem(
                     source = monster,
                     onMonsterClick = onMonsterClick,
                 )
-                if (index != monsters.lastIndex) {
+                if (index != sources.monsterRewards.lastIndex) {
                     HorizontalDivider()
                 }
             }
@@ -109,15 +104,12 @@ fun ItemSourcesContent(
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
 fun ItemSourcesContentPreview() {
     Theme {
         ItemSourcesContent(
-            combinations = PreviewItemData.itemCombinationList,
-            locations = PreviewItemData.gatheringSourceList,
-            monsters = PreviewItemData.monsterSourceList,
+            sources = PreviewItemData.itemSources,
         )
     }
 }

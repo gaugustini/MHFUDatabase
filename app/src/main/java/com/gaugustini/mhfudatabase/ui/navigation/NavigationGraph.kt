@@ -32,8 +32,8 @@ import com.gaugustini.mhfudatabase.ui.features.skill.list.SkillTreeListRoute
 import com.gaugustini.mhfudatabase.ui.features.userset.detail.UserSetDetailRoute
 import com.gaugustini.mhfudatabase.ui.features.userset.list.UserSetListRoute
 import com.gaugustini.mhfudatabase.ui.features.weapon.detail.WeaponDetailRoute
-import com.gaugustini.mhfudatabase.ui.features.weapon.graph.WeaponGraphRoute
 import com.gaugustini.mhfudatabase.ui.features.weapon.list.WeaponTypeListRoute
+import com.gaugustini.mhfudatabase.ui.features.weapon.tree.WeaponTreeRoute
 
 @Composable
 fun NavigationGraph(
@@ -149,14 +149,14 @@ fun NavigationGraph(
             WeaponTypeListRoute(
                 openDrawer = openDrawer,
                 openSearch = navigationActions.navigateToSearch,
-                onWeaponTypeClick = navigationActions.navigateToWeaponGraph,
+                onWeaponTypeClick = navigationActions.navigateToWeaponTree,
             )
         }
         composable(Destinations.USER_EQUIPMENT_SET_LIST) {
             UserSetListRoute(
                 openDrawer = openDrawer,
                 openSearch = navigationActions.navigateToSearch,
-                onSetClick = navigationActions.navigateToUserEquipmentSetDetail,
+                onEquipmentSetClick = navigationActions.navigateToUserEquipmentSetDetail,
             )
         }
         composable(Destinations.SETTINGS) {
@@ -270,12 +270,12 @@ fun NavigationGraph(
             )
         }
         composable(
-            route = Destinations.WEAPON_GRAPH,
+            route = Destinations.WEAPON_TREE,
             arguments = listOf(
                 navArgument("weaponType") { type = NavType.StringType },
             ),
         ) {
-            WeaponGraphRoute(
+            WeaponTreeRoute(
                 navigateBack = navigationActions.navigateBack,
                 openSearch = navigationActions.navigateToSearch,
                 onWeaponClick = navigationActions.navigateToWeaponDetail,

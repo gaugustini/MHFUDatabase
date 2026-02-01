@@ -1,6 +1,5 @@
 package com.gaugustini.mhfudatabase.ui.features.monster.components
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,12 +14,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.model.MonsterAilmentStats
 import com.gaugustini.mhfudatabase.ui.components.icons.StatusIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
 
 @Composable
@@ -159,13 +158,12 @@ fun AilmentStatusListItem(
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
 fun MonsterAilmentsPreview() {
     Theme {
         MonsterAilments(
-            ailments = PreviewMonsterData.monsterAilmentStatusList,
+            ailments = PreviewMonsterData.monsterAilmentStatsList,
         )
     }
 }

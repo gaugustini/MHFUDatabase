@@ -7,8 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.MHFUIcons
 
 @Composable
@@ -33,7 +33,7 @@ fun MonsterIcon(
     }
 }
 
-@Preview
+@DevicePreviews
 @Composable
 fun MonsterIconPreview() {
     MonsterIcon(monsterId = 1)

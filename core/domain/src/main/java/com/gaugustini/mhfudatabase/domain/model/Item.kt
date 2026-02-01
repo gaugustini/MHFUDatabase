@@ -90,7 +90,13 @@ data class ItemSources(
     val combinations: List<ItemCombination>,
     val locations: List<GatheringSource>,
     val monsterRewards: List<MonsterSource>,
-)
+) {
+    fun isEmpty(): Boolean {
+        return combinations.isEmpty() &&
+                locations.isEmpty() &&
+                monsterRewards.isEmpty()
+    }
+}
 
 /**
  * Represents a usage of an item in the game.
@@ -113,4 +119,11 @@ data class ItemUsages(
     val armors: List<Usage<Armor>>,
     val decorations: List<Usage<Decoration>>,
     val weapons: List<Usage<Weapon>>,
-)
+) {
+    fun isEmpty(): Boolean {
+        return combinations.isEmpty() &&
+                armors.isEmpty() &&
+                decorations.isEmpty() &&
+                weapons.isEmpty()
+    }
+}

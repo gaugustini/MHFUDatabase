@@ -37,9 +37,9 @@ object PreviewMonsterData {
         monster.copy(id = 3, name = "Monster 3"),
     )
 
-    // Monster Hitzone
+    // Monster Damage Stats
 
-    val monsterHitzone = MonsterDamageStats(
+    val monsterDamageStats = MonsterDamageStats(
         monsterId = 1,
         name = "Hitzone",
         cut = 1,
@@ -52,15 +52,15 @@ object PreviewMonsterData {
         dragon = 8,
     )
 
-    val monsterHitzoneList = listOf(
-        monsterHitzone.copy(name = "Hitzone 1"),
-        monsterHitzone.copy(name = "Hitzone 2"),
-        monsterHitzone.copy(name = "Hitzone 3"),
+    val monsterDamageStatsList = listOf(
+        monsterDamageStats.copy(name = "Hitzone 1"),
+        monsterDamageStats.copy(name = "Hitzone 2"),
+        monsterDamageStats.copy(name = "Hitzone 3"),
     )
 
-    // Monster Ailment Status
+    // Monster Ailment Stats
 
-    val monsterAilmentStatus = MonsterAilmentStats(
+    val monsterAilmentStats = MonsterAilmentStats(
         monsterId = 1,
         type = MonsterAilment.KNOCKOUT,
         initial = 1,
@@ -70,16 +70,16 @@ object PreviewMonsterData {
         damage = 5,
     )
 
-    val monsterAilmentStatusList = listOf(
-        monsterAilmentStatus.copy(type = MonsterAilment.KNOCKOUT),
-        monsterAilmentStatus.copy(type = MonsterAilment.PARALYSIS),
-        monsterAilmentStatus.copy(type = MonsterAilment.POISON),
-        monsterAilmentStatus.copy(type = MonsterAilment.SLEEP),
+    val monsterAilmentStatsList = listOf(
+        monsterAilmentStats.copy(type = MonsterAilment.KNOCKOUT),
+        monsterAilmentStats.copy(type = MonsterAilment.PARALYSIS),
+        monsterAilmentStats.copy(type = MonsterAilment.POISON),
+        monsterAilmentStats.copy(type = MonsterAilment.SLEEP),
     )
 
-    // Monster Item Usage
+    // Monster Item Effectiveness
 
-    val monsterItemUsage = MonsterItemEffectiveness(
+    val monsterItemEffectiveness = MonsterItemEffectiveness(
         monsterId = 1,
         monsterState = MonsterState.NORMAL,
         canUsePitfallTrap = true,
@@ -90,9 +90,9 @@ object PreviewMonsterData {
         canUseMeat = true,
     )
 
-    val monsterItemUsageList = listOf(
-        monsterItemUsage.copy(monsterState = MonsterState.NORMAL),
-        monsterItemUsage.copy(monsterState = MonsterState.ENRAGED),
+    val monsterItemEffectivenessList = listOf(
+        monsterItemEffectiveness.copy(monsterState = MonsterState.NORMAL),
+        monsterItemEffectiveness.copy(monsterState = MonsterState.ENRAGED),
     )
 
     // Monster Reward

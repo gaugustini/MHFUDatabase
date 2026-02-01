@@ -13,9 +13,6 @@ import com.gaugustini.mhfudatabase.domain.enums.Language
 import com.gaugustini.mhfudatabase.domain.model.Armor
 import com.gaugustini.mhfudatabase.domain.model.Decoration
 import com.gaugustini.mhfudatabase.domain.model.EquipmentDecoration
-import com.gaugustini.mhfudatabase.domain.model.ItemQuantity
-import com.gaugustini.mhfudatabase.domain.model.Skill
-import com.gaugustini.mhfudatabase.domain.model.SkillPoint
 import com.gaugustini.mhfudatabase.domain.model.UserEquipmentSet
 import com.gaugustini.mhfudatabase.domain.model.Weapon
 import com.gaugustini.mhfudatabase.ui.features.userset.components.ArmorSelectionFilter
@@ -35,13 +32,7 @@ import javax.inject.Inject
 data class UserSetDetailState(
     val initialTab: UserSetDetailTab = UserSetDetailTab.EQUIPMENT,
     val language: Language = Language.ENGLISH,
-    val set: UserEquipmentSet? = null,
-    val setWeapon: Weapon? = null,
-    val setArmors: List<Armor> = emptyList(),
-    val setDecorations: List<EquipmentDecoration> = emptyList(),
-    val setActiveSkills: List<Skill> = emptyList(),
-    val setSkillTreePoints: List<SkillPoint> = emptyList(),
-    val setRequiredMaterials: List<ItemQuantity> = emptyList(),
+    val equipmentSet: UserEquipmentSet = UserEquipmentSet(),
     val openSelectionEquipment: Boolean = false,
     val selectionType: SelectionType? = null,
     val weapons: List<Weapon> = emptyList(),
@@ -55,7 +46,26 @@ data class UserSetDetailState(
 enum class SelectionType {
     WEAPON,
     ARMOR,
-    DECORATION
+    DECORATION;
+}
+
+sealed interface UserSetEvent {
+    data class Rename(val name: String) : UserSetEvent
+    object Delete : UserSetEvent
+    data class ChangeWeapon(val weaponId: Int) : UserSetEvent
+    data class ChangeArmor(val armorId: Int) : UserSetEvent
+    data class AddDecoration(val decorationId: Int) : UserSetEvent
+    data class RemoveDecoration(val decorationId: Int, val equipmentType: EquipmentType) : UserSetEvent
+    data class OpenSelection(
+        val type: SelectionType,
+        val equipmentType: EquipmentType? = null,
+        val availableSlots: Int? = null
+    ) : UserSetEvent
+
+    object CloseSelection : UserSetEvent
+    data class ApplyWeaponFilter(val filter: WeaponSelectionFilter) : UserSetEvent
+    data class ApplyArmorFilter(val filter: ArmorSelectionFilter) : UserSetEvent
+    data class ApplyDecorationFilter(val filter: DecorationSelectionFilter) : UserSetEvent
 }
 
 @HiltViewModel
@@ -92,118 +102,142 @@ class UserSetDetailViewModel @Inject constructor(
     private fun loadEquipmentSetDetails(language: Language) {
         if (setId != 0) {
             viewModelScope.launch {
-                val equipmentSetDetails =
-                    userEquipmentSetRepository.getEquipmentSet(setId, language.code)
-
                 _uiState.update { state ->
                     state.copy(
-                        set = equipmentSetDetails,
-                        setWeapon = equipmentSetDetails.weapon,
-                        setArmors = equipmentSetDetails.armors ?: emptyList(),
-                        setDecorations = equipmentSetDetails.decorations ?: emptyList(),
-                        setActiveSkills = equipmentSetDetails.activeSkills ?: emptyList(),
-                        setSkillTreePoints = equipmentSetDetails.skills ?: emptyList(),
-                        setRequiredMaterials = equipmentSetDetails.recipe ?: emptyList(),
+                        equipmentSet = userEquipmentSetRepository.getEquipmentSet(setId, language.code),
                     )
                 }
             }
         }
     }
 
-    private fun updateSetData() {
+    private fun saveChanges(equipmentSet: UserEquipmentSet) {
         viewModelScope.launch {
-            _uiState.value.language
-
-            _uiState.update { state ->
-                state.copy(
-                    // TODO: Update set data
-                )
-            }
-        }
-    }
-
-    private fun saveChanges() {
-        viewModelScope.launch {
-            val currentState = _uiState.value
-
-            val currentUserEquipmentSet = currentState.set!!
-
-            if (setId != 0) {
-                userEquipmentSetRepository.updateEquipmentSet(currentUserEquipmentSet)
+            if (setId == 0) {
+                val newId = userEquipmentSetRepository.insertNewEquipmentSet(equipmentSet)
+                setId = newId
             } else {
-                setId = userEquipmentSetRepository.insertNewEquipmentSet(currentUserEquipmentSet)
+                userEquipmentSetRepository.updateEquipmentSet(equipmentSet)
             }
 
-            updateSetData()
+            loadEquipmentSetDetails(_uiState.value.language)
         }
     }
 
-    fun renameUserSet(newSetName: String) {
-        _uiState.update { state ->
-            state.copy(
-                set = state.set?.copy(name = newSetName),
-            )
+    fun onEvent(event: UserSetEvent) {
+        when (event) {
+            is UserSetEvent.Rename -> renameUserSet(event.name)
+            is UserSetEvent.ChangeWeapon -> changeWeapon(event.weaponId)
+            is UserSetEvent.ChangeArmor -> changeArmor(event.armorId)
+            is UserSetEvent.AddDecoration -> addDecoration(event.decorationId)
+            is UserSetEvent.RemoveDecoration -> removeDecoration(event.decorationId, event.equipmentType)
+            is UserSetEvent.Delete -> deleteUserSet()
+            is UserSetEvent.OpenSelection -> openEquipmentSelection(event)
+            is UserSetEvent.CloseSelection -> closeEquipmentSelection()
+            is UserSetEvent.ApplyWeaponFilter -> applyFilter(weaponFilter = event.filter)
+            is UserSetEvent.ApplyArmorFilter -> applyFilter(armorFilter = event.filter)
+            is UserSetEvent.ApplyDecorationFilter -> applyFilter(decorationFilter = event.filter)
         }
-        saveChanges()
     }
 
-    fun deleteUserSet() {
+    private fun renameUserSet(newSetName: String) {
+        val newEquipmentSet = _uiState.value.equipmentSet.copy(name = newSetName)
+        saveChanges(newEquipmentSet)
+    }
+
+    private fun changeWeapon(weaponId: Int) {
+        val currentState = _uiState.value
+        val selectedWeapon = currentState.weapons.find { it.id == weaponId } ?: return
+        val newEquipmentSet = currentState.equipmentSet.changeWeapon(selectedWeapon)
+
+        saveChanges(newEquipmentSet)
+    }
+
+    private fun changeArmor(armorId: Int) {
+        val currentState = _uiState.value
+        val selectedArmor = currentState.armors.find { it.id == armorId } ?: return
+        val newEquipmentSet = currentState.equipmentSet.changeArmor(selectedArmor)
+
+        saveChanges(newEquipmentSet)
+    }
+
+    private fun addDecoration(decorationId: Int) {
+        val currentState = _uiState.value
+        val selectedDecoration = currentState.decorations.find { it.id == decorationId } ?: return
+        val equipmentType = currentState.decorationSelectionFilter.equipmentType
+        val newEquipmentSet = currentState.equipmentSet.addDecoration(
+            newDecoration = EquipmentDecoration(equipmentType, selectedDecoration, 1),
+        )
+
+        saveChanges(newEquipmentSet)
+    }
+
+    private fun removeDecoration(decorationId: Int, equipmentType: EquipmentType) {
+        val currentState = _uiState.value
+        val newEquipmentSet = currentState.equipmentSet.removeDecoration(decorationId, equipmentType)
+
+        saveChanges(newEquipmentSet)
+    }
+
+    private fun deleteUserSet() {
         viewModelScope.launch {
             userEquipmentSetRepository.deleteEquipmentSet(setId)
         }
     }
 
-    fun openWeaponSelection() {
+    private fun openEquipmentSelection(event: UserSetEvent.OpenSelection) {
         viewModelScope.launch {
-            val currentLanguage = _uiState.value.language
+            val currentLanguage = _uiState.value.language.code
 
             _uiState.update { state ->
                 state.copy(
                     openSelectionEquipment = true,
-                    selectionType = SelectionType.WEAPON,
-                    weapons = weaponRepository.getWeaponList(currentLanguage.code)
+                    selectionType = event.type,
+                    weapons = emptyList(),
+                    armors = emptyList(),
+                    decorations = emptyList(),
                 )
+            }
+
+            when (event.type) {
+                SelectionType.WEAPON -> {
+                    _uiState.update { state ->
+                        state.copy(
+                            weapons = weaponRepository.getWeaponList(currentLanguage),
+                        )
+                    }
+                }
+
+                SelectionType.ARMOR -> {
+                    val equipmentType = event.equipmentType ?: return@launch
+                    ArmorSelectionFilter(armorType = equipmentType)
+                    _uiState.update { state ->
+                        state.copy(
+                            armors = armorRepository.getArmorList(currentLanguage), // TODO: Add filter
+                            armorSelectionFilter = ArmorSelectionFilter(armorType = equipmentType),
+                        )
+                    }
+                }
+
+                SelectionType.DECORATION -> {
+                    val equipmentType = event.equipmentType ?: return@launch
+                    val slots = event.availableSlots ?: return@launch
+                    val filter = DecorationSelectionFilter(
+                        availableSlots = slots,
+                        equipmentType = equipmentType
+                    )
+                    _uiState.update { state ->
+                        state.copy(
+                            decorations = decorationRepository.getDecorationList(currentLanguage), // TODO: Add filter
+                            decorationSelectionFilter = filter,
+                        )
+                    }
+                }
             }
         }
     }
 
-    fun openArmorSelection(armorType: EquipmentType) {
-        viewModelScope.launch {
-            _uiState.value.language
-
-            _uiState.update { state ->
-                state.copy(
-                    openSelectionEquipment = true,
-                    selectionType = SelectionType.ARMOR,
-//                    armors = armorRepository.getArmorList(armorType, currentLanguage), TODO: Add armor list
-                    armorSelectionFilter = ArmorSelectionFilter(armorType = armorType)
-                )
-            }
-        }
-    }
-
-    fun openDecorationSelection(
-        equipmentType: EquipmentType,
-        availableSlots: Int,
-    ) {
-        viewModelScope.launch {
-            _uiState.value.language
-
-            _uiState.update { state ->
-                state.copy(
-                    openSelectionEquipment = true,
-                    selectionType = SelectionType.DECORATION,
-//                    decorations = decorationRepository.getDecorationList(availableSlots,currentLanguage), TODO: Add decoration list
-                    decorationSelectionFilter = DecorationSelectionFilter(
-                        availableSlots = availableSlots,
-                        equipmentType = equipmentType,
-                    ),
-                )
-            }
-        }
-    }
-
-    fun closeSelection() {
+    private fun closeEquipmentSelection() {
         _uiState.update { state ->
             state.copy(
                 openSelectionEquipment = false,
@@ -218,205 +252,41 @@ class UserSetDetailViewModel @Inject constructor(
         }
     }
 
-    fun changeWeapon(weaponId: Int) {
-        val currentState = _uiState.value
-
-        val selectedWeapon = currentState.weapons.firstOrNull { it.id == weaponId } ?: return
-
-        val newSetDecorations = currentState.setDecorations
-            .filter { it.equipmentType != EquipmentType.WEAPON }
-
-        _uiState.update { state ->
-            state.copy(
-                setWeapon = selectedWeapon,
-                setDecorations = newSetDecorations,
-            )
-        }
-
-        saveChanges()
-    }
-
-    fun changeArmor(armorId: Int) {
-        val currentState = _uiState.value
-
-        val selectedArmor = currentState.armors.firstOrNull { it.id == armorId } ?: return
-
-        val changedArmorType = selectedArmor.type
-
-        val newSetArmors = currentState.setArmors
-            .filter { it.type != changedArmorType }
-            .plus(selectedArmor)
-
-        val newSetDecorations = currentState.setDecorations
-            .filter { it.equipmentType != changedArmorType }
-
-        _uiState.update { state ->
-            state.copy(
-                setArmors = newSetArmors,
-                setDecorations = newSetDecorations,
-            )
-        }
-
-        saveChanges()
-    }
-
-    fun addDecoration(decorationId: Int) {
-        val currentState = _uiState.value
-
-        val selectedDecoration = currentState.decorations.firstOrNull { it.id == decorationId } ?: return
-        val selectedEquipmentType = currentState.decorationSelectionFilter.equipmentType
-
-        val currentDecorationInSet = currentState.setDecorations.firstOrNull {
-            it.decoration.id == decorationId && it.equipmentType == selectedEquipmentType
-        }
-
-        val newSetDecorations = if (currentDecorationInSet == null) {
-            val newDecoration = EquipmentDecoration(
-                decoration = selectedDecoration,
-                equipmentType = selectedEquipmentType,
-                quantity = 1,
-            )
-            currentState.setDecorations + newDecoration
-        } else {
-            currentState.setDecorations.map { decoration ->
-                if (decoration == currentDecorationInSet) {
-                    decoration.copy(quantity = decoration.quantity + 1)
-                } else {
-                    decoration
-                }
-            }
-        }
-
-        _uiState.update {
-            it.copy(
-                setDecorations = newSetDecorations,
-            )
-        }
-
-        saveChanges()
-    }
-
-    fun removeDecoration(
-        decorationId: Int,
-        equipmentType: EquipmentType,
+    private fun applyFilter(
+        weaponFilter: WeaponSelectionFilter? = null,
+        armorFilter: ArmorSelectionFilter? = null,
+        decorationFilter: DecorationSelectionFilter? = null
     ) {
-        val currentState = _uiState.value
-
-        val currentDecorationInSet = _uiState.value.setDecorations.first {
-            it.decoration.id == decorationId && it.equipmentType == equipmentType
-        }
-
-        val newSetDecorations = if (currentDecorationInSet.quantity == 1) {
-            currentState.setDecorations - currentDecorationInSet
-        } else {
-            currentState.setDecorations.map { decoration ->
-                if (decoration == currentDecorationInSet) {
-                    decoration.copy(quantity = decoration.quantity - 1)
-                } else {
-                    decoration
-                }
-            }
-        }
-
-        _uiState.update { state ->
-            state.copy(
-                setDecorations = newSetDecorations,
-            )
-        }
-
-        saveChanges()
-    }
-
-    fun applyWeaponFilter(filter: WeaponSelectionFilter) {
         viewModelScope.launch {
-            val currentLanguage = _uiState.value.language
-            var newWeaponList = weaponRepository.getWeaponList(
-                language = currentLanguage.code,
-            )
-
-            if (filter.weaponType.isNotEmpty()) {
-                newWeaponList = newWeaponList.filter { weapon ->
-                    weapon.type in filter.weaponType
-                }
-            }
-            if (filter.elementType.isNotEmpty()) {
-                newWeaponList = newWeaponList.filter { weapon ->
-                    weapon.element1 in filter.elementType || weapon.element2 in filter.elementType
-                }
-            }
-            if (filter.numberOfSlots.isNotEmpty()) {
-                newWeaponList = newWeaponList.filter { weapon ->
-                    weapon.numberOfSlots in filter.numberOfSlots
-                }
-            }
-            if (filter.rarity.isNotEmpty()) {
-                newWeaponList = newWeaponList.filter { weapon ->
-                    weapon.rarity in filter.rarity
-                }
-            }
+            _uiState.value.language.code
 
             _uiState.update { state ->
-                state.copy(
-                    weapons = newWeaponList,
-                    weaponSelectionFilter = filter,
-                )
+                when {
+                    weaponFilter != null -> {
+                        state.copy(
+                            // weapons = weaponRepository.getWeaponList(currentLanguage, weaponFilter), TODO
+                            weaponSelectionFilter = weaponFilter,
+                        )
+                    }
+
+                    armorFilter != null -> {
+                        state.copy(
+                            // armors = armorRepository.getArmorList(currentLanguage, armorFilter), TODO
+                            armorSelectionFilter = armorFilter,
+                        )
+                    }
+
+                    decorationFilter != null -> {
+                        state.copy(
+                            // decorations = decorationRepository.getDecorationList(currentLanguage, decorationFilter), TODO
+                            decorationSelectionFilter = decorationFilter,
+                        )
+                    }
+
+                    else -> state
+                }
             }
         }
-    }
-
-    fun applyArmorFilter(filter: ArmorSelectionFilter) {
-        viewModelScope.launch {
-//            TODO: Add armor filter
-//            val currentLanguage = _uiState.value.language
-//            var newArmorList = armorRepository.getArmorListForUserEquipmentSet(
-//                query = filter.name,
-//                armorType = filter.armorType,
-//                language = currentLanguage,
-//            )
-//
-//            if (filter.numberOfSlots.isNotEmpty()) {
-//                newArmorList = newArmorList.filter { armor ->
-//                    armor.numberOfSlots in filter.numberOfSlots
-//                }
-//            }
-//            if (filter.rarity.isNotEmpty()) {
-//                newArmorList = newArmorList.filter { armor ->
-//                    armor.rarity in filter.rarity
-//                }
-//            }
-//
-//            _uiState.update { state ->
-//                state.copy(
-//                    armors = newArmorList,
-//                    armorSelectionFilter = filter,
-//                )
-//            }
-        }
-    }
-
-    fun applyDecorationFilter(filter: DecorationSelectionFilter) {
-//        TODO: Add decoration filter
-//        viewModelScope.launch {
-//            val currentLanguage = _uiState.value.language
-//            var newDecorationList = decorationRepository.getDecorationListForUserEquipmentSet(
-//                query = filter.name,
-//                availableSlots = filter.availableSlots,
-//                language = currentLanguage,
-//            )
-//
-//            if (filter.numberOfSlots.isNotEmpty()) {
-//                newDecorationList = newDecorationList.filter { decoration ->
-//                    decoration.requiredSlots in filter.numberOfSlots
-//                }
-//            }
-//
-//            _uiState.update { state ->
-//                state.copy(
-//                    decorations = newDecorationList,
-//                    decorationSelectionFilter = filter,
-//                )
-//            }
-//        }
     }
 
 }

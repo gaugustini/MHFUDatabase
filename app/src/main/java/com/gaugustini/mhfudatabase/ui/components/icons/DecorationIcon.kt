@@ -2,9 +2,9 @@ package com.gaugustini.mhfudatabase.ui.components.icons
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.domain.enums.ItemIconColor
 import com.gaugustini.mhfudatabase.domain.enums.ItemIconType
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 
 @Composable
 fun DecorationIcon(
@@ -18,7 +18,7 @@ fun DecorationIcon(
     )
 }
 
-@Preview
+@DevicePreviews
 @Composable
 fun DecorationIconPreview() {
     DecorationIcon(

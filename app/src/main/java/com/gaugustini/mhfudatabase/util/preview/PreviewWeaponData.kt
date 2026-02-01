@@ -259,9 +259,9 @@ object PreviewWeaponData {
         rapidFire = "Pierce S Lv1",
     )
 
-    // Weapon Graph
+    // Weapon Tree
 
-    private val weaponsGraph = listOf(
+    private val weaponTreeData = listOf(
         weaponGS,
         weaponGS.copy(id = 2),
         weaponGS.copy(id = 3),
@@ -270,8 +270,8 @@ object PreviewWeaponData {
         weaponGS.copy(id = 6),
     )
 
-    val graph = WeaponGraph(
-        weapons = weaponsGraph,
+    val weaponNodeList = WeaponGraph(
+        weapons = weaponTreeData,
         relations = listOf(
             WeaponParentEntity(2, 1),
             WeaponParentEntity(3, 2),

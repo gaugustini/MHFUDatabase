@@ -1,4 +1,4 @@
-package com.gaugustini.mhfudatabase.ui.features.item.components
+package com.gaugustini.mhfudatabase.ui.features.skill.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
@@ -7,38 +7,38 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.gaugustini.mhfudatabase.domain.model.Decoration
-import com.gaugustini.mhfudatabase.domain.model.Usage
+import com.gaugustini.mhfudatabase.domain.model.Armor
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
-import com.gaugustini.mhfudatabase.ui.components.icons.DecorationIcon
+import com.gaugustini.mhfudatabase.ui.components.icons.ArmorIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
-import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
+import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
 
 @Composable
-fun UsageDecorationListItem(
-    usage: Usage<Decoration>,
+fun SkillPointArmorListItem(
+    armor: Armor,
     modifier: Modifier = Modifier,
-    onDecorationClick: (decorationId: Int) -> Unit = {},
+    onArmorClick: (armorId: Int) -> Unit = {},
 ) {
     ListItemLayout(
         leadingContent = {
-            DecorationIcon(
-                color = usage.craftable.color,
+            ArmorIcon(
+                type = armor.type,
+                rarity = armor.rarity,
                 modifier = Modifier.size(Dimension.Size.medium)
             )
         },
         headlineContent = {
             Text(
-                text = usage.craftable.name,
+                text = armor.name,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
         },
         trailingContent = {
             Text(
-                text = usage.quantity.toString(),
+                text = armor.skills?.first().toString(),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
@@ -47,16 +47,16 @@ fun UsageDecorationListItem(
             horizontal = Dimension.Spacing.large,
             vertical = Dimension.Spacing.medium
         ),
-        modifier = modifier.clickable { onDecorationClick(usage.craftable.id) }
+        modifier = modifier.clickable { onArmorClick(armor.id) }
     )
 }
 
 @DevicePreviews
 @Composable
-fun UsageDecorationListItemPreview() {
+fun SkillPointArmorListItemPreview() {
     Theme {
-        UsageDecorationListItem(
-            usage = PreviewItemData.itemUsageDecoration,
+        SkillPointArmorListItem(
+            armor = PreviewArmorData.armor,
         )
     }
 }

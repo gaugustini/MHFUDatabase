@@ -9,8 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.MHFUColors
 
 @Composable
@@ -37,7 +37,7 @@ fun ArmorSetIcon(
     }
 }
 
-@Preview
+@DevicePreviews
 @Composable
 fun ArmorSetIconPreview() {
     ArmorSetIcon(10)

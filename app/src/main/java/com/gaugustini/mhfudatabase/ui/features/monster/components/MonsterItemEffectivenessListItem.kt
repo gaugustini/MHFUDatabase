@@ -1,10 +1,8 @@
 package com.gaugustini.mhfudatabase.ui.features.monster.components
 
-import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,38 +15,18 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.ItemIconColor
 import com.gaugustini.mhfudatabase.domain.enums.MonsterState
 import com.gaugustini.mhfudatabase.domain.model.MonsterItemEffectiveness
-import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.MHFUColors
 import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
 
 @Composable
-fun MonsterItemUsageList(
-    items: List<MonsterItemEffectiveness>,
-    modifier: Modifier = Modifier,
-) {
-    Column(
-        modifier = modifier
-    ) {
-        SectionHeader(
-            title = stringResource(R.string.monster_item_usage)
-        )
-        items.forEach { item ->
-            MonsterItemUsageListItem(
-                item = item,
-            )
-        }
-    }
-}
-
-@Composable
-fun MonsterItemUsageListItem(
+fun MonsterItemEffectivenessListItem(
     item: MonsterItemEffectiveness,
     modifier: Modifier = Modifier,
 ) {
@@ -153,7 +131,7 @@ fun MonsterItemUsageListItem(
             !item.canUseMeat
         ) {
             Text(
-                text = stringResource(R.string.monster_item_usage_none),
+                text = stringResource(R.string.monster_item_effectiveness_none),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
@@ -161,13 +139,12 @@ fun MonsterItemUsageListItem(
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
-fun MonsterItemUsagePreview() {
+fun MonsterItemEffectivenessItemPreview() {
     Theme {
-        MonsterItemUsageList(
-            items = PreviewMonsterData.monsterItemUsageList,
+        MonsterItemEffectivenessListItem(
+            item = PreviewMonsterData.monsterItemEffectiveness,
         )
     }
 }

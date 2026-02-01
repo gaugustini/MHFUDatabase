@@ -104,8 +104,8 @@ class NavigationActions(
     val navigateToSkillTreeDetail: (skillTreeId: Int) -> Unit = {
         navController.navigate(Destinations.skillTreeDetailRoute(it))
     }
-    val navigateToWeaponGraph: (weaponType: WeaponType) -> Unit = {
-        navController.navigate(Destinations.weaponGraphRoute(it.name))
+    val navigateToWeaponTree: (weaponType: WeaponType) -> Unit = {
+        navController.navigate(Destinations.weaponTreeRoute(it.name))
     }
     val navigateToWeaponDetail: (weaponId: Int) -> Unit = {
         navController.navigate(Destinations.weaponDetailRoute(it))

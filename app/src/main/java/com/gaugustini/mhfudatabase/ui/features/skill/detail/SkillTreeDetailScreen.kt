@@ -1,12 +1,10 @@
 package com.gaugustini.mhfudatabase.ui.features.skill.detail
 
-import android.content.res.Configuration
 import androidx.annotation.StringRes
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -16,20 +14,14 @@ import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TabbedLayout
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
+import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
+import com.gaugustini.mhfudatabase.util.preview.PreviewDecorationData
 import com.gaugustini.mhfudatabase.util.preview.PreviewSkillData
 
-enum class SkillTreeDetailTab(@param:StringRes val title: Int) {
+enum class SkillTreeDetailTab(@get:StringRes val title: Int) {
     SKILL_TREE_SUMMARY(R.string.tab_skill_detail_summary),
     SKILL_TREE_EQUIPMENT(R.string.tab_skill_detail_equipment);
-
-    companion object {
-        val all = SkillTreeDetailTab.entries
-
-        fun fromIndex(index: Int): SkillTreeDetailTab = all.getOrElse(index) { SKILL_TREE_SUMMARY }
-
-        fun toIndex(tab: SkillTreeDetailTab): Int = all.indexOf(tab)
-
-    }
 }
 
 @Composable
@@ -60,13 +52,13 @@ fun SkillTreeDetailScreen(
     onDecorationClick: (decorationId: Int) -> Unit = {},
 ) {
     val pagerState = rememberPagerState(
-        initialPage = SkillTreeDetailTab.toIndex(uiState.initialTab),
-        pageCount = { SkillTreeDetailTab.all.size },
+        initialPage = uiState.initialTab.ordinal,
+        pageCount = { SkillTreeDetailTab.entries.size },
     )
 
     TabbedLayout(
         pagerState = pagerState,
-        tabTitles = SkillTreeDetailTab.all.map { stringResource(it.title) },
+        tabTitles = SkillTreeDetailTab.entries.map { stringResource(it.title) },
         topBar = {
             TopBar(
                 title = uiState.skillTree?.name ?: stringResource(R.string.screen_skill_tree_detail),
@@ -77,17 +69,17 @@ fun SkillTreeDetailScreen(
         },
     ) { tabIndex ->
         if (uiState.skillTree != null) {
-            when (SkillTreeDetailTab.fromIndex(tabIndex)) {
+            when (SkillTreeDetailTab.entries[tabIndex]) {
                 SkillTreeDetailTab.SKILL_TREE_SUMMARY -> {
                     SkillTreeSummaryContent(
-                        skills = uiState.skillTree.skills ?: emptyList(),
+                        skillTree = uiState.skillTree,
                     )
                 }
 
                 SkillTreeDetailTab.SKILL_TREE_EQUIPMENT -> {
                     SkillTreeEquipmentContent(
-                        armors = uiState.armors,
                         decorations = uiState.decorations,
+                        armors = uiState.armors,
                         onArmorClick = onArmorClick,
                         onDecorationClick = onDecorationClick,
                     )
@@ -97,8 +89,7 @@ fun SkillTreeDetailScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
 fun SkillTreeDetailPreview(
     @PreviewParameter(SkillTreeDetailScreenPreviewParameterProvider::class) uiState: SkillTreeDetailState
@@ -118,7 +109,8 @@ private class SkillTreeDetailScreenPreviewParameterProvider :
         ),
         SkillTreeDetailState(
             initialTab = SkillTreeDetailTab.SKILL_TREE_EQUIPMENT,
-            skillTree = PreviewSkillData.skillTree,
+            decorations = PreviewDecorationData.decorationList,
+            armors = PreviewArmorData.armorList,
         )
     )
 

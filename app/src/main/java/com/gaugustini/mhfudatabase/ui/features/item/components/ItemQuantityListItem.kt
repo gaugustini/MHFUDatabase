@@ -1,6 +1,5 @@
-package com.gaugustini.mhfudatabase.ui.features.skill.components
+package com.gaugustini.mhfudatabase.ui.features.item.components
 
-import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.size
@@ -8,38 +7,38 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.gaugustini.mhfudatabase.domain.model.Armor
+import com.gaugustini.mhfudatabase.domain.model.ItemQuantity
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
-import com.gaugustini.mhfudatabase.ui.components.icons.ArmorIcon
+import com.gaugustini.mhfudatabase.ui.components.icons.ItemIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
-import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
+import com.gaugustini.mhfudatabase.util.DevicePreviews
+import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
 
 @Composable
-fun SkillPointsArmorListItem(
-    armor: Armor,
+fun ItemQuantityListItem(
+    item: ItemQuantity,
     modifier: Modifier = Modifier,
-    onArmorClick: (armorId: Int) -> Unit = {},
+    onItemClick: (itemId: Int) -> Unit = {},
 ) {
     ListItemLayout(
         leadingContent = {
-            ArmorIcon(
-                type = armor.type,
-                rarity = armor.rarity,
+            ItemIcon(
+                type = item.item.iconType,
+                color = item.item.iconColor,
                 modifier = Modifier.size(Dimension.Size.medium)
             )
         },
         headlineContent = {
             Text(
-                text = armor.name,
+                text = item.item.name,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
         },
         trailingContent = {
             Text(
-                text = armor.skills?.first().toString(),
+                text = item.quantity.toString(),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
@@ -48,17 +47,16 @@ fun SkillPointsArmorListItem(
             horizontal = Dimension.Spacing.large,
             vertical = Dimension.Spacing.medium
         ),
-        modifier = modifier.clickable { onArmorClick(armor.id) }
+        modifier = modifier.clickable { onItemClick(item.item.id) }
     )
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
-fun SkillPointsArmorListItemPreview() {
+fun ItemQuantityListItemPreview() {
     Theme {
-        SkillPointsArmorListItem(
-            armor = PreviewArmorData.armor,
+        ItemQuantityListItem(
+            item = PreviewItemData.itemQuantity,
         )
     }
 }

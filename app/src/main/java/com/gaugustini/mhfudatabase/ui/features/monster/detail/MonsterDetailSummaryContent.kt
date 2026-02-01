@@ -1,19 +1,21 @@
 package com.gaugustini.mhfudatabase.ui.features.monster.detail
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.stringResource
+import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.model.Monster
 import com.gaugustini.mhfudatabase.ui.components.DetailHeader
+import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.components.icons.MonsterIcon
-import com.gaugustini.mhfudatabase.ui.features.monster.components.MonsterItemUsageList
+import com.gaugustini.mhfudatabase.ui.features.monster.components.MonsterItemEffectivenessListItem
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
 
 @Composable
@@ -37,14 +39,20 @@ fun MonsterDetailSummaryContent(
             description = monster.description,
         )
 
-        MonsterItemUsageList(
-            items = monster.itemEffectiveness ?: emptyList(),
-        )
+        monster.itemEffectiveness?.let { items ->
+            SectionHeader(
+                title = stringResource(R.string.monster_item_effectiveness)
+            )
+            items.forEach { item ->
+                MonsterItemEffectivenessListItem(
+                    item = item,
+                )
+            }
+        }
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
 fun MonsterDetailSummaryContentPreview() {
     Theme {

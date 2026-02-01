@@ -9,8 +9,8 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.MHFUColors
 
 @Composable
@@ -47,7 +47,7 @@ fun SongNotesIcon(
     }
 }
 
-@Preview
+@DevicePreviews
 @Composable
 fun SongNotesIconPreview() {
     SongNotesIcon("PGR")

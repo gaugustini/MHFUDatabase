@@ -1,17 +1,18 @@
 package com.gaugustini.mhfudatabase.ui.features.monster.detail
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.domain.model.MonsterReward
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
-import com.gaugustini.mhfudatabase.ui.features.monster.components.MonsterRewardList
+import com.gaugustini.mhfudatabase.ui.features.monster.components.MonsterRewardListItem
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
 
 @Composable
@@ -31,11 +32,14 @@ fun MonsterDetailRankContent(
                     title = condition,
                 )
             }
-            item {
-                MonsterRewardList(
-                    rewards = rewards,
+            itemsIndexed(rewards) { index, reward ->
+                MonsterRewardListItem(
+                    reward = reward,
                     onItemClick = onItemClick,
                 )
+                if (index != rewards.lastIndex) {
+                    HorizontalDivider()
+                }
             }
             item {
                 Spacer(Modifier.height(Dimension.Spacing.large))
@@ -44,8 +48,7 @@ fun MonsterDetailRankContent(
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
 fun MonsterDetailRankContentPreview() {
     Theme {

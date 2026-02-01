@@ -1,46 +1,22 @@
 package com.gaugustini.mhfudatabase.ui.features.monster.components
 
-import android.content.res.Configuration
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.domain.model.MonsterReward
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.ItemIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
-
-@Composable
-fun MonsterRewardList(
-    rewards: List<MonsterReward>,
-    modifier: Modifier = Modifier,
-    onItemClick: (itemId: Int) -> Unit = {},
-) {
-    Column(
-        modifier = modifier
-    ) {
-        rewards.forEachIndexed { index, reward ->
-            MonsterRewardListItem(
-                reward = reward,
-                onItemClick = onItemClick,
-            )
-            if (index != rewards.lastIndex) {
-                HorizontalDivider()
-            }
-        }
-    }
-}
 
 @Composable
 fun MonsterRewardListItem(
@@ -88,13 +64,12 @@ fun MonsterRewardListItem(
     )
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
-fun MonsterRewardListPreview() {
+fun MonsterRewardListItemPreview() {
     Theme {
-        MonsterRewardList(
-            rewards = PreviewMonsterData.monsterRewardList,
+        MonsterRewardListItem(
+            reward = PreviewMonsterData.monsterReward,
         )
     }
 }

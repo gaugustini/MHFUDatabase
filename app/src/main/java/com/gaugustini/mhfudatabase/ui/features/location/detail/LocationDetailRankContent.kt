@@ -1,23 +1,24 @@
 package com.gaugustini.mhfudatabase.ui.features.location.detail
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.GatherType
 import com.gaugustini.mhfudatabase.domain.model.GatheringPoint
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
-import com.gaugustini.mhfudatabase.ui.features.item.components.GatheringPointList
+import com.gaugustini.mhfudatabase.ui.features.location.components.GatheringPointListItem
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
-import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
+import com.gaugustini.mhfudatabase.util.DevicePreviews
+import com.gaugustini.mhfudatabase.util.preview.PreviewLocationData
 
 @Composable
 fun LocationDetailRankContent(
@@ -41,7 +42,9 @@ fun LocationDetailRankContent(
                 )
             }
 
-            items.groupBy { it.type }.forEach { (type, items) ->
+            val itemsPerType = items.groupBy { it.type }
+
+            itemsPerType.forEach { (type, items) ->
                 item {
                     SectionHeader(
                         title = stringResource(
@@ -57,11 +60,14 @@ fun LocationDetailRankContent(
                         modifier = Modifier.padding(start = Dimension.Padding.large)
                     )
                 }
-                item {
-                    GatheringPointList(
-                        gatheringPoints = items,
+                itemsIndexed(items) { index, point ->
+                    GatheringPointListItem(
+                        gatheringPoint = point,
                         onItemClick = onItemClick,
                     )
+                    if (index != items.lastIndex) {
+                        HorizontalDivider()
+                    }
                 }
             }
 
@@ -72,11 +78,12 @@ fun LocationDetailRankContent(
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DevicePreviews
 @Composable
 fun LocationDetailRankContentPreview() {
     Theme {
-        LocationDetailRankContent(PreviewItemData.itemLocationList)
+        LocationDetailRankContent(
+            gatheringPoints = PreviewLocationData.gatheringPointList,
+        )
     }
 }

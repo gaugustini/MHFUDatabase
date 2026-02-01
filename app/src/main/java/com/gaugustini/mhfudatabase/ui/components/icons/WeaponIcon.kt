@@ -9,9 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.WeaponType
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.MHFUColors
 import com.gaugustini.mhfudatabase.util.MHFUIcons
 
@@ -42,7 +42,7 @@ fun WeaponIcon(
     }
 }
 
-@Preview
+@DevicePreviews
 @Composable
 fun WeaponIconPreview() {
     WeaponIcon(WeaponType.GREAT_SWORD, 1)

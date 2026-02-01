@@ -1,20 +1,22 @@
 package com.gaugustini.mhfudatabase.ui.features.search
 
-import android.content.res.Configuration
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.domain.model.SearchResults
-import com.gaugustini.mhfudatabase.ui.features.search.components.SearchResultsList
 import com.gaugustini.mhfudatabase.ui.features.search.components.SearchTopBar
+import com.gaugustini.mhfudatabase.ui.features.search.components.listitem.SearchListItem
 import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
 import com.gaugustini.mhfudatabase.util.preview.PreviewDecorationData
 import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
@@ -94,13 +96,88 @@ fun SearchScreen(
             onSkillTreeClick = onSkillTreeClick,
             onSkillClick = onSkillClick,
             onWeaponClick = onWeaponClick,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
         )
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun SearchResultsList(
+    results: SearchResults,
+    modifier: Modifier = Modifier,
+    onArmorClick: (armorId: Int) -> Unit = {},
+    onDecorationClick: (decorationId: Int) -> Unit = {},
+    onItemClick: (itemId: Int) -> Unit = {},
+    onLocationClick: (locationId: Int) -> Unit = {},
+    onMonsterClick: (monsterId: Int) -> Unit = {},
+    onQuestClick: (questId: Int) -> Unit = {},
+    onSkillTreeClick: (skillTreeId: Int) -> Unit = {},
+    onSkillClick: (skillTreeId: Int) -> Unit = {},
+    onWeaponClick: (weaponId: Int) -> Unit = {},
+) {
+    LazyColumn(
+        modifier = modifier
+    ) {
+        items(results.locations) { location ->
+            SearchListItem(
+                location = location,
+                onLocationClick = onLocationClick,
+            )
+        }
+        items(results.monsters) { monster ->
+            SearchListItem(
+                monster = monster,
+                onMonsterClick = onMonsterClick,
+            )
+        }
+        items(results.skillTrees) { skillTree ->
+            SearchListItem(
+                skillTree = skillTree,
+                onSkillTreeClick = onSkillTreeClick,
+            )
+        }
+        items(results.skills) { skill ->
+            SearchListItem(
+                skill = skill,
+                onSkillClick = onSkillClick,
+            )
+        }
+        items(results.quests) { quest ->
+            SearchListItem(
+                quest = quest,
+                onQuestClick = onQuestClick,
+            )
+        }
+        items(results.items) { item ->
+            SearchListItem(
+                item = item,
+                onItemClick = onItemClick,
+            )
+        }
+        items(results.decorations) { decoration ->
+            SearchListItem(
+                decoration = decoration,
+                onDecorationClick = onDecorationClick,
+            )
+        }
+        items(results.armors) { armor ->
+            SearchListItem(
+                armor = armor,
+                onArmorClick = onArmorClick,
+            )
+        }
+        items(results.weapons) { weapon ->
+            SearchListItem(
+                weapon = weapon,
+                onWeaponClick = onWeaponClick,
+            )
+        }
+    }
+}
+
+@DevicePreviews
 @Composable
 fun SearchScreenPreview(
     @PreviewParameter(SearchScreenPreviewParamProvider::class) uiState: SearchState
@@ -113,7 +190,10 @@ fun SearchScreenPreview(
 private class SearchScreenPreviewParamProvider : PreviewParameterProvider<SearchState> {
 
     override val values: Sequence<SearchState> = sequenceOf(
-        SearchState(),
+        SearchState(
+            query = "",
+            results = SearchResults(),
+        ),
         SearchState(
             query = "query",
             results = SearchResults(
