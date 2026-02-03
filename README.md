@@ -44,7 +44,7 @@ The pre-populated SQLite database file is located at:
 Room generates JSON schema files for each database version. These files are used to track structural
 changes and ensure consistency across versions. They can be found at:
 
-[app/schemas/com.gaugustini.mhfudatabase.data.database.AppDatabase/](app/schemas/com.gaugustini.mhfudatabase.data.database.AppDatabase/)
+[core/data/schemas/com.gaugustini.mhfudatabase.data.database.AppDatabase/](core/data/schemas/com.gaugustini.mhfudatabase.data.database.AppDatabase/)
 
 ## Contributing
 
