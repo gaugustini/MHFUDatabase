@@ -38,10 +38,19 @@ interface MonsterDao {
         JOIN monster_text
             ON monster.id = monster_text.monster_id
             AND monster_text.language = :language
+        WHERE
+            (:name IS NULL OR (monster_text.name LIKE '%' || :name || '%'))
+            AND (:ecology IS NULL OR monster_text.ecology = :ecology)
+            AND (:type IS NULL OR monster.monster_type = :type)
         ORDER BY monster_text.name ASC
         """
     )
-    suspend fun getMonsterList(language: String): List<MonsterWithText>
+    suspend fun getMonsterList(
+        language: String,
+        name: String?,
+        ecology: String?,
+        type: String?,
+    ): List<MonsterWithText>
 
     @Query(
         """

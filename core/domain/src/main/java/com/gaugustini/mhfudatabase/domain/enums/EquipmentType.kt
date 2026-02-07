@@ -39,6 +39,21 @@ enum class EquipmentType {
      */
     WEAPON;
 
+    /**
+     * Converts an [EquipmentType] to a string value.
+     */
+    override fun toString(): String {
+        return when (this) {
+            ARMOR_HEAD -> "HEAD"
+            ARMOR_CHEST -> "CHEST"
+            ARMOR_ARMS -> "ARMS"
+            ARMOR_WAIST -> "WAIST"
+            ARMOR_LEGS -> "LEGS"
+            DECORATION -> "DECORATION"
+            WEAPON -> "WEAPON"
+        }
+    }
+
     companion object {
 
         /**

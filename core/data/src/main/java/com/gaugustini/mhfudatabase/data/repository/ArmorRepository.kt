@@ -4,6 +4,8 @@ import com.gaugustini.mhfudatabase.data.database.dao.ArmorDao
 import com.gaugustini.mhfudatabase.data.database.dao.ArmorSetDao
 import com.gaugustini.mhfudatabase.data.mapper.ArmorMapper
 import com.gaugustini.mhfudatabase.data.mapper.ArmorSetMapper
+import com.gaugustini.mhfudatabase.domain.filter.ArmorFilter
+import com.gaugustini.mhfudatabase.domain.filter.ArmorSetFilter
 import com.gaugustini.mhfudatabase.domain.model.Armor
 import com.gaugustini.mhfudatabase.domain.model.ArmorSet
 import javax.inject.Inject
@@ -48,24 +50,59 @@ class ArmorRepository @Inject constructor(
     }
 
     /**
-     * Returns the list of all armor.
+     * Returns the list of all armor or filtering by [ArmorFilter].
      * Note: skills and recipe are not populated.
      */
     suspend fun getArmorList(
         language: String,
+        filter: ArmorFilter = ArmorFilter(),
     ): List<Armor> {
-        return armorDao.getArmorList(language).map { ArmorMapper.toModel(it) }
+        return armorDao.getArmorList(
+            language = language,
+            name = filter.name,
+            equipmentType = filter.type?.toString(),
+            numberOfSlots = filter.numberOfSlots,
+            hasSlotFilter = !filter.numberOfSlots.isNullOrEmpty(),
+            rarity = filter.rarity,
+            hasRarityFilter = !filter.rarity.isNullOrEmpty(),
+            gender = filter.gender?.name,
+            hunterType = filter.hunterType?.name,
+            skills = filter.skills,
+            hasSkillFilter = !filter.skills.isNullOrEmpty(),
+        ).map { ArmorMapper.toModel(it) }
     }
 
     /**
-     * Returns the list of all armor sets.
+     * Returns the list of all armor sets or filtering by [ArmorSetFilter].
      * Note: skills and recipe are not populated.
      */
     suspend fun getArmorSetList(
         language: String,
+        filter: ArmorSetFilter = ArmorSetFilter(),
     ): List<ArmorSet> {
-        val armorSetsWithText = armorSetDao.getArmorSetList(language)
-        val armorsGroupedByArmorSet = armorDao.getArmorList(language).groupBy { it.armor.armorSetId }
+        val armorSetsWithText = armorSetDao.getArmorSetList(
+            language = language,
+            name = filter.name,
+            rarity = filter.rarity,
+            hasRarityFilter = !filter.rarity.isNullOrEmpty(),
+            rank = filter.rank?.name,
+            hunterType = filter.hunterType?.name,
+            skills = filter.skills,
+            hasSkillFilter = !filter.skills.isNullOrEmpty(),
+        )
+        val armorsGroupedByArmorSet = armorDao.getArmorList(
+            language = language,
+            name = null,
+            equipmentType = null,
+            numberOfSlots = null,
+            hasSlotFilter = false,
+            rarity = null,
+            hasRarityFilter = false,
+            gender = null,
+            hunterType = null,
+            skills = null,
+            hasSkillFilter = false,
+        ).groupBy { it.armor.armorSetId }
 
         return armorSetsWithText.map {
             ArmorSetMapper.toModel(

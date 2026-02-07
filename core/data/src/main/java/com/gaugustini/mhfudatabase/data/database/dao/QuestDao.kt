@@ -35,9 +35,26 @@ interface QuestDao {
         JOIN quest_text
             ON quest.id = quest_text.quest_id
             AND quest_text.language = :language
+        WHERE
+            (:name IS NULL OR (quest_text.name LIKE '%' || :name || '%'))
+            AND (:hub IS NULL OR quest.hub_type = :hub)
+            AND (:hasStarFilter = 0 OR quest.stars IN (:stars))
+            AND (:type IS NULL OR quest.quest_type = :type)
+            AND (:goal IS NULL OR quest.goal_type = :goal)
+            AND (:hasLocationFilter = 0 OR quest.location_id IN (:locations))
         """
     )
-    suspend fun getQuestList(language: String): List<QuestWithText>
+    suspend fun getQuestList(
+        language: String,
+        name: String?,
+        hub: String?,
+        stars: List<Int>?,
+        hasStarFilter: Boolean,
+        type: String?,
+        goal: String?,
+        locations: List<Int>?,
+        hasLocationFilter: Boolean,
+    ): List<QuestWithText>
 
     @Query(
         """

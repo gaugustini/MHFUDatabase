@@ -35,10 +35,34 @@ interface ArmorDao {
         JOIN armor_text
             ON armor.id = armor_text.armor_id
             AND armor_text.language = :language
+        WHERE
+            (:name IS NULL OR (armor_text.name LIKE '%' || :name || '%' OR armor_text.full_name LIKE '%' || :name || '%'))
+            AND (:equipmentType IS NULL OR armor.armor_type = :equipmentType)
+            AND (:hasSlotFilter = 0 OR armor.num_slots IN (:numberOfSlots))
+            AND (:hasRarityFilter = 0 OR armor.rarity IN (:rarity))
+            AND (:gender IS NULL OR armor.gender = :gender)
+            AND (:hunterType IS NULL OR armor.hunter_type = :hunterType)
+            AND (:hasSkillFilter = 0 OR EXISTS (
+                SELECT 1 FROM armor_skill 
+                WHERE armor_skill.armor_id = armor.id 
+                AND armor_skill.skill_tree_id IN (:skills)
+            ))
         ORDER BY armor.armor_set_id ASC
         """
     )
-    suspend fun getArmorList(language: String): List<ArmorWithText>
+    suspend fun getArmorList(
+        language: String,
+        name: String?,
+        equipmentType: String?,
+        numberOfSlots: List<Int>?,
+        hasSlotFilter: Boolean,
+        rarity: List<Int>?,
+        hasRarityFilter: Boolean,
+        gender: String?,
+        hunterType: String?,
+        skills: List<Int>?,
+        hasSkillFilter: Boolean,
+    ): List<ArmorWithText>
 
     @Query(
         """

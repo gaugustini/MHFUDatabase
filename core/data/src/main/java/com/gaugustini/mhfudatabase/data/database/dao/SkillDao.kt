@@ -36,10 +36,17 @@ interface SkillDao {
         JOIN skill_tree_text
             ON skill_tree.id = skill_tree_text.skill_tree_id
             AND skill_tree_text.language = :language
+        WHERE
+            (:name IS NULL OR (skill_tree_text.name LIKE '%' || :name || '%' OR skill_tree_text.full_name LIKE '%' || :name || '%'))
+            AND (:category IS NULL OR skill_tree.category = :category)
         ORDER BY skill_tree_text.name ASC
         """
     )
-    suspend fun getSkillTreeList(language: String): List<SkillTreeWithText>
+    suspend fun getSkillTreeList(
+        language: String,
+        name: String?,
+        category: String?,
+    ): List<SkillTreeWithText>
 
     @Query(
         """

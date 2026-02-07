@@ -7,6 +7,7 @@ import com.gaugustini.mhfudatabase.data.database.relation.EquipmentSkillTreePoin
 import com.gaugustini.mhfudatabase.data.mapper.ArmorMapper
 import com.gaugustini.mhfudatabase.data.mapper.DecorationMapper
 import com.gaugustini.mhfudatabase.data.mapper.SkillTreeMapper
+import com.gaugustini.mhfudatabase.domain.filter.SkillTreeFilter
 import com.gaugustini.mhfudatabase.domain.model.Armor
 import com.gaugustini.mhfudatabase.domain.model.Decoration
 import com.gaugustini.mhfudatabase.domain.model.SkillTree
@@ -35,13 +36,18 @@ class SkillRepository @Inject constructor(
     }
 
     /**
-     * Returns the list of all skill trees.
+     * Returns the list of all skill trees or filtering by [SkillTreeFilter].
      * Note: skills are not populated.
      */
     suspend fun getSkillTreeList(
         language: String,
+        filter: SkillTreeFilter = SkillTreeFilter(),
     ): List<SkillTree> {
-        return skillDao.getSkillTreeList(language).map { SkillTreeMapper.toModel(it) }
+        return skillDao.getSkillTreeList(
+            language = language,
+            name = filter.name,
+            category = filter.category?.name,
+        ).map { SkillTreeMapper.toModel(it) }
     }
 
     /**

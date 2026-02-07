@@ -37,9 +37,26 @@ interface WeaponDao {
         JOIN weapon_text
             ON weapon.id = weapon_text.weapon_id
             AND weapon_text.language = :language
+        WHERE
+            (:name IS NULL OR (weapon_text.name LIKE '%' || :name || '%' OR weapon_text.full_name LIKE '%' || :name || '%'))
+            AND (:hasWeaponTypeFilter = 0 OR weapon.weapon_type IN (:weaponType))
+            AND (:hasSlotFilter = 0 OR weapon.num_slots IN (:numberOfSlots))
+            AND (:hasRarityFilter = 0 OR weapon.rarity IN (:rarity))
+            AND (:hasElementFilter = 0 OR (weapon.element_1 IN (:elementType) OR weapon.element_2 IN (:elementType)))
         """
     )
-    suspend fun getWeaponList(language: String): List<WeaponWithText>
+    suspend fun getWeaponList(
+        language: String,
+        name: String?,
+        weaponType: List<String>?,
+        hasWeaponTypeFilter: Boolean,
+        numberOfSlots: List<Int>?,
+        hasSlotFilter: Boolean,
+        rarity: List<Int>?,
+        hasRarityFilter: Boolean,
+        elementType: List<String>?,
+        hasElementFilter: Boolean,
+    ): List<WeaponWithText>
 
     @Query(
         """

@@ -4,6 +4,7 @@ import com.gaugustini.mhfudatabase.data.database.dao.ItemDao
 import com.gaugustini.mhfudatabase.data.database.entity.item.ItemCombinationEntity
 import com.gaugustini.mhfudatabase.data.mapper.ItemCombinationMapper
 import com.gaugustini.mhfudatabase.data.mapper.ItemMapper
+import com.gaugustini.mhfudatabase.domain.filter.ItemFilter
 import com.gaugustini.mhfudatabase.domain.model.Item
 import com.gaugustini.mhfudatabase.domain.model.ItemCombination
 import com.gaugustini.mhfudatabase.domain.model.ItemSources
@@ -34,13 +35,23 @@ class ItemRepository @Inject constructor(
     }
 
     /**
-     * Returns the list of all items.
+     * Returns the list of all items or filtering by [ItemFilter].
      * Note: sources and usages are not populated.
      */
     suspend fun getItemList(
         language: String,
+        filter: ItemFilter = ItemFilter(),
     ): List<Item> {
-        return itemDao.getItemList(language).map { ItemMapper.toModel(it) }
+        return itemDao.getItemList(
+            language = language,
+            name = filter.name,
+            rarity = filter.rarity,
+            hasRarityFilter = !filter.rarity.isNullOrEmpty(),
+            icons = filter.icons?.map { it.name },
+            hasIconFilter = !filter.icons.isNullOrEmpty(),
+            iconColors = filter.iconColors?.map { it.name },
+            hasIconColorFilter = !filter.iconColors.isNullOrEmpty(),
+        ).map { ItemMapper.toModel(it) }
     }
 
     /**
