@@ -35,7 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
+import com.gaugustini.mhfudatabase.domain.filter.ArmorFilter
 import com.gaugustini.mhfudatabase.domain.model.Armor
 import com.gaugustini.mhfudatabase.ui.features.armor.components.ArmorListItem
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
@@ -43,20 +43,13 @@ import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
 
-data class ArmorSelectionFilter(
-    val name: String = "",
-    val armorType: EquipmentType = EquipmentType.ARMOR_HEAD,
-    val numberOfSlots: List<Int> = emptyList(),
-    val rarity: List<Int> = emptyList(),
-)
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArmorSelection(
     armors: List<Armor>,
-    filter: ArmorSelectionFilter = ArmorSelectionFilter(),
+    filter: ArmorFilter = ArmorFilter(),
     onArmorClick: (armorId: Int) -> Unit = {},
-    onFilterChange: (filter: ArmorSelectionFilter) -> Unit = {},
+    onFilterChange: (filter: ArmorFilter) -> Unit = {},
     onBack: () -> Unit = {},
 ) {
     var showSearchTextField by rememberSaveable { mutableStateOf(false) }
@@ -154,12 +147,13 @@ fun ArmorSelection(
 @Composable
 fun ArmorFilterSheet(
     sheetState: SheetState,
-    filter: ArmorSelectionFilter,
+    filter: ArmorFilter,
     modifier: Modifier = Modifier,
-    onFilterChange: (filter: ArmorSelectionFilter) -> Unit = {},
+    onFilterChange: (filter: ArmorFilter) -> Unit = {},
     onDismiss: () -> Unit = {},
 ) {
-    var newFilter = filter
+    var rarities = filter.rarity ?: emptyList()
+    var numberOfSlots = filter.numberOfSlots ?: emptyList()
 
     ModalBottomSheet(
         sheetState = sheetState,
@@ -185,14 +179,14 @@ fun ArmorFilterSheet(
             ) {
                 repeat(10) {
                     SelectionContainer(
-                        selected = (it + 1) in newFilter.rarity,
+                        selected = (it + 1) in rarities,
                         onSelected = {
-                            newFilter = if ((it + 1) in newFilter.rarity) {
-                                newFilter.copy(rarity = newFilter.rarity - (it + 1))
+                            rarities = if ((it + 1) in rarities) {
+                                rarities - (it + 1)
                             } else {
-                                newFilter.copy(rarity = newFilter.rarity + (it + 1))
+                                rarities + (it + 1)
                             }
-                            onFilterChange(newFilter)
+                            onFilterChange(filter.copy(rarity = rarities.ifEmpty { null }))
                         }
                     ) {
                         Text(
@@ -216,14 +210,14 @@ fun ArmorFilterSheet(
             ) {
                 repeat(4) {
                     SelectionContainer(
-                        selected = it in newFilter.numberOfSlots,
+                        selected = it in numberOfSlots,
                         onSelected = {
-                            newFilter = if (it in newFilter.numberOfSlots) {
-                                newFilter.copy(numberOfSlots = newFilter.numberOfSlots - it)
+                            numberOfSlots = if (it in numberOfSlots) {
+                                numberOfSlots - it
                             } else {
-                                newFilter.copy(numberOfSlots = newFilter.numberOfSlots + it)
+                                numberOfSlots + it
                             }
-                            onFilterChange(newFilter)
+                            onFilterChange(filter.copy(numberOfSlots = numberOfSlots.ifEmpty { null }))
                         }
                     ) {
                         Text(

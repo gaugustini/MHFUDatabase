@@ -147,7 +147,7 @@ fun UserSetDetailScreen(
             SelectionType.WEAPON -> {
                 WeaponSelection(
                     weapons = uiState.weapons,
-                    filter = uiState.weaponSelectionFilter,
+                    filter = uiState.weaponFilter,
                     onWeaponClick = { weaponId ->
                         onEvent(UserSetEvent.ChangeWeapon(weaponId))
                         onEvent(UserSetEvent.CloseSelection)
@@ -160,7 +160,7 @@ fun UserSetDetailScreen(
             SelectionType.ARMOR -> {
                 ArmorSelection(
                     armors = uiState.armors,
-                    filter = uiState.armorSelectionFilter,
+                    filter = uiState.armorFilter,
                     onArmorClick = { armorId ->
                         onEvent(UserSetEvent.ChangeArmor(armorId))
                         onEvent(UserSetEvent.CloseSelection)
@@ -173,7 +173,8 @@ fun UserSetDetailScreen(
             SelectionType.DECORATION -> {
                 DecorationSelection(
                     decorations = uiState.decorations,
-                    filter = uiState.decorationSelectionFilter,
+                    maxAvailableSlots = uiState.maxAvailableSlots,
+                    filter = uiState.decorationFilter,
                     onDecorationClick = { decorationId ->
                         onEvent(UserSetEvent.AddDecoration(decorationId))
                         onEvent(UserSetEvent.CloseSelection)

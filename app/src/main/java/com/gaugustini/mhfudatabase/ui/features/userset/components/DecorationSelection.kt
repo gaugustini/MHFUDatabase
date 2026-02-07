@@ -35,7 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
+import com.gaugustini.mhfudatabase.domain.filter.DecorationFilter
 import com.gaugustini.mhfudatabase.domain.model.Decoration
 import com.gaugustini.mhfudatabase.ui.features.decoration.components.DecorationListItem
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
@@ -43,20 +43,14 @@ import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewDecorationData
 
-data class DecorationSelectionFilter(
-    val name: String = "",
-    val availableSlots: Int = 0,
-    val equipmentType: EquipmentType = EquipmentType.WEAPON,
-    val numberOfSlots: List<Int> = emptyList(),
-)
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DecorationSelection(
     decorations: List<Decoration>,
-    filter: DecorationSelectionFilter = DecorationSelectionFilter(),
+    maxAvailableSlots: Int = 3,
+    filter: DecorationFilter = DecorationFilter(),
     onDecorationClick: (decorationId: Int) -> Unit = {},
-    onFilterChange: (filter: DecorationSelectionFilter) -> Unit = {},
+    onFilterChange: (filter: DecorationFilter) -> Unit = {},
     onBack: () -> Unit = {},
 ) {
     var showSearchTextField by rememberSaveable { mutableStateOf(false) }
@@ -143,6 +137,7 @@ fun DecorationSelection(
             DecorationFilterSheet(
                 sheetState = filterSheetState,
                 filter = filter,
+                maxAvailableSlots = maxAvailableSlots,
                 onFilterChange = onFilterChange,
                 onDismiss = { showFilterSheet = false },
             )
@@ -154,12 +149,13 @@ fun DecorationSelection(
 @Composable
 fun DecorationFilterSheet(
     sheetState: SheetState,
-    filter: DecorationSelectionFilter,
+    filter: DecorationFilter,
+    maxAvailableSlots: Int,
     modifier: Modifier = Modifier,
-    onFilterChange: (filter: DecorationSelectionFilter) -> Unit = {},
+    onFilterChange: (filter: DecorationFilter) -> Unit = {},
     onDismiss: () -> Unit = {},
 ) {
-    var newFilter = filter
+    var numberOfSlots = filter.numberOfSlots ?: emptyList()
 
     ModalBottomSheet(
         sheetState = sheetState,
@@ -183,16 +179,16 @@ fun DecorationFilterSheet(
                     .fillMaxWidth()
                     .padding(Dimension.Padding.medium)
             ) {
-                for (slot in 1..filter.availableSlots) {
+                for (slot in 1..maxAvailableSlots) {
                     SelectionContainer(
-                        selected = slot in newFilter.numberOfSlots,
+                        selected = slot in numberOfSlots,
                         onSelected = {
-                            newFilter = if (slot in newFilter.numberOfSlots) {
-                                newFilter.copy(numberOfSlots = newFilter.numberOfSlots - slot)
+                            numberOfSlots = if (slot in numberOfSlots) {
+                                numberOfSlots - slot
                             } else {
-                                newFilter.copy(numberOfSlots = newFilter.numberOfSlots + slot)
+                                numberOfSlots + slot
                             }
-                            onFilterChange(newFilter)
+                            onFilterChange(filter.copy(numberOfSlots = numberOfSlots.ifEmpty { null }))
                         }
                     ) {
                         Text(

@@ -39,6 +39,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.WeaponElement
 import com.gaugustini.mhfudatabase.domain.enums.WeaponType
+import com.gaugustini.mhfudatabase.domain.filter.WeaponFilter
 import com.gaugustini.mhfudatabase.domain.model.Weapon
 import com.gaugustini.mhfudatabase.ui.features.weapon.components.WeaponListItem
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
@@ -47,21 +48,13 @@ import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.MHFUIcons
 import com.gaugustini.mhfudatabase.util.preview.PreviewWeaponData
 
-data class WeaponSelectionFilter(
-    val name: String = "",
-    val weaponType: List<WeaponType> = emptyList(),
-    val elementType: List<WeaponElement> = emptyList(),
-    val numberOfSlots: List<Int> = emptyList(),
-    val rarity: List<Int> = emptyList(),
-)
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WeaponSelection(
     weapons: List<Weapon>,
-    filter: WeaponSelectionFilter = WeaponSelectionFilter(),
+    filter: WeaponFilter = WeaponFilter(),
     onWeaponClick: (weaponId: Int) -> Unit = {},
-    onFilterChange: (filter: WeaponSelectionFilter) -> Unit = {},
+    onFilterChange: (filter: WeaponFilter) -> Unit = {},
     onBack: () -> Unit = {},
 ) {
     var showSearchTextField by rememberSaveable { mutableStateOf(false) }
@@ -159,12 +152,15 @@ fun WeaponSelection(
 @Composable
 fun WeaponFilterSheet(
     sheetState: SheetState,
-    filter: WeaponSelectionFilter,
+    filter: WeaponFilter,
     modifier: Modifier = Modifier,
-    onFilterChange: (filter: WeaponSelectionFilter) -> Unit = {},
+    onFilterChange: (filter: WeaponFilter) -> Unit = {},
     onDismiss: () -> Unit = {},
 ) {
-    var newFilter = filter
+    var weaponTypes = filter.weaponType ?: emptyList()
+    var elementTypes = filter.elementType ?: emptyList()
+    var rarities = filter.rarity ?: emptyList()
+    var numberOfSlots = filter.numberOfSlots ?: emptyList()
 
     ModalBottomSheet(
         sheetState = sheetState,
@@ -190,14 +186,14 @@ fun WeaponFilterSheet(
             ) {
                 WeaponType.entries.forEach { weaponType ->
                     SelectionContainer(
-                        selected = weaponType in newFilter.weaponType,
+                        selected = weaponType in weaponTypes,
                         onSelected = {
-                            newFilter = if (weaponType in newFilter.weaponType) {
-                                newFilter.copy(weaponType = newFilter.weaponType - weaponType)
+                            weaponTypes = if (weaponType in weaponTypes) {
+                                weaponTypes - weaponType
                             } else {
-                                newFilter.copy(weaponType = newFilter.weaponType + weaponType)
+                                weaponTypes + weaponType
                             }
-                            onFilterChange(newFilter)
+                            onFilterChange(filter.copy(weaponType = weaponTypes.ifEmpty { null }))
                         },
                     ) {
                         Image(
@@ -224,14 +220,14 @@ fun WeaponFilterSheet(
             ) {
                 WeaponElement.entries.forEach { elementType ->
                     SelectionContainer(
-                        selected = elementType in newFilter.elementType,
+                        selected = elementType in elementTypes,
                         onSelected = {
-                            newFilter = if (elementType in newFilter.elementType) {
-                                newFilter.copy(elementType = newFilter.elementType - elementType)
+                            elementTypes = if (elementType in elementTypes) {
+                                elementTypes - elementType
                             } else {
-                                newFilter.copy(elementType = newFilter.elementType + elementType)
+                                elementTypes + elementType
                             }
-                            onFilterChange(newFilter)
+                            onFilterChange(filter.copy(elementType = elementTypes.ifEmpty { null }))
                         },
                     ) {
                         Image(
@@ -258,14 +254,14 @@ fun WeaponFilterSheet(
             ) {
                 repeat(10) {
                     SelectionContainer(
-                        selected = (it + 1) in newFilter.rarity,
+                        selected = (it + 1) in rarities,
                         onSelected = {
-                            newFilter = if ((it + 1) in newFilter.rarity) {
-                                newFilter.copy(rarity = newFilter.rarity - (it + 1))
+                            rarities = if ((it + 1) in rarities) {
+                                rarities - (it + 1)
                             } else {
-                                newFilter.copy(rarity = newFilter.rarity + (it + 1))
+                                rarities + (it + 1)
                             }
-                            onFilterChange(newFilter)
+                            onFilterChange(filter.copy(rarity = rarities.ifEmpty { null }))
                         }
                     ) {
                         Text(
@@ -289,14 +285,14 @@ fun WeaponFilterSheet(
             ) {
                 repeat(4) {
                     SelectionContainer(
-                        selected = it in newFilter.numberOfSlots,
+                        selected = it in numberOfSlots,
                         onSelected = {
-                            newFilter = if (it in newFilter.numberOfSlots) {
-                                newFilter.copy(numberOfSlots = newFilter.numberOfSlots - it)
+                            numberOfSlots = if (it in numberOfSlots) {
+                                numberOfSlots - it
                             } else {
-                                newFilter.copy(numberOfSlots = newFilter.numberOfSlots + it)
+                                numberOfSlots + it
                             }
-                            onFilterChange(newFilter)
+                            onFilterChange(filter.copy(numberOfSlots = numberOfSlots.ifEmpty { null }))
                         }
                     ) {
                         Text(

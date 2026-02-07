@@ -10,14 +10,14 @@ import com.gaugustini.mhfudatabase.data.repository.UserEquipmentSetRepository
 import com.gaugustini.mhfudatabase.data.repository.WeaponRepository
 import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
 import com.gaugustini.mhfudatabase.domain.enums.Language
+import com.gaugustini.mhfudatabase.domain.filter.ArmorFilter
+import com.gaugustini.mhfudatabase.domain.filter.DecorationFilter
+import com.gaugustini.mhfudatabase.domain.filter.WeaponFilter
 import com.gaugustini.mhfudatabase.domain.model.Armor
 import com.gaugustini.mhfudatabase.domain.model.Decoration
 import com.gaugustini.mhfudatabase.domain.model.EquipmentDecoration
 import com.gaugustini.mhfudatabase.domain.model.UserEquipmentSet
 import com.gaugustini.mhfudatabase.domain.model.Weapon
-import com.gaugustini.mhfudatabase.ui.features.userset.components.ArmorSelectionFilter
-import com.gaugustini.mhfudatabase.ui.features.userset.components.DecorationSelectionFilter
-import com.gaugustini.mhfudatabase.ui.features.userset.components.WeaponSelectionFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,14 +33,19 @@ data class UserSetDetailState(
     val initialTab: UserSetDetailTab = UserSetDetailTab.EQUIPMENT,
     val language: Language = Language.ENGLISH,
     val equipmentSet: UserEquipmentSet = UserEquipmentSet(),
+
     val openSelectionEquipment: Boolean = false,
     val selectionType: SelectionType? = null,
+    val selectedEquipmentType: EquipmentType? = null,
+    val maxAvailableSlots: Int = 3,
+
     val weapons: List<Weapon> = emptyList(),
     val armors: List<Armor> = emptyList(),
     val decorations: List<Decoration> = emptyList(),
-    val weaponSelectionFilter: WeaponSelectionFilter = WeaponSelectionFilter(),
-    val armorSelectionFilter: ArmorSelectionFilter = ArmorSelectionFilter(),
-    val decorationSelectionFilter: DecorationSelectionFilter = DecorationSelectionFilter(),
+
+    val weaponFilter: WeaponFilter = WeaponFilter(),
+    val armorFilter: ArmorFilter = ArmorFilter(),
+    val decorationFilter: DecorationFilter = DecorationFilter(),
 )
 
 enum class SelectionType {
@@ -63,9 +68,9 @@ sealed interface UserSetEvent {
     ) : UserSetEvent
 
     object CloseSelection : UserSetEvent
-    data class ApplyWeaponFilter(val filter: WeaponSelectionFilter) : UserSetEvent
-    data class ApplyArmorFilter(val filter: ArmorSelectionFilter) : UserSetEvent
-    data class ApplyDecorationFilter(val filter: DecorationSelectionFilter) : UserSetEvent
+    data class ApplyWeaponFilter(val filter: WeaponFilter) : UserSetEvent
+    data class ApplyArmorFilter(val filter: ArmorFilter) : UserSetEvent
+    data class ApplyDecorationFilter(val filter: DecorationFilter) : UserSetEvent
 }
 
 @HiltViewModel
@@ -164,7 +169,7 @@ class UserSetDetailViewModel @Inject constructor(
     private fun addDecoration(decorationId: Int) {
         val currentState = _uiState.value
         val selectedDecoration = currentState.decorations.find { it.id == decorationId } ?: return
-        val equipmentType = currentState.decorationSelectionFilter.equipmentType
+        val equipmentType = currentState.selectedEquipmentType ?: return
         val newEquipmentSet = currentState.equipmentSet.addDecoration(
             newDecoration = EquipmentDecoration(equipmentType, selectedDecoration, 1),
         )
@@ -210,11 +215,11 @@ class UserSetDetailViewModel @Inject constructor(
 
                 SelectionType.ARMOR -> {
                     val equipmentType = event.equipmentType ?: return@launch
-                    ArmorSelectionFilter(armorType = equipmentType)
+                    val filter = ArmorFilter(type = equipmentType)
                     _uiState.update { state ->
                         state.copy(
-                            armors = armorRepository.getArmorList(currentLanguage), // TODO: Add filter
-                            armorSelectionFilter = ArmorSelectionFilter(armorType = equipmentType),
+                            armors = armorRepository.getArmorList(currentLanguage, filter),
+                            armorFilter = filter,
                         )
                     }
                 }
@@ -222,14 +227,18 @@ class UserSetDetailViewModel @Inject constructor(
                 SelectionType.DECORATION -> {
                     val equipmentType = event.equipmentType ?: return@launch
                     val slots = event.availableSlots ?: return@launch
-                    val filter = DecorationSelectionFilter(
-                        availableSlots = slots,
-                        equipmentType = equipmentType
+                    val filter = DecorationFilter(
+                        numberOfSlots = listOf(1..slots).flatten(),
                     )
                     _uiState.update { state ->
                         state.copy(
-                            decorations = decorationRepository.getDecorationList(currentLanguage), // TODO: Add filter
-                            decorationSelectionFilter = filter,
+                            selectedEquipmentType = equipmentType,
+                            maxAvailableSlots = slots,
+                            decorations = decorationRepository.getDecorationList(
+                                currentLanguage,
+                                filter
+                            ),
+                            decorationFilter = DecorationFilter(),
                         )
                     }
                 }
@@ -242,44 +251,49 @@ class UserSetDetailViewModel @Inject constructor(
             state.copy(
                 openSelectionEquipment = false,
                 selectionType = null,
+                selectedEquipmentType = null,
+                maxAvailableSlots = 3,
                 weapons = emptyList(),
                 armors = emptyList(),
                 decorations = emptyList(),
-                weaponSelectionFilter = WeaponSelectionFilter(),
-                armorSelectionFilter = ArmorSelectionFilter(),
-                decorationSelectionFilter = DecorationSelectionFilter(),
+                weaponFilter = WeaponFilter(),
+                armorFilter = ArmorFilter(),
+                decorationFilter = DecorationFilter(),
             )
         }
     }
 
     private fun applyFilter(
-        weaponFilter: WeaponSelectionFilter? = null,
-        armorFilter: ArmorSelectionFilter? = null,
-        decorationFilter: DecorationSelectionFilter? = null
+        weaponFilter: WeaponFilter? = null,
+        armorFilter: ArmorFilter? = null,
+        decorationFilter: DecorationFilter? = null
     ) {
         viewModelScope.launch {
-            _uiState.value.language.code
+            val currentLanguage = _uiState.value.language.code
 
             _uiState.update { state ->
                 when {
                     weaponFilter != null -> {
                         state.copy(
-                            // weapons = weaponRepository.getWeaponList(currentLanguage, weaponFilter), TODO
-                            weaponSelectionFilter = weaponFilter,
+                            weapons = weaponRepository.getWeaponList(currentLanguage, weaponFilter),
+                            weaponFilter = weaponFilter,
                         )
                     }
 
                     armorFilter != null -> {
                         state.copy(
-                            // armors = armorRepository.getArmorList(currentLanguage, armorFilter), TODO
-                            armorSelectionFilter = armorFilter,
+                            armors = armorRepository.getArmorList(currentLanguage, armorFilter),
+                            armorFilter = armorFilter,
                         )
                     }
 
                     decorationFilter != null -> {
                         state.copy(
-                            // decorations = decorationRepository.getDecorationList(currentLanguage, decorationFilter), TODO
-                            decorationSelectionFilter = decorationFilter,
+                            decorations = decorationRepository.getDecorationList(
+                                currentLanguage,
+                                decorationFilter
+                            ),
+                            decorationFilter = decorationFilter,
                         )
                     }
 
