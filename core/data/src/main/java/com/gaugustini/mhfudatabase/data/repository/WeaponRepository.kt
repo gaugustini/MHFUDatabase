@@ -52,7 +52,18 @@ class WeaponRepository @Inject constructor(
         language: String,
         filter: WeaponFilter = WeaponFilter(),
     ): List<Weapon> {
-        return weaponDao.getWeaponList(language).map { WeaponMapper.toModel(it) }
+        return weaponDao.getWeaponList(
+            language = language,
+            name = filter.name,
+            weaponType = filter.weaponType?.map { it.name },
+            hasWeaponTypeFilter = !filter.weaponType.isNullOrEmpty(),
+            numberOfSlots = filter.numberOfSlots,
+            hasSlotFilter = !filter.numberOfSlots.isNullOrEmpty(),
+            rarity = filter.rarity,
+            hasRarityFilter = !filter.rarity.isNullOrEmpty(),
+            elementType = filter.elementType?.map { it.name },
+            hasElementFilter = !filter.elementType.isNullOrEmpty(),
+        ).map { WeaponMapper.toModel(it) }
     }
 
     /**

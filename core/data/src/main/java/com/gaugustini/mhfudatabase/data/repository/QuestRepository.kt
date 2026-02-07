@@ -37,7 +37,17 @@ class QuestRepository @Inject constructor(
         language: String,
         filter: QuestFilter = QuestFilter(),
     ): List<Quest> {
-        return questDao.getQuestList(language).map { QuestMapper.toModel(it) }
+        return questDao.getQuestList(
+            language = language,
+            name = filter.name,
+            hub = filter.hub?.name,
+            stars = filter.stars,
+            hasStarFilter = !filter.stars.isNullOrEmpty(),
+            type = filter.type?.name,
+            goal = filter.goal?.name,
+            locations = filter.locations,
+            hasLocationFilter = !filter.locations.isNullOrEmpty(),
+        ).map { QuestMapper.toModel(it) }
     }
 
 }

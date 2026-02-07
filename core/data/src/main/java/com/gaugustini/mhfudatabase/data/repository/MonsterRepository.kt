@@ -40,7 +40,12 @@ class MonsterRepository @Inject constructor(
         language: String,
         filter: MonsterFilter = MonsterFilter(),
     ): List<Monster> {
-        return monsterDao.getMonsterList(language).map { MonsterMapper.toModel(it) }
+        return monsterDao.getMonsterList(
+            language = language,
+            name = filter.name,
+            ecology = filter.ecology,
+            type = filter.type?.name
+        ).map { MonsterMapper.toModel(it) }
     }
 
 }

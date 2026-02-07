@@ -43,7 +43,11 @@ class SkillRepository @Inject constructor(
         language: String,
         filter: SkillTreeFilter = SkillTreeFilter(),
     ): List<SkillTree> {
-        return skillDao.getSkillTreeList(language).map { SkillTreeMapper.toModel(it) }
+        return skillDao.getSkillTreeList(
+            language = language,
+            name = filter.name,
+            category = filter.category?.name,
+        ).map { SkillTreeMapper.toModel(it) }
     }
 
     /**

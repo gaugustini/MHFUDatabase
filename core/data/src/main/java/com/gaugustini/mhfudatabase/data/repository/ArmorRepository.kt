@@ -57,7 +57,19 @@ class ArmorRepository @Inject constructor(
         language: String,
         filter: ArmorFilter = ArmorFilter(),
     ): List<Armor> {
-        return armorDao.getArmorList(language).map { ArmorMapper.toModel(it) }
+        return armorDao.getArmorList(
+            language = language,
+            name = filter.name,
+            equipmentType = filter.type?.toString(),
+            numberOfSlots = filter.numberOfSlots,
+            hasSlotFilter = !filter.numberOfSlots.isNullOrEmpty(),
+            rarity = filter.rarity,
+            hasRarityFilter = !filter.rarity.isNullOrEmpty(),
+            gender = filter.gender?.name,
+            hunterType = filter.hunterType?.name,
+            skills = filter.skills,
+            hasSkillFilter = !filter.skills.isNullOrEmpty(),
+        ).map { ArmorMapper.toModel(it) }
     }
 
     /**
@@ -68,8 +80,29 @@ class ArmorRepository @Inject constructor(
         language: String,
         filter: ArmorSetFilter = ArmorSetFilter(),
     ): List<ArmorSet> {
-        val armorSetsWithText = armorSetDao.getArmorSetList(language)
-        val armorsGroupedByArmorSet = armorDao.getArmorList(language).groupBy { it.armor.armorSetId }
+        val armorSetsWithText = armorSetDao.getArmorSetList(
+            language = language,
+            name = filter.name,
+            rarity = filter.rarity,
+            hasRarityFilter = !filter.rarity.isNullOrEmpty(),
+            rank = filter.rank?.name,
+            hunterType = filter.hunterType?.name,
+            skills = filter.skills,
+            hasSkillFilter = !filter.skills.isNullOrEmpty(),
+        )
+        val armorsGroupedByArmorSet = armorDao.getArmorList(
+            language = language,
+            name = null,
+            equipmentType = null,
+            numberOfSlots = null,
+            hasSlotFilter = false,
+            rarity = null,
+            hasRarityFilter = false,
+            gender = null,
+            hunterType = null,
+            skills = null,
+            hasSkillFilter = false,
+        ).groupBy { it.armor.armorSetId }
 
         return armorSetsWithText.map {
             ArmorSetMapper.toModel(

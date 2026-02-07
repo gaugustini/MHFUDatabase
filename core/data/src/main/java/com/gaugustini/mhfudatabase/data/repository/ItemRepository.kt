@@ -42,7 +42,16 @@ class ItemRepository @Inject constructor(
         language: String,
         filter: ItemFilter = ItemFilter(),
     ): List<Item> {
-        return itemDao.getItemList(language).map { ItemMapper.toModel(it) }
+        return itemDao.getItemList(
+            language = language,
+            name = filter.name,
+            rarity = filter.rarity,
+            hasRarityFilter = !filter.rarity.isNullOrEmpty(),
+            icons = filter.icons?.map { it.name },
+            hasIconFilter = !filter.icons.isNullOrEmpty(),
+            iconColors = filter.iconColors?.map { it.name },
+            hasIconColorFilter = !filter.iconColors.isNullOrEmpty(),
+        ).map { ItemMapper.toModel(it) }
     }
 
     /**

@@ -38,7 +38,14 @@ class DecorationRepository @Inject constructor(
         language: String,
         filter: DecorationFilter = DecorationFilter(),
     ): List<Decoration> {
-        return decorationDao.getDecorationList(language).map { DecorationMapper.toModel(it) }
+        return decorationDao.getDecorationList(
+            language = language,
+            name = filter.name,
+            numberOfSlots = filter.numberOfSlots,
+            hasSlotFilter = !filter.numberOfSlots.isNullOrEmpty(),
+            skills = filter.skills,
+            hasSkillFilter = !filter.skills.isNullOrEmpty(),
+        ).map { DecorationMapper.toModel(it) }
     }
 
 }

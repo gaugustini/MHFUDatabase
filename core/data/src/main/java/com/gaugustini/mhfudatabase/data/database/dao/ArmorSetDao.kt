@@ -54,10 +54,30 @@ interface ArmorSetDao {
             AND armor_set_text.language = :language
         JOIN armor
             ON armor_set.id = armor.armor_set_id
+        WHERE
+            (:name IS NULL OR armor_set_text.name LIKE '%' || :name || '%')
+            AND (:hasRarityFilter = 0 OR armor_set.rarity IN (:rarity))
+            AND (:rank IS NULL OR armor_set.rank = :rank)
+            AND (:hunterType IS NULL OR armor_set.hunter_type = :hunterType)
+            AND (:hasSkillFilter = 0 OR EXISTS (
+                SELECT 1 FROM armor_skill
+                JOIN armor ON armor.id = armor_skill.armor_id
+                WHERE armor.armor_set_id = armor_set.id 
+                AND armor_skill.skill_tree_id IN (:skills)
+            ))
         GROUP BY armor_set.id
         """
     )
-    suspend fun getArmorSetList(language: String): List<ArmorSetWithText>
+    suspend fun getArmorSetList(
+        language: String,
+        name: String?,
+        rarity: List<Int>?,
+        hasRarityFilter: Boolean,
+        rank: String?,
+        hunterType: String?,
+        skills: List<Int>?,
+        hasSkillFilter: Boolean,
+    ): List<ArmorSetWithText>
 
     @Query(
         """
