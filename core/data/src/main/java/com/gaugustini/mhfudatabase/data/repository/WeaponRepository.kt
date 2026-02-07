@@ -4,6 +4,7 @@ import com.gaugustini.mhfudatabase.data.database.dao.WeaponDao
 import com.gaugustini.mhfudatabase.data.database.entity.weapon.WeaponParentEntity
 import com.gaugustini.mhfudatabase.data.mapper.WeaponMapper
 import com.gaugustini.mhfudatabase.domain.enums.WeaponType
+import com.gaugustini.mhfudatabase.domain.filter.WeaponFilter
 import com.gaugustini.mhfudatabase.domain.model.Weapon
 import com.gaugustini.mhfudatabase.domain.model.WeaponNode
 import javax.inject.Inject
@@ -44,10 +45,12 @@ class WeaponRepository @Inject constructor(
     }
 
     /**
-     * Returns the list of all weapons.
+     * Returns the list of all weapons or filtering by [WeaponFilter].
+     * Note: ammo, recipe, paths and finals are not populated.
      */
     suspend fun getWeaponList(
         language: String,
+        filter: WeaponFilter = WeaponFilter(),
     ): List<Weapon> {
         return weaponDao.getWeaponList(language).map { WeaponMapper.toModel(it) }
     }

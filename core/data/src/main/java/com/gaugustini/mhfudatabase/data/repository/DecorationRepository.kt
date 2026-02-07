@@ -2,6 +2,7 @@ package com.gaugustini.mhfudatabase.data.repository
 
 import com.gaugustini.mhfudatabase.data.database.dao.DecorationDao
 import com.gaugustini.mhfudatabase.data.mapper.DecorationMapper
+import com.gaugustini.mhfudatabase.domain.filter.DecorationFilter
 import com.gaugustini.mhfudatabase.domain.model.Decoration
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,11 +31,12 @@ class DecorationRepository @Inject constructor(
     }
 
     /**
-     * Returns the list of all decorations.
+     * Returns the list of all decorations or filtering by [DecorationFilter].
      * Note: skills and recipes are not populated.
      */
     suspend fun getDecorationList(
         language: String,
+        filter: DecorationFilter = DecorationFilter(),
     ): List<Decoration> {
         return decorationDao.getDecorationList(language).map { DecorationMapper.toModel(it) }
     }

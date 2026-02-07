@@ -4,6 +4,8 @@ import com.gaugustini.mhfudatabase.data.database.dao.ArmorDao
 import com.gaugustini.mhfudatabase.data.database.dao.ArmorSetDao
 import com.gaugustini.mhfudatabase.data.mapper.ArmorMapper
 import com.gaugustini.mhfudatabase.data.mapper.ArmorSetMapper
+import com.gaugustini.mhfudatabase.domain.filter.ArmorFilter
+import com.gaugustini.mhfudatabase.domain.filter.ArmorSetFilter
 import com.gaugustini.mhfudatabase.domain.model.Armor
 import com.gaugustini.mhfudatabase.domain.model.ArmorSet
 import javax.inject.Inject
@@ -48,21 +50,23 @@ class ArmorRepository @Inject constructor(
     }
 
     /**
-     * Returns the list of all armor.
+     * Returns the list of all armor or filtering by [ArmorFilter].
      * Note: skills and recipe are not populated.
      */
     suspend fun getArmorList(
         language: String,
+        filter: ArmorFilter = ArmorFilter(),
     ): List<Armor> {
         return armorDao.getArmorList(language).map { ArmorMapper.toModel(it) }
     }
 
     /**
-     * Returns the list of all armor sets.
+     * Returns the list of all armor sets or filtering by [ArmorSetFilter].
      * Note: skills and recipe are not populated.
      */
     suspend fun getArmorSetList(
         language: String,
+        filter: ArmorSetFilter = ArmorSetFilter(),
     ): List<ArmorSet> {
         val armorSetsWithText = armorSetDao.getArmorSetList(language)
         val armorsGroupedByArmorSet = armorDao.getArmorList(language).groupBy { it.armor.armorSetId }
