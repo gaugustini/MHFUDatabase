@@ -43,7 +43,7 @@ class DecorationRepository @Inject constructor(
             name = filter.name,
             numberOfSlots = filter.numberOfSlots,
             hasSlotFilter = !filter.numberOfSlots.isNullOrEmpty(),
-            skills = filter.skills,
+            skills = filter.skills?.map { it.id },
             hasSkillFilter = !filter.skills.isNullOrEmpty(),
         ).map { DecorationMapper.toModel(it) }
     }

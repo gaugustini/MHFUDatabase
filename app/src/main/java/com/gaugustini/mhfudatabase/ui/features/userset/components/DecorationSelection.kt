@@ -193,8 +193,9 @@ fun DecorationFilterSheet(
                         },
                     ) {
                         Text(
-                            text = skill.toString(), // TODO: Change filter to use model instead of ID
+                            text = skill.name,
                             style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier.padding(horizontal = Dimension.Padding.large)
                         )
                     }
                 }

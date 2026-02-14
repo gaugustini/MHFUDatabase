@@ -4,6 +4,7 @@ import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
 import com.gaugustini.mhfudatabase.domain.enums.Gender
 import com.gaugustini.mhfudatabase.domain.enums.HunterType
 import com.gaugustini.mhfudatabase.domain.model.Armor
+import com.gaugustini.mhfudatabase.domain.model.SkillTree
 
 /**
  * Filter for [Armor].
@@ -15,5 +16,5 @@ data class ArmorFilter(
     val rarity: List<Int>? = null,
     val gender: Gender? = null,
     val hunterType: HunterType? = null,
-    val skills: List<Int>? = null,
+    val skills: List<SkillTree>? = null,
 )

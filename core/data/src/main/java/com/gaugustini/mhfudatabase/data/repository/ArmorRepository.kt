@@ -67,7 +67,7 @@ class ArmorRepository @Inject constructor(
             hasRarityFilter = !filter.rarity.isNullOrEmpty(),
             gender = filter.gender?.name,
             hunterType = filter.hunterType?.name,
-            skills = filter.skills,
+            skills = filter.skills?.map { it.id },
             hasSkillFilter = !filter.skills.isNullOrEmpty(),
         ).map { ArmorMapper.toModel(it) }
     }
@@ -87,7 +87,7 @@ class ArmorRepository @Inject constructor(
             hasRarityFilter = !filter.rarity.isNullOrEmpty(),
             rank = filter.rank?.name,
             hunterType = filter.hunterType?.name,
-            skills = filter.skills,
+            skills = filter.skills?.map { it.id },
             hasSkillFilter = !filter.skills.isNullOrEmpty(),
         )
         val armorsGroupedByArmorSet = armorDao.getArmorList(

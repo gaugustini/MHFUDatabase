@@ -349,29 +349,29 @@ class UserSetDetailViewModel @Inject constructor(
     }
 
     private fun addSkillToFilter(skillTreeId: Int) {
-        if (_uiState.value.skills.find { it.id == skillTreeId } == null) return
+        val skill = _uiState.value.skills.find { it.id == skillTreeId } ?: return
 
         when (_uiState.value.selectionType) {
             SelectionType.ARMOR -> {
                 val filter = _uiState.value.armorFilter
-                val newSkill = if (filter.skills?.contains(skillTreeId) ?: false) {
-                    filter.skills?.minus(skillTreeId)
+                val updatedSkills = if (filter.skills?.contains(skill) ?: false) {
+                    filter.skills?.minus(skill)
                 } else {
-                    filter.skills?.plus(skillTreeId) ?: listOf(skillTreeId)
+                    filter.skills?.plus(skill) ?: listOf(skill)
                 }
 
-                applyFilter(armorFilter = filter.copy(skills = newSkill))
+                applyFilter(armorFilter = filter.copy(skills = updatedSkills))
             }
 
             SelectionType.DECORATION -> {
                 val filter = _uiState.value.decorationFilter
-                val newSkill = if (filter.skills?.contains(skillTreeId) ?: false) {
-                    filter.skills?.minus(skillTreeId)
+                val updatedSkills = if (filter.skills?.contains(skill) ?: false) {
+                    filter.skills?.minus(skill)
                 } else {
-                    filter.skills?.plus(skillTreeId) ?: listOf(skillTreeId)
+                    filter.skills?.plus(skill) ?: listOf(skill)
                 }
 
-                applyFilter(decorationFilter = filter.copy(skills = newSkill))
+                applyFilter(decorationFilter = filter.copy(skills = updatedSkills))
             }
 
             else -> {}
