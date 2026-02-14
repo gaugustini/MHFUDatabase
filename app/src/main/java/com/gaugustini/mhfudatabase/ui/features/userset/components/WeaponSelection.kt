@@ -308,8 +308,7 @@ fun WeaponFilterSheet(
 
 @DevicePreviews
 @Composable
-fun WeaponSelectionPreview(
-) {
+fun WeaponSelectionPreview() {
     Theme {
         WeaponSelection(
             weapons = PreviewWeaponData.weaponList,

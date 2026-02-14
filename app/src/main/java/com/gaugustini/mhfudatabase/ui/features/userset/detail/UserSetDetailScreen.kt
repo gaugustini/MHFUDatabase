@@ -27,6 +27,7 @@ import com.gaugustini.mhfudatabase.ui.features.userset.components.ArmorSelection
 import com.gaugustini.mhfudatabase.ui.features.userset.components.DecorationSelection
 import com.gaugustini.mhfudatabase.ui.features.userset.components.DeleteConfirmationDialog
 import com.gaugustini.mhfudatabase.ui.features.userset.components.RenameDialog
+import com.gaugustini.mhfudatabase.ui.features.userset.components.SkillTreeSelection
 import com.gaugustini.mhfudatabase.ui.features.userset.components.WeaponSelection
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
@@ -70,7 +71,7 @@ fun UserSetDetailScreen(
     var showRenameDialog by rememberSaveable { mutableStateOf(false) }
     var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
 
-    if (!uiState.openSelectionEquipment) {
+    if (!uiState.openSelectionEquipment && !uiState.openSkillSelection) {
         val pagerState = rememberPagerState(
             initialPage = uiState.initialTab.ordinal,
             pageCount = { UserSetDetailTab.entries.size },
@@ -142,7 +143,9 @@ fun UserSetDetailScreen(
                 }
             }
         }
-    } else {
+    }
+
+    if (uiState.openSelectionEquipment && !uiState.openSkillSelection) {
         when (uiState.selectionType) {
             SelectionType.WEAPON -> {
                 WeaponSelection(
@@ -150,10 +153,10 @@ fun UserSetDetailScreen(
                     filter = uiState.weaponFilter,
                     onWeaponClick = { weaponId ->
                         onEvent(UserSetEvent.ChangeWeapon(weaponId))
-                        onEvent(UserSetEvent.CloseSelection)
+                        onEvent(UserSetEvent.CloseEquipmentSelection)
                     },
                     onFilterChange = { onEvent(UserSetEvent.ApplyWeaponFilter(it)) },
-                    onBack = { onEvent(UserSetEvent.CloseSelection) },
+                    onBack = { onEvent(UserSetEvent.CloseEquipmentSelection) },
                 )
             }
 
@@ -163,10 +166,11 @@ fun UserSetDetailScreen(
                     filter = uiState.armorFilter,
                     onArmorClick = { armorId ->
                         onEvent(UserSetEvent.ChangeArmor(armorId))
-                        onEvent(UserSetEvent.CloseSelection)
+                        onEvent(UserSetEvent.CloseEquipmentSelection)
                     },
                     onFilterChange = { onEvent(UserSetEvent.ApplyArmorFilter(it)) },
-                    onBack = { onEvent(UserSetEvent.CloseSelection) },
+                    onBack = { onEvent(UserSetEvent.CloseEquipmentSelection) },
+                    openSkillSelection = { onEvent(UserSetEvent.OpenSkillSelection) },
                 )
             }
 
@@ -177,15 +181,29 @@ fun UserSetDetailScreen(
                     filter = uiState.decorationFilter,
                     onDecorationClick = { decorationId ->
                         onEvent(UserSetEvent.AddDecoration(decorationId))
-                        onEvent(UserSetEvent.CloseSelection)
+                        onEvent(UserSetEvent.CloseEquipmentSelection)
                     },
                     onFilterChange = { onEvent(UserSetEvent.ApplyDecorationFilter(it)) },
-                    onBack = { onEvent(UserSetEvent.CloseSelection) },
+                    onBack = { onEvent(UserSetEvent.CloseEquipmentSelection) },
+                    openSkillSelection = { onEvent(UserSetEvent.OpenSkillSelection) },
                 )
             }
 
             else -> {}
         }
+    }
+
+    if (uiState.openSelectionEquipment && uiState.openSkillSelection) {
+        SkillTreeSelection(
+            skills = uiState.skills,
+            filter = uiState.skillFilter,
+            onSkillTreeClick = { skillTreeId ->
+                onEvent(UserSetEvent.AddSkillToFilter(skillTreeId))
+                onEvent(UserSetEvent.CloseSkillSelection)
+            },
+            onFilterChange = { onEvent(UserSetEvent.ApplySkillTreeFilter(it)) },
+            onBack = { onEvent(UserSetEvent.CloseSkillSelection) },
+        )
     }
 
     if (showRenameDialog) {

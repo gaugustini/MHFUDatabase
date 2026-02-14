@@ -14,7 +14,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -36,23 +35,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.domain.filter.ArmorFilter
-import com.gaugustini.mhfudatabase.domain.model.Armor
-import com.gaugustini.mhfudatabase.ui.features.armor.components.ArmorListItem
+import com.gaugustini.mhfudatabase.domain.enums.SkillCategory
+import com.gaugustini.mhfudatabase.domain.filter.SkillTreeFilter
+import com.gaugustini.mhfudatabase.domain.model.SkillTree
+import com.gaugustini.mhfudatabase.ui.features.skill.components.SkillTreeListItem
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
-import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
+import com.gaugustini.mhfudatabase.util.preview.PreviewSkillData
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ArmorSelection(
-    armors: List<Armor>,
-    filter: ArmorFilter = ArmorFilter(),
-    onArmorClick: (armorId: Int) -> Unit = {},
-    onFilterChange: (filter: ArmorFilter) -> Unit = {},
+fun SkillTreeSelection(
+    skills: List<SkillTree>,
+    filter: SkillTreeFilter = SkillTreeFilter(),
+    onSkillTreeClick: (skillTreeId: Int) -> Unit = {},
+    onFilterChange: (filter: SkillTreeFilter) -> Unit = {},
     onBack: () -> Unit = {},
-    openSkillSelection: () -> Unit = {},
 ) {
     var showSearchTextField by rememberSaveable { mutableStateOf(false) }
     var showFilterSheet by rememberSaveable { mutableStateOf(false) }
@@ -77,7 +76,7 @@ fun ArmorSelection(
                         )
                     } else {
                         Text(
-                            text = stringResource(id = R.string.user_set_armor_selection),
+                            text = stringResource(id = R.string.user_set_skill_tree_selection),
                             style = MaterialTheme.typography.titleLarge,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
@@ -126,40 +125,34 @@ fun ArmorSelection(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            items(armors) { armor ->
-                ArmorListItem(
-                    armor = armor,
-                    onArmorClick = onArmorClick
+            items(skills) { skill ->
+                SkillTreeListItem(
+                    skillTree = skill,
+                    onSkillTreeClick = onSkillTreeClick,
                 )
             }
         }
     }
 
     if (showFilterSheet) {
-        ArmorFilterSheet(
+        SkillTreeFilterSheet(
             sheetState = filterSheetState,
             filter = filter,
             onFilterChange = onFilterChange,
             onDismiss = { showFilterSheet = false },
-            onOpenSkillSelection = openSkillSelection,
         )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ArmorFilterSheet(
+fun SkillTreeFilterSheet(
     sheetState: SheetState,
-    filter: ArmorFilter,
+    filter: SkillTreeFilter,
     modifier: Modifier = Modifier,
-    onFilterChange: (filter: ArmorFilter) -> Unit = {},
+    onFilterChange: (filter: SkillTreeFilter) -> Unit = {},
     onDismiss: () -> Unit = {},
-    onOpenSkillSelection: () -> Unit = {},
 ) {
-    var skills = filter.skills ?: emptyList()
-    var rarities = filter.rarity ?: emptyList()
-    var numberOfSlots = filter.numberOfSlots ?: emptyList()
-
     ModalBottomSheet(
         sheetState = sheetState,
         onDismissRequest = onDismiss,
@@ -172,7 +165,7 @@ fun ArmorFilterSheet(
                 .padding(horizontal = Dimension.Padding.large)
         ) {
             Text(
-                text = stringResource(R.string.user_set_filter_skill),
+                text = stringResource(R.string.user_set_filter_skill_category),
                 style = MaterialTheme.typography.titleMedium,
             )
             FlowRow(
@@ -182,88 +175,32 @@ fun ArmorFilterSheet(
                     .fillMaxWidth()
                     .padding(Dimension.Padding.medium)
             ) {
-                skills.forEach { skill ->
+                SkillCategory.entries.forEach { category ->
                     SelectionContainer(
-                        selected = true,
+                        selected = category == filter.category,
                         onSelected = {
-                            skills = skills - skill
-                            onFilterChange(filter.copy(skills = skills.ifEmpty { null }))
-                        },
+                            if (category == filter.category) {
+                                onFilterChange(filter.copy(category = null))
+                            } else {
+                                onFilterChange(filter.copy(category = category))
+                            }
+                        }
                     ) {
                         Text(
-                            text = skill.toString(), // TODO: Change filter to use model instead of ID
+                            text = stringResource(
+                                when (category) {
+                                    SkillCategory.BLADE -> R.string.user_set_filter_skill_blade
+                                    SkillCategory.COMBAT -> R.string.user_set_filter_skill_combat
+                                    SkillCategory.FELYNE -> R.string.user_set_filter_skill_felyne
+                                    SkillCategory.GATHER -> R.string.user_set_filter_skill_gather
+                                    SkillCategory.GUNNER -> R.string.user_set_filter_skill_gunner
+                                    SkillCategory.ITEM -> R.string.user_set_filter_skill_item
+                                    SkillCategory.RESISTANCE -> R.string.user_set_filter_skill_resistance
+                                    SkillCategory.STATUS -> R.string.user_set_filter_skill_status
+                                }
+                            ),
                             style = MaterialTheme.typography.bodyLarge,
-                        )
-                    }
-                }
-                SelectionContainer(
-                    selected = false,
-                    onSelected = onOpenSkillSelection,
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = null,
-                    )
-                }
-            }
-
-            Text(
-                text = stringResource(R.string.user_set_filter_rarity),
-                style = MaterialTheme.typography.titleMedium,
-            )
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
-                verticalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(Dimension.Padding.medium)
-            ) {
-                repeat(10) {
-                    SelectionContainer(
-                        selected = (it + 1) in rarities,
-                        onSelected = {
-                            rarities = if ((it + 1) in rarities) {
-                                rarities - (it + 1)
-                            } else {
-                                rarities + (it + 1)
-                            }
-                            onFilterChange(filter.copy(rarity = rarities.ifEmpty { null }))
-                        }
-                    ) {
-                        Text(
-                            text = (it + 1).toString(),
-                            style = MaterialTheme.typography.titleMedium,
-                        )
-                    }
-                }
-            }
-
-            Text(
-                text = stringResource(R.string.user_set_filter_number_of_slots),
-                style = MaterialTheme.typography.titleMedium,
-            )
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
-                verticalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(Dimension.Padding.medium)
-            ) {
-                repeat(4) {
-                    SelectionContainer(
-                        selected = it in numberOfSlots,
-                        onSelected = {
-                            numberOfSlots = if (it in numberOfSlots) {
-                                numberOfSlots - it
-                            } else {
-                                numberOfSlots + it
-                            }
-                            onFilterChange(filter.copy(numberOfSlots = numberOfSlots.ifEmpty { null }))
-                        }
-                    ) {
-                        Text(
-                            text = (it).toString(),
-                            style = MaterialTheme.typography.titleMedium,
+                            modifier = Modifier.padding(horizontal = Dimension.Padding.large)
                         )
                     }
                 }
@@ -274,10 +211,10 @@ fun ArmorFilterSheet(
 
 @DevicePreviews
 @Composable
-fun ArmorSelectionPreview() {
+fun SkillTreeSelectionPreview() {
     Theme {
-        ArmorSelection(
-            armors = PreviewArmorData.armorList,
+        SkillTreeSelection(
+            skills = PreviewSkillData.skillTreeList,
         )
     }
 }

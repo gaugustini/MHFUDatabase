@@ -6,16 +6,19 @@ import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.ArmorRepository
 import com.gaugustini.mhfudatabase.data.repository.DecorationRepository
+import com.gaugustini.mhfudatabase.data.repository.SkillRepository
 import com.gaugustini.mhfudatabase.data.repository.UserEquipmentSetRepository
 import com.gaugustini.mhfudatabase.data.repository.WeaponRepository
 import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
 import com.gaugustini.mhfudatabase.domain.enums.Language
 import com.gaugustini.mhfudatabase.domain.filter.ArmorFilter
 import com.gaugustini.mhfudatabase.domain.filter.DecorationFilter
+import com.gaugustini.mhfudatabase.domain.filter.SkillTreeFilter
 import com.gaugustini.mhfudatabase.domain.filter.WeaponFilter
 import com.gaugustini.mhfudatabase.domain.model.Armor
 import com.gaugustini.mhfudatabase.domain.model.Decoration
 import com.gaugustini.mhfudatabase.domain.model.EquipmentDecoration
+import com.gaugustini.mhfudatabase.domain.model.SkillTree
 import com.gaugustini.mhfudatabase.domain.model.UserEquipmentSet
 import com.gaugustini.mhfudatabase.domain.model.Weapon
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,6 +38,7 @@ data class UserSetDetailState(
     val equipmentSet: UserEquipmentSet = UserEquipmentSet(),
 
     val openSelectionEquipment: Boolean = false,
+    val openSkillSelection: Boolean = false,
     val selectionType: SelectionType? = null,
     val selectedEquipmentType: EquipmentType? = null,
     val maxAvailableSlots: Int = 3,
@@ -42,10 +46,12 @@ data class UserSetDetailState(
     val weapons: List<Weapon> = emptyList(),
     val armors: List<Armor> = emptyList(),
     val decorations: List<Decoration> = emptyList(),
+    val skills: List<SkillTree> = emptyList(),
 
     val weaponFilter: WeaponFilter = WeaponFilter(),
     val armorFilter: ArmorFilter = ArmorFilter(),
     val decorationFilter: DecorationFilter = DecorationFilter(),
+    val skillFilter: SkillTreeFilter = SkillTreeFilter(),
 )
 
 enum class SelectionType {
@@ -67,10 +73,14 @@ sealed interface UserSetEvent {
         val availableSlots: Int? = null
     ) : UserSetEvent
 
-    object CloseSelection : UserSetEvent
+    object CloseEquipmentSelection : UserSetEvent
+    object OpenSkillSelection : UserSetEvent
+    object CloseSkillSelection : UserSetEvent
     data class ApplyWeaponFilter(val filter: WeaponFilter) : UserSetEvent
     data class ApplyArmorFilter(val filter: ArmorFilter) : UserSetEvent
     data class ApplyDecorationFilter(val filter: DecorationFilter) : UserSetEvent
+    data class ApplySkillTreeFilter(val filter: SkillTreeFilter) : UserSetEvent
+    data class AddSkillToFilter(val skillTreeId: Int) : UserSetEvent
 }
 
 @HiltViewModel
@@ -81,6 +91,7 @@ class UserSetDetailViewModel @Inject constructor(
     private val weaponRepository: WeaponRepository,
     private val armorRepository: ArmorRepository,
     private val decorationRepository: DecorationRepository,
+    private val skillRepository: SkillRepository,
 ) : ViewModel() {
 
     private var setId: Int = checkNotNull(savedStateHandle["setId"])
@@ -138,10 +149,14 @@ class UserSetDetailViewModel @Inject constructor(
             is UserSetEvent.RemoveDecoration -> removeDecoration(event.decorationId, event.equipmentType)
             is UserSetEvent.Delete -> deleteUserSet()
             is UserSetEvent.OpenSelection -> openEquipmentSelection(event)
-            is UserSetEvent.CloseSelection -> closeEquipmentSelection()
+            is UserSetEvent.CloseEquipmentSelection -> closeEquipmentSelection()
+            is UserSetEvent.OpenSkillSelection -> openSkillSelection()
+            is UserSetEvent.CloseSkillSelection -> closeSkillSelection()
             is UserSetEvent.ApplyWeaponFilter -> applyFilter(weaponFilter = event.filter)
             is UserSetEvent.ApplyArmorFilter -> applyFilter(armorFilter = event.filter)
             is UserSetEvent.ApplyDecorationFilter -> applyFilter(decorationFilter = event.filter)
+            is UserSetEvent.ApplySkillTreeFilter -> applyFilter(skillFilter = event.filter)
+            is UserSetEvent.AddSkillToFilter -> addSkillToFilter(event.skillTreeId)
         }
     }
 
@@ -198,9 +213,6 @@ class UserSetDetailViewModel @Inject constructor(
                 state.copy(
                     openSelectionEquipment = true,
                     selectionType = event.type,
-                    weapons = emptyList(),
-                    armors = emptyList(),
-                    decorations = emptyList(),
                 )
             }
 
@@ -218,6 +230,7 @@ class UserSetDetailViewModel @Inject constructor(
                     val filter = ArmorFilter(type = equipmentType)
                     _uiState.update { state ->
                         state.copy(
+                            selectedEquipmentType = equipmentType,
                             armors = armorRepository.getArmorList(currentLanguage, filter),
                             armorFilter = filter,
                         )
@@ -263,10 +276,35 @@ class UserSetDetailViewModel @Inject constructor(
         }
     }
 
+    private fun openSkillSelection() {
+        viewModelScope.launch {
+            val currentLanguage = _uiState.value.language.code
+
+            _uiState.update { state ->
+                state.copy(
+                    openSkillSelection = true,
+                    skills = skillRepository.getSkillTreeList(language = currentLanguage),
+                    skillFilter = SkillTreeFilter(),
+                )
+            }
+        }
+    }
+
+    private fun closeSkillSelection() {
+        _uiState.update { state ->
+            state.copy(
+                openSkillSelection = false,
+                skills = emptyList(),
+                skillFilter = SkillTreeFilter(),
+            )
+        }
+    }
+
     private fun applyFilter(
         weaponFilter: WeaponFilter? = null,
         armorFilter: ArmorFilter? = null,
-        decorationFilter: DecorationFilter? = null
+        decorationFilter: DecorationFilter? = null,
+        skillFilter: SkillTreeFilter? = null,
     ) {
         viewModelScope.launch {
             val currentLanguage = _uiState.value.language.code
@@ -297,9 +335,46 @@ class UserSetDetailViewModel @Inject constructor(
                         )
                     }
 
+                    skillFilter != null -> {
+                        state.copy(
+                            skills = skillRepository.getSkillTreeList(currentLanguage, skillFilter),
+                            skillFilter = skillFilter,
+                        )
+                    }
+
                     else -> state
                 }
             }
+        }
+    }
+
+    private fun addSkillToFilter(skillTreeId: Int) {
+        if (_uiState.value.skills.find { it.id == skillTreeId } == null) return
+
+        when (_uiState.value.selectionType) {
+            SelectionType.ARMOR -> {
+                val filter = _uiState.value.armorFilter
+                val newSkill = if (filter.skills?.contains(skillTreeId) ?: false) {
+                    filter.skills?.minus(skillTreeId)
+                } else {
+                    filter.skills?.plus(skillTreeId) ?: listOf(skillTreeId)
+                }
+
+                applyFilter(armorFilter = filter.copy(skills = newSkill))
+            }
+
+            SelectionType.DECORATION -> {
+                val filter = _uiState.value.decorationFilter
+                val newSkill = if (filter.skills?.contains(skillTreeId) ?: false) {
+                    filter.skills?.minus(skillTreeId)
+                } else {
+                    filter.skills?.plus(skillTreeId) ?: listOf(skillTreeId)
+                }
+
+                applyFilter(decorationFilter = filter.copy(skills = newSkill))
+            }
+
+            else -> {}
         }
     }
 

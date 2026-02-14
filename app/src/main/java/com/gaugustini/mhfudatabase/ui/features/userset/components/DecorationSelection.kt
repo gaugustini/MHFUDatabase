@@ -14,6 +14,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -52,6 +53,7 @@ fun DecorationSelection(
     onDecorationClick: (decorationId: Int) -> Unit = {},
     onFilterChange: (filter: DecorationFilter) -> Unit = {},
     onBack: () -> Unit = {},
+    openSkillSelection: () -> Unit = {},
 ) {
     var showSearchTextField by rememberSaveable { mutableStateOf(false) }
     var showFilterSheet by rememberSaveable { mutableStateOf(false) }
@@ -140,6 +142,7 @@ fun DecorationSelection(
                 maxAvailableSlots = maxAvailableSlots,
                 onFilterChange = onFilterChange,
                 onDismiss = { showFilterSheet = false },
+                onOpenSkillSelection = openSkillSelection,
             )
         }
     }
@@ -154,7 +157,9 @@ fun DecorationFilterSheet(
     modifier: Modifier = Modifier,
     onFilterChange: (filter: DecorationFilter) -> Unit = {},
     onDismiss: () -> Unit = {},
+    onOpenSkillSelection: () -> Unit = {},
 ) {
+    var skills = filter.skills ?: emptyList()
     var numberOfSlots = filter.numberOfSlots ?: emptyList()
 
     ModalBottomSheet(
@@ -168,6 +173,42 @@ fun DecorationFilterSheet(
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = Dimension.Padding.large)
         ) {
+            Text(
+                text = stringResource(R.string.user_set_filter_skill),
+                style = MaterialTheme.typography.titleMedium,
+            )
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
+                verticalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(Dimension.Padding.medium)
+            ) {
+                skills.forEach { skill ->
+                    SelectionContainer(
+                        selected = true,
+                        onSelected = {
+                            skills = skills - skill
+                            onFilterChange(filter.copy(skills = skills.ifEmpty { null }))
+                        },
+                    ) {
+                        Text(
+                            text = skill.toString(), // TODO: Change filter to use model instead of ID
+                            style = MaterialTheme.typography.bodyLarge,
+                        )
+                    }
+                }
+                SelectionContainer(
+                    selected = false,
+                    onSelected = onOpenSkillSelection,
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = null,
+                    )
+                }
+            }
+
             Text(
                 text = stringResource(R.string.user_set_filter_number_of_slots),
                 style = MaterialTheme.typography.titleMedium,
@@ -204,8 +245,7 @@ fun DecorationFilterSheet(
 
 @DevicePreviews
 @Composable
-fun DecorationSelectionPreview(
-) {
+fun DecorationSelectionPreview() {
     Theme {
         DecorationSelection(
             decorations = PreviewDecorationData.decorationList,
