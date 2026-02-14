@@ -48,7 +48,6 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewDecorationData
 @Composable
 fun DecorationSelection(
     decorations: List<Decoration>,
-    maxAvailableSlots: Int = 3,
     filter: DecorationFilter = DecorationFilter(),
     onDecorationClick: (decorationId: Int) -> Unit = {},
     onFilterChange: (filter: DecorationFilter) -> Unit = {},
@@ -139,7 +138,6 @@ fun DecorationSelection(
             DecorationFilterSheet(
                 sheetState = filterSheetState,
                 filter = filter,
-                maxAvailableSlots = maxAvailableSlots,
                 onFilterChange = onFilterChange,
                 onDismiss = { showFilterSheet = false },
                 onOpenSkillSelection = openSkillSelection,
@@ -153,13 +151,13 @@ fun DecorationSelection(
 fun DecorationFilterSheet(
     sheetState: SheetState,
     filter: DecorationFilter,
-    maxAvailableSlots: Int,
     modifier: Modifier = Modifier,
     onFilterChange: (filter: DecorationFilter) -> Unit = {},
     onDismiss: () -> Unit = {},
     onOpenSkillSelection: () -> Unit = {},
 ) {
     var skills = filter.skills ?: emptyList()
+    val maxAvailableSlots = filter.maxAvailableSlots ?: 3
     var numberOfSlots = filter.numberOfSlots ?: emptyList()
 
     ModalBottomSheet(

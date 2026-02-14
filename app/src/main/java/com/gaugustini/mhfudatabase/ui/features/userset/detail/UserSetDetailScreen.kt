@@ -71,7 +71,7 @@ fun UserSetDetailScreen(
     var showRenameDialog by rememberSaveable { mutableStateOf(false) }
     var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
 
-    if (!uiState.openSelectionEquipment && !uiState.openSkillSelection) {
+    if (!uiState.openEquipmentSelection && !uiState.openSkillSelection) {
         val pagerState = rememberPagerState(
             initialPage = uiState.initialTab.ordinal,
             pageCount = { UserSetDetailTab.entries.size },
@@ -114,14 +114,14 @@ fun UserSetDetailScreen(
                     UserSetDetailEquipmentContent(
                         equipmentSet = uiState.equipmentSet,
                         openWeaponSelection = {
-                            onEvent(UserSetEvent.OpenSelection(SelectionType.WEAPON))
+                            onEvent(UserSetEvent.OpenEquipmentSelection(SelectionType.WEAPON))
                         },
                         openArmorSelection = { armorType ->
-                            onEvent(UserSetEvent.OpenSelection(SelectionType.ARMOR, armorType))
+                            onEvent(UserSetEvent.OpenEquipmentSelection(SelectionType.ARMOR, armorType))
                         },
                         openDecorationSelection = { equipmentType, availableSlots ->
                             onEvent(
-                                UserSetEvent.OpenSelection(
+                                UserSetEvent.OpenEquipmentSelection(
                                     type = SelectionType.DECORATION,
                                     equipmentType = equipmentType,
                                     availableSlots = availableSlots
@@ -145,7 +145,7 @@ fun UserSetDetailScreen(
         }
     }
 
-    if (uiState.openSelectionEquipment && !uiState.openSkillSelection) {
+    if (uiState.openEquipmentSelection && !uiState.openSkillSelection) {
         when (uiState.selectionType) {
             SelectionType.WEAPON -> {
                 WeaponSelection(
@@ -177,7 +177,6 @@ fun UserSetDetailScreen(
             SelectionType.DECORATION -> {
                 DecorationSelection(
                     decorations = uiState.decorations,
-                    maxAvailableSlots = uiState.maxAvailableSlots,
                     filter = uiState.decorationFilter,
                     onDecorationClick = { decorationId ->
                         onEvent(UserSetEvent.AddDecoration(decorationId))
@@ -193,12 +192,12 @@ fun UserSetDetailScreen(
         }
     }
 
-    if (uiState.openSelectionEquipment && uiState.openSkillSelection) {
+    if (uiState.openEquipmentSelection && uiState.openSkillSelection) {
         SkillTreeSelection(
             skills = uiState.skills,
             filter = uiState.skillFilter,
             onSkillTreeClick = { skillTreeId ->
-                onEvent(UserSetEvent.AddSkillToFilter(skillTreeId))
+                onEvent(UserSetEvent.SkillToFilter(skillTreeId))
                 onEvent(UserSetEvent.CloseSkillSelection)
             },
             onFilterChange = { onEvent(UserSetEvent.ApplySkillTreeFilter(it)) },

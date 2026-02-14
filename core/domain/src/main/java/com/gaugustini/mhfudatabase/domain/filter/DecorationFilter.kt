@@ -8,6 +8,7 @@ import com.gaugustini.mhfudatabase.domain.model.SkillTree
  */
 data class DecorationFilter(
     val name: String? = null,
+    val maxAvailableSlots: Int? = null,
     val numberOfSlots: List<Int>? = null,
     val skills: List<SkillTree>? = null,
 )

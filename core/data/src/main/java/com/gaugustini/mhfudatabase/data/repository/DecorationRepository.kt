@@ -41,6 +41,7 @@ class DecorationRepository @Inject constructor(
         return decorationDao.getDecorationList(
             language = language,
             name = filter.name,
+            maxAvailableSlots = filter.maxAvailableSlots,
             numberOfSlots = filter.numberOfSlots,
             hasSlotFilter = !filter.numberOfSlots.isNullOrEmpty(),
             skills = filter.skills?.map { it.id },

@@ -37,11 +37,10 @@ data class UserSetDetailState(
     val language: Language = Language.ENGLISH,
     val equipmentSet: UserEquipmentSet = UserEquipmentSet(),
 
-    val openSelectionEquipment: Boolean = false,
+    val openEquipmentSelection: Boolean = false,
     val openSkillSelection: Boolean = false,
     val selectionType: SelectionType? = null,
-    val selectedEquipmentType: EquipmentType? = null,
-    val maxAvailableSlots: Int = 3,
+    val selectionEquipmentType: EquipmentType? = null,
 
     val weapons: List<Weapon> = emptyList(),
     val armors: List<Armor> = emptyList(),
@@ -67,7 +66,7 @@ sealed interface UserSetEvent {
     data class ChangeArmor(val armorId: Int) : UserSetEvent
     data class AddDecoration(val decorationId: Int) : UserSetEvent
     data class RemoveDecoration(val decorationId: Int, val equipmentType: EquipmentType) : UserSetEvent
-    data class OpenSelection(
+    data class OpenEquipmentSelection(
         val type: SelectionType,
         val equipmentType: EquipmentType? = null,
         val availableSlots: Int? = null
@@ -80,7 +79,7 @@ sealed interface UserSetEvent {
     data class ApplyArmorFilter(val filter: ArmorFilter) : UserSetEvent
     data class ApplyDecorationFilter(val filter: DecorationFilter) : UserSetEvent
     data class ApplySkillTreeFilter(val filter: SkillTreeFilter) : UserSetEvent
-    data class AddSkillToFilter(val skillTreeId: Int) : UserSetEvent
+    data class SkillToFilter(val skillTreeId: Int) : UserSetEvent
 }
 
 @HiltViewModel
@@ -143,12 +142,12 @@ class UserSetDetailViewModel @Inject constructor(
     fun onEvent(event: UserSetEvent) {
         when (event) {
             is UserSetEvent.Rename -> renameUserSet(event.name)
+            is UserSetEvent.Delete -> deleteUserSet()
             is UserSetEvent.ChangeWeapon -> changeWeapon(event.weaponId)
             is UserSetEvent.ChangeArmor -> changeArmor(event.armorId)
             is UserSetEvent.AddDecoration -> addDecoration(event.decorationId)
             is UserSetEvent.RemoveDecoration -> removeDecoration(event.decorationId, event.equipmentType)
-            is UserSetEvent.Delete -> deleteUserSet()
-            is UserSetEvent.OpenSelection -> openEquipmentSelection(event)
+            is UserSetEvent.OpenEquipmentSelection -> openEquipmentSelection(event)
             is UserSetEvent.CloseEquipmentSelection -> closeEquipmentSelection()
             is UserSetEvent.OpenSkillSelection -> openSkillSelection()
             is UserSetEvent.CloseSkillSelection -> closeSkillSelection()
@@ -156,13 +155,19 @@ class UserSetDetailViewModel @Inject constructor(
             is UserSetEvent.ApplyArmorFilter -> applyFilter(armorFilter = event.filter)
             is UserSetEvent.ApplyDecorationFilter -> applyFilter(decorationFilter = event.filter)
             is UserSetEvent.ApplySkillTreeFilter -> applyFilter(skillFilter = event.filter)
-            is UserSetEvent.AddSkillToFilter -> addSkillToFilter(event.skillTreeId)
+            is UserSetEvent.SkillToFilter -> skillToFilter(event.skillTreeId)
         }
     }
 
     private fun renameUserSet(newSetName: String) {
         val newEquipmentSet = _uiState.value.equipmentSet.copy(name = newSetName)
         saveChanges(newEquipmentSet)
+    }
+
+    private fun deleteUserSet() {
+        viewModelScope.launch {
+            userEquipmentSetRepository.deleteEquipmentSet(setId)
+        }
     }
 
     private fun changeWeapon(weaponId: Int) {
@@ -184,7 +189,7 @@ class UserSetDetailViewModel @Inject constructor(
     private fun addDecoration(decorationId: Int) {
         val currentState = _uiState.value
         val selectedDecoration = currentState.decorations.find { it.id == decorationId } ?: return
-        val equipmentType = currentState.selectedEquipmentType ?: return
+        val equipmentType = currentState.selectionEquipmentType ?: return
         val newEquipmentSet = currentState.equipmentSet.addDecoration(
             newDecoration = EquipmentDecoration(equipmentType, selectedDecoration, 1),
         )
@@ -199,20 +204,15 @@ class UserSetDetailViewModel @Inject constructor(
         saveChanges(newEquipmentSet)
     }
 
-    private fun deleteUserSet() {
-        viewModelScope.launch {
-            userEquipmentSetRepository.deleteEquipmentSet(setId)
-        }
-    }
-
-    private fun openEquipmentSelection(event: UserSetEvent.OpenSelection) {
+    private fun openEquipmentSelection(event: UserSetEvent.OpenEquipmentSelection) {
         viewModelScope.launch {
             val currentLanguage = _uiState.value.language.code
 
             _uiState.update { state ->
                 state.copy(
-                    openSelectionEquipment = true,
+                    openEquipmentSelection = true,
                     selectionType = event.type,
+                    selectionEquipmentType = event.equipmentType,
                 )
             }
 
@@ -230,7 +230,6 @@ class UserSetDetailViewModel @Inject constructor(
                     val filter = ArmorFilter(type = equipmentType)
                     _uiState.update { state ->
                         state.copy(
-                            selectedEquipmentType = equipmentType,
                             armors = armorRepository.getArmorList(currentLanguage, filter),
                             armorFilter = filter,
                         )
@@ -238,20 +237,15 @@ class UserSetDetailViewModel @Inject constructor(
                 }
 
                 SelectionType.DECORATION -> {
-                    val equipmentType = event.equipmentType ?: return@launch
-                    val slots = event.availableSlots ?: return@launch
-                    val filter = DecorationFilter(
-                        numberOfSlots = listOf(1..slots).flatten(),
-                    )
+                    val maxSlots = event.availableSlots ?: return@launch
+                    val filter = DecorationFilter(maxAvailableSlots = maxSlots)
                     _uiState.update { state ->
                         state.copy(
-                            selectedEquipmentType = equipmentType,
-                            maxAvailableSlots = slots,
                             decorations = decorationRepository.getDecorationList(
                                 currentLanguage,
                                 filter
                             ),
-                            decorationFilter = DecorationFilter(),
+                            decorationFilter = filter,
                         )
                     }
                 }
@@ -262,10 +256,9 @@ class UserSetDetailViewModel @Inject constructor(
     private fun closeEquipmentSelection() {
         _uiState.update { state ->
             state.copy(
-                openSelectionEquipment = false,
+                openEquipmentSelection = false,
                 selectionType = null,
-                selectedEquipmentType = null,
-                maxAvailableSlots = 3,
+                selectionEquipmentType = null,
                 weapons = emptyList(),
                 armors = emptyList(),
                 decorations = emptyList(),
@@ -348,7 +341,7 @@ class UserSetDetailViewModel @Inject constructor(
         }
     }
 
-    private fun addSkillToFilter(skillTreeId: Int) {
+    private fun skillToFilter(skillTreeId: Int) {
         val skill = _uiState.value.skills.find { it.id == skillTreeId } ?: return
 
         when (_uiState.value.selectionType) {
