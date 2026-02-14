@@ -16,7 +16,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.FilterList
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -34,7 +33,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.filter.ArmorFilter
 import com.gaugustini.mhfudatabase.domain.model.Armor
@@ -54,7 +52,6 @@ fun ArmorSelection(
     onBack: () -> Unit = {},
     openSkillSelection: () -> Unit = {},
 ) {
-    var showSearchTextField by rememberSaveable { mutableStateOf(false) }
     var showFilterSheet by rememberSaveable { mutableStateOf(false) }
     val filterSheetState = rememberModalBottomSheetState(true)
 
@@ -64,26 +61,11 @@ fun ArmorSelection(
         topBar = {
             TopAppBar(
                 title = {
-                    if (showSearchTextField) {
-                        SearchTextField(
-                            onQueryChange = {
-                                onFilterChange(filter.copy(name = it))
-                            },
-                            onDismiss = {
-                                showSearchTextField = false
-                                onFilterChange(filter.copy(name = ""))
-                            },
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                    } else {
-                        Text(
-                            text = stringResource(id = R.string.user_set_armor_selection),
-                            style = MaterialTheme.typography.titleLarge,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                    }
+                    SearchTextField(
+                        onQueryChange = { onFilterChange(filter.copy(name = it)) },
+                        onDismiss = { onFilterChange(filter.copy(name = null)) },
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 },
                 navigationIcon = {
                     IconButton(
@@ -105,17 +87,6 @@ fun ArmorSelection(
                             contentDescription = null,
                             modifier = Modifier.size(Dimension.Size.extraSmall)
                         )
-                    }
-                    if (!showSearchTextField) {
-                        IconButton(
-                            onClick = { showSearchTextField = true },
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Search,
-                                contentDescription = null,
-                                modifier = Modifier.size(Dimension.Size.extraSmall)
-                            )
-                        }
                     }
                 },
             )
