@@ -127,15 +127,24 @@ class UserSetDetailViewModel @Inject constructor(
     }
 
     private fun saveChanges(equipmentSet: UserEquipmentSet) {
+        val currentLanguage = _uiState.value.language
+
         viewModelScope.launch {
             if (setId == 0) {
-                val newId = userEquipmentSetRepository.insertNewEquipmentSet(equipmentSet)
+                val setName = equipmentSet.name.ifBlank {
+                    when (currentLanguage) {
+                        Language.ENGLISH -> "New Set"
+                        Language.SPANISH -> "Nuevo Set"
+                    }
+                }
+                val newId =
+                    userEquipmentSetRepository.insertNewEquipmentSet(equipmentSet.copy(name = setName))
                 setId = newId
             } else {
                 userEquipmentSetRepository.updateEquipmentSet(equipmentSet)
             }
 
-            loadEquipmentSetDetails(_uiState.value.language)
+            loadEquipmentSetDetails(currentLanguage)
         }
     }
 

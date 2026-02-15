@@ -57,7 +57,7 @@ fun UserSetDetailSummaryContent(
                     rarity = 0,
                 )
             },
-            title = equipmentSet.name,
+            title = equipmentSet.name.ifBlank { stringResource(R.string.user_set_new) },
         )
 
         equipmentSet.armors.let { armors ->

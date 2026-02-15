@@ -10,6 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.model.UserEquipmentSet
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.ArmorSetIcon
@@ -45,7 +47,7 @@ fun UserSetListItem(
             },
             headlineContent = {
                 Text(
-                    text = equipmentSet.name,
+                    text = equipmentSet.name.ifBlank { stringResource(R.string.user_set_new) },
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
