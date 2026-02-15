@@ -75,6 +75,24 @@ interface DecorationDao {
         JOIN skill_tree_text
             ON skill_tree.id = skill_tree_text.skill_tree_id
             AND skill_tree_text.language = :language
+        ORDER BY points DESC
+        """
+    )
+    suspend fun getDecorationSkillList(language: String): List<EquipmentSkillTreePoint>
+
+    @Query(
+        """
+        SELECT 
+            decoration_skill.decoration_id AS equipmentId,
+            skill_tree.*,
+            skill_tree_text.*,
+            decoration_skill.point_value AS points
+        FROM decoration_skill
+        JOIN skill_tree
+            ON decoration_skill.skill_tree_id = skill_tree.id
+        JOIN skill_tree_text
+            ON skill_tree.id = skill_tree_text.skill_tree_id
+            AND skill_tree_text.language = :language
         WHERE decoration_skill.decoration_id = :decorationId
         ORDER BY points DESC
         """

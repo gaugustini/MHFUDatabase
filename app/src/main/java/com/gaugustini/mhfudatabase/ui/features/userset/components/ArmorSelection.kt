@@ -1,9 +1,12 @@
 package com.gaugustini.mhfudatabase.ui.features.userset.components
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -31,12 +34,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.filter.ArmorFilter
 import com.gaugustini.mhfudatabase.domain.model.Armor
-import com.gaugustini.mhfudatabase.ui.features.armor.components.ArmorListItem
+import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
+import com.gaugustini.mhfudatabase.ui.components.icons.ArmorIcon
+import com.gaugustini.mhfudatabase.ui.components.icons.SlotsIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
@@ -98,7 +104,7 @@ fun ArmorSelection(
                 .padding(innerPadding)
         ) {
             items(armors) { armor ->
-                ArmorListItem(
+                ArmorSelectionListItem(
                     armor = armor,
                     onArmorClick = onArmorClick
                 )
@@ -242,6 +248,80 @@ fun ArmorFilterSheet(
             }
         }
     }
+}
+
+@Composable
+fun ArmorSelectionListItem(
+    armor: Armor,
+    modifier: Modifier = Modifier,
+    onArmorClick: (armorId: Int) -> Unit = {},
+) {
+    ListItemLayout(
+        leadingContent = {
+            ArmorIcon(
+                type = armor.type,
+                rarity = armor.rarity,
+                modifier = Modifier.size(Dimension.Size.medium)
+            )
+        },
+        headlineContent = {
+            Text(
+                text = armor.name,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+        },
+        supportingContent = {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.large),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = stringResource(R.string.armor_rarity, armor.rarity),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                SlotsIcon(
+                    numberOfSlots = armor.numberOfSlots,
+                    modifier = Modifier.size(
+                        width = Dimension.Size.tiny * 3,
+                        height = Dimension.Size.tiny
+                    )
+                )
+            }
+        },
+        trailingContent = {
+            armor.skills?.let { skills ->
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.End,
+                ) {
+                    skills.forEach { (skill, points) ->
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.large),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(
+                                text = skill.name,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                            Text(
+                                text = points.toString(),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                    }
+                }
+            }
+        },
+        contentPadding = PaddingValues(
+            horizontal = Dimension.Spacing.large,
+            vertical = Dimension.Spacing.medium
+        ),
+        modifier = modifier.clickable { onArmorClick(armor.id) }
+    )
 }
 
 @DevicePreviews

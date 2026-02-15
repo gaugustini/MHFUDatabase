@@ -1,9 +1,12 @@
 package com.gaugustini.mhfudatabase.ui.features.userset.components
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -31,15 +34,22 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.gaugustini.mhfudatabase.R
+import com.gaugustini.mhfudatabase.domain.enums.ItemIconColor
 import com.gaugustini.mhfudatabase.domain.filter.DecorationFilter
 import com.gaugustini.mhfudatabase.domain.model.Decoration
-import com.gaugustini.mhfudatabase.ui.features.decoration.components.DecorationListItem
+import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
+import com.gaugustini.mhfudatabase.ui.components.icons.DecorationIcon
+import com.gaugustini.mhfudatabase.ui.components.icons.SlotIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
+import com.gaugustini.mhfudatabase.ui.theme.LocalIsDarkTheme
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
+import com.gaugustini.mhfudatabase.util.MHFUColors
 import com.gaugustini.mhfudatabase.util.preview.PreviewDecorationData
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -98,7 +108,7 @@ fun DecorationSelection(
                 .padding(innerPadding)
         ) {
             items(decorations) { decoration ->
-                DecorationListItem(
+                DecorationSelectionListItem(
                     decoration = decoration,
                     onDecorationClick = onDecorationClick
                 )
@@ -211,6 +221,75 @@ fun DecorationFilterSheet(
             }
         }
     }
+}
+
+@Composable
+fun DecorationSelectionListItem(
+    decoration: Decoration,
+    modifier: Modifier = Modifier,
+    onDecorationClick: (decorationId: Int) -> Unit = {},
+) {
+    ListItemLayout(
+        leadingContent = {
+            DecorationIcon(
+                color = decoration.color,
+                modifier = Modifier.size(Dimension.Size.medium)
+            )
+        },
+        headlineContent = {
+            Text(
+                text = decoration.name,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+        },
+        supportingContent = {
+            Row {
+                repeat(decoration.requiredSlots) {
+                    SlotIcon(
+                        filled = true,
+                        color = if (!LocalIsDarkTheme.current && decoration.color == ItemIconColor.WHITE) {
+                            Color.Gray
+                        } else {
+                            MHFUColors.getItemColor(decoration.color)
+                        },
+                        modifier = Modifier.size(Dimension.Size.tiny)
+                    )
+                }
+            }
+        },
+        trailingContent = {
+            decoration.skills?.let { skills ->
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.End,
+                ) {
+                    skills.forEach { (skill, points) ->
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.large),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(
+                                text = skill.name,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                            Text(
+                                text = points.toString(),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                    }
+                }
+            }
+        },
+        contentPadding = PaddingValues(
+            horizontal = Dimension.Spacing.large,
+            vertical = Dimension.Spacing.medium
+        ),
+        modifier = modifier.clickable { onDecorationClick(decoration.id) }
+    )
 }
 
 @DevicePreviews

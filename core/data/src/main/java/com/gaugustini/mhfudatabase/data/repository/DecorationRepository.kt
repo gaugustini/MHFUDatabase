@@ -32,13 +32,13 @@ class DecorationRepository @Inject constructor(
 
     /**
      * Returns the list of all decorations or filtering by [DecorationFilter].
-     * Note: skills and recipes are not populated.
+     * Note: recipe is not populated.
      */
     suspend fun getDecorationList(
         language: String,
         filter: DecorationFilter = DecorationFilter(),
     ): List<Decoration> {
-        return decorationDao.getDecorationList(
+        val decorationsWithText = decorationDao.getDecorationList(
             language = language,
             name = filter.name,
             maxAvailableSlots = filter.maxAvailableSlots,
@@ -46,7 +46,16 @@ class DecorationRepository @Inject constructor(
             hasSlotFilter = !filter.numberOfSlots.isNullOrEmpty(),
             skills = filter.skills?.map { it.id },
             hasSkillFilter = !filter.skills.isNullOrEmpty(),
-        ).map { DecorationMapper.toModel(it) }
+        )
+        val skillPointsGroupedByDecoration =
+            decorationDao.getDecorationSkillList(language).groupBy { it.equipmentId }
+
+        return decorationsWithText.map {
+            DecorationMapper.toModel(
+                decoration = it,
+                skills = skillPointsGroupedByDecoration[it.decoration.id],
+            )
+        }
     }
 
 }

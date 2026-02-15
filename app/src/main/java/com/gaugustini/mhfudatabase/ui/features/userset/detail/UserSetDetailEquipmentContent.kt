@@ -35,6 +35,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
+import com.gaugustini.mhfudatabase.domain.enums.ItemIconColor
 import com.gaugustini.mhfudatabase.domain.enums.WeaponType
 import com.gaugustini.mhfudatabase.domain.model.Armor
 import com.gaugustini.mhfudatabase.domain.model.EquipmentDecoration
@@ -46,6 +47,7 @@ import com.gaugustini.mhfudatabase.ui.components.icons.NoSlotIcon
 import com.gaugustini.mhfudatabase.ui.components.icons.SlotIcon
 import com.gaugustini.mhfudatabase.ui.components.icons.WeaponIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
+import com.gaugustini.mhfudatabase.ui.theme.LocalIsDarkTheme
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.MHFUColors
@@ -172,7 +174,13 @@ fun EquipmentListItem(
                                 repeat(decoration.decoration.requiredSlots * decoration.quantity) {
                                     SlotIcon(
                                         filled = true,
-                                        color = MHFUColors.getItemColor(decoration.decoration.color),
+                                        color = if (!LocalIsDarkTheme.current
+                                            && decoration.decoration.color == ItemIconColor.WHITE
+                                        ) {
+                                            Color.Gray
+                                        } else {
+                                            MHFUColors.getItemColor(decoration.decoration.color)
+                                        },
                                         modifier = Modifier
                                             .weight(1f)
                                             .aspectRatio(1f)

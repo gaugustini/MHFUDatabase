@@ -91,6 +91,24 @@ interface ArmorDao {
         JOIN skill_tree_text
             ON skill_tree.id = skill_tree_text.skill_tree_id
             AND skill_tree_text.language = :language
+        ORDER BY points DESC
+        """
+    )
+    suspend fun getArmorSkillList(language: String): List<EquipmentSkillTreePoint>
+
+    @Query(
+        """
+        SELECT 
+            armor_skill.armor_id AS equipmentId,
+            skill_tree.*,
+            skill_tree_text.*,
+            armor_skill.point_value AS points
+        FROM armor_skill
+        JOIN skill_tree
+            ON armor_skill.skill_tree_id = skill_tree.id
+        JOIN skill_tree_text
+            ON skill_tree.id = skill_tree_text.skill_tree_id
+            AND skill_tree_text.language = :language
         WHERE armor_skill.armor_id = :armorId
         ORDER BY points DESC
         """

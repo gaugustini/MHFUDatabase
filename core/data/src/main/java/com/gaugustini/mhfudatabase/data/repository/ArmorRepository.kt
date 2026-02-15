@@ -51,13 +51,13 @@ class ArmorRepository @Inject constructor(
 
     /**
      * Returns the list of all armor or filtering by [ArmorFilter].
-     * Note: skills and recipe are not populated.
+     * Note: recipe is not populated.
      */
     suspend fun getArmorList(
         language: String,
         filter: ArmorFilter = ArmorFilter(),
     ): List<Armor> {
-        return armorDao.getArmorList(
+        val armorsWithText = armorDao.getArmorList(
             language = language,
             name = filter.name,
             equipmentType = filter.type?.toString(),
@@ -69,7 +69,15 @@ class ArmorRepository @Inject constructor(
             hunterType = filter.hunterType?.name,
             skills = filter.skills?.map { it.id },
             hasSkillFilter = !filter.skills.isNullOrEmpty(),
-        ).map { ArmorMapper.toModel(it) }
+        )
+        val skillPointsGroupedByArmor = armorDao.getArmorSkillList(language).groupBy { it.equipmentId }
+
+        return armorsWithText.map {
+            ArmorMapper.toModel(
+                armor = it,
+                skills = skillPointsGroupedByArmor[it.armor.id],
+            )
+        }
     }
 
     /**
