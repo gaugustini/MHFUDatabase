@@ -86,7 +86,7 @@ object UserEquipmentSetMapper {
             UserEquipmentSetDecorationEntity(
                 userSetId = equipmentSet.id,
                 decorationId = decoration.decoration.id,
-                equipmentType = decoration.equipmentType.name,
+                equipmentType = decoration.equipmentType.toString(),
                 quantity = decoration.quantity,
             )
         } ?: emptyList()
