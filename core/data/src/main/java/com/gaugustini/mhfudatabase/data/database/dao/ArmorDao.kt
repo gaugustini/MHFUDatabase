@@ -40,8 +40,8 @@ interface ArmorDao {
             AND (:equipmentType IS NULL OR armor.armor_type = :equipmentType)
             AND (:hasSlotFilter = 0 OR armor.num_slots IN (:numberOfSlots))
             AND (:hasRarityFilter = 0 OR armor.rarity IN (:rarity))
-            AND (:gender IS NULL OR armor.gender = :gender)
-            AND (:hunterType IS NULL OR armor.hunter_type = :hunterType)
+            AND (:gender IS NULL OR armor.gender IN (:gender, 'BOTH'))
+            AND (:hunterType IS NULL OR armor.hunter_type IN (:hunterType, 'BOTH'))
             AND (:hasSkillFilter = 0 OR EXISTS (
                 SELECT 1 FROM armor_skill 
                 WHERE armor_skill.armor_id = armor.id 

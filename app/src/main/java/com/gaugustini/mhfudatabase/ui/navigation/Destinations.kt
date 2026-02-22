@@ -29,7 +29,7 @@ object Destinations {
     const val SKILL_TREE_DETAIL = "skill_tree_detail/{skillTreeId}"
     const val WEAPON_TREE = "weapon_tree/{weaponType}"
     const val WEAPON_DETAIL = "weapon_detail/{weaponId}"
-    const val USER_EQUIPMENT_SET_DETAIL = "user_equipment_set_detail/{setId}"
+    const val USER_EQUIPMENT_SET_DETAIL = "user_equipment_set_detail/{setId}/{hunterType}/{gender}"
 
     fun armorDetailRoute(armorId: Int): String = "armor_detail/$armorId"
     fun decorationDetailRoute(decorationId: Int): String = "decoration_detail/$decorationId"
@@ -40,6 +40,7 @@ object Destinations {
     fun skillTreeDetailRoute(skillTreeId: Int): String = "skill_tree_detail/$skillTreeId"
     fun weaponTreeRoute(weaponType: String): String = "weapon_tree/$weaponType"
     fun weaponDetailRoute(weaponId: Int): String = "weapon_detail/$weaponId"
-    fun userEquipmentSetDetailRoute(setId: Int): String = "user_equipment_set_detail/$setId"
+    fun userEquipmentSetDetailRoute(setId: Int, hunterType: String, gender: String): String =
+        "user_equipment_set_detail/$setId/$hunterType/$gender"
 
 }

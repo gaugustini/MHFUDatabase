@@ -10,6 +10,8 @@ import com.gaugustini.mhfudatabase.data.repository.SkillRepository
 import com.gaugustini.mhfudatabase.data.repository.UserEquipmentSetRepository
 import com.gaugustini.mhfudatabase.data.repository.WeaponRepository
 import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
+import com.gaugustini.mhfudatabase.domain.enums.Gender
+import com.gaugustini.mhfudatabase.domain.enums.HunterType
 import com.gaugustini.mhfudatabase.domain.enums.Language
 import com.gaugustini.mhfudatabase.domain.filter.ArmorFilter
 import com.gaugustini.mhfudatabase.domain.filter.DecorationFilter
@@ -94,6 +96,10 @@ class UserSetDetailViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var setId: Int = checkNotNull(savedStateHandle["setId"])
+    private val _hunterType: HunterType = HunterType.fromString(
+        checkNotNull(savedStateHandle["hunterType"])
+    )
+    private val _gender: Gender = Gender.fromString(checkNotNull(savedStateHandle["gender"]))
 
     private val _uiState = MutableStateFlow(UserSetDetailState())
     val uiState: StateFlow<UserSetDetailState> = _uiState.asStateFlow()
@@ -137,8 +143,13 @@ class UserSetDetailViewModel @Inject constructor(
                         Language.SPANISH -> "Nuevo Set"
                     }
                 }
-                val newId =
-                    userEquipmentSetRepository.insertNewEquipmentSet(equipmentSet.copy(name = setName))
+                val newId = userEquipmentSetRepository.insertNewEquipmentSet(
+                    equipmentSet.copy(
+                        name = setName,
+                        hunterType = _hunterType,
+                        gender = _gender,
+                    )
+                )
                 setId = newId
             } else {
                 userEquipmentSetRepository.updateEquipmentSet(equipmentSet)
@@ -228,15 +239,21 @@ class UserSetDetailViewModel @Inject constructor(
             when (event.type) {
                 SelectionType.WEAPON -> {
                     _uiState.update { state ->
+                        val filter = WeaponFilter(hunterType = _hunterType)
                         state.copy(
-                            weapons = weaponRepository.getWeaponList(currentLanguage),
+                            weapons = weaponRepository.getWeaponList(currentLanguage, filter),
+                            weaponFilter = filter,
                         )
                     }
                 }
 
                 SelectionType.ARMOR -> {
                     val equipmentType = event.equipmentType ?: return@launch
-                    val filter = ArmorFilter(type = equipmentType)
+                    val filter = ArmorFilter(
+                        type = equipmentType,
+                        gender = _gender,
+                        hunterType = _hunterType,
+                    )
                     _uiState.update { state ->
                         state.copy(
                             armors = armorRepository.getArmorList(currentLanguage, filter),

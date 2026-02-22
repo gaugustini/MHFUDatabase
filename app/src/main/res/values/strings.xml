@@ -289,6 +289,13 @@
     <string name="user_set_new">New Set</string>
     <string name="user_set_nothing_equipped">Nothing Equipped</string>
     <string name="user_set_none">None</string>
+    <string name="user_set_dialog_new_set_title">New Set</string>
+    <string name="user_set_dialog_hunter_type">Hunter Type</string>
+    <string name="user_set_dialog_hunter_type_blade">Blademaster</string>
+    <string name="user_set_dialog_hunter_type_gunner">Gunner</string>
+    <string name="user_set_dialog_gender">Gender</string>
+    <string name="user_set_dialog_gender_male">Male</string>
+    <string name="user_set_dialog_gender_female">Female</string>
     <string name="user_set_dialog_rename_title">Rename Set</string>
     <string name="user_set_dialog_delete_title">Delete Set?</string>
     <string name="user_set_dialog_confirm">Confirm</string>

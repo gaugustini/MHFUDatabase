@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.gaugustini.mhfudatabase.R
+import com.gaugustini.mhfudatabase.domain.enums.HunterType
 import com.gaugustini.mhfudatabase.domain.enums.WeaponElement
 import com.gaugustini.mhfudatabase.domain.enums.WeaponType
 import com.gaugustini.mhfudatabase.domain.filter.WeaponFilter
@@ -128,6 +129,7 @@ fun WeaponFilterSheet(
     onFilterChange: (filter: WeaponFilter) -> Unit = {},
     onDismiss: () -> Unit = {},
 ) {
+    val hunterType = filter.hunterType ?: HunterType.BOTH
     var weaponTypes = filter.weaponType ?: emptyList()
     var elementTypes = filter.elementType ?: emptyList()
     var rarities = filter.rarity ?: emptyList()
@@ -155,7 +157,7 @@ fun WeaponFilterSheet(
                     .fillMaxWidth()
                     .padding(Dimension.Padding.medium)
             ) {
-                WeaponType.entries.forEach { weaponType ->
+                WeaponType.forHunterType(hunterType).forEach { weaponType ->
                     SelectionContainer(
                         selected = weaponType in weaponTypes,
                         onSelected = {

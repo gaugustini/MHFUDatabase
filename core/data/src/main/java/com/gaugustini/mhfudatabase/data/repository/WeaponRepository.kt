@@ -55,8 +55,12 @@ class WeaponRepository @Inject constructor(
         return weaponDao.getWeaponList(
             language = language,
             name = filter.name,
-            weaponType = filter.weaponType?.map { it.name },
-            hasWeaponTypeFilter = !filter.weaponType.isNullOrEmpty(),
+            weaponType = if (filter.weaponType.isNullOrEmpty()) {
+                filter.hunterType?.let { WeaponType.forHunterType(it) }?.map { it.name }
+            } else {
+                filter.weaponType?.map { it.name }
+            },
+            hasWeaponTypeFilter = !filter.weaponType.isNullOrEmpty() || filter.hunterType != null,
             numberOfSlots = filter.numberOfSlots,
             hasSlotFilter = !filter.numberOfSlots.isNullOrEmpty(),
             rarity = filter.rarity,

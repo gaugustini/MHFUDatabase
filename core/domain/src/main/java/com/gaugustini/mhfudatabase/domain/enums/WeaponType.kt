@@ -97,5 +97,27 @@ enum class WeaponType {
             }
         }
 
+        /**
+         * Returns a list of weapon types that are related to the given hunter type.
+         */
+        fun forHunterType(hunterType: HunterType): List<WeaponType> {
+            return when (hunterType) {
+                HunterType.BOTH -> entries
+
+                HunterType.BLADE -> listOf(
+                    GREAT_SWORD,
+                    LONG_SWORD,
+                    SWORD_AND_SHIELD,
+                    DUAL_BLADES,
+                    HAMMER,
+                    HUNTING_HORN,
+                    LANCE,
+                    GUNLANCE
+                )
+
+                HunterType.GUNNER -> listOf(LIGHT_BOWGUN, HEAVY_BOWGUN, BOW)
+            }
+        }
+
     }
 }

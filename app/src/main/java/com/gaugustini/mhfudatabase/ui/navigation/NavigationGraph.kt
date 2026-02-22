@@ -298,6 +298,8 @@ fun NavigationGraph(
             route = Destinations.USER_EQUIPMENT_SET_DETAIL,
             arguments = listOf(
                 navArgument("setId") { type = NavType.IntType },
+                navArgument("hunterType") { type = NavType.StringType },
+                navArgument("gender") { type = NavType.StringType },
             ),
         ) {
             UserSetDetailRoute(
