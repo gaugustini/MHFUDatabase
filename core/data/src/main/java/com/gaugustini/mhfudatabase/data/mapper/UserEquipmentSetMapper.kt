@@ -11,6 +11,8 @@ import com.gaugustini.mhfudatabase.data.database.relation.SkillWithText
 import com.gaugustini.mhfudatabase.data.database.relation.UserSetDecorationWithDecoration
 import com.gaugustini.mhfudatabase.data.database.relation.WeaponWithText
 import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
+import com.gaugustini.mhfudatabase.domain.enums.Gender
+import com.gaugustini.mhfudatabase.domain.enums.HunterType
 import com.gaugustini.mhfudatabase.domain.model.EquipmentDecoration
 import com.gaugustini.mhfudatabase.domain.model.UserEquipmentSet
 
@@ -31,6 +33,8 @@ object UserEquipmentSetMapper {
         return UserEquipmentSet(
             id = equipmentSet.id,
             name = equipmentSet.name,
+            hunterType = HunterType.fromString(equipmentSet.hunterType),
+            gender = Gender.fromString(equipmentSet.gender),
             defense = armors?.sumOf { it.armor.defense } ?: 0,
             fire = armors?.sumOf { it.armor.fireResistance } ?: 0,
             water = armors?.sumOf { it.armor.waterResistance } ?: 0,
@@ -64,6 +68,8 @@ object UserEquipmentSetMapper {
         return UserEquipmentSetEntity(
             id = equipmentSet.id,
             name = equipmentSet.name,
+            hunterType = equipmentSet.hunterType.name,
+            gender = equipmentSet.gender.name,
             weaponId = equipmentSet.weapon?.id,
         )
     }
@@ -86,7 +92,7 @@ object UserEquipmentSetMapper {
             UserEquipmentSetDecorationEntity(
                 userSetId = equipmentSet.id,
                 decorationId = decoration.decoration.id,
-                equipmentType = decoration.equipmentType.name,
+                equipmentType = decoration.equipmentType.toString(),
                 quantity = decoration.quantity,
             )
         } ?: emptyList()

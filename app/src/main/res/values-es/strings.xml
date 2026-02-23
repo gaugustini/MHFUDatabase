@@ -110,6 +110,7 @@
 
     <!-- List Header -->
     <string name="list_armors">Piezas de Armadura</string>
+    <string name="list_decorations">Decoraciones</string>
     <string name="list_active_skills">Habilidades Activas</string>
     <string name="list_skills">Habilidades</string>
     <string name="list_recipe">Materiales Requeridos</string>
@@ -289,17 +290,32 @@
     <string name="user_set_new">Nuevo Set</string>
     <string name="user_set_nothing_equipped">Nada equipado</string>
     <string name="user_set_none">Ninguno</string>
+    <string name="user_set_dialog_new_set_title">Nuevo Set</string>
+    <string name="user_set_dialog_hunter_type">Tipo Cazador</string>
+    <string name="user_set_dialog_hunter_type_blade">Espadas</string>
+    <string name="user_set_dialog_hunter_type_gunner">Artillero</string>
+    <string name="user_set_dialog_gender">Género</string>
+    <string name="user_set_dialog_gender_male">Hombre</string>
+    <string name="user_set_dialog_gender_female">Mujer</string>
     <string name="user_set_dialog_rename_title">Renombrar Set</string>
     <string name="user_set_dialog_delete_title">¿Eliminar Set?</string>
     <string name="user_set_dialog_confirm">Confirmar</string>
     <string name="user_set_dialog_cancel">Cancelar</string>
-    <string name="user_set_weapon_selection">Selección de Armas</string>
-    <string name="user_set_armor_selection">Selección de Armaduras</string>
-    <string name="user_set_decoration_selection">Selección de Decoraciones</string>
+    <string name="user_set_selection_search">Buscar…</string>
     <string name="user_set_filter_weapon_type">Tipo de Arma</string>
     <string name="user_set_filter_element_type">Tipo de Elemento</string>
     <string name="user_set_filter_rarity">Rareza</string>
     <string name="user_set_filter_number_of_slots">Número de Ranuras</string>
+    <string name="user_set_filter_skill">Skill</string>
+    <string name="user_set_filter_skill_category">Category</string>
+    <string name="user_set_filter_skill_blade">Maestro de Espadas</string>
+    <string name="user_set_filter_skill_combat">Combate</string>
+    <string name="user_set_filter_skill_felyne">Felyne</string>
+    <string name="user_set_filter_skill_gather">Recolectar</string>
+    <string name="user_set_filter_skill_gunner">Artillero</string>
+    <string name="user_set_filter_skill_item">Objetos</string>
+    <string name="user_set_filter_skill_resistance">Resistencia</string>
+    <string name="user_set_filter_skill_status">Estado</string>
 
     <!-- Settings -->
     <string name="settings_option_confirm">Confirmar</string>

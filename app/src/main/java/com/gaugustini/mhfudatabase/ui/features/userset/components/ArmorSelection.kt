@@ -1,9 +1,13 @@
 package com.gaugustini.mhfudatabase.ui.features.userset.components
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -14,8 +18,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.FilterList
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -31,35 +35,31 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
+import com.gaugustini.mhfudatabase.domain.filter.ArmorFilter
 import com.gaugustini.mhfudatabase.domain.model.Armor
-import com.gaugustini.mhfudatabase.ui.features.armor.components.ArmorListItem
+import com.gaugustini.mhfudatabase.domain.model.SkillTree
+import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
+import com.gaugustini.mhfudatabase.ui.components.icons.ArmorIcon
+import com.gaugustini.mhfudatabase.ui.components.icons.SlotsIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
 
-data class ArmorSelectionFilter(
-    val name: String = "",
-    val armorType: EquipmentType = EquipmentType.ARMOR_HEAD,
-    val numberOfSlots: List<Int> = emptyList(),
-    val rarity: List<Int> = emptyList(),
-)
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArmorSelection(
     armors: List<Armor>,
-    filter: ArmorSelectionFilter = ArmorSelectionFilter(),
+    filter: ArmorFilter = ArmorFilter(),
     onArmorClick: (armorId: Int) -> Unit = {},
-    onFilterChange: (filter: ArmorSelectionFilter) -> Unit = {},
+    onFilterChange: (filter: ArmorFilter) -> Unit = {},
     onBack: () -> Unit = {},
+    openSkillSelection: () -> Unit = {},
 ) {
-    var showSearchTextField by rememberSaveable { mutableStateOf(false) }
     var showFilterSheet by rememberSaveable { mutableStateOf(false) }
     val filterSheetState = rememberModalBottomSheetState(true)
 
@@ -69,26 +69,11 @@ fun ArmorSelection(
         topBar = {
             TopAppBar(
                 title = {
-                    if (showSearchTextField) {
-                        SearchTextField(
-                            onQueryChange = {
-                                onFilterChange(filter.copy(name = it))
-                            },
-                            onDismiss = {
-                                showSearchTextField = false
-                                onFilterChange(filter.copy(name = ""))
-                            },
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                    } else {
-                        Text(
-                            text = stringResource(id = R.string.user_set_armor_selection),
-                            style = MaterialTheme.typography.titleLarge,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                    }
+                    SearchTextField(
+                        onQueryChange = { onFilterChange(filter.copy(name = it)) },
+                        onDismiss = { onFilterChange(filter.copy(name = null)) },
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 },
                 navigationIcon = {
                     IconButton(
@@ -111,17 +96,6 @@ fun ArmorSelection(
                             modifier = Modifier.size(Dimension.Size.extraSmall)
                         )
                     }
-                    if (!showSearchTextField) {
-                        IconButton(
-                            onClick = { showSearchTextField = true },
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Search,
-                                contentDescription = null,
-                                modifier = Modifier.size(Dimension.Size.extraSmall)
-                            )
-                        }
-                    }
                 },
             )
         },
@@ -132,9 +106,10 @@ fun ArmorSelection(
                 .padding(innerPadding)
         ) {
             items(armors) { armor ->
-                ArmorListItem(
+                ArmorSelectionListItem(
                     armor = armor,
-                    onArmorClick = onArmorClick
+                    onArmorClick = onArmorClick,
+                    selectedSkills = filter.skills ?: emptyList(),
                 )
             }
         }
@@ -146,6 +121,7 @@ fun ArmorSelection(
             filter = filter,
             onFilterChange = onFilterChange,
             onDismiss = { showFilterSheet = false },
+            onOpenSkillSelection = openSkillSelection,
         )
     }
 }
@@ -154,12 +130,15 @@ fun ArmorSelection(
 @Composable
 fun ArmorFilterSheet(
     sheetState: SheetState,
-    filter: ArmorSelectionFilter,
+    filter: ArmorFilter,
     modifier: Modifier = Modifier,
-    onFilterChange: (filter: ArmorSelectionFilter) -> Unit = {},
+    onFilterChange: (filter: ArmorFilter) -> Unit = {},
     onDismiss: () -> Unit = {},
+    onOpenSkillSelection: () -> Unit = {},
 ) {
-    var newFilter = filter
+    var skills = filter.skills ?: emptyList()
+    var rarities = filter.rarity ?: emptyList()
+    var numberOfSlots = filter.numberOfSlots ?: emptyList()
 
     ModalBottomSheet(
         sheetState = sheetState,
@@ -173,6 +152,43 @@ fun ArmorFilterSheet(
                 .padding(horizontal = Dimension.Padding.large)
         ) {
             Text(
+                text = stringResource(R.string.user_set_filter_skill),
+                style = MaterialTheme.typography.titleMedium,
+            )
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
+                verticalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(Dimension.Padding.medium)
+            ) {
+                skills.forEach { skill ->
+                    SelectionContainer(
+                        selected = true,
+                        onSelected = {
+                            skills = skills - skill
+                            onFilterChange(filter.copy(skills = skills.ifEmpty { null }))
+                        },
+                    ) {
+                        Text(
+                            text = skill.name,
+                            style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier.padding(horizontal = Dimension.Padding.large)
+                        )
+                    }
+                }
+                SelectionContainer(
+                    selected = false,
+                    onSelected = onOpenSkillSelection,
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = null,
+                    )
+                }
+            }
+
+            Text(
                 text = stringResource(R.string.user_set_filter_rarity),
                 style = MaterialTheme.typography.titleMedium,
             )
@@ -185,14 +201,14 @@ fun ArmorFilterSheet(
             ) {
                 repeat(10) {
                     SelectionContainer(
-                        selected = (it + 1) in newFilter.rarity,
+                        selected = (it + 1) in rarities,
                         onSelected = {
-                            newFilter = if ((it + 1) in newFilter.rarity) {
-                                newFilter.copy(rarity = newFilter.rarity - (it + 1))
+                            rarities = if ((it + 1) in rarities) {
+                                rarities - (it + 1)
                             } else {
-                                newFilter.copy(rarity = newFilter.rarity + (it + 1))
+                                rarities + (it + 1)
                             }
-                            onFilterChange(newFilter)
+                            onFilterChange(filter.copy(rarity = rarities.ifEmpty { null }))
                         }
                     ) {
                         Text(
@@ -216,14 +232,14 @@ fun ArmorFilterSheet(
             ) {
                 repeat(4) {
                     SelectionContainer(
-                        selected = it in newFilter.numberOfSlots,
+                        selected = it in numberOfSlots,
                         onSelected = {
-                            newFilter = if (it in newFilter.numberOfSlots) {
-                                newFilter.copy(numberOfSlots = newFilter.numberOfSlots - it)
+                            numberOfSlots = if (it in numberOfSlots) {
+                                numberOfSlots - it
                             } else {
-                                newFilter.copy(numberOfSlots = newFilter.numberOfSlots + it)
+                                numberOfSlots + it
                             }
-                            onFilterChange(newFilter)
+                            onFilterChange(filter.copy(numberOfSlots = numberOfSlots.ifEmpty { null }))
                         }
                     ) {
                         Text(
@@ -237,10 +253,96 @@ fun ArmorFilterSheet(
     }
 }
 
+@Composable
+fun ArmorSelectionListItem(
+    armor: Armor,
+    modifier: Modifier = Modifier,
+    selectedSkills: List<SkillTree> = emptyList(),
+    onArmorClick: (armorId: Int) -> Unit = {},
+) {
+    ListItemLayout(
+        leadingContent = {
+            ArmorIcon(
+                type = armor.type,
+                rarity = armor.rarity,
+                modifier = Modifier.size(Dimension.Size.medium)
+            )
+        },
+        headlineContent = {
+            Text(
+                text = armor.name,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+        },
+        supportingContent = {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.large),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = stringResource(R.string.armor_rarity, armor.rarity),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                SlotsIcon(
+                    numberOfSlots = armor.numberOfSlots,
+                    modifier = Modifier.size(
+                        width = Dimension.Size.tiny * 3,
+                        height = Dimension.Size.tiny
+                    )
+                )
+            }
+        },
+        trailingContent = {
+            armor.skills?.let { skills ->
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.End,
+                ) {
+                    skills.forEach { (skill, points) ->
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.large),
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .background(
+                                    color = if (skill in selectedSkills) {
+                                        MaterialTheme.colorScheme.primaryContainer
+                                    } else {
+                                        MaterialTheme.colorScheme.surface
+                                    },
+                                    shape = MaterialTheme.shapes.medium
+                                )
+                                .padding(
+                                    horizontal = Dimension.Padding.small,
+                                )
+                        ) {
+                            Text(
+                                text = skill.name,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                            Text(
+                                text = points.toString(),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                    }
+                }
+            }
+        },
+        contentPadding = PaddingValues(
+            horizontal = Dimension.Spacing.large,
+            vertical = Dimension.Spacing.medium
+        ),
+        modifier = modifier.clickable { onArmorClick(armor.id) }
+    )
+}
+
 @DevicePreviews
 @Composable
-fun ArmorSelectionPreview(
-) {
+fun ArmorSelectionPreview() {
     Theme {
         ArmorSelection(
             armors = PreviewArmorData.armorList,

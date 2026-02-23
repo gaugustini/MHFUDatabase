@@ -1,12 +1,16 @@
 package com.gaugustini.mhfudatabase.domain.model
 
 import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
+import com.gaugustini.mhfudatabase.domain.enums.Gender
+import com.gaugustini.mhfudatabase.domain.enums.HunterType
 
 /**
  * Represents a user-created equipment set.
  *
  * @property id The unique identifier of the user equipment set.
  * @property name The name of the equipment set.
+ * @property hunterType The type of hunter that can wear the equipment set.
+ * @property gender The gender that can wear the equipment set.
  * @property defense The total base defense of the equipment set.
  * @property fire The total fire resistance of the equipment set.
  * @property water The total water resistance of the equipment set.
@@ -23,6 +27,8 @@ import com.gaugustini.mhfudatabase.domain.enums.EquipmentType
 data class UserEquipmentSet(
     val id: Int = 0,
     val name: String = "",
+    val hunterType: HunterType = HunterType.BOTH,
+    val gender: Gender = Gender.BOTH,
     val defense: Int = 0,
     val fire: Int = 0,
     val water: Int = 0,

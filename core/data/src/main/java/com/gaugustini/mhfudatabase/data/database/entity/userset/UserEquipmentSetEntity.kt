@@ -23,5 +23,7 @@ import com.gaugustini.mhfudatabase.data.database.entity.weapon.WeaponEntity
 data class UserEquipmentSetEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "name") val name: String,
+    @ColumnInfo(name = "hunter_type") val hunterType: String,
+    @ColumnInfo(name = "gender") val gender: String,
     @ColumnInfo(name = "weapon_id") val weaponId: Int?,
 )

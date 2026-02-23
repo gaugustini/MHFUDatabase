@@ -1,6 +1,8 @@
 package com.gaugustini.mhfudatabase.ui.navigation
 
 import androidx.navigation.NavHostController
+import com.gaugustini.mhfudatabase.domain.enums.Gender
+import com.gaugustini.mhfudatabase.domain.enums.HunterType
 import com.gaugustini.mhfudatabase.domain.enums.WeaponType
 
 class NavigationActions(
@@ -110,8 +112,15 @@ class NavigationActions(
     val navigateToWeaponDetail: (weaponId: Int) -> Unit = {
         navController.navigate(Destinations.weaponDetailRoute(it))
     }
-    val navigateToUserEquipmentSetDetail: (setId: Int) -> Unit = {
-        navController.navigate(Destinations.userEquipmentSetDetailRoute(it))
-    }
+    val navigateToUserEquipmentSetDetail: (setId: Int, hunterType: HunterType, gender: Gender) -> Unit =
+        { setId, hunterType, gender ->
+            navController.navigate(
+                Destinations.userEquipmentSetDetailRoute(
+                    setId,
+                    hunterType.name,
+                    gender.name
+                )
+            )
+        }
 
 }

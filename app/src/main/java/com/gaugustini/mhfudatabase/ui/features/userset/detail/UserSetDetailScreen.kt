@@ -27,6 +27,7 @@ import com.gaugustini.mhfudatabase.ui.features.userset.components.ArmorSelection
 import com.gaugustini.mhfudatabase.ui.features.userset.components.DecorationSelection
 import com.gaugustini.mhfudatabase.ui.features.userset.components.DeleteConfirmationDialog
 import com.gaugustini.mhfudatabase.ui.features.userset.components.RenameDialog
+import com.gaugustini.mhfudatabase.ui.features.userset.components.SkillTreeSelection
 import com.gaugustini.mhfudatabase.ui.features.userset.components.WeaponSelection
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
@@ -42,6 +43,8 @@ enum class UserSetDetailTab(@get:StringRes val title: Int) {
 fun UserSetDetailRoute(
     navigateBack: () -> Unit,
     openSearch: () -> Unit,
+    onArmorClick: (armorId: Int) -> Unit = {},
+    onDecorationClick: (decorationId: Int) -> Unit = {},
     onItemClick: (itemId: Int) -> Unit = {},
     onSkillClick: (skillTreeId: Int) -> Unit = {},
     viewModel: UserSetDetailViewModel = hiltViewModel(),
@@ -53,6 +56,8 @@ fun UserSetDetailRoute(
         navigateBack = navigateBack,
         openSearch = openSearch,
         onEvent = viewModel::onEvent,
+        onArmorClick = onArmorClick,
+        onDecorationClick = onDecorationClick,
         onItemClick = onItemClick,
         onSkillClick = onSkillClick,
     )
@@ -64,13 +69,15 @@ fun UserSetDetailScreen(
     navigateBack: () -> Unit = {},
     openSearch: () -> Unit = {},
     onEvent: (UserSetEvent) -> Unit = {},
+    onArmorClick: (armorId: Int) -> Unit = {},
+    onDecorationClick: (decorationId: Int) -> Unit = {},
     onItemClick: (itemId: Int) -> Unit = {},
     onSkillClick: (skillTreeId: Int) -> Unit = {},
 ) {
     var showRenameDialog by rememberSaveable { mutableStateOf(false) }
     var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
 
-    if (!uiState.openSelectionEquipment) {
+    if (!uiState.openEquipmentSelection && !uiState.openSkillSelection) {
         val pagerState = rememberPagerState(
             initialPage = uiState.initialTab.ordinal,
             pageCount = { UserSetDetailTab.entries.size },
@@ -113,14 +120,14 @@ fun UserSetDetailScreen(
                     UserSetDetailEquipmentContent(
                         equipmentSet = uiState.equipmentSet,
                         openWeaponSelection = {
-                            onEvent(UserSetEvent.OpenSelection(SelectionType.WEAPON))
+                            onEvent(UserSetEvent.OpenEquipmentSelection(SelectionType.WEAPON))
                         },
                         openArmorSelection = { armorType ->
-                            onEvent(UserSetEvent.OpenSelection(SelectionType.ARMOR, armorType))
+                            onEvent(UserSetEvent.OpenEquipmentSelection(SelectionType.ARMOR, armorType))
                         },
                         openDecorationSelection = { equipmentType, availableSlots ->
                             onEvent(
-                                UserSetEvent.OpenSelection(
+                                UserSetEvent.OpenEquipmentSelection(
                                     type = SelectionType.DECORATION,
                                     equipmentType = equipmentType,
                                     availableSlots = availableSlots
@@ -136,55 +143,74 @@ fun UserSetDetailScreen(
                 UserSetDetailTab.SUMMARY -> {
                     UserSetDetailSummaryContent(
                         equipmentSet = uiState.equipmentSet,
+                        onArmorClick = onArmorClick,
+                        onDecorationClick = onDecorationClick,
                         onItemClick = onItemClick,
                         onSkillClick = onSkillClick,
                     )
                 }
             }
         }
-    } else {
+    }
+
+    if (uiState.openEquipmentSelection && !uiState.openSkillSelection) {
         when (uiState.selectionType) {
             SelectionType.WEAPON -> {
                 WeaponSelection(
                     weapons = uiState.weapons,
-                    filter = uiState.weaponSelectionFilter,
+                    filter = uiState.weaponFilter,
                     onWeaponClick = { weaponId ->
                         onEvent(UserSetEvent.ChangeWeapon(weaponId))
-                        onEvent(UserSetEvent.CloseSelection)
+                        onEvent(UserSetEvent.CloseEquipmentSelection)
                     },
                     onFilterChange = { onEvent(UserSetEvent.ApplyWeaponFilter(it)) },
-                    onBack = { onEvent(UserSetEvent.CloseSelection) },
+                    onBack = { onEvent(UserSetEvent.CloseEquipmentSelection) },
                 )
             }
 
             SelectionType.ARMOR -> {
                 ArmorSelection(
                     armors = uiState.armors,
-                    filter = uiState.armorSelectionFilter,
+                    filter = uiState.armorFilter,
                     onArmorClick = { armorId ->
                         onEvent(UserSetEvent.ChangeArmor(armorId))
-                        onEvent(UserSetEvent.CloseSelection)
+                        onEvent(UserSetEvent.CloseEquipmentSelection)
                     },
                     onFilterChange = { onEvent(UserSetEvent.ApplyArmorFilter(it)) },
-                    onBack = { onEvent(UserSetEvent.CloseSelection) },
+                    onBack = { onEvent(UserSetEvent.CloseEquipmentSelection) },
+                    openSkillSelection = { onEvent(UserSetEvent.OpenSkillSelection) },
                 )
             }
 
             SelectionType.DECORATION -> {
                 DecorationSelection(
                     decorations = uiState.decorations,
-                    filter = uiState.decorationSelectionFilter,
+                    filter = uiState.decorationFilter,
                     onDecorationClick = { decorationId ->
                         onEvent(UserSetEvent.AddDecoration(decorationId))
-                        onEvent(UserSetEvent.CloseSelection)
+                        onEvent(UserSetEvent.CloseEquipmentSelection)
                     },
                     onFilterChange = { onEvent(UserSetEvent.ApplyDecorationFilter(it)) },
-                    onBack = { onEvent(UserSetEvent.CloseSelection) },
+                    onBack = { onEvent(UserSetEvent.CloseEquipmentSelection) },
+                    openSkillSelection = { onEvent(UserSetEvent.OpenSkillSelection) },
                 )
             }
 
             else -> {}
         }
+    }
+
+    if (uiState.openEquipmentSelection && uiState.openSkillSelection) {
+        SkillTreeSelection(
+            skills = uiState.skills,
+            filter = uiState.skillFilter,
+            onSkillTreeClick = { skillTreeId ->
+                onEvent(UserSetEvent.SkillToFilter(skillTreeId))
+                onEvent(UserSetEvent.CloseSkillSelection)
+            },
+            onFilterChange = { onEvent(UserSetEvent.ApplySkillTreeFilter(it)) },
+            onBack = { onEvent(UserSetEvent.CloseSkillSelection) },
+        )
     }
 
     if (showRenameDialog) {

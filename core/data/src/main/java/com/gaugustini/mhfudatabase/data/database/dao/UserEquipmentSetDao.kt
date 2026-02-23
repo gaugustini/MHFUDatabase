@@ -122,6 +122,32 @@ interface UserEquipmentSetDao {
 
     @Query(
         """
+        SELECT 
+            armor_skill.armor_id AS equipmentId,
+            skill_tree.*,
+            skill_tree_text.*,
+            armor_skill.point_value AS points
+        FROM user_set_armor
+        JOIN armor
+            ON user_set_armor.armor_id = armor.id
+        JOIN armor_skill
+            ON armor.id = armor_skill.armor_id
+        JOIN skill_tree
+            ON armor_skill.skill_tree_id = skill_tree.id
+        JOIN skill_tree_text
+            ON skill_tree.id = skill_tree_text.skill_tree_id
+            AND skill_tree_text.language = :language
+        WHERE user_set_armor.user_set_id = :equipmentSetId
+            AND armor.armor_type = 'CHEST'
+        """
+    )
+    suspend fun getArmorSkillsInTorso(
+        equipmentSetId: Int,
+        language: String
+    ): List<EquipmentSkillTreePoint>
+
+    @Query(
+        """
         SELECT
             user_set_decoration.user_set_id AS equipmentId,
             skill_tree.*,
@@ -142,6 +168,30 @@ interface UserEquipmentSetDao {
     suspend fun getDecorationSkillsByUserSetId(
         equipmentSetId: Int,
         language: String
+    ): List<EquipmentSkillTreePoint>
+
+    @Query(
+        """
+        SELECT 
+            decoration_skill.decoration_id AS equipmentId,
+            skill_tree.*,
+            skill_tree_text.*,
+            decoration_skill.point_value AS points
+        FROM user_set_decoration
+        JOIN decoration_skill
+            ON user_set_decoration.decoration_id = decoration_skill.decoration_id
+        JOIN skill_tree
+            ON decoration_skill.skill_tree_id = skill_tree.id
+        JOIN skill_tree_text
+            ON skill_tree.id = skill_tree_text.skill_tree_id
+            AND skill_tree_text.language = :language
+        WHERE user_set_decoration.user_set_id = :equipmentSetId
+            AND user_set_decoration.equipment_type = 'CHEST'
+        """
+    )
+    suspend fun getDecorationSkillsInTorso(
+        equipmentSetId: Int,
+        language: String,
     ): List<EquipmentSkillTreePoint>
 
     @Query(

@@ -3,6 +3,7 @@ package com.gaugustini.mhfudatabase.domain.filter
 import com.gaugustini.mhfudatabase.domain.enums.HunterType
 import com.gaugustini.mhfudatabase.domain.enums.Rank
 import com.gaugustini.mhfudatabase.domain.model.ArmorSet
+import com.gaugustini.mhfudatabase.domain.model.SkillTree
 
 /**
  * Filter for [ArmorSet].
@@ -13,5 +14,5 @@ data class ArmorSetFilter(
     val rank: Rank? = null,
     //val gender: Gender? = null, TODO: Add Gender when implemented
     val hunterType: HunterType? = null,
-    val skills: List<Int>? = null,
+    val skills: List<SkillTree>? = null,
 )

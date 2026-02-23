@@ -3,7 +3,7 @@ package com.gaugustini.mhfudatabase.ui.features.userset.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,7 +20,10 @@ fun SelectionContainer(
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
-            .size(Dimension.Size.large)
+            .defaultMinSize(
+                minWidth = Dimension.Size.large,
+                minHeight = Dimension.Size.large
+            )
             .background(
                 color = if (selected) {
                     MaterialTheme.colorScheme.primaryContainer

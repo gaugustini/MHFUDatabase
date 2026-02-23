@@ -91,15 +91,33 @@ class UserEquipmentSetRepository @Inject constructor(
 
     /**
      * Returns the skill tree points for the given equipment set id.
-     * TODO: Add calculation for Torso Increased
      */
     private suspend fun getSkillTreePointsInSet(
         equipmentSetId: Int,
         language: String,
     ): List<EquipmentSkillTreePoint> {
-        val armorsSkills = userEquipmentSetDao.getArmorSkillsByUserSetId(equipmentSetId, language)
-        val decorationsSkills =
+        var armorsSkills = userEquipmentSetDao.getArmorSkillsByUserSetId(equipmentSetId, language)
+        var decorationsSkills =
             userEquipmentSetDao.getDecorationSkillsByUserSetId(equipmentSetId, language)
+
+        // Torso Inc ID = 1
+        val torsoMultiplier = armorsSkills.find { it.skillTree.id == 1 }?.points ?: 0
+
+        if (torsoMultiplier > 0) {
+            var torsoArmorSkills = userEquipmentSetDao.getArmorSkillsInTorso(equipmentSetId, language)
+            var torsoDecorationSkills =
+                userEquipmentSetDao.getDecorationSkillsInTorso(equipmentSetId, language)
+
+            torsoArmorSkills = torsoArmorSkills.map {
+                it.copy(points = it.points * torsoMultiplier)
+            }
+            torsoDecorationSkills = torsoDecorationSkills.map {
+                it.copy(points = it.points * torsoMultiplier)
+            }
+
+            armorsSkills = armorsSkills + torsoArmorSkills
+            decorationsSkills = decorationsSkills + torsoDecorationSkills
+        }
 
         return (armorsSkills + decorationsSkills)
             .groupBy { it.skillTree.id }

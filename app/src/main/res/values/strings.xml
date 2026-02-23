@@ -110,6 +110,7 @@
 
     <!-- List Header -->
     <string name="list_armors">Armor Pieces</string>
+    <string name="list_decorations">Decorations</string>
     <string name="list_active_skills">Active Skills</string>
     <string name="list_skills">Skills</string>
     <string name="list_recipe">Required Materials</string>
@@ -289,17 +290,32 @@
     <string name="user_set_new">New Set</string>
     <string name="user_set_nothing_equipped">Nothing Equipped</string>
     <string name="user_set_none">None</string>
+    <string name="user_set_dialog_new_set_title">New Set</string>
+    <string name="user_set_dialog_hunter_type">Hunter Type</string>
+    <string name="user_set_dialog_hunter_type_blade">Blademaster</string>
+    <string name="user_set_dialog_hunter_type_gunner">Gunner</string>
+    <string name="user_set_dialog_gender">Gender</string>
+    <string name="user_set_dialog_gender_male">Male</string>
+    <string name="user_set_dialog_gender_female">Female</string>
     <string name="user_set_dialog_rename_title">Rename Set</string>
     <string name="user_set_dialog_delete_title">Delete Set?</string>
     <string name="user_set_dialog_confirm">Confirm</string>
     <string name="user_set_dialog_cancel">Cancel</string>
-    <string name="user_set_weapon_selection">Weapon Selection</string>
-    <string name="user_set_armor_selection">Armor Selection</string>
-    <string name="user_set_decoration_selection">Decoration Selection</string>
+    <string name="user_set_selection_search">Search…</string>
     <string name="user_set_filter_weapon_type">Weapon Type</string>
     <string name="user_set_filter_element_type">Element Type</string>
     <string name="user_set_filter_rarity">Rarity</string>
     <string name="user_set_filter_number_of_slots">Number of Slots</string>
+    <string name="user_set_filter_skill">Skill</string>
+    <string name="user_set_filter_skill_category">Category</string>
+    <string name="user_set_filter_skill_blade">Blademaster</string>
+    <string name="user_set_filter_skill_combat">Combat</string>
+    <string name="user_set_filter_skill_felyne">Felyne</string>
+    <string name="user_set_filter_skill_gather">Gathering</string>
+    <string name="user_set_filter_skill_gunner">Gunner</string>
+    <string name="user_set_filter_skill_item">Item</string>
+    <string name="user_set_filter_skill_resistance">Resistance</string>
+    <string name="user_set_filter_skill_status">Status</string>
 
     <!-- Settings -->
     <string name="settings_option_confirm">Confirm</string>

@@ -37,7 +37,14 @@ interface SkillDao {
             ON skill_tree.id = skill_tree_text.skill_tree_id
             AND skill_tree_text.language = :language
         WHERE
-            (:name IS NULL OR (skill_tree_text.name LIKE '%' || :name || '%' OR skill_tree_text.full_name LIKE '%' || :name || '%'))
+            (:name IS NULL OR (skill_tree_text.name LIKE '%' || :name || '%' OR skill_tree_text.full_name LIKE '%' || :name || '%')
+                OR EXISTS (
+                    SELECT 1 FROM skill 
+                    JOIN skill_text ON skill.id = skill_text.skill_id AND skill_text.language = :language
+                    WHERE skill.skill_tree_id = skill_tree.id 
+                      AND (skill_text.name LIKE '%' || :name || '%' OR skill_text.full_name LIKE '%' || :name || '%')
+                )
+            )
             AND (:category IS NULL OR skill_tree.category = :category)
         ORDER BY skill_tree_text.name ASC
         """

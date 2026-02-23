@@ -15,7 +15,9 @@ import com.gaugustini.mhfudatabase.domain.model.UserEquipmentSet
 import com.gaugustini.mhfudatabase.ui.components.DetailHeader
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.components.icons.ArmorSetIcon
+import com.gaugustini.mhfudatabase.ui.features.armor.components.ArmorListItem
 import com.gaugustini.mhfudatabase.ui.features.armor.components.EquipmentStats
+import com.gaugustini.mhfudatabase.ui.features.decoration.components.DecorationListItem
 import com.gaugustini.mhfudatabase.ui.features.item.components.ItemQuantityListItem
 import com.gaugustini.mhfudatabase.ui.features.skill.components.SkillPointListItem
 import com.gaugustini.mhfudatabase.ui.features.userset.components.ActiveSkillListItem
@@ -29,6 +31,8 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewUserEquipmentSet
 fun UserSetDetailSummaryContent(
     equipmentSet: UserEquipmentSet,
     modifier: Modifier = Modifier,
+    onArmorClick: (armorId: Int) -> Unit = {},
+    onDecorationClick: (decorationId: Int) -> Unit = {},
     onItemClick: (itemId: Int) -> Unit = {},
     onSkillClick: (skillTreeId: Int) -> Unit = {},
 ) {
@@ -57,7 +61,7 @@ fun UserSetDetailSummaryContent(
                     rarity = 0,
                 )
             },
-            title = equipmentSet.name,
+            title = equipmentSet.name.ifBlank { stringResource(R.string.user_set_new) },
         )
 
         equipmentSet.armors.let { armors ->
@@ -102,6 +106,54 @@ fun UserSetDetailSummaryContent(
                         SkillPointListItem(
                             skill = skill,
                             onSkillClick = onSkillClick,
+                        )
+                    }
+                }
+            }
+        }
+
+        SectionHeader(
+            title = stringResource(R.string.list_armors),
+        )
+        equipmentSet.armors.let { armors ->
+            if (armors?.isEmpty() ?: true) {
+                noneText()
+            } else {
+                Column {
+                    armors.forEach { armor ->
+                        ArmorListItem(
+                            armor = armor,
+                            onArmorClick = onArmorClick,
+                        )
+                    }
+                }
+            }
+        }
+
+        SectionHeader(
+            title = stringResource(R.string.list_decorations),
+        )
+        equipmentSet.decorations.let { decorations ->
+            if (decorations?.isEmpty() ?: true) {
+                noneText()
+            } else {
+                val summarizedDecorations = decorations
+                    .groupBy { it.decoration.id }
+                    .map { (_, decoration) ->
+                        decoration.first().copy(quantity = decoration.sumOf { it.quantity })
+                    }
+                    .sortedByDescending { it.quantity }
+                Column {
+                    summarizedDecorations.forEach { (_, decoration, quantity) ->
+                        DecorationListItem(
+                            decoration = decoration,
+                            onDecorationClick = onDecorationClick,
+                            trailingContent = {
+                                Text(
+                                    text = quantity.toString(),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                )
+                            }
                         )
                     }
                 }

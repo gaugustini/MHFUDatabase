@@ -43,6 +43,7 @@ interface DecorationDao {
             AND item_text.language = :language
         WHERE
             (:name IS NULL OR (item_text.name LIKE '%' || :name || '%' OR item_text.full_name LIKE '%' || :name || '%'))
+            AND (:maxAvailableSlots IS NULL OR decoration.required_slots <= :maxAvailableSlots)
             AND (:hasSlotFilter = 0 OR decoration.required_slots IN (:numberOfSlots))
             AND (:hasSkillFilter = 0 OR EXISTS (
                 SELECT 1 FROM decoration_skill
@@ -54,11 +55,30 @@ interface DecorationDao {
     suspend fun getDecorationList(
         language: String,
         name: String?,
+        maxAvailableSlots: Int?,
         numberOfSlots: List<Int>?,
         hasSlotFilter: Boolean,
         skills: List<Int>?,
         hasSkillFilter: Boolean,
     ): List<DecorationWithText>
+
+    @Query(
+        """
+        SELECT 
+            decoration_skill.decoration_id AS equipmentId,
+            skill_tree.*,
+            skill_tree_text.*,
+            decoration_skill.point_value AS points
+        FROM decoration_skill
+        JOIN skill_tree
+            ON decoration_skill.skill_tree_id = skill_tree.id
+        JOIN skill_tree_text
+            ON skill_tree.id = skill_tree_text.skill_tree_id
+            AND skill_tree_text.language = :language
+        ORDER BY points DESC
+        """
+    )
+    suspend fun getDecorationSkillList(language: String): List<EquipmentSkillTreePoint>
 
     @Query(
         """
