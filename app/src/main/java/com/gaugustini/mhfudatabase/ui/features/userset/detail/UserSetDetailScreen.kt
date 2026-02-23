@@ -43,6 +43,8 @@ enum class UserSetDetailTab(@get:StringRes val title: Int) {
 fun UserSetDetailRoute(
     navigateBack: () -> Unit,
     openSearch: () -> Unit,
+    onArmorClick: (armorId: Int) -> Unit = {},
+    onDecorationClick: (decorationId: Int) -> Unit = {},
     onItemClick: (itemId: Int) -> Unit = {},
     onSkillClick: (skillTreeId: Int) -> Unit = {},
     viewModel: UserSetDetailViewModel = hiltViewModel(),
@@ -54,6 +56,8 @@ fun UserSetDetailRoute(
         navigateBack = navigateBack,
         openSearch = openSearch,
         onEvent = viewModel::onEvent,
+        onArmorClick = onArmorClick,
+        onDecorationClick = onDecorationClick,
         onItemClick = onItemClick,
         onSkillClick = onSkillClick,
     )
@@ -65,6 +69,8 @@ fun UserSetDetailScreen(
     navigateBack: () -> Unit = {},
     openSearch: () -> Unit = {},
     onEvent: (UserSetEvent) -> Unit = {},
+    onArmorClick: (armorId: Int) -> Unit = {},
+    onDecorationClick: (decorationId: Int) -> Unit = {},
     onItemClick: (itemId: Int) -> Unit = {},
     onSkillClick: (skillTreeId: Int) -> Unit = {},
 ) {
@@ -137,6 +143,8 @@ fun UserSetDetailScreen(
                 UserSetDetailTab.SUMMARY -> {
                     UserSetDetailSummaryContent(
                         equipmentSet = uiState.equipmentSet,
+                        onArmorClick = onArmorClick,
+                        onDecorationClick = onDecorationClick,
                         onItemClick = onItemClick,
                         onSkillClick = onSkillClick,
                     )

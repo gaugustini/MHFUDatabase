@@ -110,6 +110,7 @@
 
     <!-- List Header -->
     <string name="list_armors">Armor Pieces</string>
+    <string name="list_decorations">Decorations</string>
     <string name="list_active_skills">Active Skills</string>
     <string name="list_skills">Skills</string>
     <string name="list_recipe">Required Materials</string>

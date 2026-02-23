@@ -1,6 +1,7 @@
 package com.gaugustini.mhfudatabase.ui.features.userset.components
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -40,6 +41,7 @@ import androidx.compose.ui.res.stringResource
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.filter.ArmorFilter
 import com.gaugustini.mhfudatabase.domain.model.Armor
+import com.gaugustini.mhfudatabase.domain.model.SkillTree
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.ArmorIcon
 import com.gaugustini.mhfudatabase.ui.components.icons.SlotsIcon
@@ -106,7 +108,8 @@ fun ArmorSelection(
             items(armors) { armor ->
                 ArmorSelectionListItem(
                     armor = armor,
-                    onArmorClick = onArmorClick
+                    onArmorClick = onArmorClick,
+                    selectedSkills = filter.skills ?: emptyList(),
                 )
             }
         }
@@ -254,6 +257,7 @@ fun ArmorFilterSheet(
 fun ArmorSelectionListItem(
     armor: Armor,
     modifier: Modifier = Modifier,
+    selectedSkills: List<SkillTree> = emptyList(),
     onArmorClick: (armorId: Int) -> Unit = {},
 ) {
     ListItemLayout(
@@ -300,6 +304,18 @@ fun ArmorSelectionListItem(
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.large),
                             verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .background(
+                                    color = if (skill in selectedSkills) {
+                                        MaterialTheme.colorScheme.primaryContainer
+                                    } else {
+                                        MaterialTheme.colorScheme.surface
+                                    },
+                                    shape = MaterialTheme.shapes.medium
+                                )
+                                .padding(
+                                    horizontal = Dimension.Padding.small,
+                                )
                         ) {
                             Text(
                                 text = skill.name,

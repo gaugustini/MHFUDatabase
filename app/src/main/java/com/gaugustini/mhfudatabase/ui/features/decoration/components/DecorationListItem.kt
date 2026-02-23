@@ -20,6 +20,7 @@ fun DecorationListItem(
     decoration: Decoration,
     modifier: Modifier = Modifier,
     onDecorationClick: (decorationId: Int) -> Unit = {},
+    trailingContent: @Composable () -> Unit = {}
 ) {
     ListItemLayout(
         leadingContent = {
@@ -34,6 +35,9 @@ fun DecorationListItem(
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
+        },
+        trailingContent = {
+            trailingContent()
         },
         contentPadding = PaddingValues(
             horizontal = Dimension.Spacing.large,

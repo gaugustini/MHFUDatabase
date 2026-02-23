@@ -305,6 +305,8 @@ fun NavigationGraph(
             UserSetDetailRoute(
                 navigateBack = navigationActions.navigateBack,
                 openSearch = navigationActions.navigateToSearch,
+                onArmorClick = navigationActions.navigateToArmorDetail,
+                onDecorationClick = navigationActions.navigateToDecorationDetail,
                 onItemClick = navigationActions.navigateToItemDetail,
                 onSkillClick = navigationActions.navigateToSkillTreeDetail,
             )
