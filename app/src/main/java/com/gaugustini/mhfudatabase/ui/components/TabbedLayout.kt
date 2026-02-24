@@ -7,6 +7,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerScope
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SecondaryScrollableTabRow
 import androidx.compose.material3.SecondaryTabRow
@@ -32,6 +33,23 @@ fun TabbedLayout(
 ) {
     val animationScope = rememberCoroutineScope()
 
+    val tabs = @Composable {
+        tabTitles.forEachIndexed { index, title ->
+            Tab(
+                text = {
+                    Text(
+                        text = title,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                },
+                selected = index == pagerState.currentPage,
+                onClick = {
+                    animationScope.launch { pagerState.animateScrollToPage(index) }
+                },
+            )
+        }
+    }
+
     Scaffold(
         topBar = topBar,
         modifier = modifier
@@ -45,31 +63,13 @@ fun TabbedLayout(
                 SecondaryScrollableTabRow(
                     selectedTabIndex = pagerState.currentPage,
                     edgePadding = 0.dp,
-                ) {
-                    tabTitles.forEachIndexed { index, title ->
-                        Tab(
-                            text = { Text(title) },
-                            selected = index == pagerState.currentPage,
-                            onClick = {
-                                animationScope.launch { pagerState.animateScrollToPage(index) }
-                            },
-                        )
-                    }
-                }
+                    tabs = tabs,
+                )
             } else {
                 SecondaryTabRow(
                     selectedTabIndex = pagerState.currentPage,
-                ) {
-                    tabTitles.forEachIndexed { index, title ->
-                        Tab(
-                            text = { Text(title) },
-                            selected = index == pagerState.currentPage,
-                            onClick = {
-                                animationScope.launch { pagerState.animateScrollToPage(index) }
-                            },
-                        )
-                    }
-                }
+                    tabs = tabs,
+                )
             }
             HorizontalPager(
                 state = pagerState,
