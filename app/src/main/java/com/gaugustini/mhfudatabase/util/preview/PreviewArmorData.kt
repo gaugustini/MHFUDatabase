@@ -49,6 +49,7 @@ object PreviewArmorData {
         rarity = 1,
         rank = Rank.LOW,
         hunterType = HunterType.BLADE,
+        gender = Gender.MALE,
         defense = 10,
         maxDefense = 10,
         fire = 10,

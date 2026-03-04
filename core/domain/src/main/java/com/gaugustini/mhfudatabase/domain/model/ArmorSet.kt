@@ -1,5 +1,6 @@
 package com.gaugustini.mhfudatabase.domain.model
 
+import com.gaugustini.mhfudatabase.domain.enums.Gender
 import com.gaugustini.mhfudatabase.domain.enums.HunterType
 import com.gaugustini.mhfudatabase.domain.enums.Rank
 
@@ -10,6 +11,7 @@ import com.gaugustini.mhfudatabase.domain.enums.Rank
  * @property name The name of the armor set.
  * @property rank The rank of the armor set (Low Rank, High Rank, or G Rank).
  * @property hunterType The type of hunter that can wear this armor set (Blademaster, Gunner, or both).
+ * @property gender The gender that can wear this armor set (Male, Female, or both).
  * @property rarity The rarity of the armor set.
  * @property defense The total base defense of the armor set.
  * @property maxDefense The total maximum defense of the armor set when fully upgraded.
@@ -22,13 +24,12 @@ import com.gaugustini.mhfudatabase.domain.enums.Rank
  * @property skills The list of skills provided by the full armor set.
  * @property recipe The list of items required to craft the entire armor set.
  */
-// TODO: Add Gender
 data class ArmorSet(
     val id: Int,
     val name: String,
     val rank: Rank,
     val hunterType: HunterType,
-//    val gender: Gender,
+    val gender: Gender,
     val rarity: Int,
     val defense: Int,
     val maxDefense: Int,
