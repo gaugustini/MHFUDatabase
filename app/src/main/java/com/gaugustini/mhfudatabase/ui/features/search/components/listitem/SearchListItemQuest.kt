@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import com.gaugustini.mhfudatabase.R
+import com.gaugustini.mhfudatabase.domain.enums.HubType
 import com.gaugustini.mhfudatabase.domain.model.Quest
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.QuestIcon
@@ -45,7 +46,12 @@ fun SearchListItem(
             },
             trailingContent = {
                 Text(
-                    text = stringResource(R.string.search_quest),
+                    text = stringResource(
+                        when (quest.hubType) {
+                            HubType.VILLAGE -> R.string.search_quest_village
+                            HubType.GUILD -> R.string.search_quest_guild
+                        }
+                    ),
                     style = SearchListItemDefaults.TrailingTextStyle,
                     color = SearchListItemDefaults.TrailingTextColor,
                 )
