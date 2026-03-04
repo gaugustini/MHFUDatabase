@@ -12,4 +12,5 @@ data class ArmorSetEntity(
     @ColumnInfo(name = "rarity") val rarity: Int,
     @ColumnInfo(name = "rank") val rank: String,
     @ColumnInfo(name = "hunter_type") val hunterType: String,
+    @ColumnInfo(name = "gender") val gender: String,
 )

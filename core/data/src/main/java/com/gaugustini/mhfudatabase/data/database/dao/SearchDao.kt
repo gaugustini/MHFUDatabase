@@ -37,7 +37,7 @@ interface SearchDao {
     @Query(
         """
         SELECT
-            decoration.id AS dec_id, decoration.required_slots AS dec_required_slots,
+            decoration.id AS dec_id, decoration.shop_order AS dec_shop_order, decoration.required_slots AS dec_required_slots,
             item.*,
             item_text.*
         FROM decoration
