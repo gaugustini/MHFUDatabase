@@ -50,6 +50,7 @@ interface DecorationDao {
                 WHERE decoration_skill.decoration_id = decoration.id
                 AND decoration_skill.skill_tree_id IN (:skills)
             ))
+        ORDER BY dec_shop_order ASC
         """
     )
     suspend fun getDecorationList(
