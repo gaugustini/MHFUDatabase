@@ -129,7 +129,8 @@
     <string name="search_item">Objeto</string>
     <string name="search_location">Localización</string>
     <string name="search_monster">Monstruo</string>
-    <string name="search_quest">Misión</string>
+    <string name="search_quest_village">Misión (Aldea)</string>
+    <string name="search_quest_guild">Misión (Gremio)</string>
     <string name="search_skill_tree">Árbol de Habilidades</string>
     <string name="search_skill">Habilidad</string>
     <string name="search_weapon">Arma</string>

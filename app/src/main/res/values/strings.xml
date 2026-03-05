@@ -129,7 +129,8 @@
     <string name="search_item">Item</string>
     <string name="search_location">Location</string>
     <string name="search_monster">Monster</string>
-    <string name="search_quest">Quest</string>
+    <string name="search_quest_village">Quest (Village)</string>
+    <string name="search_quest_guild">Quest (Guild)</string>
     <string name="search_skill_tree">Skill Tree</string>
     <string name="search_skill">Skill</string>
     <string name="search_weapon">Weapon</string>

@@ -1,6 +1,7 @@
 package com.gaugustini.mhfudatabase.ui.features.userset.components
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -42,6 +43,7 @@ import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.ItemIconColor
 import com.gaugustini.mhfudatabase.domain.filter.DecorationFilter
 import com.gaugustini.mhfudatabase.domain.model.Decoration
+import com.gaugustini.mhfudatabase.domain.model.SkillTree
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.DecorationIcon
 import com.gaugustini.mhfudatabase.ui.components.icons.SlotIcon
@@ -110,7 +112,8 @@ fun DecorationSelection(
             items(decorations) { decoration ->
                 DecorationSelectionListItem(
                     decoration = decoration,
-                    onDecorationClick = onDecorationClick
+                    onDecorationClick = onDecorationClick,
+                    selectedSkills = filter.skills ?: emptyList(),
                 )
             }
         }
@@ -227,6 +230,7 @@ fun DecorationFilterSheet(
 fun DecorationSelectionListItem(
     decoration: Decoration,
     modifier: Modifier = Modifier,
+    selectedSkills: List<SkillTree> = emptyList(),
     onDecorationClick: (decorationId: Int) -> Unit = {},
 ) {
     ListItemLayout(
@@ -268,6 +272,18 @@ fun DecorationSelectionListItem(
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.large),
                             verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .background(
+                                    color = if (skill in selectedSkills) {
+                                        MaterialTheme.colorScheme.primaryContainer
+                                    } else {
+                                        MaterialTheme.colorScheme.surface
+                                    },
+                                    shape = MaterialTheme.shapes.medium
+                                )
+                                .padding(
+                                    horizontal = Dimension.Padding.small,
+                                )
                         ) {
                             Text(
                                 text = skill.name,
