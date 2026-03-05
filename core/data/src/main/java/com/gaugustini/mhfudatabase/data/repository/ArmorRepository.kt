@@ -95,6 +95,7 @@ class ArmorRepository @Inject constructor(
             hasRarityFilter = !filter.rarity.isNullOrEmpty(),
             rank = filter.rank?.name,
             hunterType = filter.hunterType?.name,
+            gender = filter.gender?.name,
             skills = filter.skills?.map { it.id },
             hasSkillFilter = !filter.skills.isNullOrEmpty(),
         )

@@ -18,5 +18,6 @@ import com.gaugustini.mhfudatabase.data.database.entity.item.ItemEntity
 )
 data class DecorationEntity(
     @ColumnInfo(name = "id") val id: Int,
+    @ColumnInfo(name = "shop_order") val shopOrder: Int,
     @ColumnInfo(name = "required_slots") val requiredSlots: Int,
 )

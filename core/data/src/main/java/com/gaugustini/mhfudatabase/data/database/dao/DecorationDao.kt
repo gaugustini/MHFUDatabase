@@ -15,7 +15,7 @@ interface DecorationDao {
     @Query(
         """
         SELECT
-            decoration.id AS dec_id, decoration.required_slots AS dec_required_slots,
+            decoration.id AS dec_id, decoration.shop_order AS dec_shop_order, decoration.required_slots AS dec_required_slots,
             item.*,
             item_text.*
         FROM decoration
@@ -32,7 +32,7 @@ interface DecorationDao {
     @Query(
         """
         SELECT
-            decoration.id AS dec_id, decoration.required_slots AS dec_required_slots,
+            decoration.id AS dec_id, decoration.shop_order AS dec_shop_order, decoration.required_slots AS dec_required_slots,
             item.*,
             item_text.*
         FROM decoration
@@ -50,6 +50,7 @@ interface DecorationDao {
                 WHERE decoration_skill.decoration_id = decoration.id
                 AND decoration_skill.skill_tree_id IN (:skills)
             ))
+        ORDER BY dec_shop_order ASC
         """
     )
     suspend fun getDecorationList(

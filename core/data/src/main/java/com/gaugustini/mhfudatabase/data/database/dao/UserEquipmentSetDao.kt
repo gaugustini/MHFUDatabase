@@ -77,7 +77,7 @@ interface UserEquipmentSetDao {
         """
         SELECT
             usd.user_set_id AS usd_user_set_id, usd.decoration_id AS usd_decoration_id, usd.equipment_type AS usd_equipment_type, usd.quantity AS usd_quantity,
-            decoration.id AS dec_id, decoration.required_slots AS dec_required_slots,
+            decoration.id AS dec_id, decoration.shop_order AS dec_shop_order, decoration.required_slots AS dec_required_slots,
             item.*,
             item_text.*
         FROM user_set_decoration usd

@@ -4,6 +4,7 @@ import com.gaugustini.mhfudatabase.data.database.relation.ArmorSetWithText
 import com.gaugustini.mhfudatabase.data.database.relation.ArmorWithText
 import com.gaugustini.mhfudatabase.data.database.relation.EquipmentItemQuantity
 import com.gaugustini.mhfudatabase.data.database.relation.EquipmentSkillTreePoint
+import com.gaugustini.mhfudatabase.domain.enums.Gender
 import com.gaugustini.mhfudatabase.domain.enums.HunterType
 import com.gaugustini.mhfudatabase.domain.enums.Rank
 import com.gaugustini.mhfudatabase.domain.model.ArmorSet
@@ -24,6 +25,7 @@ object ArmorSetMapper {
             name = armorSet.armorSetText.name,
             rank = Rank.fromString(armorSet.armorSet.rank),
             hunterType = HunterType.fromString(armorSet.armorSet.hunterType),
+            gender = Gender.fromString(armorSet.armorSet.gender),
             rarity = armorSet.armorSet.rarity,
             defense = armorSet.defense,
             maxDefense = armorSet.maxDefense,
