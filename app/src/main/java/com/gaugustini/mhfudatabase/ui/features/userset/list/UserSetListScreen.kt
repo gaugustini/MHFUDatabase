@@ -34,6 +34,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.Gender
 import com.gaugustini.mhfudatabase.domain.enums.HunterType
+import com.gaugustini.mhfudatabase.ui.components.EmptyContent
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.features.userset.components.UserSetListItem
@@ -95,18 +96,26 @@ fun UserSetListScreen(
             )
         },
     ) { innerPadding ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-        ) {
-            items(uiState.equipmentSets) { set ->
-                UserSetListItem(
-                    equipmentSet = set,
-                    onEquipmentSetClick = {
-                        onEquipmentSetClick(set.id, set.hunterType, set.gender)
-                    },
-                )
+        if (uiState.equipmentSets.isEmpty()) {
+            EmptyContent(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
+            )
+        } else {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+            ) {
+                items(uiState.equipmentSets) { set ->
+                    UserSetListItem(
+                        equipmentSet = set,
+                        onEquipmentSetClick = {
+                            onEquipmentSetClick(set.id, set.hunterType, set.gender)
+                        },
+                    )
+                }
             }
         }
 
