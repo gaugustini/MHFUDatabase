@@ -22,7 +22,6 @@ import javax.inject.Inject
 data class MainUiState(
     val isLoading: Boolean = true,
     val themeMode: ThemeMode? = null,
-    val showBetaDialog: Boolean = false,
     val showWhatsNew: Boolean = false,
 )
 
@@ -73,9 +72,6 @@ class MainViewModel @Inject constructor(
     private fun checkFirstLaunch() {
         viewModelScope.launch {
             if (appPreferences.isFirstLaunch()) {
-                _uiState.update { state ->
-                    state.copy(showBetaDialog = true)
-                }
                 appPreferences.setFirstLaunchDone()
             }
         }
@@ -99,12 +95,6 @@ class MainViewModel @Inject constructor(
 
                 appPreferences.setLastAppVersion(currentVersion)
             }
-        }
-    }
-
-    fun onBetaDialogDismissed() {
-        _uiState.update { state ->
-            state.copy(showBetaDialog = false)
         }
     }
 
