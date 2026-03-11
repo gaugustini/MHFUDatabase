@@ -29,22 +29,40 @@ Or download the latest APK from the [Releases](../../releases) page.
 
 ## Data
 
-The app stores its data using a local SQLite database. A pre-populated database file is packaged
-with the project and used to initialize the local database when the app is launched for the first
-time.
+The app uses a local SQLite database. A pre-populated database is bundled with the app and copied to
+the device on first launch.
 
-### Database File
-
-The pre-populated SQLite database file is located at:
+Location of the database file:
 
 [app/src/main/assets/database/data.db](app/src/main/assets/database/data.db)
 
-### Database Schema (Room)
+## Development Setup
 
-Room generates JSON schema files for each database version. These files are used to track structural
-changes and ensure consistency across versions. They can be found at:
+### Requirements
 
-[core/data/schemas/com.gaugustini.mhfudatabase.data.database.AppDatabase/](core/data/schemas/com.gaugustini.mhfudatabase.data.database.AppDatabase/)
+- Android Studio (latest stable version recommended)
+- JDK 17 or newer
+- Android SDK
+
+### Building
+
+1. Clone this repository:
+
+```
+git clone https://github.com/gaugustini/MHFUDatabase.git
+```
+
+2. Open the project in Android Studio
+3. Let Gradle sync and download the dependencies
+4. Run the app on:
+    - an Android emulator
+    - or a physical device
+
+To build the project from the command line:
+
+```
+./gradlew build
+```
 
 ## Contributing
 
@@ -65,19 +83,24 @@ You can start by:
 
 ## Credits and Resources
 
-* [Gathering Hall Studios](https://github.com/gatheringhallstudios)
-* [MHFU-DB](https://github.com/Kolyn090/mhfu-db) by Kolyn090
-* [MHFU Blacksmith](https://mhfu.vallode.com/) by vallode
-* [MHFU Wiki](https://monsterhunter.fandom.com/wiki/Monster_Hunter_Freedom_Unite)
-* [MHP2G Wiki (Japanese)](https://w.atwiki.jp/mhp2g/)
-* [GameFAQs](https://gamefaqs.gamespot.com/psp/943356-monster-hunter-freedom-unite)
-  * [Guide and Walkthrough](https://gamefaqs.gamespot.com/psp/943356-monster-hunter-freedom-unite/faqs/78652) by ryin77
-  * [Armor Set List](https://gamefaqs.gamespot.com/psp/943356-monster-hunter-freedom-unite/faqs/74198) by ZeoKnight
-  * [Armor Skill/Decoration Jewel List](https://gamefaqs.gamespot.com/psp/943356-monster-hunter-freedom-unite/faqs/74199) by ZeoKnight
-  * [Weapon Guide](https://gamefaqs.gamespot.com/psp/943356-monster-hunter-freedom-unite/faqs/57283) by Boldrin
-* [Neoseeker](https://monsterhunter.neoseeker.com/wiki/Monster_Hunter_Freedom_Unite_(PSP))
-* [MHFU Texture Port](https://github.com/Monkbreh/MHFU-Texture-Port) - Item icons
-* [Monster Hunter DB](https://github.com/CrimsonNynja/monster-hunter-DB) - Monster icons
+- [Gathering Hall Studios](https://github.com/gatheringhallstudios)
+- [MHFU-DB](https://github.com/Kolyn090/mhfu-db) by Kolyn090
+- [MHFU Blacksmith](https://mhfu.vallode.com/) by vallode
+- [MHFU Wiki](https://monsterhunter.fandom.com/wiki/Monster_Hunter_Freedom_Unite)
+- [MHP2G Wiki (Japanese)](https://w.atwiki.jp/mhp2g/)
+- [GameFAQs](https://gamefaqs.gamespot.com/psp/943356-monster-hunter-freedom-unite)
+    - [Guide and Walkthrough](https://gamefaqs.gamespot.com/psp/943356-monster-hunter-freedom-unite/faqs/78652)
+      by ryin77
+    - [Armor Set List](https://gamefaqs.gamespot.com/psp/943356-monster-hunter-freedom-unite/faqs/74198)
+      by ZeoKnight
+    - [Armor Skill/Decoration Jewel List](https://gamefaqs.gamespot.com/psp/943356-monster-hunter-freedom-unite/faqs/74199)
+      by ZeoKnight
+    - [Weapon Guide](https://gamefaqs.gamespot.com/psp/943356-monster-hunter-freedom-unite/faqs/57283)
+      by Boldrin
+- [FuComplete](https://fucomplete.github.io/)
+- [Neoseeker](https://monsterhunter.neoseeker.com/wiki/Monster_Hunter_Freedom_Unite_(PSP))
+- [MHFU Texture Port](https://github.com/Monkbreh/MHFU-Texture-Port) - Item icons
+- [Monster Hunter DB](https://github.com/CrimsonNynja/monster-hunter-DB) - Monster icons
 
 ## License
 
