@@ -13,7 +13,7 @@
     <!-- What's New -->
     <string name="whats_new_title">¿Qué hay de nuevo?</string>
     <string name="whats_new_text">
-        "Versión 1.0.0-rc01\n\n"
+        "Versión 1.0.0-rc02\n\n"
         "• NUEVO: Constructor de Sets\n"
         "• Añadidas misiones a los detalles de los monstruos\n"
         "• Mejoras generales en la interfaz (UI)\n"
