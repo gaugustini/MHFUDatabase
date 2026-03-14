@@ -13,11 +13,11 @@
     <!-- What's New -->
     <string name="whats_new_title">What\'s New?</string>
     <string name="whats_new_text">
-        Version 0.3.2\n
-        • Improved search functionality. Searches can now be performed using either the exact
-        in-game names or the full names\n
-        • Added missing combinations\n
-        • Reordered the monster hitzones and reward conditions
+        "Version 1.0.0\n\n"
+        "• NEW: Armor Set Builder\n"
+        "• Added quests to monster details\n"
+        "• General UI improvements\n"
+        "• Data fixes\n"
     </string>
 
     <!-- Screen Title: Main Routes -->

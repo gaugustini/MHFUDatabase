@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
             if (!uiState.isLoading) {
                 MHFUDatabase(
                     uiState = uiState,
-                    onBetaDialogDismissed = viewModel::onBetaDialogDismissed,
                     onWhatsNewDialogDismissed = viewModel::onWhatsNewDialogDismissed,
                 )
             }

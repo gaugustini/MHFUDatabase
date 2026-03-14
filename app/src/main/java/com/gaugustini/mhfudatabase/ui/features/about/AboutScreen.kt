@@ -170,6 +170,11 @@ fun CreditsAndResourcesList(
         ),
         AboutItem(
             icon = R.drawable.ic_item_book,
+            title = "FUComplete",
+            uri = "https://fucomplete.github.io/",
+        ),
+        AboutItem(
+            icon = R.drawable.ic_item_book,
             title = "Neoseeker",
             uri = "https://monsterhunter.neoseeker.com/wiki/Monster_Hunter_Freedom_Unite_(PSP)",
         ),

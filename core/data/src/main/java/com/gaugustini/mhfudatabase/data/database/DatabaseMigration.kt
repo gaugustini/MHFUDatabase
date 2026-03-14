@@ -46,7 +46,7 @@ object DatabaseMigration {
      * Returns an array of all migrations for the database.
      */
     fun allMigrations(context: Context): Array<Migration> = arrayOf(
-        // Add migrations here
+        fromAsset(context, startVersion = 5, endVersion = 6),
     )
 
 }
