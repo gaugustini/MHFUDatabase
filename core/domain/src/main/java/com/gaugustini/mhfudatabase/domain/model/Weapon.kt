@@ -20,8 +20,7 @@ import com.gaugustini.mhfudatabase.domain.enums.WeaponType
  * @property numberOfSlots The number of decoration slots available on the weapon.
  * @property attack The attack power of the weapon.
  * @property maxAttack The maximum attack power of the weapon (for Bowguns).
- * @property priceCreate The price to create the weapon.
- * @property priceUpgrade The price to create the weapon after upgrading it.
+ * @property price The price of the weapon to create or upgrade it.
  * @property element1 The first elemental attribute of the weapon.
  * @property element1Value The value of the first elemental attribute.
  * @property element2 The second elemental attribute of the weapon.
@@ -33,6 +32,7 @@ import com.gaugustini.mhfudatabase.domain.enums.WeaponType
  * @property songNotes The notes for Hunting Horns.
  * @property reloadSpeed The reload speed for Bowguns.
  * @property recoil The recoil for Bowguns.
+ * @property buildable Whether the weapon can be built without being upgraded.
  * @property ammoBow The available ammo coatings and charges for Bows.
  * @property ammoBowgun The available ammo for Bowguns.
  * @property recipeCreate The list of items required to create the weapon.
@@ -52,8 +52,7 @@ data class Weapon(
     val numberOfSlots: Int,
     val attack: Int,
     val maxAttack: Int?,
-    val priceCreate: Int?,
-    val priceUpgrade: Int?,
+    val price: Int,
     val element1: WeaponElement?,
     val element1Value: Int?,
     val element2: WeaponElement?,
@@ -65,6 +64,7 @@ data class Weapon(
     val songNotes: String?,
     val reloadSpeed: WeaponReloadSpeed?,
     val recoil: WeaponRecoil?,
+    val buildable: Boolean,
     val ammoBow: AmmoBow?,
     val ammoBowgun: AmmoBowgun?,
     val recipeCreate: List<ItemQuantity>?,
