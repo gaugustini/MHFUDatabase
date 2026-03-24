@@ -47,6 +47,7 @@ object DatabaseMigration {
      */
     fun allMigrations(context: Context): Array<Migration> = arrayOf(
         fromAsset(context, startVersion = 5, endVersion = 6),
+        fromAsset(context, startVersion = 6, endVersion = 7),
     )
 
 }

@@ -8,7 +8,7 @@ import com.gaugustini.mhfudatabase.data.database.entity.item.ItemEntity
 
 @Entity(
     tableName = "weapon_recipe",
-    primaryKeys = ["weapon_id", "item_id", "recipe_type"],
+    primaryKeys = ["weapon_id", "item_id", "recipe_type", "recipe_variant"],
     foreignKeys = [
         ForeignKey(
             entity = WeaponEntity::class,
@@ -28,6 +28,7 @@ import com.gaugustini.mhfudatabase.data.database.entity.item.ItemEntity
 data class WeaponRecipeEntity(
     @ColumnInfo(name = "weapon_id") val weaponId: Int,
     @ColumnInfo(name = "item_id") val itemId: Int,
-    @ColumnInfo(name = "recipe_type") val recipeType: String,
     @ColumnInfo(name = "quantity") val quantity: Int,
+    @ColumnInfo(name = "recipe_type") val recipeType: String,
+    @ColumnInfo(name = "recipe_variant") val recipeVariant: Int,
 )

@@ -16,8 +16,7 @@ data class WeaponEntity(
     @ColumnInfo(name = "num_slots") val numberOfSlots: Int,
     @ColumnInfo(name = "attack") val attack: Int,
     @ColumnInfo(name = "max_attack") val maxAttack: Int?,
-    @ColumnInfo(name = "price_create") val priceCreate: Int?,
-    @ColumnInfo(name = "price_upgrade") val priceUpgrade: Int?,
+    @ColumnInfo(name = "price") val price: Int,
     @ColumnInfo(name = "element_1") val element1: String?,
     @ColumnInfo(name = "element_1_value") val element1Value: Int?,
     @ColumnInfo(name = "element_2") val element2: String?,
@@ -29,4 +28,5 @@ data class WeaponEntity(
     @ColumnInfo(name = "song_notes") val songNotes: String?,
     @ColumnInfo(name = "reload_speed") val reloadSpeed: String?,
     @ColumnInfo(name = "recoil") val recoil: String?,
+    @ColumnInfo(name = "buildable") val buildable: Boolean,
 )
