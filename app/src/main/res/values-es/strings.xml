@@ -13,11 +13,9 @@
     <!-- What's New -->
     <string name="whats_new_title">¿Qué hay de nuevo?</string>
     <string name="whats_new_text">
-        "Versión 1.0.0\n\n"
-        "• NUEVO: Constructor de Sets\n"
-        "• Añadidas misiones a los detalles de los monstruos\n"
-        "• Mejoras generales en la interfaz (UI)\n"
-        "• Corrección de datos\n"
+        Versión 1.0.1\n\n
+        • Corregido valores de armaduras
+        • Corregido valores de armas
      </string>
 
     <!-- Screen Title: Main Routes -->
