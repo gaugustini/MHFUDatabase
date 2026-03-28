@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 7,
-    "identityHash": "00a17fd3312900abc868fb8d243def0b",
+    "identityHash": "b820eb119479a844f6c3734cd41cf900",
     "entities": [
       {
         "tableName": "armor",
@@ -254,7 +254,7 @@
       },
       {
         "tableName": "armor_recipe",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`armor_id` INTEGER NOT NULL, `item_id` INTEGER NOT NULL, `quantity` INTEGER NOT NULL, PRIMARY KEY(`armor_id`, `item_id`), FOREIGN KEY(`armor_id`) REFERENCES `armor`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`item_id`) REFERENCES `item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`armor_id` INTEGER NOT NULL, `item_id` INTEGER NOT NULL, `quantity` INTEGER NOT NULL, `recipe_variant` INTEGER NOT NULL, PRIMARY KEY(`armor_id`, `item_id`, `recipe_variant`), FOREIGN KEY(`armor_id`) REFERENCES `armor`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`item_id`) REFERENCES `item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "armorId",
@@ -273,13 +273,20 @@
             "columnName": "quantity",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "recipeVariant",
+            "columnName": "recipe_variant",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
             "armor_id",
-            "item_id"
+            "item_id",
+            "recipe_variant"
           ]
         },
         "indices": [
@@ -2700,7 +2707,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '00a17fd3312900abc868fb8d243def0b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b820eb119479a844f6c3734cd41cf900')"
     ]
   }
 }
