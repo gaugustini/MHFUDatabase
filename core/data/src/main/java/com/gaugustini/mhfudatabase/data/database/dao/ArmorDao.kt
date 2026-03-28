@@ -121,7 +121,8 @@ interface ArmorDao {
             armor_recipe.armor_id AS equipmentId,
             item.*,
             item_text.*,
-            armor_recipe.quantity AS quantity
+            armor_recipe.quantity AS quantity,
+            armor_recipe.recipe_variant AS recipeVariant
         FROM armor_recipe
         JOIN item
             ON armor_recipe.item_id = item.id

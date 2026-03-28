@@ -54,7 +54,9 @@ object WeaponMapper {
             buildable = weapon.weapon.buildable,
             ammoBow = ammoBow?.let { toAmmoBow(it) },
             ammoBowgun = ammoBowgun?.let { toAmmoBowgun(it) },
-            recipeCreate = recipeCreate?.map { ItemMapper.toItemQuantity(it) },
+            recipeCreate = recipeCreate?.groupBy { it.recipeVariant }?.values?.map { items ->
+                items.map { ItemMapper.toItemQuantity(it) }
+            },
             recipeUpgrade = recipeUpgrade?.map { ItemMapper.toItemQuantity(it) },
             paths = paths,
             finals = finals,

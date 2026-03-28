@@ -109,7 +109,8 @@ interface DecorationDao {
             decoration_recipe.decoration_id AS equipmentId,
             item.*,
             item_text.*,
-            decoration_recipe.quantity AS quantity
+            decoration_recipe.quantity AS quantity,
+            decoration_recipe.recipe_variant AS recipeVariant
         FROM decoration_recipe
         JOIN item
             ON decoration_recipe.item_id = item.id

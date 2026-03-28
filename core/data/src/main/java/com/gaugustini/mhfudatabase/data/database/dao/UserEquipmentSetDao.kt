@@ -200,11 +200,13 @@ interface UserEquipmentSetDao {
             user_set.id AS equipmentId,
             item.*,
             item_text.*,
-            SUM(weapon_recipe.quantity) AS quantity
+            SUM(weapon_recipe.quantity) AS quantity,
+            weapon_recipe.recipe_variant AS recipeVariant
         FROM user_set
         JOIN weapon_recipe
             ON user_set.weapon_id = weapon_recipe.weapon_id
             AND weapon_recipe.recipe_type = :recipeType
+            AND weapon_recipe.recipe_variant = 1
         JOIN item
             ON weapon_recipe.item_id = item.id
         JOIN item_text
@@ -226,10 +228,12 @@ interface UserEquipmentSetDao {
             user_set_armor.user_set_id AS equipmentId,
             item.*,
             item_text.*,
-            SUM(armor_recipe.quantity) AS quantity
+            SUM(armor_recipe.quantity) AS quantity,
+            armor_recipe.recipe_variant AS recipeVariant
         FROM user_set_armor
         JOIN armor_recipe
             ON user_set_armor.armor_id = armor_recipe.armor_id
+            AND armor_recipe.recipe_variant = 1
         JOIN item
             ON armor_recipe.item_id = item.id
         JOIN item_text
@@ -250,7 +254,8 @@ interface UserEquipmentSetDao {
             user_set_decoration.user_set_id AS equipmentId,
             item.*,
             item_text.*,
-            SUM(decoration_recipe.quantity * user_set_decoration.quantity) AS quantity
+            SUM(decoration_recipe.quantity * user_set_decoration.quantity) AS quantity,
+            decoration_recipe.recipe_variant AS recipeVariant
         FROM user_set_decoration
         JOIN decoration_recipe
             ON user_set_decoration.decoration_id = decoration_recipe.decoration_id

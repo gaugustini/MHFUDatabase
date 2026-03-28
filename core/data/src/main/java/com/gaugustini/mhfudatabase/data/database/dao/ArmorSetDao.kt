@@ -114,12 +114,14 @@ interface ArmorSetDao {
             armor_set.id AS equipmentId,
             item.*,
             item_text.*,
-            SUM(armor_recipe.quantity) AS quantity
+            SUM(armor_recipe.quantity) AS quantity,
+            armor_recipe.recipe_variant AS recipeVariant
         FROM armor_set
         JOIN armor
             ON armor_set.id = armor.armor_set_id
         JOIN armor_recipe
             ON armor.id = armor_recipe.armor_id
+            AND armor_recipe.recipe_variant = 1
         JOIN item
             ON armor_recipe.item_id = item.id
         JOIN item_text
