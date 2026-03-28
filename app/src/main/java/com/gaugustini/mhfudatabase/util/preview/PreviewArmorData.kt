@@ -30,7 +30,7 @@ object PreviewArmorData {
         ice = 10,
         dragon = 10,
         skills = PreviewSkillData.skillPointList,
-        recipe = PreviewItemData.itemQuantityList,
+        recipes = listOf(PreviewItemData.itemQuantityList),
     )
 
     val armorList = listOf(

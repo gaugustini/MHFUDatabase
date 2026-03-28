@@ -35,7 +35,7 @@ import com.gaugustini.mhfudatabase.domain.enums.WeaponType
  * @property buildable Whether the weapon can be built without being upgraded.
  * @property ammoBow The available ammo coatings and charges for Bows.
  * @property ammoBowgun The available ammo for Bowguns.
- * @property recipeCreate The list of items required to create the weapon. Each list represents a different recipe.
+ * @property recipesCreate The list of items required to create the weapon. Each list represents a different recipe.
  * @property recipeUpgrade The list of items required to create the weapon after upgrading it.
  * @property paths The list of paths to the root of the weapon tree.
  * @property finals The list of weapons that are the finals of the weapon tree.
@@ -67,7 +67,7 @@ data class Weapon(
     val buildable: Boolean,
     val ammoBow: AmmoBow?,
     val ammoBowgun: AmmoBowgun?,
-    val recipeCreate: List<List<ItemQuantity>>?,
+    val recipesCreate: List<List<ItemQuantity>>?,
     val recipeUpgrade: List<ItemQuantity>?,
     val paths: List<List<Weapon>>?,
     val finals: List<Weapon>?,

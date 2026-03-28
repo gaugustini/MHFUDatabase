@@ -61,17 +61,30 @@ fun WeaponDetailSummaryContent(
             )
         }
 
-        weapon.recipeCreate?.let { recipe ->
-            if (recipe.isNotEmpty()) {
+        weapon.recipesCreate?.let { recipes ->
+            if (recipes.isNotEmpty()) {
                 SectionHeader(
                     title = stringResource(R.string.list_recipe_create),
                 )
                 Column {
-                    recipe.ForEachWithDivider { item ->
+                    recipes[0].ForEachWithDivider { item ->
                         ItemQuantityListItem(
                             item = item,
                             onItemClick = onItemClick,
                         )
+                    }
+                }
+                if (recipes.size > 1) {
+                    SectionHeader(
+                        title = stringResource(R.string.list_recipe_create),
+                    )
+                    Column {
+                        recipes[1].ForEachWithDivider { item ->
+                            ItemQuantityListItem(
+                                item = item,
+                                onItemClick = onItemClick,
+                            )
+                        }
                     }
                 }
             }
