@@ -100,7 +100,8 @@ interface WeaponDao {
             weapon_recipe.weapon_id AS equipmentId,
             item.*,
             item_text.*,
-            weapon_recipe.quantity
+            weapon_recipe.quantity,
+            weapon_recipe.recipe_variant AS recipeVariant
         FROM weapon_recipe
         JOIN item
             ON weapon_recipe.item_id = item.id

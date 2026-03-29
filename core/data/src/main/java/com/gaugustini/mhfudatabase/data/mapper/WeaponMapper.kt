@@ -39,8 +39,7 @@ object WeaponMapper {
             numberOfSlots = weapon.weapon.numberOfSlots,
             attack = weapon.weapon.attack,
             maxAttack = weapon.weapon.maxAttack,
-            priceCreate = weapon.weapon.priceCreate,
-            priceUpgrade = weapon.weapon.priceUpgrade,
+            price = weapon.weapon.price,
             element1 = weapon.weapon.element1?.let { WeaponElement.fromString(it) },
             element1Value = weapon.weapon.element1Value,
             element2 = weapon.weapon.element2?.let { WeaponElement.fromString(it) },
@@ -52,9 +51,12 @@ object WeaponMapper {
             songNotes = weapon.weapon.songNotes,
             reloadSpeed = weapon.weapon.reloadSpeed?.let { WeaponReloadSpeed.fromString(it) },
             recoil = weapon.weapon.recoil?.let { WeaponRecoil.fromString(it) },
+            buildable = weapon.weapon.buildable,
             ammoBow = ammoBow?.let { toAmmoBow(it) },
             ammoBowgun = ammoBowgun?.let { toAmmoBowgun(it) },
-            recipeCreate = recipeCreate?.map { ItemMapper.toItemQuantity(it) },
+            recipesCreate = recipeCreate?.groupBy { it.recipeVariant }?.values?.map { items ->
+                items.map { ItemMapper.toItemQuantity(it) }
+            },
             recipeUpgrade = recipeUpgrade?.map { ItemMapper.toItemQuantity(it) },
             paths = paths,
             finals = finals,

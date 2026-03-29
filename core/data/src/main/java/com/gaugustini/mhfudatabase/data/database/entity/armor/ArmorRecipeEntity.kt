@@ -8,7 +8,7 @@ import com.gaugustini.mhfudatabase.data.database.entity.item.ItemEntity
 
 @Entity(
     tableName = "armor_recipe",
-    primaryKeys = ["armor_id", "item_id"],
+    primaryKeys = ["armor_id", "item_id", "recipe_variant"],
     foreignKeys = [
         ForeignKey(
             entity = ArmorEntity::class,
@@ -29,4 +29,5 @@ data class ArmorRecipeEntity(
     @ColumnInfo(name = "armor_id") val armorId: Int,
     @ColumnInfo(name = "item_id") val itemId: Int,
     @ColumnInfo(name = "quantity") val quantity: Int,
+    @ColumnInfo(name = "recipe_variant") val recipeVariant: Int,
 )

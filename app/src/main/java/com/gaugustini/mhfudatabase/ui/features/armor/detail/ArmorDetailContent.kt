@@ -71,17 +71,36 @@ fun ArmorDetailContent(
             }
         }
 
-        armor.recipe?.let { recipe ->
-            if (recipe.isNotEmpty()) {
+        armor.recipes?.let { recipes ->
+            if (recipes.isNotEmpty()) {
                 SectionHeader(
-                    title = stringResource(R.string.list_recipe),
+                    title = stringResource(
+                        if (recipes.size == 1) {
+                            R.string.list_recipe
+                        } else {
+                            R.string.list_recipe_a
+                        }
+                    ),
                 )
                 Column {
-                    recipe.ForEachWithDivider { item ->
+                    recipes[0].ForEachWithDivider { item ->
                         ItemQuantityListItem(
                             item = item,
                             onItemClick = onItemClick,
                         )
+                    }
+                }
+                if (recipes.size > 1) {
+                    SectionHeader(
+                        title = stringResource(R.string.list_recipe_b),
+                    )
+                    Column {
+                        recipes[1].ForEachWithDivider { item ->
+                            ItemQuantityListItem(
+                                item = item,
+                                onItemClick = onItemClick,
+                            )
+                        }
                     }
                 }
             }

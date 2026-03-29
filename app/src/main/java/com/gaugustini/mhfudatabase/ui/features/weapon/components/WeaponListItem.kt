@@ -50,7 +50,7 @@ fun WeaponListItem(
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
-                    if (weapon.priceCreate != null) {
+                    if (weapon.buildable) {
                         Spacer(modifier = Modifier.width(Dimension.Spacing.medium))
                         Image(
                             painterResource(R.drawable.ic_ui_build),

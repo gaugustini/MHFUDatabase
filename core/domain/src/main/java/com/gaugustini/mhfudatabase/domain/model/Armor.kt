@@ -25,7 +25,7 @@ import com.gaugustini.mhfudatabase.domain.enums.HunterType
  * @property ice The ice resistance of the armor piece.
  * @property dragon The dragon resistance of the armor piece.
  * @property skills The list of skills provided by the armor piece.
- * @property recipe The list of items required to craft the armor piece.
+ * @property recipes The list of items required to craft the armor piece. Each list represents a different recipe.
  */
 data class Armor(
     val id: Int,
@@ -46,5 +46,5 @@ data class Armor(
     val ice: Int,
     val dragon: Int,
     val skills: List<SkillPoint>?,
-    val recipe: List<ItemQuantity>?,
+    val recipes: List<List<ItemQuantity>>?,
 )

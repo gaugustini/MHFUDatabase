@@ -13,4 +13,5 @@ data class EquipmentItemQuantity(
     @Embedded val item: ItemEntity,
     @Embedded val itemText: ItemTextEntity,
     val quantity: Int,
+    val recipeVariant: Int,
 )

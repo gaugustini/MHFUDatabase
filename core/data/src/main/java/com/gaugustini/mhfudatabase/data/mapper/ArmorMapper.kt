@@ -37,7 +37,9 @@ object ArmorMapper {
             ice = armor.armor.iceResistance,
             dragon = armor.armor.dragonResistance,
             skills = skills?.map { SkillTreeMapper.toSkillPoint(it) },
-            recipe = recipe?.map { ItemMapper.toItemQuantity(it) },
+            recipes = recipe?.groupBy { it.recipeVariant }?.values?.map { items ->
+                items.map { ItemMapper.toItemQuantity(it) }
+            },
         )
     }
 
