@@ -97,7 +97,8 @@ You can start by:
       by ZeoKnight
     - [Weapon Guide](https://gamefaqs.gamespot.com/psp/943356-monster-hunter-freedom-unite/faqs/57283)
       by Boldrin
-- [FuComplete](https://fucomplete.github.io/)
+- [FUComplete](https://fucomplete.github.io/)
+- [mhp2g-patterns](https://github.com/IncognitoMan/mhp2g-patterns) by IncognitoMan
 - [Neoseeker](https://monsterhunter.neoseeker.com/wiki/Monster_Hunter_Freedom_Unite_(PSP))
 - [MHFU Texture Port](https://github.com/Monkbreh/MHFU-Texture-Port) - Item icons
 - [Monster Hunter DB](https://github.com/CrimsonNynja/monster-hunter-DB) - Monster icons
