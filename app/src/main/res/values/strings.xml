@@ -13,9 +13,11 @@
     <!-- What's New -->
     <string name="whats_new_title">What\'s New?</string>
     <string name="whats_new_text">
-        Version 1.0.1\n\n
-        • Correction in armor values
-        • Correction in weapon values
+        Version 1.0.2\n\n
+        • Correction in armor values\n
+        • Correction in decoration values\n
+        • Correction in combination values\n
+        • Correction in weapon values\n
     </string>
 
     <!-- Screen Title: Main Routes -->

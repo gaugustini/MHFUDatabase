@@ -28,6 +28,6 @@ import com.gaugustini.mhfudatabase.data.database.entity.item.ItemEntity
 data class DecorationRecipeEntity(
     @ColumnInfo(name = "decoration_id") val decorationId: Int,
     @ColumnInfo(name = "item_id") val itemId: Int,
-    @ColumnInfo(name = "recipe_variant") val variant: Int,
     @ColumnInfo(name = "quantity") val quantity: Int,
+    @ColumnInfo(name = "recipe_variant") val variant: Int,
 )
