@@ -1236,9 +1236,9 @@ INSERT INTO `item_combination` VALUES ('185','190','350','ALCHEMY','1','1','65')
 INSERT INTO `item_combination` VALUES ('186','189','341','ALCHEMY','1','1','65');
 INSERT INTO `item_combination` VALUES ('53','56','161','ALCHEMY','1','1','90');
 
-CREATE INDEX `index_decoration_recipe_item_id` ON `decoration_recipe` (`item_id`)
-CREATE INDEX `index_decoration_skill_skill_tree_id` ON `decoration_skill` (`skill_tree_id`)
-CREATE INDEX `index_item_combination_item_a_id` ON `item_combination` (`item_a_id`)
-CREATE INDEX `index_item_combination_item_b_id` ON `item_combination` (`item_b_id`)
+CREATE INDEX `index_decoration_recipe_item_id` ON `decoration_recipe` (`item_id`);
+CREATE INDEX `index_decoration_skill_skill_tree_id` ON `decoration_skill` (`skill_tree_id`);
+CREATE INDEX `index_item_combination_item_a_id` ON `item_combination` (`item_a_id`);
+CREATE INDEX `index_item_combination_item_b_id` ON `item_combination` (`item_b_id`);
 
 PRAGMA foreign_keys=ON;
