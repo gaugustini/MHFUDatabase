@@ -174,6 +174,12 @@ fun CreditsAndResourcesList(
             uri = "https://fucomplete.github.io/",
         ),
         AboutItem(
+            icon = if (isDarkTheme) R.drawable.ic_github_white else R.drawable.ic_github_black,
+            title = "MHP2G Patterns",
+            uri = "https://github.com/IncognitoMan/mhp2g-patterns",
+            author = "IncognitoMan",
+        ),
+        AboutItem(
             icon = R.drawable.ic_item_book,
             title = "Neoseeker",
             uri = "https://monsterhunter.neoseeker.com/wiki/Monster_Hunter_Freedom_Unite_(PSP)",
