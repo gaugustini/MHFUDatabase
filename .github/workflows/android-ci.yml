@@ -3,6 +3,15 @@ name: Android CI
 on:
   pull_request:
     branches: [ main ]
+    paths:
+      - 'app/**'
+      - 'core/**'
+      - '**/*.kt'
+      - '**/*.kts'
+      - '**/*.gradle'
+      - '**/gradle.properties'
+      - '**/gradle-wrapper.properties'
+      - 'gradle/**'
 
 jobs:
   build:
@@ -25,4 +34,4 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build
-        run: ./gradlew build
+        run: ./gradlew assembleDebug --parallel --build-cache
