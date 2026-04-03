@@ -2,7 +2,18 @@ name: Android CI
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ]
+    paths:
+      - 'app/**'
+      - 'core/**'
+      - '**/*.kt'
+      - '**/*.kts'
+      - '**/*.gradle'
+      - '**/gradle.properties'
+      - '**/gradle-wrapper.properties'
+      - 'gradle/**'
+  push:
+    branches: [ develop ]
     paths:
       - 'app/**'
       - 'core/**'
@@ -26,6 +37,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+          cache: 'gradle'
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
