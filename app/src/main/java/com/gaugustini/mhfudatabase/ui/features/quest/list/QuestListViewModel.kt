@@ -81,6 +81,8 @@ class QuestListViewModel @Inject constructor(
 
                     state.copy(expandedStarSectionsGuild = newSet)
                 }
+
+                else -> state
             }
         }
     }

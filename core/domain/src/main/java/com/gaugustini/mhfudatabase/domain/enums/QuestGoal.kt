@@ -1,11 +1,11 @@
 package com.gaugustini.mhfudatabase.domain.enums
 
 /**
- * Represents the quest goal type.
+ * Represents the quest goal, this helps to define the color of the quest icon.
  */
 enum class QuestGoal {
     /**
-     * Gather items.
+     * Gather or Delivery items.
      */
     GATHER,
 
@@ -22,7 +22,12 @@ enum class QuestGoal {
     /**
      * Special goal, only used in Fatalis quests.
      */
-    SPECIAL;
+    SPECIAL,
+
+    /**
+     * Treasure hunt.
+     */
+    TREASURE;
 
     companion object {
 
@@ -35,6 +40,7 @@ enum class QuestGoal {
                 "HUNT" -> HUNT
                 "SLAY" -> SLAY
                 "SPECIAL" -> SPECIAL
+                "TREASURE" -> TREASURE
                 else -> throw IllegalArgumentException("Invalid quest goal value: $string")
             }
         }

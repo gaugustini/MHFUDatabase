@@ -50,6 +50,7 @@ fun SearchListItem(
                         when (quest.hubType) {
                             HubType.VILLAGE -> R.string.search_quest_village
                             HubType.GUILD -> R.string.search_quest_guild
+                            HubType.TRAINING -> R.string.search_quest_training
                         }
                     ),
                     style = SearchListItemDefaults.TrailingTextStyle,

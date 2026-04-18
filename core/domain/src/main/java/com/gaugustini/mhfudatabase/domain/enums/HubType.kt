@@ -1,18 +1,23 @@
 package com.gaugustini.mhfudatabase.domain.enums
 
 /**
- * Represents the quest hub.
+ * Represents where the quest is located.
  */
 enum class HubType {
     /**
-     * Village quests.
+     * Quests in the village.
      */
     VILLAGE,
 
     /**
-     * Guild quests.
+     * Quests in the gathering hall.
      */
-    GUILD;
+    GUILD,
+
+    /**
+     * Quests in the training school.
+     */
+    TRAINING;
 
     companion object {
 
@@ -23,6 +28,7 @@ enum class HubType {
             return when (string) {
                 "VILLAGE" -> VILLAGE
                 "GUILD" -> GUILD
+                "TRAINING" -> TRAINING
                 else -> throw IllegalArgumentException("Invalid quest hub value: $string")
             }
         }

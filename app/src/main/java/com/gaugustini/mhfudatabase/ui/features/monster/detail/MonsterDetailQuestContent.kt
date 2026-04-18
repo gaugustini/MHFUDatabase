@@ -71,6 +71,7 @@ fun MonsterDetailQuestListItem(
                     when (quest.hubType) {
                         HubType.VILLAGE -> R.string.quest_village_stars
                         HubType.GUILD -> R.string.quest_guild_stars
+                        HubType.TRAINING -> R.string.quest_training_stars
                     },
                     quest.stars
                 ),
