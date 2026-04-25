@@ -51,6 +51,7 @@ object MHFUColors {
             QuestGoal.HUNT -> Color(0xFFFFFFFF)
             QuestGoal.SLAY -> Color(0xFFFF0000)
             QuestGoal.SPECIAL -> Color(0xFFFF00FF)
+            QuestGoal.TREASURE -> Color(0xFFFFFF00)
         }
     }
 
