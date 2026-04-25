@@ -95,6 +95,7 @@
     <!-- Tab Title: Quest List -->
     <string name="tab_quest_village">ALDEA</string>
     <string name="tab_quest_guild">GREMIO</string>
+    <string name="tab_quest_training">ENTRENAMIENTO</string>
 
     <!-- Tab Title: Skill Tree Detail -->
     <string name="tab_skill_detail_summary">RESUMEN</string>

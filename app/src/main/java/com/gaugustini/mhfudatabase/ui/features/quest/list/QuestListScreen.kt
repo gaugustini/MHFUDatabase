@@ -42,7 +42,8 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewQuestData
 
 enum class QuestListTab(@get:StringRes val title: Int) {
     VILLAGE(R.string.tab_quest_village),
-    GUILD(R.string.tab_quest_guild);
+    GUILD(R.string.tab_quest_guild),
+    TRAINING(R.string.tab_quest_training);
 }
 
 @Composable
@@ -105,6 +106,15 @@ fun QuestListScreen(
                     onQuestClick = onQuestClick,
                 )
             }
+
+            QuestListTab.TRAINING -> {
+                QuestList(
+                    quests = uiState.quests.filter { it.hubType == HubType.TRAINING },
+                    expandedStarSections = uiState.expandedStarSectionsTraining,
+                    onToggleExpand = { onToggleExpand(it, HubType.TRAINING) },
+                    onQuestClick = onQuestClick,
+                )
+            }
         }
     }
 }
@@ -117,6 +127,11 @@ fun QuestList(
     onToggleExpand: (numberOfStars: Int) -> Unit = {},
     onQuestClick: (questId: Int) -> Unit = {},
 ) {
+//  TODO: new design
+//    - Village: group per stars
+//    - Guild: group per HR, Treasure, Event
+//    - Training: group per Beginner, Solo, Group, Challenge
+
     val questsPerStar = quests.groupBy { it.stars }
 
     LazyColumn(

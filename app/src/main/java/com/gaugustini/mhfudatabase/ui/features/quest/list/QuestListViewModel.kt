@@ -23,6 +23,7 @@ data class QuestListState(
     val quests: List<Quest> = emptyList(),
     val expandedStarSectionsVillage: Set<Int> = emptySet(),
     val expandedStarSectionsGuild: Set<Int> = emptySet(),
+    val expandedStarSectionsTraining: Set<Int> = emptySet(),
 )
 
 @HiltViewModel
@@ -82,7 +83,16 @@ class QuestListViewModel @Inject constructor(
                     state.copy(expandedStarSectionsGuild = newSet)
                 }
 
-                else -> state
+                HubType.TRAINING -> {
+                    val newSet =
+                        if (starSection in state.expandedStarSectionsTraining) {
+                            state.expandedStarSectionsTraining - starSection
+                        } else {
+                            state.expandedStarSectionsTraining + starSection
+                        }
+
+                    state.copy(expandedStarSectionsTraining = newSet)
+                }
             }
         }
     }
