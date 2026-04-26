@@ -5,6 +5,7 @@ import com.gaugustini.mhfudatabase.data.database.relation.MonsterWithText
 import com.gaugustini.mhfudatabase.data.database.relation.QuestWithText
 import com.gaugustini.mhfudatabase.domain.enums.HubType
 import com.gaugustini.mhfudatabase.domain.enums.QuestGoal
+import com.gaugustini.mhfudatabase.domain.enums.QuestGroup
 import com.gaugustini.mhfudatabase.domain.enums.QuestType
 import com.gaugustini.mhfudatabase.domain.model.Quest
 
@@ -24,6 +25,7 @@ object QuestMapper {
             goal = quest.questText.goal,
             client = quest.questText.client,
             description = quest.questText.description,
+            group = QuestGroup.fromString(quest.quest.group),
             questType = QuestType.fromString(quest.quest.questType),
             goalType = QuestGoal.fromString(quest.quest.goalType),
             hubType = HubType.fromString(quest.quest.hubType),

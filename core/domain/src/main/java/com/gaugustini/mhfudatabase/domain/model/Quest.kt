@@ -2,6 +2,7 @@ package com.gaugustini.mhfudatabase.domain.model
 
 import com.gaugustini.mhfudatabase.domain.enums.HubType
 import com.gaugustini.mhfudatabase.domain.enums.QuestGoal
+import com.gaugustini.mhfudatabase.domain.enums.QuestGroup
 import com.gaugustini.mhfudatabase.domain.enums.QuestType
 
 /**
@@ -12,6 +13,7 @@ import com.gaugustini.mhfudatabase.domain.enums.QuestType
  * @property goal The objective of the quest.
  * @property client The person that created the quest.
  * @property description The description of the quest in the game.
+ * @property group The group the quest belongs to (e.g., Village, Solo Training, Group Training)
  * @property questType The type of the quest (Normal, Key, Urgent or Special).
  * @property goalType The goal type of the quest (Gather, Hunt, Slay or Special).
  * @property hubType The hub where the quest is available (e.g., Village, Guild).
@@ -29,6 +31,7 @@ data class Quest(
     val goal: String,
     val client: String,
     val description: String,
+    val group: QuestGroup,
     val questType: QuestType,
     val goalType: QuestGoal,
     val hubType: HubType,

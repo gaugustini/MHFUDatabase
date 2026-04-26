@@ -210,6 +210,35 @@
     <string name="quest_monsters">Monsters</string>
     <string name="quest_description">Description</string>
     <string name="quest_client">Client: %1$s</string>
+    <string name="quest_group_village_1">1</string>
+    <string name="quest_group_village_2">2</string>
+    <string name="quest_group_village_3">3</string>
+    <string name="quest_group_village_4">4</string>
+    <string name="quest_group_village_5">5</string>
+    <string name="quest_group_village_6">6</string>
+    <string name="quest_group_village_7">7</string>
+    <string name="quest_group_village_8">8</string>
+    <string name="quest_group_village_9">9</string>
+    <string name="quest_group_hr_1_1">HR 1</string>
+    <string name="quest_group_hr_1_2">HR 1</string>
+    <string name="quest_group_hr_1_3">HR 1</string>
+    <string name="quest_group_hr_2">HR 2</string>
+    <string name="quest_group_hr_3">HR 3</string>
+    <string name="quest_group_hr_4">HR 4</string>
+    <string name="quest_group_hr_5">HR 5</string>
+    <string name="quest_group_hr_6">HR 6</string>
+    <string name="quest_group_hr_7">HR 7</string>
+    <string name="quest_group_hr_8">HR 8</string>
+    <string name="quest_group_hr_9">HR 9</string>
+    <string name="quest_group_treasure">Treasure</string>
+    <string name="quest_group_event">Event</string>
+    <string name="quest_group_beginner_basic">Beginner: Basic Practice</string>
+    <string name="quest_group_beginner_weapon">Beginner: Weapon Usage</string>
+    <string name="quest_group_training_battle">Solo Training: Battle</string>
+    <string name="quest_group_training_special">Solo Training: Special</string>
+    <string name="quest_group_training_g">Solo Training: G Level</string>
+    <string name="quest_group_group_practice">Group Training: Practice</string>
+    <string name="quest_group_group_challenge">Group Training: Challenge</string>
 
     <!-- Skill Tree -->
     <string name="skill_empty_list">None</string>

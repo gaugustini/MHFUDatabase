@@ -2,6 +2,7 @@ package com.gaugustini.mhfudatabase.util.preview
 
 import com.gaugustini.mhfudatabase.domain.enums.HubType
 import com.gaugustini.mhfudatabase.domain.enums.QuestGoal
+import com.gaugustini.mhfudatabase.domain.enums.QuestGroup
 import com.gaugustini.mhfudatabase.domain.enums.QuestType
 import com.gaugustini.mhfudatabase.domain.model.Quest
 
@@ -16,6 +17,7 @@ object PreviewQuestData {
         goalType = QuestGoal.HUNT,
         client = "Quest Client",
         description = "Quest Description",
+        group = QuestGroup.VILLAGE_1,
         hubType = HubType.VILLAGE,
         stars = 5,
         questType = QuestType.NORMAL,
