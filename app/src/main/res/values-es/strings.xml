@@ -132,7 +132,7 @@
     <string name="search_monster">Monstruo</string>
     <string name="search_quest_village">Misión (Aldea)</string>
     <string name="search_quest_guild">Misión (Gremio)</string>
-    <string name="search_quest_training">Quest (Entrenamiento)</string>
+    <string name="search_quest_training">Misión (Entren.)</string>
     <string name="search_skill_tree">Árbol de Habilidades</string>
     <string name="search_skill">Habilidad</string>
     <string name="search_weapon">Arma</string>
@@ -202,7 +202,7 @@
     <string name="quest_type_urgent">Urgente</string>
     <string name="quest_village_stars">Aldea %1$d ★</string>
     <string name="quest_guild_stars">Gremio %1$d ★</string>
-    <string name="quest_training_stars">Entrenamiento %1$d ★</string>
+    <string name="quest_training_stars">Entren. %1$d ★</string>
     <string name="quest_reward">Recompensa</string>
     <string name="quest_fee">Cuota</string>
     <string name="quest_time_limit">Límite de Tiempo</string>
