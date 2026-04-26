@@ -1,9 +1,6 @@
 package com.gaugustini.mhfudatabase.ui.features.quest.list
 
 import androidx.annotation.StringRes
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,6 +18,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateSetOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -29,6 +29,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.HubType
+import com.gaugustini.mhfudatabase.domain.enums.QuestGroup
 import com.gaugustini.mhfudatabase.domain.model.Quest
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
@@ -59,7 +60,6 @@ fun QuestListRoute(
         uiState = uiState,
         openDrawer = openDrawer,
         openSearch = openSearch,
-        onToggleExpand = viewModel::toggleExpansion,
         onQuestClick = onQuestClick,
     )
 }
@@ -69,7 +69,6 @@ fun QuestListScreen(
     uiState: QuestListState = QuestListState(),
     openDrawer: () -> Unit = {},
     openSearch: () -> Unit = {},
-    onToggleExpand: (numberOfStars: Int, HubType) -> Unit = { _, _ -> },
     onQuestClick: (questId: Int) -> Unit = {},
 ) {
     val pagerState = rememberPagerState(
@@ -92,8 +91,6 @@ fun QuestListScreen(
             QuestListTab.VILLAGE -> {
                 QuestList(
                     quests = uiState.quests.filter { it.hubType == HubType.VILLAGE },
-                    expandedStarSections = uiState.expandedStarSectionsVillage,
-                    onToggleExpand = { onToggleExpand(it, HubType.VILLAGE) },
                     onQuestClick = onQuestClick,
                 )
             }
@@ -101,8 +98,6 @@ fun QuestListScreen(
             QuestListTab.GUILD -> {
                 QuestList(
                     quests = uiState.quests.filter { it.hubType == HubType.GUILD },
-                    expandedStarSections = uiState.expandedStarSectionsGuild,
-                    onToggleExpand = { onToggleExpand(it, HubType.GUILD) },
                     onQuestClick = onQuestClick,
                 )
             }
@@ -110,8 +105,6 @@ fun QuestListScreen(
             QuestListTab.TRAINING -> {
                 QuestList(
                     quests = uiState.quests.filter { it.hubType == HubType.TRAINING },
-                    expandedStarSections = uiState.expandedStarSectionsTraining,
-                    onToggleExpand = { onToggleExpand(it, HubType.TRAINING) },
                     onQuestClick = onQuestClick,
                 )
             }
@@ -122,39 +115,58 @@ fun QuestListScreen(
 @Composable
 fun QuestList(
     quests: List<Quest>,
-    expandedStarSections: Set<Int>,
     modifier: Modifier = Modifier,
-    onToggleExpand: (numberOfStars: Int) -> Unit = {},
     onQuestClick: (questId: Int) -> Unit = {},
 ) {
-//  TODO: new design
-//    - Village: group per stars
-//    - Guild: group per HR, Treasure, Event
-//    - Training: group per Beginner, Solo, Group, Challenge
+    val questGrouped = quests.groupBy { it.group }
+    val expandedGroupSections = remember { mutableStateSetOf<QuestGroup>() }
 
-    val questsPerStar = quests.groupBy { it.stars }
+    val excludedStars = listOf(
+        QuestGroup.TREASURE,
+        QuestGroup.EVENT,
+        QuestGroup.BEGINNER_BASIC,
+        QuestGroup.BEGINNER_WEAPON,
+        QuestGroup.TRAINING_BATTLE,
+        QuestGroup.TRAINING_SPECIAL,
+        QuestGroup.TRAINING_G,
+        QuestGroup.GROUP_PRACTICE,
+        QuestGroup.GROUP_CHALLENGE
+    )
 
     LazyColumn(
         modifier = modifier
     ) {
-        questsPerStar.forEach { (star, quests) ->
-            val isExpanded = star in expandedStarSections
+        questGrouped.forEach { (group, quests) ->
+            val isExpanded = group in expandedGroupSections
+            val numberOfStars = if (group !in excludedStars) {
+                quests.first().stars
+            } else {
+                0
+            }
 
-            stickyHeader {
-                QuestStarSectionHeader(
-                    numberOfStars = star,
+            stickyHeader(key = group) {
+                QuestGroupSectionHeader(
+                    group = group,
+                    numberOfStars = numberOfStars,
                     expanded = isExpanded,
-                    onToggleExpand = { onToggleExpand(star) }
+                    onToggleExpand = {
+                        if (isExpanded) {
+                            expandedGroupSections.remove(group)
+                        } else {
+                            expandedGroupSections.add(group)
+                        }
+                    }
                 )
             }
 
-            items(quests) { quest ->
-                AnimatedVisibility(
-                    visible = isExpanded,
-                    enter = expandVertically(),
-                    exit = shrinkVertically()
-                ) {
-                    Column {
+            if (isExpanded) {
+                items(
+                    items = quests,
+                    key = { it.id }
+                ) { quest ->
+                    Column(
+                        modifier = Modifier.animateItem()
+                    ) {
                         QuestListItem(
                             quest = quest,
                             onQuestClick = onQuestClick,
@@ -168,17 +180,50 @@ fun QuestList(
 }
 
 @Composable
-fun QuestStarSectionHeader(
+fun QuestGroupSectionHeader(
+    group: QuestGroup,
     numberOfStars: Int,
     modifier: Modifier = Modifier,
     expanded: Boolean = false,
     onToggleExpand: () -> Unit = {},
 ) {
+    val title = when (group) {
+        QuestGroup.VILLAGE_1 -> R.string.quest_group_village_1
+        QuestGroup.VILLAGE_2 -> R.string.quest_group_village_2
+        QuestGroup.VILLAGE_3 -> R.string.quest_group_village_3
+        QuestGroup.VILLAGE_4 -> R.string.quest_group_village_4
+        QuestGroup.VILLAGE_5 -> R.string.quest_group_village_5
+        QuestGroup.VILLAGE_6 -> R.string.quest_group_village_6
+        QuestGroup.VILLAGE_7 -> R.string.quest_group_village_7
+        QuestGroup.VILLAGE_8 -> R.string.quest_group_village_8
+        QuestGroup.VILLAGE_9 -> R.string.quest_group_village_9
+        QuestGroup.HR_1_1 -> R.string.quest_group_hr_1_1
+        QuestGroup.HR_1_2 -> R.string.quest_group_hr_1_2
+        QuestGroup.HR_1_3 -> R.string.quest_group_hr_1_3
+        QuestGroup.HR_2 -> R.string.quest_group_hr_2
+        QuestGroup.HR_3 -> R.string.quest_group_hr_3
+        QuestGroup.HR_4 -> R.string.quest_group_hr_4
+        QuestGroup.HR_5 -> R.string.quest_group_hr_5
+        QuestGroup.HR_6 -> R.string.quest_group_hr_6
+        QuestGroup.HR_7 -> R.string.quest_group_hr_7
+        QuestGroup.HR_8 -> R.string.quest_group_hr_8
+        QuestGroup.HR_9 -> R.string.quest_group_hr_9
+        QuestGroup.TREASURE -> R.string.quest_group_treasure
+        QuestGroup.EVENT -> R.string.quest_group_event
+        QuestGroup.BEGINNER_BASIC -> R.string.quest_group_beginner_basic
+        QuestGroup.BEGINNER_WEAPON -> R.string.quest_group_beginner_weapon
+        QuestGroup.TRAINING_BATTLE -> R.string.quest_group_training_battle
+        QuestGroup.TRAINING_SPECIAL -> R.string.quest_group_training_special
+        QuestGroup.TRAINING_G -> R.string.quest_group_training_g
+        QuestGroup.GROUP_PRACTICE -> R.string.quest_group_group_practice
+        QuestGroup.GROUP_CHALLENGE -> R.string.quest_group_group_challenge
+    }
+
     ListItemLayout(
         leadingContent = {
             Text(
-                text = numberOfStars.toString(),
-                style = MaterialTheme.typography.titleLarge,
+                text = stringResource(title),
+                style = MaterialTheme.typography.bodyLarge,
                 color = if (expanded) {
                     MaterialTheme.colorScheme.onSecondaryContainer
                 } else {
@@ -187,14 +232,38 @@ fun QuestStarSectionHeader(
             )
         },
         headlineContent = {
-            Row {
-                repeat(numberOfStars) {
-                    Icon(
-                        imageVector = Icons.TwoTone.Star,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.tertiary,
-                        modifier = Modifier.size(Dimension.Size.extraSmall)
-                    )
+            if (numberOfStars > 0) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    if (group in listOf(QuestGroup.HR_7, QuestGroup.HR_8, QuestGroup.HR_9)) {
+                        Text(
+                            text = "G ",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = if (expanded) {
+                                MaterialTheme.colorScheme.onSecondaryContainer
+                            } else {
+                                MaterialTheme.colorScheme.onSurface
+                            },
+                        )
+                        repeat(numberOfStars - 8) {
+                            Icon(
+                                imageVector = Icons.TwoTone.Star,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.tertiary,
+                                modifier = Modifier.size(Dimension.Size.extraSmall)
+                            )
+                        }
+                    } else {
+                        repeat(numberOfStars) {
+                            Icon(
+                                imageVector = Icons.TwoTone.Star,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.tertiary,
+                                modifier = Modifier.size(Dimension.Size.extraSmall)
+                            )
+                        }
+                    }
                 }
             }
         },

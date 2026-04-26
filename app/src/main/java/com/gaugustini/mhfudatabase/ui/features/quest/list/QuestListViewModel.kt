@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.QuestRepository
-import com.gaugustini.mhfudatabase.domain.enums.HubType
 import com.gaugustini.mhfudatabase.domain.enums.Language
 import com.gaugustini.mhfudatabase.domain.model.Quest
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -54,45 +53,6 @@ class QuestListViewModel @Inject constructor(
                 state.copy(
                     quests = questRepository.getQuestList(language.code),
                 )
-            }
-        }
-    }
-
-    fun toggleExpansion(starSection: Int, hubType: HubType) {
-        _uiState.update { state ->
-            when (hubType) {
-                HubType.VILLAGE -> {
-                    val newSet =
-                        if (starSection in state.expandedStarSectionsVillage) {
-                            state.expandedStarSectionsVillage - starSection
-                        } else {
-                            state.expandedStarSectionsVillage + starSection
-                        }
-
-                    state.copy(expandedStarSectionsVillage = newSet)
-                }
-
-                HubType.GUILD -> {
-                    val newSet =
-                        if (starSection in state.expandedStarSectionsGuild) {
-                            state.expandedStarSectionsGuild - starSection
-                        } else {
-                            state.expandedStarSectionsGuild + starSection
-                        }
-
-                    state.copy(expandedStarSectionsGuild = newSet)
-                }
-
-                HubType.TRAINING -> {
-                    val newSet =
-                        if (starSection in state.expandedStarSectionsTraining) {
-                            state.expandedStarSectionsTraining - starSection
-                        } else {
-                            state.expandedStarSectionsTraining + starSection
-                        }
-
-                    state.copy(expandedStarSectionsTraining = newSet)
-                }
             }
         }
     }
