@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 10,
-    "identityHash": "b820eb119479a844f6c3734cd41cf900",
+    "identityHash": "b8efa08cb28d7fc6a60029ea9a9f3e38",
     "entities": [
       {
         "tableName": "armor",
@@ -1533,7 +1533,7 @@
       },
       {
         "tableName": "quest",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `location_id` INTEGER NOT NULL, `hub_type` TEXT NOT NULL, `stars` INTEGER NOT NULL, `goal_type` TEXT NOT NULL, `quest_type` TEXT NOT NULL, `reward` INTEGER NOT NULL, `fee` INTEGER NOT NULL, `time_limit` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`location_id`) REFERENCES `location`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `location_id` INTEGER NOT NULL, `group` TEXT NOT NULL, `hub_type` TEXT NOT NULL, `stars` INTEGER NOT NULL, `goal_type` TEXT NOT NULL, `quest_type` TEXT NOT NULL, `reward` INTEGER NOT NULL, `fee` INTEGER NOT NULL, `time_limit` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`location_id`) REFERENCES `location`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -1545,6 +1545,12 @@
             "fieldPath": "locationId",
             "columnName": "location_id",
             "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "group",
+            "columnName": "group",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -2707,7 +2713,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b820eb119479a844f6c3734cd41cf900')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b8efa08cb28d7fc6a60029ea9a9f3e38')"
     ]
   }
 }
