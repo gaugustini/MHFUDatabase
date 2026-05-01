@@ -188,35 +188,35 @@ fun QuestGroupSectionHeader(
     onToggleExpand: () -> Unit = {},
 ) {
     val title = when (group) {
-        QuestGroup.VILLAGE_1 -> R.string.quest_group_village_1
-        QuestGroup.VILLAGE_2 -> R.string.quest_group_village_2
-        QuestGroup.VILLAGE_3 -> R.string.quest_group_village_3
-        QuestGroup.VILLAGE_4 -> R.string.quest_group_village_4
-        QuestGroup.VILLAGE_5 -> R.string.quest_group_village_5
-        QuestGroup.VILLAGE_6 -> R.string.quest_group_village_6
-        QuestGroup.VILLAGE_7 -> R.string.quest_group_village_7
-        QuestGroup.VILLAGE_8 -> R.string.quest_group_village_8
-        QuestGroup.VILLAGE_9 -> R.string.quest_group_village_9
-        QuestGroup.HR_1_1 -> R.string.quest_group_hr_1_1
-        QuestGroup.HR_1_2 -> R.string.quest_group_hr_1_2
-        QuestGroup.HR_1_3 -> R.string.quest_group_hr_1_3
-        QuestGroup.HR_2 -> R.string.quest_group_hr_2
-        QuestGroup.HR_3 -> R.string.quest_group_hr_3
-        QuestGroup.HR_4 -> R.string.quest_group_hr_4
-        QuestGroup.HR_5 -> R.string.quest_group_hr_5
-        QuestGroup.HR_6 -> R.string.quest_group_hr_6
-        QuestGroup.HR_7 -> R.string.quest_group_hr_7
-        QuestGroup.HR_8 -> R.string.quest_group_hr_8
-        QuestGroup.HR_9 -> R.string.quest_group_hr_9
-        QuestGroup.TREASURE -> R.string.quest_group_treasure
-        QuestGroup.EVENT -> R.string.quest_group_event
-        QuestGroup.BEGINNER_BASIC -> R.string.quest_group_beginner_basic
-        QuestGroup.BEGINNER_WEAPON -> R.string.quest_group_beginner_weapon
-        QuestGroup.TRAINING_BATTLE -> R.string.quest_group_training_battle
-        QuestGroup.TRAINING_SPECIAL -> R.string.quest_group_training_special
-        QuestGroup.TRAINING_G -> R.string.quest_group_training_g
-        QuestGroup.GROUP_PRACTICE -> R.string.quest_group_group_practice
-        QuestGroup.GROUP_CHALLENGE -> R.string.quest_group_group_challenge
+        QuestGroup.VILLAGE_1 -> R.string.section_quest_group_village_1
+        QuestGroup.VILLAGE_2 -> R.string.section_quest_group_village_2
+        QuestGroup.VILLAGE_3 -> R.string.section_quest_group_village_3
+        QuestGroup.VILLAGE_4 -> R.string.section_quest_group_village_4
+        QuestGroup.VILLAGE_5 -> R.string.section_quest_group_village_5
+        QuestGroup.VILLAGE_6 -> R.string.section_quest_group_village_6
+        QuestGroup.VILLAGE_7 -> R.string.section_quest_group_village_7
+        QuestGroup.VILLAGE_8 -> R.string.section_quest_group_village_8
+        QuestGroup.VILLAGE_9 -> R.string.section_quest_group_village_9
+        QuestGroup.HR_1_1 -> R.string.section_quest_group_hr_1_1
+        QuestGroup.HR_1_2 -> R.string.section_quest_group_hr_1_2
+        QuestGroup.HR_1_3 -> R.string.section_quest_group_hr_1_3
+        QuestGroup.HR_2 -> R.string.section_quest_group_hr_2
+        QuestGroup.HR_3 -> R.string.section_quest_group_hr_3
+        QuestGroup.HR_4 -> R.string.section_quest_group_hr_4
+        QuestGroup.HR_5 -> R.string.section_quest_group_hr_5
+        QuestGroup.HR_6 -> R.string.section_quest_group_hr_6
+        QuestGroup.HR_7 -> R.string.section_quest_group_hr_7
+        QuestGroup.HR_8 -> R.string.section_quest_group_hr_8
+        QuestGroup.HR_9 -> R.string.section_quest_group_hr_9
+        QuestGroup.TREASURE -> R.string.section_quest_group_treasure
+        QuestGroup.EVENT -> R.string.section_quest_group_event
+        QuestGroup.BEGINNER_BASIC -> R.string.section_quest_group_beginner_basic
+        QuestGroup.BEGINNER_WEAPON -> R.string.section_quest_group_beginner_weapon
+        QuestGroup.TRAINING_BATTLE -> R.string.section_quest_group_training_battle
+        QuestGroup.TRAINING_SPECIAL -> R.string.section_quest_group_training_special
+        QuestGroup.TRAINING_G -> R.string.section_quest_group_training_g
+        QuestGroup.GROUP_PRACTICE -> R.string.section_quest_group_group_practice
+        QuestGroup.GROUP_CHALLENGE -> R.string.section_quest_group_group_challenge
     }
 
     ListItemLayout(
