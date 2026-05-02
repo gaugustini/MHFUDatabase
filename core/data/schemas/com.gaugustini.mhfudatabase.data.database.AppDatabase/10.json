@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 10,
-    "identityHash": "fe3c3053fd9ce5740834ccb405f36eef",
+    "identityHash": "821bbbc2121802926803f30db027ab97",
     "entities": [
       {
         "tableName": "armor",
@@ -1851,7 +1851,7 @@
       },
       {
         "tableName": "quest_supply",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`quest_id` INTEGER NOT NULL, `item_id` INTEGER NOT NULL, `quantity` INTEGER NOT NULL, `order` INTEGER NOT NULL, PRIMARY KEY(`quest_id`, `item_id`, `order`), FOREIGN KEY(`quest_id`) REFERENCES `quest`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`item_id`) REFERENCES `item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`quest_id` INTEGER NOT NULL, `item_id` INTEGER NOT NULL, `quantity` INTEGER NOT NULL, `box_order` INTEGER NOT NULL, PRIMARY KEY(`quest_id`, `item_id`, `box_order`), FOREIGN KEY(`quest_id`) REFERENCES `quest`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`item_id`) REFERENCES `item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "questId",
@@ -1872,8 +1872,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "order",
-            "columnName": "order",
+            "fieldPath": "boxOrder",
+            "columnName": "box_order",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -1883,7 +1883,7 @@
           "columnNames": [
             "quest_id",
             "item_id",
-            "order"
+            "box_order"
           ]
         },
         "indices": [
@@ -2886,7 +2886,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fe3c3053fd9ce5740834ccb405f36eef')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '821bbbc2121802926803f30db027ab97')"
     ]
   }
 }

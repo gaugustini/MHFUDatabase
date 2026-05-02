@@ -8,7 +8,7 @@ import com.gaugustini.mhfudatabase.data.database.entity.item.ItemEntity
 
 @Entity(
     tableName = "quest_supply",
-    primaryKeys = ["quest_id", "item_id", "order"],
+    primaryKeys = ["quest_id", "item_id", "box_order"],
     foreignKeys = [
         ForeignKey(
             entity = QuestEntity::class,
@@ -29,5 +29,5 @@ data class QuestSupplyEntity(
     @ColumnInfo(name = "quest_id") val questId: Int,
     @ColumnInfo(name = "item_id") val itemId: Int,
     @ColumnInfo(name = "quantity") val quantity: Int,
-    @ColumnInfo(name = "order") val order: Int,
+    @ColumnInfo(name = "box_order") val boxOrder: Int,
 )

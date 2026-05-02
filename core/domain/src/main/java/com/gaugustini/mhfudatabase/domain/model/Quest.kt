@@ -24,6 +24,7 @@ import com.gaugustini.mhfudatabase.domain.enums.QuestType
  * @property location The location where the quest takes place.
  * @property monsters A list of monsters that appear in the quest.
  * @property rewards A list of rewards the player can receive after completing the quest.
+ * @property supplies A list of items in the quest's supply box.
  */
 // TODO: Add ranks
 data class Quest(
@@ -43,6 +44,7 @@ data class Quest(
     val location: Location?,
     val monsters: List<Monster>?,
     val rewards: List<QuestReward>?,
+    val supplies: List<QuestSupply>?,
 )
 
 /**
@@ -58,4 +60,17 @@ data class QuestReward(
     val condition: String,
     val quantity: Int,
     val percentage: Int,
+)
+
+/**
+ * Represents an item in the quest's supply box.
+ *
+ * @property item The item in the supply box.
+ * @property quantity The quantity of the item in the supply box.
+ * @property boxOrder The order of the item in the supply box.
+ */
+data class QuestSupply(
+    val item: Item,
+    val quantity: Int,
+    val boxOrder: Int,
 )
