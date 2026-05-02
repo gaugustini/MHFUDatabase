@@ -75,6 +75,7 @@ fun QuestDetailScreen(
                 QuestDetailTab.SUMMARY -> {
                     QuestDetailSummaryContent(
                         quest = uiState.quest,
+                        onItemClick = onItemClick,
                         onLocationClick = onLocationClick,
                         onMonsterClick = onMonsterClick,
                     )
