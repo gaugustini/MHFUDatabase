@@ -35,7 +35,7 @@ data class Item(
 )
 
 /**
- * Represents a item and quantity used to craft or upgrade an equipment.
+ * Represents an item and quantity used to craft or upgrade equipment.
  */
 data class ItemQuantity(
     val item: Item,
@@ -80,6 +80,21 @@ data class MonsterSource(
 ) : ItemSource
 
 /**
+ * Represents a quest reward received after completing a quest.
+ *
+ * @property quest The quest that rewards the player.
+ * @property condition The condition required to receive the reward.
+ * @property quantity The quantity of the item rewarded.
+ * @property percentage The percentage chance of receiving the reward.
+ */
+data class QuestSource(
+    val quest: Quest,
+    val condition: String,
+    val quantity: Int,
+    val percentage: Int,
+)
+
+/**
  * Represents all the ways a specific item can be obtained.
  *
  * @property combinations The list of item combinations where the result is the item.
@@ -90,11 +105,13 @@ data class ItemSources(
     val combinations: List<ItemCombination>,
     val locations: List<GatheringSource>,
     val monsterRewards: List<MonsterSource>,
+    val questRewards: List<QuestSource>,
 ) {
     fun isEmpty(): Boolean {
         return combinations.isEmpty() &&
                 locations.isEmpty() &&
-                monsterRewards.isEmpty()
+                monsterRewards.isEmpty() &&
+                questRewards.isEmpty()
     }
 }
 

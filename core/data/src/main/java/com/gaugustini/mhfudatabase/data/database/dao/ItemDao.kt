@@ -8,6 +8,7 @@ import com.gaugustini.mhfudatabase.data.database.relation.DecorationWithItemQuan
 import com.gaugustini.mhfudatabase.data.database.relation.ItemWithText
 import com.gaugustini.mhfudatabase.data.database.relation.LocationItemWithLocation
 import com.gaugustini.mhfudatabase.data.database.relation.MonsterRewardWithMonster
+import com.gaugustini.mhfudatabase.data.database.relation.QuestRewardWithQuest
 import com.gaugustini.mhfudatabase.data.database.relation.WeaponWithItemQuantity
 
 /**
@@ -129,6 +130,28 @@ interface ItemDao {
         """
     )
     suspend fun getMonsterRewardSources(itemId: Int, language: String): List<MonsterRewardWithMonster>
+
+    @Query(
+        """
+        SELECT
+            qr.quest_id AS qr_quest_id, qr.reward_condition_id AS qr_reward_condition_id, qr.item_id AS qr_item_id, qr.quantity AS qr_quantity, qr.percentage AS qr_percentage,
+            rctxt.reward_condition_id AS rctxt_reward_condition_id, rctxt.language AS rctxt_language, rctxt.name AS rctxt_name,
+            quest.*,
+            quest_text.*
+        FROM quest_reward qr
+        JOIN reward_condition_text rctxt
+            ON qr.reward_condition_id = rctxt.reward_condition_id
+            AND rctxt.language = :language
+        JOIN quest
+            ON qr.quest_id = quest.id
+        JOIN quest_text
+            ON quest.id = quest_text.quest_id
+            AND quest_text.language = :language
+        WHERE qr.item_id = :itemId
+        ORDER BY quest.id ASC, qr.percentage DESC
+        """
+    )
+    suspend fun getQuestRewardSources(itemId: Int, language: String): List<QuestRewardWithQuest>
 
     @Query(
         """

@@ -1,13 +1,16 @@
 package com.gaugustini.mhfudatabase.data.mapper
 
+import com.gaugustini.mhfudatabase.data.database.relation.ItemWithText
 import com.gaugustini.mhfudatabase.data.database.relation.LocationWithText
 import com.gaugustini.mhfudatabase.data.database.relation.MonsterWithText
+import com.gaugustini.mhfudatabase.data.database.relation.QuestRewardWithItem
 import com.gaugustini.mhfudatabase.data.database.relation.QuestWithText
 import com.gaugustini.mhfudatabase.domain.enums.HubType
 import com.gaugustini.mhfudatabase.domain.enums.QuestGoal
 import com.gaugustini.mhfudatabase.domain.enums.QuestGroup
 import com.gaugustini.mhfudatabase.domain.enums.QuestType
 import com.gaugustini.mhfudatabase.domain.model.Quest
+import com.gaugustini.mhfudatabase.domain.model.QuestReward
 
 /**
  * Mapper for Quest entities.
@@ -18,6 +21,7 @@ object QuestMapper {
         quest: QuestWithText,
         location: LocationWithText? = null,
         monsters: List<MonsterWithText>? = null,
+        rewards: List<QuestRewardWithItem>? = null,
     ): Quest {
         return Quest(
             id = quest.quest.id,
@@ -35,6 +39,18 @@ object QuestMapper {
             timeLimit = quest.quest.timeLimit,
             location = location?.let { LocationMapper.toModel(it) },
             monsters = monsters?.map { MonsterMapper.toModel(it) },
+            rewards = rewards?.map { toQuestReward(it) },
+        )
+    }
+
+    fun toQuestReward(
+        questReward: QuestRewardWithItem,
+    ): QuestReward {
+        return QuestReward(
+            item = ItemMapper.toModel(ItemWithText(questReward.item, questReward.itemText)),
+            condition = questReward.rewardConditionText.name,
+            quantity = questReward.questReward.quantity,
+            percentage = questReward.questReward.percentage,
         )
     }
 

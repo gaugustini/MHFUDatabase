@@ -79,6 +79,7 @@ class ItemRepository @Inject constructor(
             combinations = combinations,
             locations = itemDao.getLocationSources(itemId, language),
             monsterRewards = itemDao.getMonsterRewardSources(itemId, language),
+            questRewards = itemDao.getQuestRewardSources(itemId, language),
         )
     }
 

@@ -5,6 +5,7 @@ import com.gaugustini.mhfudatabase.domain.enums.QuestGoal
 import com.gaugustini.mhfudatabase.domain.enums.QuestGroup
 import com.gaugustini.mhfudatabase.domain.enums.QuestType
 import com.gaugustini.mhfudatabase.domain.model.Quest
+import com.gaugustini.mhfudatabase.domain.model.QuestReward
 
 object PreviewQuestData {
 
@@ -26,6 +27,7 @@ object PreviewQuestData {
         timeLimit = 1,
         location = PreviewLocationData.location,
         monsters = PreviewMonsterData.monsterList,
+        rewards = null,
     )
 
     val questList = listOf(
@@ -53,6 +55,19 @@ object PreviewQuestData {
             goalType = QuestGoal.SPECIAL,
             questType = QuestType.SPECIAL,
         ),
+    )
+
+    val questReward = QuestReward(
+        item = PreviewItemData.item,
+        condition = "Condition",
+        quantity = 1,
+        percentage = 100
+    )
+
+    val questRewardList = listOf(
+        questReward.copy(condition = "Condition 1"),
+        questReward.copy(condition = "Condition 2"),
+        questReward.copy(condition = "Condition 3"),
     )
 
 }

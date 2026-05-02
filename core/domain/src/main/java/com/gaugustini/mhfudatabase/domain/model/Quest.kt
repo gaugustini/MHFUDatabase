@@ -23,6 +23,7 @@ import com.gaugustini.mhfudatabase.domain.enums.QuestType
  * @property timeLimit The time limit for the quest in minutes.
  * @property location The location where the quest takes place.
  * @property monsters A list of monsters that appear in the quest.
+ * @property rewards A list of rewards the player can receive after completing the quest.
  */
 // TODO: Add ranks
 data class Quest(
@@ -41,4 +42,20 @@ data class Quest(
     val timeLimit: Int,
     val location: Location?,
     val monsters: List<Monster>?,
+    val rewards: List<QuestReward>?,
+)
+
+/**
+ * Represents a reward for completing a quest.
+ *
+ * @property item The item rewarded.
+ * @property condition The condition required to receive the reward.
+ * @property quantity The quantity of the item rewarded.
+ * @property percentage The percentage chance of receiving the reward.
+ */
+data class QuestReward(
+    val item: Item,
+    val condition: String,
+    val quantity: Int,
+    val percentage: Int,
 )
