@@ -40,6 +40,7 @@ import com.gaugustini.mhfudatabase.data.database.entity.monster.RewardConditionE
 import com.gaugustini.mhfudatabase.data.database.entity.monster.RewardConditionTextEntity
 import com.gaugustini.mhfudatabase.data.database.entity.quest.QuestEntity
 import com.gaugustini.mhfudatabase.data.database.entity.quest.QuestMonsterEntity
+import com.gaugustini.mhfudatabase.data.database.entity.quest.QuestRewardEntity
 import com.gaugustini.mhfudatabase.data.database.entity.quest.QuestTextEntity
 import com.gaugustini.mhfudatabase.data.database.entity.skill.SkillEntity
 import com.gaugustini.mhfudatabase.data.database.entity.skill.SkillTextEntity
@@ -77,7 +78,7 @@ import com.gaugustini.mhfudatabase.data.database.entity.weapon.WeaponTextEntity
         MonsterStatusEntity::class, MonsterItemEntity::class,
         RewardConditionEntity::class, RewardConditionTextEntity::class, MonsterRewardEntity::class,
         // Quest
-        QuestEntity::class, QuestTextEntity::class, QuestMonsterEntity::class,
+        QuestEntity::class, QuestTextEntity::class, QuestMonsterEntity::class, QuestRewardEntity::class,
         // Skill
         SkillTreeEntity::class, SkillTreeTextEntity::class,
         SkillEntity::class, SkillTextEntity::class,
