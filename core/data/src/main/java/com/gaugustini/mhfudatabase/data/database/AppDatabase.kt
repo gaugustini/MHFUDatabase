@@ -19,6 +19,10 @@ import com.gaugustini.mhfudatabase.data.database.entity.armor.ArmorSkillEntity
 import com.gaugustini.mhfudatabase.data.database.entity.armor.ArmorTextEntity
 import com.gaugustini.mhfudatabase.data.database.entity.armorset.ArmorSetEntity
 import com.gaugustini.mhfudatabase.data.database.entity.armorset.ArmorSetTextEntity
+import com.gaugustini.mhfudatabase.data.database.entity.common.HitzoneEntity
+import com.gaugustini.mhfudatabase.data.database.entity.common.HitzoneTextEntity
+import com.gaugustini.mhfudatabase.data.database.entity.common.RewardConditionEntity
+import com.gaugustini.mhfudatabase.data.database.entity.common.RewardConditionTextEntity
 import com.gaugustini.mhfudatabase.data.database.entity.decoration.DecorationEntity
 import com.gaugustini.mhfudatabase.data.database.entity.decoration.DecorationRecipeEntity
 import com.gaugustini.mhfudatabase.data.database.entity.decoration.DecorationSkillEntity
@@ -28,18 +32,15 @@ import com.gaugustini.mhfudatabase.data.database.entity.item.ItemTextEntity
 import com.gaugustini.mhfudatabase.data.database.entity.location.LocationEntity
 import com.gaugustini.mhfudatabase.data.database.entity.location.LocationItemEntity
 import com.gaugustini.mhfudatabase.data.database.entity.location.LocationTextEntity
-import com.gaugustini.mhfudatabase.data.database.entity.monster.HitzoneEntity
-import com.gaugustini.mhfudatabase.data.database.entity.monster.HitzoneTextEntity
 import com.gaugustini.mhfudatabase.data.database.entity.monster.MonsterEntity
 import com.gaugustini.mhfudatabase.data.database.entity.monster.MonsterHitzoneEntity
 import com.gaugustini.mhfudatabase.data.database.entity.monster.MonsterItemEntity
 import com.gaugustini.mhfudatabase.data.database.entity.monster.MonsterRewardEntity
 import com.gaugustini.mhfudatabase.data.database.entity.monster.MonsterStatusEntity
 import com.gaugustini.mhfudatabase.data.database.entity.monster.MonsterTextEntity
-import com.gaugustini.mhfudatabase.data.database.entity.monster.RewardConditionEntity
-import com.gaugustini.mhfudatabase.data.database.entity.monster.RewardConditionTextEntity
 import com.gaugustini.mhfudatabase.data.database.entity.quest.QuestEntity
 import com.gaugustini.mhfudatabase.data.database.entity.quest.QuestMonsterEntity
+import com.gaugustini.mhfudatabase.data.database.entity.quest.QuestRewardEntity
 import com.gaugustini.mhfudatabase.data.database.entity.quest.QuestTextEntity
 import com.gaugustini.mhfudatabase.data.database.entity.skill.SkillEntity
 import com.gaugustini.mhfudatabase.data.database.entity.skill.SkillTextEntity
@@ -77,7 +78,7 @@ import com.gaugustini.mhfudatabase.data.database.entity.weapon.WeaponTextEntity
         MonsterStatusEntity::class, MonsterItemEntity::class,
         RewardConditionEntity::class, RewardConditionTextEntity::class, MonsterRewardEntity::class,
         // Quest
-        QuestEntity::class, QuestTextEntity::class, QuestMonsterEntity::class,
+        QuestEntity::class, QuestTextEntity::class, QuestMonsterEntity::class, QuestRewardEntity::class,
         // Skill
         SkillTreeEntity::class, SkillTreeTextEntity::class,
         SkillEntity::class, SkillTextEntity::class,

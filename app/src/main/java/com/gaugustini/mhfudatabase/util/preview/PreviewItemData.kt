@@ -12,6 +12,7 @@ import com.gaugustini.mhfudatabase.domain.model.ItemQuantity
 import com.gaugustini.mhfudatabase.domain.model.ItemSources
 import com.gaugustini.mhfudatabase.domain.model.ItemUsages
 import com.gaugustini.mhfudatabase.domain.model.MonsterSource
+import com.gaugustini.mhfudatabase.domain.model.QuestSource
 import com.gaugustini.mhfudatabase.domain.model.Usage
 
 object PreviewItemData {
@@ -101,10 +102,25 @@ object PreviewItemData {
         monsterSource.copy(rank = Rank.TRAINING),
     )
 
+    val questSource = QuestSource(
+        quest = PreviewQuestData.quest,
+        condition = "Condition",
+        quantity = 1,
+        percentage = 100,
+    )
+
+    val questSourceList = listOf(
+        questSource.copy(quantity = 1),
+        questSource.copy(quantity = 2),
+        questSource.copy(quantity = 3),
+        questSource.copy(quantity = 4),
+    )
+
     val itemSources = ItemSources(
         combinations = itemCombinationList,
         locations = gatheringSourceList,
         monsterRewards = monsterSourceList,
+        questRewards = questSourceList,
     )
 
     // Item Usages

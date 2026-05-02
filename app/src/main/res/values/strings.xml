@@ -97,6 +97,10 @@
     <string name="tab_quest_guild">GUILD</string>
     <string name="tab_quest_training">TRAINING</string>
 
+    <!-- Tab Title: Quest Detail -->
+    <string name="tab_quest_detail_summary">SUMMARY</string>
+    <string name="tab_quest_detail_reward">REWARD</string>
+
     <!-- Tab Title: Skill Tree Detail -->
     <string name="tab_skill_detail_summary">SUMMARY</string>
     <string name="tab_skill_detail_equipment">EQUIPMENT</string>
@@ -172,6 +176,39 @@
     <string name="item_rank_g">G</string>
     <string name="item_rank_treasure">Treasure</string>
     <string name="item_rank_training">Training</string>
+    <string name="item_quest">Quest</string>
+    <string name="item_quest_hub_village">Village</string>
+    <string name="item_quest_hub_guild">Gathering Hall</string>
+    <string name="item_quest_hub_training">Training School</string>
+    <string name="item_quest_group_village_1">1★</string>
+    <string name="item_quest_group_village_2">2★</string>
+    <string name="item_quest_group_village_3">3★</string>
+    <string name="item_quest_group_village_4">4★</string>
+    <string name="item_quest_group_village_5">5★</string>
+    <string name="item_quest_group_village_6">6★</string>
+    <string name="item_quest_group_village_7">7★</string>
+    <string name="item_quest_group_village_8">8★</string>
+    <string name="item_quest_group_village_9">9★</string>
+    <string name="item_quest_group_hr_1_1">1★</string>
+    <string name="item_quest_group_hr_1_2">2★</string>
+    <string name="item_quest_group_hr_1_3">3★</string>
+    <string name="item_quest_group_hr_2">4★</string>
+    <string name="item_quest_group_hr_3">5★</string>
+    <string name="item_quest_group_hr_4">6★</string>
+    <string name="item_quest_group_hr_5">7★</string>
+    <string name="item_quest_group_hr_6">8★</string>
+    <string name="item_quest_group_hr_7">G1★</string>
+    <string name="item_quest_group_hr_8">G2★</string>
+    <string name="item_quest_group_hr_9">G3★</string>
+    <string name="item_quest_group_treasure">Treas.</string>
+    <string name="item_quest_group_event">Event</string>
+    <string name="item_quest_group_beginner_basic">Beg.</string>
+    <string name="item_quest_group_beginner_weapon">Beg.</string>
+    <string name="item_quest_group_training_battle">Solo</string>
+    <string name="item_quest_group_training_special">Solo</string>
+    <string name="item_quest_group_training_g">Solo</string>
+    <string name="item_quest_group_group_practice">Group</string>
+    <string name="item_quest_group_group_challenge">Chall.</string>
 
     <!-- Item Combination-->
     <string name="combination_treasure">Treasure</string>

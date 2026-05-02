@@ -1,4 +1,4 @@
-package com.gaugustini.mhfudatabase.data.database.entity.monster
+package com.gaugustini.mhfudatabase.data.database.entity.quest
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -8,13 +8,13 @@ import com.gaugustini.mhfudatabase.data.database.entity.common.RewardConditionEn
 import com.gaugustini.mhfudatabase.data.database.entity.item.ItemEntity
 
 @Entity(
-    tableName = "monster_reward",
-    primaryKeys = ["monster_id", "reward_condition_id", "item_id", "rank", "stack_size"],
+    tableName = "quest_reward",
+    primaryKeys = ["quest_id", "reward_condition_id", "item_id", "quantity"],
     foreignKeys = [
         ForeignKey(
-            entity = MonsterEntity::class,
+            entity = QuestEntity::class,
             parentColumns = ["id"],
-            childColumns = ["monster_id"],
+            childColumns = ["quest_id"],
         ),
         ForeignKey(
             entity = RewardConditionEntity::class,
@@ -32,11 +32,10 @@ import com.gaugustini.mhfudatabase.data.database.entity.item.ItemEntity
         Index(value = ["item_id"]),
     ],
 )
-data class MonsterRewardEntity(
-    @ColumnInfo(name = "monster_id") val monsterId: Int,
+data class QuestRewardEntity(
+    @ColumnInfo(name = "quest_id") val questId: Int,
     @ColumnInfo(name = "reward_condition_id") val rewardConditionId: Int,
     @ColumnInfo(name = "item_id") val itemId: Int,
-    @ColumnInfo(name = "rank") val rank: String,
-    @ColumnInfo(name = "stack_size") val stackSize: Int,
-    @ColumnInfo(name = "percentage") val percentage: Int?,
+    @ColumnInfo(name = "quantity") val quantity: Int,
+    @ColumnInfo(name = "percentage") val percentage: Int,
 )

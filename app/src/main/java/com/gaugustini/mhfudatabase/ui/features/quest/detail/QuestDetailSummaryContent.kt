@@ -25,7 +25,7 @@ import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewQuestData
 
 @Composable
-fun QuestDetailContent(
+fun QuestDetailSummaryContent(
     quest: Quest,
     modifier: Modifier = Modifier,
     onLocationClick: (locationId: Int) -> Unit = {},
@@ -122,9 +122,9 @@ fun QuestDetailContent(
 
 @DevicePreviews
 @Composable
-fun QuestDetailContentPreview() {
+fun QuestDetailSummaryContentPreview() {
     Theme {
-        QuestDetailContent(
+        QuestDetailSummaryContent(
             quest = PreviewQuestData.quest,
         )
     }

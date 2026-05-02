@@ -10,6 +10,8 @@ import com.gaugustini.mhfudatabase.data.database.relation.LocationItemWithLocati
 import com.gaugustini.mhfudatabase.data.database.relation.LocationWithText
 import com.gaugustini.mhfudatabase.data.database.relation.MonsterRewardWithMonster
 import com.gaugustini.mhfudatabase.data.database.relation.MonsterWithText
+import com.gaugustini.mhfudatabase.data.database.relation.QuestRewardWithQuest
+import com.gaugustini.mhfudatabase.data.database.relation.QuestWithText
 import com.gaugustini.mhfudatabase.data.database.relation.WeaponWithItemQuantity
 import com.gaugustini.mhfudatabase.data.database.relation.WeaponWithText
 import com.gaugustini.mhfudatabase.domain.enums.GatherType
@@ -23,6 +25,7 @@ import com.gaugustini.mhfudatabase.domain.model.ItemQuantity
 import com.gaugustini.mhfudatabase.domain.model.ItemSources
 import com.gaugustini.mhfudatabase.domain.model.ItemUsages
 import com.gaugustini.mhfudatabase.domain.model.MonsterSource
+import com.gaugustini.mhfudatabase.domain.model.QuestSource
 import com.gaugustini.mhfudatabase.domain.model.Usage
 
 /**
@@ -75,6 +78,7 @@ object ItemMapper {
         combinations: List<ItemCombination>,
         locations: List<LocationItemWithLocation>,
         monsterRewards: List<MonsterRewardWithMonster>,
+        questRewards: List<QuestRewardWithQuest>,
     ): ItemSources {
         val gatheringSources = locations.map {
             GatheringSource(
@@ -93,11 +97,20 @@ object ItemMapper {
                 percentage = it.monsterReward.percentage,
             )
         }
+        val questSources = questRewards.map {
+            QuestSource(
+                quest = QuestMapper.toModel(QuestWithText(it.quest, it.questText)),
+                condition = it.rewardConditionText.name,
+                quantity = it.questReward.quantity,
+                percentage = it.questReward.percentage,
+            )
+        }
 
         return ItemSources(
             combinations = combinations,
             locations = gatheringSources,
             monsterRewards = monsterSources,
+            questRewards = questSources,
         )
     }
 

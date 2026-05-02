@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class QuestDetailState(
+    val initialTab: QuestDetailTab = QuestDetailTab.SUMMARY,
     val quest: Quest? = null,
 )
 

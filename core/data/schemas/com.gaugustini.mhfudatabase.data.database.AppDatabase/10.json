@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 10,
-    "identityHash": "b8efa08cb28d7fc6a60029ea9a9f3e38",
+    "identityHash": "ff1bcbe9c424d3d34e9642f0b2e62ede",
     "entities": [
       {
         "tableName": "armor",
@@ -1750,6 +1750,106 @@
         ]
       },
       {
+        "tableName": "quest_reward",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`quest_id` INTEGER NOT NULL, `reward_condition_id` INTEGER NOT NULL, `item_id` INTEGER NOT NULL, `quantity` INTEGER NOT NULL, `percentage` INTEGER NOT NULL, PRIMARY KEY(`quest_id`, `reward_condition_id`, `item_id`, `quantity`), FOREIGN KEY(`quest_id`) REFERENCES `quest`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`reward_condition_id`) REFERENCES `reward_condition`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`item_id`) REFERENCES `item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "questId",
+            "columnName": "quest_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rewardConditionId",
+            "columnName": "reward_condition_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemId",
+            "columnName": "item_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "quantity",
+            "columnName": "quantity",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "percentage",
+            "columnName": "percentage",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "quest_id",
+            "reward_condition_id",
+            "item_id",
+            "quantity"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_quest_reward_reward_condition_id",
+            "unique": false,
+            "columnNames": [
+              "reward_condition_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_quest_reward_reward_condition_id` ON `${TABLE_NAME}` (`reward_condition_id`)"
+          },
+          {
+            "name": "index_quest_reward_item_id",
+            "unique": false,
+            "columnNames": [
+              "item_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_quest_reward_item_id` ON `${TABLE_NAME}` (`item_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "quest",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "quest_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "reward_condition",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "reward_condition_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "item",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "item_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
         "tableName": "skill_tree",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `category` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
@@ -2713,7 +2813,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b8efa08cb28d7fc6a60029ea9a9f3e38')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ff1bcbe9c424d3d34e9642f0b2e62ede')"
     ]
   }
 }

@@ -215,6 +215,7 @@ fun NavigationGraph(
                 onItemClick = navigationActions.navigateToItemDetail,
                 onLocationClick = navigationActions.navigateToLocationDetail,
                 onMonsterClick = navigationActions.navigateToMonsterDetail,
+                onQuestClick = navigationActions.navigateToQuestDetail,
                 onWeaponClick = navigationActions.navigateToWeaponDetail,
             )
         }
@@ -252,6 +253,7 @@ fun NavigationGraph(
             QuestDetailRoute(
                 navigateBack = navigationActions.navigateBack,
                 openSearch = navigationActions.navigateToSearch,
+                onItemClick = navigationActions.navigateToItemDetail,
                 onLocationClick = navigationActions.navigateToLocationDetail,
                 onMonsterClick = navigationActions.navigateToMonsterDetail,
             )
