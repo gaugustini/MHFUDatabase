@@ -97,6 +97,10 @@
     <string name="tab_quest_guild">GREMIO</string>
     <string name="tab_quest_training">ENTRENAMIENTO</string>
 
+    <!-- Tab Title: Quest Detail -->
+    <string name="tab_quest_detail_summary">RESUMEN</string>
+    <string name="tab_quest_detail_reward">RECOMPENSA</string>
+
     <!-- Tab Title: Skill Tree Detail -->
     <string name="tab_skill_detail_summary">RESUMEN</string>
     <string name="tab_skill_detail_equipment">EQUIPO</string>
@@ -172,6 +176,7 @@
     <string name="item_rank_g">RG</string>
     <string name="item_rank_treasure">Tesoro</string>
     <string name="item_rank_training">Entrenamiento</string>
+    <string name="item_quest">Misión</string>
 
     <!-- Item Combination-->
     <string name="combination_treasure">Tesoro</string>

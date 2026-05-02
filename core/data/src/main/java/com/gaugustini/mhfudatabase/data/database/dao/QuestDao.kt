@@ -85,6 +85,7 @@ interface QuestDao {
             ON monster.id = monster_text.monster_id
             AND monster_text.language = :language
         WHERE quest_monster.quest_id = :questId
+        ORDER BY monster_text.name ASC
         """
     )
     suspend fun getMonstersByQuestId(questId: Int, language: String): List<MonsterWithText>

@@ -33,6 +33,7 @@ fun ItemDetailRoute(
     onItemClick: (itemId: Int) -> Unit,
     onLocationClick: (locationId: Int) -> Unit,
     onMonsterClick: (monsterId: Int) -> Unit,
+    onQuestClick: (questId: Int) -> Unit,
     onWeaponClick: (weaponId: Int) -> Unit,
     viewModel: ItemDetailViewModel = hiltViewModel(),
 ) {
@@ -47,6 +48,7 @@ fun ItemDetailRoute(
         onItemClick = onItemClick,
         onLocationClick = onLocationClick,
         onMonsterClick = onMonsterClick,
+        onQuestClick = onQuestClick,
         onWeaponClick = onWeaponClick,
     )
 }
@@ -61,6 +63,7 @@ fun ItemDetailScreen(
     onItemClick: (itemId: Int) -> Unit = {},
     onLocationClick: (locationId: Int) -> Unit = {},
     onMonsterClick: (monsterId: Int) -> Unit = {},
+    onQuestClick: (questId: Int) -> Unit = {},
     onWeaponClick: (weaponId: Int) -> Unit = {},
 ) {
     val pagerState = rememberPagerState(
@@ -114,6 +117,7 @@ fun ItemDetailScreen(
                                 onItemClick = onItemClick,
                                 onLocationClick = onLocationClick,
                                 onMonsterClick = onMonsterClick,
+                                onQuestClick = onQuestClick,
                             )
                         }
                     }

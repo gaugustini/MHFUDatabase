@@ -13,6 +13,7 @@ import com.gaugustini.mhfudatabase.domain.model.ItemSources
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.features.item.components.GatheringSourceListItem
 import com.gaugustini.mhfudatabase.ui.features.item.components.MonsterSourceListItem
+import com.gaugustini.mhfudatabase.ui.features.item.components.QuestSourceListItem
 import com.gaugustini.mhfudatabase.ui.features.itemcombination.components.ItemCombinationListItem
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
@@ -25,6 +26,7 @@ fun ItemSourcesContent(
     onItemClick: (itemId: Int) -> Unit = {},
     onLocationClick: (locationId: Int) -> Unit = {},
     onMonsterClick: (monsterId: Int) -> Unit = {},
+    onQuestClick: (questId: Int) -> Unit = {},
 ) {
     LazyColumn(
         modifier = modifier
@@ -97,6 +99,23 @@ fun ItemSourcesContent(
                     onMonsterClick = onMonsterClick,
                 )
                 if (index != sources.monsterRewards.lastIndex) {
+                    HorizontalDivider()
+                }
+            }
+        }
+
+        if (sources.questRewards.isNotEmpty()) {
+            item {
+                SectionHeader(
+                    title = stringResource(R.string.item_quest),
+                )
+            }
+            itemsIndexed(sources.questRewards) { index, quest ->
+                QuestSourceListItem(
+                    source = quest,
+                    onQuestClick = onQuestClick,
+                )
+                if (index != sources.questRewards.lastIndex) {
                     HorizontalDivider()
                 }
             }

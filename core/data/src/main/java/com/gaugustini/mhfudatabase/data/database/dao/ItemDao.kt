@@ -148,7 +148,7 @@ interface ItemDao {
             ON quest.id = quest_text.quest_id
             AND quest_text.language = :language
         WHERE qr.item_id = :itemId
-        ORDER BY quest.id ASC, qr.percentage DESC
+        ORDER BY qr.percentage DESC
         """
     )
     suspend fun getQuestRewardSources(itemId: Int, language: String): List<QuestRewardWithQuest>
