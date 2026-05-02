@@ -1,4 +1,4 @@
-package com.gaugustini.mhfudatabase.data.database.entity.monster
+package com.gaugustini.mhfudatabase.data.database.entity.common
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

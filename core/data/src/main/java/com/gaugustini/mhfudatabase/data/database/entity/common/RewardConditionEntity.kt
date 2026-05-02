@@ -1,12 +1,12 @@
-package com.gaugustini.mhfudatabase.data.database.entity.monster
+package com.gaugustini.mhfudatabase.data.database.entity.common
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 
 @Entity(
-    tableName = "hitzone",
+    tableName = "reward_condition",
     primaryKeys = ["id"],
 )
-data class HitzoneEntity(
+data class RewardConditionEntity(
     @ColumnInfo(name = "id") val id: Int,
 )

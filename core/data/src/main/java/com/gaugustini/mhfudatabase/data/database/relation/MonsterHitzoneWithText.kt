@@ -1,7 +1,7 @@
 package com.gaugustini.mhfudatabase.data.database.relation
 
 import androidx.room.Embedded
-import com.gaugustini.mhfudatabase.data.database.entity.monster.HitzoneTextEntity
+import com.gaugustini.mhfudatabase.data.database.entity.common.HitzoneTextEntity
 import com.gaugustini.mhfudatabase.data.database.entity.monster.MonsterHitzoneEntity
 
 /**
