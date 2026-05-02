@@ -1,10 +1,10 @@
 package com.gaugustini.mhfudatabase.ui.features.quest.detail
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +19,7 @@ import com.gaugustini.mhfudatabase.ui.components.icons.QuestIcon
 import com.gaugustini.mhfudatabase.ui.features.location.components.LocationListItem
 import com.gaugustini.mhfudatabase.ui.features.monster.components.MonsterListItem
 import com.gaugustini.mhfudatabase.ui.features.quest.components.QuestSummary
+import com.gaugustini.mhfudatabase.ui.features.quest.components.QuestSupplyListItem
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
@@ -28,6 +29,7 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewQuestData
 fun QuestDetailSummaryContent(
     quest: Quest,
     modifier: Modifier = Modifier,
+    onItemClick: (itemId: Int) -> Unit = {},
     onLocationClick: (locationId: Int) -> Unit = {},
     onMonsterClick: (monsterId: Int) -> Unit = {},
 ) {
@@ -63,59 +65,78 @@ fun QuestDetailSummaryContent(
         QuestGroup.GROUP_CHALLENGE -> R.string.detail_quest_group_group_challenge
     }
 
-    Column(
+    LazyColumn(
+        contentPadding = PaddingValues(bottom = Dimension.Padding.endContent),
         modifier = modifier
-            .verticalScroll(rememberScrollState())
-            .background(MaterialTheme.colorScheme.surface)
-            .padding(bottom = Dimension.Padding.endContent)
     ) {
-        DetailHeader(
-            icon = {
-                QuestIcon(goalType = quest.goalType)
-            },
-            title = quest.name,
-            subtitle = stringResource(questGroup),
-            description = quest.goal,
-        )
-
-        QuestSummary(
-            quest = quest,
-        )
-
-        SectionHeader(
-            title = stringResource(R.string.quest_description),
-        )
-        Text(
-            text = quest.description,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.padding(Dimension.Padding.large)
-        )
-        Text(
-            text = stringResource(R.string.quest_client, quest.client),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.padding(Dimension.Padding.large)
-        )
-
-        SectionHeader(
-            title = stringResource(R.string.quest_location),
-        )
-        quest.location?.let { location ->
-            LocationListItem(
-                location = location,
-                onLocationClick = onLocationClick,
+        item {
+            DetailHeader(
+                icon = {
+                    QuestIcon(goalType = quest.goalType)
+                },
+                title = quest.name,
+                subtitle = stringResource(questGroup),
+                description = quest.goal,
             )
+
+            QuestSummary(
+                quest = quest,
+            )
+
+            SectionHeader(
+                title = stringResource(R.string.quest_description),
+            )
+            Text(
+                text = quest.description,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.padding(Dimension.Padding.large)
+            )
+            Text(
+                text = stringResource(R.string.quest_client, quest.client),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.padding(Dimension.Padding.large)
+            )
+
+            SectionHeader(
+                title = stringResource(R.string.quest_location),
+            )
+            quest.location?.let { location ->
+                LocationListItem(
+                    location = location,
+                    onLocationClick = onLocationClick,
+                )
+            }
+
+            SectionHeader(
+                title = stringResource(R.string.quest_monsters),
+            )
+            quest.monsters?.forEach { monster ->
+                MonsterListItem(
+                    monster = monster,
+                    onMonsterClick = onMonsterClick,
+                )
+            }
         }
 
-        SectionHeader(
-            title = stringResource(R.string.quest_monsters),
-        )
-        quest.monsters?.forEach { monster ->
-            MonsterListItem(
-                monster = monster,
-                onMonsterClick = onMonsterClick,
-            )
+        quest.supplies?.let { supplies ->
+            if (supplies.isNotEmpty()) {
+                item {
+                    SectionHeader(
+                        title = stringResource(R.string.quest_supply_box),
+                    )
+                }
+                itemsIndexed(supplies) { index, supply ->
+                    QuestSupplyListItem(
+                        supply = supply,
+                        onItemClick = onItemClick,
+                    )
+                    if (index != supplies.lastIndex) {
+                        HorizontalDivider()
+                    }
+                }
+            }
         }
     }
 }

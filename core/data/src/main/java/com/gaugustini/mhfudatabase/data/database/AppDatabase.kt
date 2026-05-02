@@ -41,6 +41,7 @@ import com.gaugustini.mhfudatabase.data.database.entity.monster.MonsterTextEntit
 import com.gaugustini.mhfudatabase.data.database.entity.quest.QuestEntity
 import com.gaugustini.mhfudatabase.data.database.entity.quest.QuestMonsterEntity
 import com.gaugustini.mhfudatabase.data.database.entity.quest.QuestRewardEntity
+import com.gaugustini.mhfudatabase.data.database.entity.quest.QuestSupplyEntity
 import com.gaugustini.mhfudatabase.data.database.entity.quest.QuestTextEntity
 import com.gaugustini.mhfudatabase.data.database.entity.skill.SkillEntity
 import com.gaugustini.mhfudatabase.data.database.entity.skill.SkillTextEntity
@@ -66,6 +67,9 @@ import com.gaugustini.mhfudatabase.data.database.entity.weapon.WeaponTextEntity
         ArmorSkillEntity::class, ArmorRecipeEntity::class,
         // Armor Set
         ArmorSetEntity::class, ArmorSetTextEntity::class,
+        // Common
+        HitzoneEntity::class, HitzoneTextEntity::class,
+        RewardConditionEntity::class, RewardConditionTextEntity::class,
         // Decoration
         DecorationEntity::class, DecorationSkillEntity::class, DecorationRecipeEntity::class,
         // Item
@@ -73,12 +77,11 @@ import com.gaugustini.mhfudatabase.data.database.entity.weapon.WeaponTextEntity
         // Location
         LocationEntity::class, LocationTextEntity::class, LocationItemEntity::class,
         // Monster
-        MonsterEntity::class, MonsterTextEntity::class,
-        HitzoneEntity::class, HitzoneTextEntity::class, MonsterHitzoneEntity::class,
-        MonsterStatusEntity::class, MonsterItemEntity::class,
-        RewardConditionEntity::class, RewardConditionTextEntity::class, MonsterRewardEntity::class,
+        MonsterEntity::class, MonsterTextEntity::class, MonsterHitzoneEntity::class,
+        MonsterStatusEntity::class, MonsterItemEntity::class, MonsterRewardEntity::class,
         // Quest
-        QuestEntity::class, QuestTextEntity::class, QuestMonsterEntity::class, QuestRewardEntity::class,
+        QuestEntity::class, QuestTextEntity::class, QuestMonsterEntity::class,
+        QuestRewardEntity::class, QuestSupplyEntity::class,
         // Skill
         SkillTreeEntity::class, SkillTreeTextEntity::class,
         SkillEntity::class, SkillTextEntity::class,

@@ -279,6 +279,7 @@
     <string name="quest_monsters">Monstruos</string>
     <string name="quest_description">Descripción</string>
     <string name="quest_client">Cliente: %1$s</string>
+    <string name="quest_supply_box">Caja de Suministros</string>
     <string name="section_quest_group_village_1">1</string>
     <string name="section_quest_group_village_2">2</string>
     <string name="section_quest_group_village_3">3</string>

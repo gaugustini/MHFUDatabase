@@ -5,6 +5,7 @@ import androidx.room.Query
 import com.gaugustini.mhfudatabase.data.database.relation.LocationWithText
 import com.gaugustini.mhfudatabase.data.database.relation.MonsterWithText
 import com.gaugustini.mhfudatabase.data.database.relation.QuestRewardWithItem
+import com.gaugustini.mhfudatabase.data.database.relation.QuestSupplyWithItem
 import com.gaugustini.mhfudatabase.data.database.relation.QuestWithText
 
 /**
@@ -114,5 +115,26 @@ interface QuestDao {
         questId: Int,
         language: String
     ): List<QuestRewardWithItem>
+
+    @Query(
+        """
+        SELECT
+            qs.quest_id AS qs_quest_id, qs.item_id AS qs_item_id, qs.quantity AS qs_quantity, qs.box_order AS qs_box_order,
+            item.*,
+            item_text.*
+        FROM quest_supply qs
+        JOIN item
+            ON qs.item_id = item.id
+        JOIN item_text
+            ON item.id = item_text.item_id
+            AND item_text.language = :language
+        WHERE qs.quest_id = :questId
+        ORDER BY qs.box_order ASC
+        """
+    )
+    suspend fun getQuestSuppliesByQuestId(
+        questId: Int,
+        language: String
+    ): List<QuestSupplyWithItem>
 
 }
