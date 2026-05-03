@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 10,
-    "identityHash": "821bbbc2121802926803f30db027ab97",
+    "identityHash": "62358acdfe452100d5c5a2a66006865b",
     "entities": [
       {
         "tableName": "armor",
@@ -2305,6 +2305,172 @@
         ]
       },
       {
+        "tableName": "veggie",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `location_id` INTEGER NOT NULL, `location_area` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`location_id`) REFERENCES `location`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "locationId",
+            "columnName": "location_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "locationArea",
+            "columnName": "location_area",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_veggie_location_id",
+            "unique": false,
+            "columnNames": [
+              "location_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_veggie_location_id` ON `${TABLE_NAME}` (`location_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "location",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "location_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "veggie_trade",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`veggie_id` INTEGER NOT NULL, `item_traded_id` INTEGER NOT NULL, `item_common_id` INTEGER NOT NULL, `item_rare_id` INTEGER NOT NULL, PRIMARY KEY(`veggie_id`, `item_traded_id`), FOREIGN KEY(`veggie_id`) REFERENCES `veggie`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`item_traded_id`) REFERENCES `item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`item_common_id`) REFERENCES `item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`item_rare_id`) REFERENCES `item`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "veggieId",
+            "columnName": "veggie_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemTradedId",
+            "columnName": "item_traded_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemCommonId",
+            "columnName": "item_common_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemRareId",
+            "columnName": "item_rare_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "veggie_id",
+            "item_traded_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_veggie_trade_item_traded_id",
+            "unique": false,
+            "columnNames": [
+              "item_traded_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_veggie_trade_item_traded_id` ON `${TABLE_NAME}` (`item_traded_id`)"
+          },
+          {
+            "name": "index_veggie_trade_item_common_id",
+            "unique": false,
+            "columnNames": [
+              "item_common_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_veggie_trade_item_common_id` ON `${TABLE_NAME}` (`item_common_id`)"
+          },
+          {
+            "name": "index_veggie_trade_item_rare_id",
+            "unique": false,
+            "columnNames": [
+              "item_rare_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_veggie_trade_item_rare_id` ON `${TABLE_NAME}` (`item_rare_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "veggie",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "veggie_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "item",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "item_traded_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "item",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "item_common_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "item",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "item_rare_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
         "tableName": "weapon",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `weapon_type` TEXT NOT NULL, `rarity` INTEGER NOT NULL, `affinity` INTEGER NOT NULL, `defense` INTEGER NOT NULL, `num_slots` INTEGER NOT NULL, `attack` INTEGER NOT NULL, `max_attack` INTEGER, `price` INTEGER NOT NULL, `element_1` TEXT, `element_1_value` INTEGER, `element_2` TEXT, `element_2_value` INTEGER, `sharpness` TEXT, `sharpness_plus` TEXT, `shelling_type` TEXT, `shelling_level` INTEGER, `song_notes` TEXT, `reload_speed` TEXT, `recoil` TEXT, `buildable` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
@@ -2886,7 +3052,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '821bbbc2121802926803f30db027ab97')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '62358acdfe452100d5c5a2a66006865b')"
     ]
   }
 }

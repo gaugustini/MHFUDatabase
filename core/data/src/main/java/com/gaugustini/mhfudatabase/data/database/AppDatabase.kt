@@ -50,6 +50,8 @@ import com.gaugustini.mhfudatabase.data.database.entity.skill.SkillTreeTextEntit
 import com.gaugustini.mhfudatabase.data.database.entity.userset.UserEquipmentSetArmorEntity
 import com.gaugustini.mhfudatabase.data.database.entity.userset.UserEquipmentSetDecorationEntity
 import com.gaugustini.mhfudatabase.data.database.entity.userset.UserEquipmentSetEntity
+import com.gaugustini.mhfudatabase.data.database.entity.veggie.VeggieEntity
+import com.gaugustini.mhfudatabase.data.database.entity.veggie.VeggieTradeEntity
 import com.gaugustini.mhfudatabase.data.database.entity.weapon.WeaponAmmoBowEntity
 import com.gaugustini.mhfudatabase.data.database.entity.weapon.WeaponAmmoBowgunEntity
 import com.gaugustini.mhfudatabase.data.database.entity.weapon.WeaponEntity
@@ -88,6 +90,8 @@ import com.gaugustini.mhfudatabase.data.database.entity.weapon.WeaponTextEntity
         // User Equipment Set
         UserEquipmentSetEntity::class, UserEquipmentSetArmorEntity::class,
         UserEquipmentSetDecorationEntity::class,
+        // Veggie Elder
+        VeggieEntity::class, VeggieTradeEntity::class,
         // Weapon
         WeaponEntity::class, WeaponTextEntity::class, WeaponParentEntity::class,
         WeaponAmmoBowEntity::class, WeaponAmmoBowgunEntity::class,
