@@ -14,6 +14,7 @@ import com.gaugustini.mhfudatabase.data.database.dao.QuestDao
 import com.gaugustini.mhfudatabase.data.database.dao.SearchDao
 import com.gaugustini.mhfudatabase.data.database.dao.SkillDao
 import com.gaugustini.mhfudatabase.data.database.dao.UserEquipmentSetDao
+import com.gaugustini.mhfudatabase.data.database.dao.VeggieDao
 import com.gaugustini.mhfudatabase.data.database.dao.WeaponDao
 import dagger.Module
 import dagger.Provides
@@ -101,6 +102,12 @@ object DatabaseModule {
     @Singleton
     fun provideUserEquipmentSetDao(appDatabase: AppDatabase): UserEquipmentSetDao {
         return appDatabase.userEquipmentSetDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideVeggieDao(appDatabase: AppDatabase): VeggieDao {
+        return appDatabase.veggieDao()
     }
 
     @Provides
