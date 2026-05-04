@@ -1,0 +1,40 @@
+package com.gaugustini.mhfudatabase.ui.features.veggie.components
+
+import androidx.compose.foundation.clickable
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import com.gaugustini.mhfudatabase.domain.model.VeggieTrade
+import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
+import com.gaugustini.mhfudatabase.ui.theme.Theme
+import com.gaugustini.mhfudatabase.util.DevicePreviews
+import com.gaugustini.mhfudatabase.util.preview.PreviewVeggieData
+
+@Composable
+fun VeggieTradeListItem(
+    veggieTrade: VeggieTrade,
+    modifier: Modifier = Modifier,
+    onItemClick: (itemId: Int) -> Unit = {},
+) {
+    ListItemLayout(
+        headlineContent = {
+            Text(
+                text = veggieTrade.itemTraded.name,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+        },
+        modifier = modifier.clickable { onItemClick(veggieTrade.itemTraded.id) }
+    )
+}
+
+@DevicePreviews
+@Composable
+fun VeggieTradeListItemPreview() {
+    Theme {
+        VeggieTradeListItem(
+            veggieTrade = PreviewVeggieData.veggieTrade,
+        )
+    }
+}
