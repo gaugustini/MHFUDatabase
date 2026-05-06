@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.VeggieRepository
 import com.gaugustini.mhfudatabase.domain.enums.Language
-import com.gaugustini.mhfudatabase.domain.model.VeggieTrade
+import com.gaugustini.mhfudatabase.domain.model.VeggieLocation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class VeggieDetailState(
-    val trades: List<VeggieTrade> = emptyList(),
+    val veggieLocation: VeggieLocation? = null,
 )
 
 @HiltViewModel
@@ -29,7 +29,7 @@ class VeggieDetailViewModel @Inject constructor(
     private val veggieRepository: VeggieRepository,
 ) : ViewModel() {
 
-    private val tableId: Int = checkNotNull(savedStateHandle["tableId"])
+    private val veggieId: Int = checkNotNull(savedStateHandle["veggieId"])
 
     private val _uiState = MutableStateFlow(VeggieDetailState())
     val uiState: StateFlow<VeggieDetailState> = _uiState.asStateFlow()
@@ -51,7 +51,7 @@ class VeggieDetailViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { state ->
                 state.copy(
-                    trades = veggieRepository.getVeggieTradeList(tableId, language.code),
+                    veggieLocation = veggieRepository.getVeggieLocation(veggieId, language.code),
                 )
             }
         }

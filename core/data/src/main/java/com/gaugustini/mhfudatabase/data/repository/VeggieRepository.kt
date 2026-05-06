@@ -2,7 +2,6 @@ package com.gaugustini.mhfudatabase.data.repository
 
 import com.gaugustini.mhfudatabase.data.database.dao.ItemDao
 import com.gaugustini.mhfudatabase.data.database.dao.VeggieDao
-import com.gaugustini.mhfudatabase.data.database.entity.veggie.VeggieTradeEntity
 import com.gaugustini.mhfudatabase.data.mapper.ItemMapper
 import com.gaugustini.mhfudatabase.data.mapper.VeggieMapper
 import com.gaugustini.mhfudatabase.domain.model.VeggieLocation
@@ -20,6 +19,19 @@ class VeggieRepository @Inject constructor(
 ) {
 
     /**
+     * Returns the Veggie Elder location with the given ID.
+     */
+    suspend fun getVeggieLocation(
+        veggieId: Int,
+        language: String,
+    ): VeggieLocation {
+        return VeggieMapper.toModel(
+            veggie = veggieDao.getVeggieLocation(veggieId, language),
+            trades = getVeggieTradeList(veggieId, language),
+        )
+    }
+
+    /**
      * Returns the list of all Veggie Elder locations.
      */
     suspend fun getVeggieLocationList(
@@ -27,30 +39,21 @@ class VeggieRepository @Inject constructor(
     ): List<VeggieLocation> {
         return veggieDao.getVeggieLocationList(
             language = language
-        ).map { VeggieMapper.toVeggieLocation(it) }
+        ).map { VeggieMapper.toModel(it) }
     }
 
     /**
-     * Returns the list of all trades between the player and the Veggie Elder in the given table ID.
+     * Returns the list of all trades between the player and the Veggie Elder in the given ID.
      */
-    suspend fun getVeggieTradeList(
-        tableId: Int,
+    private suspend fun getVeggieTradeList(
+        veggieId: Int,
         language: String,
     ): List<VeggieTrade> {
-        val tradeEntities = veggieDao.getVeggieTradeList(tableId)
-        return mapTradeEntities(tradeEntities, language)
-    }
+        val tradeEntities = veggieDao.getVeggieTradeList(veggieId)
 
-    /**
-     * Maps a list of [VeggieTradeEntity] to a list of [VeggieTrade].
-     */
-    private suspend fun mapTradeEntities(
-        entities: List<VeggieTradeEntity>,
-        language: String,
-    ): List<VeggieTrade> {
-        if (entities.isEmpty()) return emptyList()
+        if (tradeEntities.isEmpty()) return emptyList()
 
-        val itemIds = entities.flatMap {
+        val itemIds = tradeEntities.flatMap {
             listOf(it.itemTradedId, it.itemCommonId, it.itemRareId)
         }
 
@@ -58,7 +61,7 @@ class VeggieRepository @Inject constructor(
             it.item.id to ItemMapper.toModel(it)
         }
 
-        return entities.mapNotNull { entity ->
+        return tradeEntities.mapNotNull { entity ->
             val traded = itemsById[entity.itemTradedId]
             val common = itemsById[entity.itemCommonId]
             val rare = itemsById[entity.itemRareId]

@@ -3,14 +3,16 @@ package com.gaugustini.mhfudatabase.domain.model
 /**
  * Represents a Veggie Elder location in the game.
  *
- * @property tableId The ID of the table of trades.
+ * @property id The ID of the table of trades.
  * @property location The location in the game.
  * @property locationArea The area of the location where the Veggie Elder can be found.
+ * @property trades The list of trades available in the location.
  */
 data class VeggieLocation(
-    val tableId: Int,
+    val id: Int,
     val location: Location,
     val locationArea: Int,
+    val trades: List<VeggieTrade>?,
 )
 
 /**

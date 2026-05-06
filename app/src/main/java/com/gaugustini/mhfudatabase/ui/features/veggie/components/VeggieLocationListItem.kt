@@ -25,7 +25,7 @@ fun VeggieLocationListItem(
                 color = MaterialTheme.colorScheme.onSurface,
             )
         },
-        modifier = modifier.clickable { onVeggieLocationClick(veggieLocation.tableId) }
+        modifier = modifier.clickable { onVeggieLocationClick(veggieLocation.id) }
     )
 }
 

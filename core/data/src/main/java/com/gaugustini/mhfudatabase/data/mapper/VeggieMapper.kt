@@ -12,11 +12,12 @@ import com.gaugustini.mhfudatabase.domain.model.VeggieTrade
  */
 object VeggieMapper {
 
-    fun toVeggieLocation(
+    fun toModel(
         veggie: VeggieWithLocationText,
+        trades: List<VeggieTrade>? = null,
     ): VeggieLocation {
         return VeggieLocation(
-            tableId = veggie.veggie.id,
+            id = veggie.veggie.id,
             location = LocationMapper.toModel(
                 LocationWithText(
                     LocationEntity(veggie.veggie.locationId),
@@ -24,6 +25,7 @@ object VeggieMapper {
                 )
             ),
             locationArea = veggie.veggie.locationArea,
+            trades = trades,
         )
     }
 

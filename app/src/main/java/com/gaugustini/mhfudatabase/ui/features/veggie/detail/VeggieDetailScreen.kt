@@ -49,24 +49,27 @@ fun VeggieDetailScreen(
     Scaffold(
         topBar = {
             TopBar(
-                title = stringResource(R.string.screen_veggie_detail),
+                title = uiState.veggieLocation?.location?.name
+                    ?: stringResource(R.string.screen_veggie_detail),
                 navigationType = NavigationType.BACK,
                 navigation = navigateBack,
                 openSearch = openSearch,
             )
         },
     ) { innerPadding ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-        ) {
-            items(uiState.trades) { trade ->
-                VeggieTradeListItem(
-                    veggieTrade = trade,
-                    onItemClick = onItemClick,
-                )
-                HorizontalDivider()
+        uiState.veggieLocation?.trades?.let { trades ->
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+            ) {
+                items(trades) { trade ->
+                    VeggieTradeListItem(
+                        veggieTrade = trade,
+                        onItemClick = onItemClick,
+                    )
+                    HorizontalDivider()
+                }
             }
         }
     }
@@ -86,7 +89,7 @@ private class VeggieDetailScreenPreviewParamProvider : PreviewParameterProvider<
 
     override val values: Sequence<VeggieDetailState> = sequenceOf(
         VeggieDetailState(
-            trades = PreviewVeggieData.veggieTradeList,
+            veggieLocation = PreviewVeggieData.veggieLocation,
         ),
     )
 

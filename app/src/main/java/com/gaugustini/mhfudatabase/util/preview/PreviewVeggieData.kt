@@ -8,15 +8,16 @@ object PreviewVeggieData {
     // Veggie Location
 
     val veggieLocation = VeggieLocation(
-        tableId = 1,
+        id = 1,
         location = PreviewLocationData.location,
         locationArea = 1,
+        trades = null,
     )
 
     val veggieLocationList = listOf(
-        veggieLocation.copy(tableId = 1, locationArea = 0),
-        veggieLocation.copy(tableId = 2, locationArea = 1),
-        veggieLocation.copy(tableId = 3, locationArea = 2),
+        veggieLocation.copy(id = 1, locationArea = 0),
+        veggieLocation.copy(id = 2, locationArea = 1),
+        veggieLocation.copy(id = 3, locationArea = 2),
     )
 
     // Veggie Trade
