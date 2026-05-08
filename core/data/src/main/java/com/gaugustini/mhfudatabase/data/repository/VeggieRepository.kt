@@ -71,7 +71,7 @@ class VeggieRepository @Inject constructor(
             } else {
                 null
             }
-        }
+        }.sortedBy { it.itemTraded.name }
     }
 
 }

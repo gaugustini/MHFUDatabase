@@ -19,7 +19,7 @@ interface VeggieDao {
         FROM veggie
         JOIN location_text
             ON veggie.location_id = location_text.location_id
-            AND location_text.language = :language   
+            AND location_text.language = :language
         WHERE veggie.id = :veggieId
         """
     )
@@ -33,7 +33,8 @@ interface VeggieDao {
         FROM veggie
         JOIN location_text
             ON veggie.location_id = location_text.location_id
-            AND location_text.language = :language            
+            AND location_text.language = :language
+        ORDER BY location_text.name
         """
     )
     suspend fun getVeggieLocationList(language: String): List<VeggieWithLocationText>
