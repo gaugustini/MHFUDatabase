@@ -31,6 +31,8 @@ import com.gaugustini.mhfudatabase.ui.features.skill.detail.SkillTreeDetailRoute
 import com.gaugustini.mhfudatabase.ui.features.skill.list.SkillTreeListRoute
 import com.gaugustini.mhfudatabase.ui.features.userset.detail.UserSetDetailRoute
 import com.gaugustini.mhfudatabase.ui.features.userset.list.UserSetListRoute
+import com.gaugustini.mhfudatabase.ui.features.veggie.detail.VeggieDetailRoute
+import com.gaugustini.mhfudatabase.ui.features.veggie.list.VeggieListRoute
 import com.gaugustini.mhfudatabase.ui.features.weapon.detail.WeaponDetailRoute
 import com.gaugustini.mhfudatabase.ui.features.weapon.list.WeaponTypeListRoute
 import com.gaugustini.mhfudatabase.ui.features.weapon.tree.WeaponTreeRoute
@@ -143,6 +145,13 @@ fun NavigationGraph(
                 openDrawer = openDrawer,
                 openSearch = navigationActions.navigateToSearch,
                 onSkillTreeClick = navigationActions.navigateToSkillTreeDetail,
+            )
+        }
+        composable(Destinations.VEGGIE_LIST) {
+            VeggieListRoute(
+                openDrawer = openDrawer,
+                openSearch = navigationActions.navigateToSearch,
+                onVeggieLocationClick = navigationActions.navigateToVeggieDetail,
             )
         }
         composable(Destinations.WEAPON_TYPE_LIST) {
@@ -269,6 +278,18 @@ fun NavigationGraph(
                 openSearch = navigationActions.navigateToSearch,
                 onArmorClick = navigationActions.navigateToArmorDetail,
                 onDecorationClick = navigationActions.navigateToDecorationDetail,
+            )
+        }
+        composable(
+            route = Destinations.VEGGIE_DETAIL,
+            arguments = listOf(
+                navArgument("veggieId") { type = NavType.IntType },
+            ),
+        ) {
+            VeggieDetailRoute(
+                navigateBack = navigationActions.navigateBack,
+                openSearch = navigationActions.navigateToSearch,
+                onItemClick = navigationActions.navigateToItemDetail,
             )
         }
         composable(

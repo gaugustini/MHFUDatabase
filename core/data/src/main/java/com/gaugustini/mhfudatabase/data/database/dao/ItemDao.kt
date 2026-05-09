@@ -9,6 +9,7 @@ import com.gaugustini.mhfudatabase.data.database.relation.ItemWithText
 import com.gaugustini.mhfudatabase.data.database.relation.LocationItemWithLocation
 import com.gaugustini.mhfudatabase.data.database.relation.MonsterRewardWithMonster
 import com.gaugustini.mhfudatabase.data.database.relation.QuestRewardWithQuest
+import com.gaugustini.mhfudatabase.data.database.relation.VeggieTradeWithLocation
 import com.gaugustini.mhfudatabase.data.database.relation.WeaponWithItemQuantity
 
 /**
@@ -156,6 +157,25 @@ interface ItemDao {
     @Query(
         """
         SELECT
+            veggie_trade.*,
+            location_text.*,
+            veggie.location_area AS area
+        FROM veggie_trade
+        JOIN veggie
+            ON veggie_trade.veggie_id = veggie.id
+        JOIN location_text
+            ON location_text.location_id = veggie.location_id
+            AND location_text.language = :language
+        WHERE
+            veggie_trade.item_common_id = :itemId
+            OR veggie_trade.item_rare_id = :itemId
+        """
+    )
+    suspend fun getVeggieSources(itemId: Int, language: String): List<VeggieTradeWithLocation>
+
+    @Query(
+        """
+        SELECT
             item_combination.*
         FROM item_combination
         WHERE
@@ -203,6 +223,24 @@ interface ItemDao {
         """
     )
     suspend fun getDecorationUsages(itemId: Int, language: String): List<DecorationWithItemQuantity>
+
+    @Query(
+        """
+        SELECT
+            veggie_trade.*,
+            location_text.*,
+            veggie.location_area AS area
+        FROM veggie_trade
+        JOIN veggie
+            ON veggie_trade.veggie_id = veggie.id
+        JOIN location_text
+            ON location_text.location_id = veggie.location_id
+            AND location_text.language = :language
+        WHERE
+            veggie_trade.item_traded_id = :itemId
+        """
+    )
+    suspend fun getVeggieUsages(itemId: Int, language: String): List<VeggieTradeWithLocation>
 
     @Query(
         """

@@ -29,6 +29,7 @@
     <string name="screen_monster_list">Monstruos</string>
     <string name="screen_quest_list">Misiones</string>
     <string name="screen_skill_tree_list">Habilidades</string>
+    <string name="screen_veggie_list">Anciano Vegetal</string>
     <string name="screen_weapon_list">Armas</string>
     <string name="screen_user_set_list">Constructor de Sets</string>
     <string name="screen_settings">Ajustes</string>
@@ -43,6 +44,7 @@
     <string name="screen_monster_detail">Detalle de Monstruo</string>
     <string name="screen_quest_detail">Detalle de Misión</string>
     <string name="screen_skill_tree_detail">Detalle de Habilidad</string>
+    <string name="screen_veggie_detail">Detalle de Anciano Vegetal</string>
     <string name="screen_weapon_detail">Detalle de Arma</string>
     <string name="screen_user_set_detail">Detalle de Set</string>
 
@@ -166,6 +168,7 @@
     <string name="item_buy_price">Precio de Compra</string>
     <string name="item_sell_price">Precio de Venta</string>
     <string name="item_crafting">Fabricación</string>
+    <string name="item_trade_veggie">Cambiar: Anciano Vegetal</string>
     <string name="item_armor">Armadura</string>
     <string name="item_decoration">Decoración</string>
     <string name="item_weapon">Arma</string>

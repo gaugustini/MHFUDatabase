@@ -12,6 +12,7 @@ import com.gaugustini.mhfudatabase.data.database.dao.QuestDao
 import com.gaugustini.mhfudatabase.data.database.dao.SearchDao
 import com.gaugustini.mhfudatabase.data.database.dao.SkillDao
 import com.gaugustini.mhfudatabase.data.database.dao.UserEquipmentSetDao
+import com.gaugustini.mhfudatabase.data.database.dao.VeggieDao
 import com.gaugustini.mhfudatabase.data.database.dao.WeaponDao
 import com.gaugustini.mhfudatabase.data.database.entity.armor.ArmorEntity
 import com.gaugustini.mhfudatabase.data.database.entity.armor.ArmorRecipeEntity
@@ -50,6 +51,8 @@ import com.gaugustini.mhfudatabase.data.database.entity.skill.SkillTreeTextEntit
 import com.gaugustini.mhfudatabase.data.database.entity.userset.UserEquipmentSetArmorEntity
 import com.gaugustini.mhfudatabase.data.database.entity.userset.UserEquipmentSetDecorationEntity
 import com.gaugustini.mhfudatabase.data.database.entity.userset.UserEquipmentSetEntity
+import com.gaugustini.mhfudatabase.data.database.entity.veggie.VeggieEntity
+import com.gaugustini.mhfudatabase.data.database.entity.veggie.VeggieTradeEntity
 import com.gaugustini.mhfudatabase.data.database.entity.weapon.WeaponAmmoBowEntity
 import com.gaugustini.mhfudatabase.data.database.entity.weapon.WeaponAmmoBowgunEntity
 import com.gaugustini.mhfudatabase.data.database.entity.weapon.WeaponEntity
@@ -88,6 +91,8 @@ import com.gaugustini.mhfudatabase.data.database.entity.weapon.WeaponTextEntity
         // User Equipment Set
         UserEquipmentSetEntity::class, UserEquipmentSetArmorEntity::class,
         UserEquipmentSetDecorationEntity::class,
+        // Veggie Elder
+        VeggieEntity::class, VeggieTradeEntity::class,
         // Weapon
         WeaponEntity::class, WeaponTextEntity::class, WeaponParentEntity::class,
         WeaponAmmoBowEntity::class, WeaponAmmoBowgunEntity::class,
@@ -117,6 +122,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun skillDao(): SkillDao
 
     abstract fun userEquipmentSetDao(): UserEquipmentSetDao
+
+    abstract fun veggieDao(): VeggieDao
 
     abstract fun weaponDao(): WeaponDao
 

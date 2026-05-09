@@ -57,6 +57,7 @@ fun MHFUDatabase(
                     navigateToMonsterList = navigationActions.navigateToMonsterList,
                     navigateToQuestList = navigationActions.navigateToQuestList,
                     navigateToSkillTreeList = navigationActions.navigateToSkillTreeList,
+                    navigateToVeggieList = navigationActions.navigateToVeggieList,
                     navigateToWeaponList = navigationActions.navigateToWeaponTypeList,
                     navigateToUserEquipmentSetList = navigationActions.navigateToUserEquipmentSetList,
                     navigateToSettings = navigationActions.navigateToSettings,

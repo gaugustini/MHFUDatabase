@@ -29,6 +29,7 @@
     <string name="screen_monster_list">Monsters</string>
     <string name="screen_quest_list">Quests</string>
     <string name="screen_skill_tree_list">Skills</string>
+    <string name="screen_veggie_list">Veggie Elder</string>
     <string name="screen_weapon_list">Weapons</string>
     <string name="screen_user_set_list">Armor Set Builder</string>
     <string name="screen_settings">Settings</string>
@@ -43,6 +44,7 @@
     <string name="screen_monster_detail">Monster Detail</string>
     <string name="screen_quest_detail">Quest Detail</string>
     <string name="screen_skill_tree_detail">Skill Detail</string>
+    <string name="screen_veggie_detail">Veggie Elder Detail</string>
     <string name="screen_weapon_detail">Weapon Detail</string>
     <string name="screen_user_set_detail">Armor Set Detail</string>
 
@@ -166,6 +168,7 @@
     <string name="item_buy_price">Buy Price</string>
     <string name="item_sell_price">Sell Price</string>
     <string name="item_crafting">Crafting</string>
+    <string name="item_trade_veggie">Trade: Veggie Elder</string>
     <string name="item_armor">Armor</string>
     <string name="item_decoration">Decoration</string>
     <string name="item_weapon">Weapon</string>

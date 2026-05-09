@@ -27,6 +27,8 @@ import com.gaugustini.mhfudatabase.domain.model.ItemUsages
 import com.gaugustini.mhfudatabase.domain.model.MonsterSource
 import com.gaugustini.mhfudatabase.domain.model.QuestSource
 import com.gaugustini.mhfudatabase.domain.model.Usage
+import com.gaugustini.mhfudatabase.domain.model.VeggieSource
+import com.gaugustini.mhfudatabase.domain.model.VeggieUsage
 
 /**
  * Mapper for Item entities.
@@ -79,6 +81,7 @@ object ItemMapper {
         locations: List<LocationItemWithLocation>,
         monsterRewards: List<MonsterRewardWithMonster>,
         questRewards: List<QuestRewardWithQuest>,
+        veggieTrades: List<VeggieSource>,
     ): ItemSources {
         val gatheringSources = locations.map {
             GatheringSource(
@@ -111,11 +114,13 @@ object ItemMapper {
             locations = gatheringSources,
             monsterRewards = monsterSources,
             questRewards = questSources,
+            veggieTrades = veggieTrades,
         )
     }
 
     fun toItemUsages(
         combinations: List<ItemCombination>,
+        veggieTrades: List<VeggieUsage>,
         armors: List<ArmorWithItemQuantity>,
         decorations: List<DecorationWithItemQuantity>,
         weapons: List<WeaponWithItemQuantity>,
@@ -143,6 +148,7 @@ object ItemMapper {
 
         return ItemUsages(
             combinations = combinations,
+            veggieTrades = veggieTrades,
             armors = armorUsages,
             decorations = decorationUsages,
             weapons = weaponUsages,
