@@ -17,6 +17,7 @@ import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.features.item.components.GatheringSourceListItem
 import com.gaugustini.mhfudatabase.ui.features.item.components.MonsterSourceListItem
 import com.gaugustini.mhfudatabase.ui.features.item.components.QuestSourceListItem
+import com.gaugustini.mhfudatabase.ui.features.item.components.VeggieSourceListItem
 import com.gaugustini.mhfudatabase.ui.features.itemcombination.components.ItemCombinationListItem
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
@@ -140,6 +141,23 @@ fun ItemSourcesContent(
                 }
                 item {
                     Spacer(modifier = Modifier.height(Dimension.Spacing.large))
+                }
+            }
+        }
+
+        if (sources.veggieTrades.isNotEmpty()) {
+            item {
+                SectionHeader(
+                    title = stringResource(R.string.item_trade_veggie),
+                )
+            }
+            itemsIndexed(sources.veggieTrades) { index, trade ->
+                VeggieSourceListItem(
+                    source = trade,
+                    onItemClick = onItemClick,
+                )
+                if (index != sources.veggieTrades.lastIndex) {
+                    HorizontalDivider()
                 }
             }
         }

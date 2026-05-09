@@ -168,6 +168,7 @@
     <string name="item_buy_price">Precio de Compra</string>
     <string name="item_sell_price">Precio de Venta</string>
     <string name="item_crafting">Fabricación</string>
+    <string name="item_trade_veggie">Cambiar: Anciano Vegetal</string>
     <string name="item_armor">Armadura</string>
     <string name="item_decoration">Decoración</string>
     <string name="item_weapon">Arma</string>

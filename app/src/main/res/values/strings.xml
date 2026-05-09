@@ -168,6 +168,7 @@
     <string name="item_buy_price">Buy Price</string>
     <string name="item_sell_price">Sell Price</string>
     <string name="item_crafting">Crafting</string>
+    <string name="item_trade_veggie">Trade: Veggie Elder</string>
     <string name="item_armor">Armor</string>
     <string name="item_decoration">Decoration</string>
     <string name="item_weapon">Weapon</string>
