@@ -13,11 +13,13 @@
     <!-- What's New -->
     <string name="whats_new_title">¿Qué hay de nuevo?</string>
     <string name="whats_new_text">
-        Versión 1.0.3\n\n
-        • Corregido valores de armaduras\n
-        • Corregido valores de decoraciones\n
-        • Corregido valores de combinaciones\n
-        • Corregido valores de armas\n
+        Versión 1.1.0-rc01\n\n
+        • NUEVO: Recompensas de misiones\n
+        • NUEVO: Suministros de misiones\n
+        • NUEVO: Intercambios del Veggie Elder\n
+        • Añadido misiones faltantes\n
+        • Correcciones en las misiones\n
+        • Pequeñas mejoras y correcciones de errores\n
      </string>
 
     <!-- Screen Title: Main Routes -->
