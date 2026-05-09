@@ -419,6 +419,7 @@
     <string name="weapon_bow_coating_sleep">Sleep</string>
     <string name="weapon_path">Path</string>
     <string name="weapon_path_details">Path: %1$d</string>
+    <string name="weapon_upgrades">Upgrades</string>
     <string name="weapon_finals">Finals</string>
 
     <!-- User Equipment Set -->

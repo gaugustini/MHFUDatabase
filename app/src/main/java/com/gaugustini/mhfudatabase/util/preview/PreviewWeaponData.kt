@@ -45,6 +45,7 @@ object PreviewWeaponData {
         recipesCreate = null,
         recipeUpgrade = null,
         paths = null,
+        upgrades = null,
         finals = null,
     )
 
@@ -77,6 +78,7 @@ object PreviewWeaponData {
         recipesCreate = null,
         recipeUpgrade = null,
         paths = null,
+        upgrades = null,
         finals = null,
     )
 
@@ -109,6 +111,7 @@ object PreviewWeaponData {
         recipesCreate = null,
         recipeUpgrade = null,
         paths = null,
+        upgrades = null,
         finals = null,
     )
 
@@ -141,6 +144,7 @@ object PreviewWeaponData {
         recipesCreate = null,
         recipeUpgrade = null,
         paths = null,
+        upgrades = null,
         finals = null,
     )
 
@@ -173,6 +177,7 @@ object PreviewWeaponData {
         recipesCreate = null,
         recipeUpgrade = null,
         paths = null,
+        upgrades = null,
         finals = null,
     )
 
@@ -205,6 +210,7 @@ object PreviewWeaponData {
         recipesCreate = null,
         recipeUpgrade = null,
         paths = null,
+        upgrades = null,
         finals = null,
     )
 

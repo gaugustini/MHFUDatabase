@@ -24,6 +24,7 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewWeaponData
 @Composable
 fun WeaponDetailPathsContent(
     paths: List<List<Weapon>>,
+    upgrades: List<Weapon>,
     finals: List<Weapon>,
     modifier: Modifier = Modifier,
     onWeaponClick: (weaponId: Int) -> Unit = {},
@@ -62,6 +63,24 @@ fun WeaponDetailPathsContent(
             }
         }
 
+        if (upgrades.isNotEmpty()) {
+            item {
+                SectionHeader(
+                    title = stringResource(R.string.weapon_upgrades)
+                )
+            }
+
+            itemsIndexed(upgrades) { index, weapon ->
+                WeaponListItem(
+                    weapon = weapon,
+                    onWeaponClick = { onWeaponClick(weapon.id) },
+                )
+                if (index != upgrades.lastIndex) {
+                    HorizontalDivider()
+                }
+            }
+        }
+
         item {
             SectionHeader(
                 title = stringResource(R.string.weapon_finals)
@@ -86,6 +105,7 @@ fun WeaponDetailPathsContentPreview() {
     Theme {
         WeaponDetailPathsContent(
             paths = listOf(PreviewWeaponData.weaponList),
+            upgrades = PreviewWeaponData.weaponList,
             finals = PreviewWeaponData.weaponList,
         )
     }
