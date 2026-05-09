@@ -26,6 +26,7 @@ object WeaponMapper {
         recipeCreate: List<EquipmentItemQuantity>? = null,
         recipeUpgrade: List<EquipmentItemQuantity>? = null,
         paths: List<List<Weapon>>? = null,
+        upgrades: List<Weapon>? = null,
         finals: List<Weapon>? = null,
     ): Weapon {
         return Weapon(
@@ -59,6 +60,7 @@ object WeaponMapper {
             },
             recipeUpgrade = recipeUpgrade?.map { ItemMapper.toItemQuantity(it) },
             paths = paths,
+            upgrades = upgrades,
             finals = finals,
         )
     }

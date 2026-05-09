@@ -40,6 +40,7 @@ class WeaponRepository @Inject constructor(
             recipeCreate = weaponDao.getWeaponRecipeByWeaponId(weaponId, "CREATE", language),
             recipeUpgrade = weaponDao.getWeaponRecipeByWeaponId(weaponId, "UPGRADE", language),
             paths = weaponGraph.findPathsToRoot(weaponId),
+            upgrades = weaponGraph.findDirectUpgrades(weaponId),
             finals = weaponGraph.findLeaves(weaponId),
         )
     }
@@ -170,6 +171,12 @@ class WeaponGraph(
 
         dfs(startNode)
         return leaves
+    }
+
+    fun findDirectUpgrades(weaponId: Int): List<Weapon> {
+        return nodes[weaponId]?.children
+            ?.map { it.weapon }
+            ?: emptyList()
     }
 
 }

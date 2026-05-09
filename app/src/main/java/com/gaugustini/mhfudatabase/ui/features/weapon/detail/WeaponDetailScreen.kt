@@ -78,6 +78,7 @@ fun WeaponDetailScreen(
                 WeaponDetailTab.PATHS -> {
                     WeaponDetailPathsContent(
                         paths = uiState.weapon.paths ?: emptyList(),
+                        upgrades = uiState.weapon.upgrades ?: emptyList(),
                         finals = uiState.weapon.finals ?: emptyList(),
                         onWeaponClick = onWeaponClick,
                     )

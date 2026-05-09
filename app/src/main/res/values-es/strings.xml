@@ -419,6 +419,7 @@
     <string name="weapon_bow_coating_sleep">Sueño</string>
     <string name="weapon_path">Ruta</string>
     <string name="weapon_path_details">Ruta: %1$d</string>
+    <string name="weapon_upgrades">Mejoras</string>
     <string name="weapon_finals">Finales</string>
 
     <!-- User Equipment Set -->
