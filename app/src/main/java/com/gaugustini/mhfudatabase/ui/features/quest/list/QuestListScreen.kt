@@ -18,8 +18,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateSetOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -60,6 +58,7 @@ fun QuestListRoute(
         uiState = uiState,
         openDrawer = openDrawer,
         openSearch = openSearch,
+        onToggleExpand = viewModel::toggleExpansion,
         onQuestClick = onQuestClick,
     )
 }
@@ -69,6 +68,7 @@ fun QuestListScreen(
     uiState: QuestListState = QuestListState(),
     openDrawer: () -> Unit = {},
     openSearch: () -> Unit = {},
+    onToggleExpand: (questGroup: QuestGroup) -> Unit = {},
     onQuestClick: (questId: Int) -> Unit = {},
 ) {
     val pagerState = rememberPagerState(
@@ -91,6 +91,8 @@ fun QuestListScreen(
             QuestListTab.VILLAGE -> {
                 QuestList(
                     quests = uiState.quests.filter { it.hubType == HubType.VILLAGE },
+                    expandedQuestGroup = uiState.expandedQuestGroup,
+                    onToggleExpand = onToggleExpand,
                     onQuestClick = onQuestClick,
                 )
             }
@@ -98,6 +100,8 @@ fun QuestListScreen(
             QuestListTab.GUILD -> {
                 QuestList(
                     quests = uiState.quests.filter { it.hubType == HubType.GUILD },
+                    expandedQuestGroup = uiState.expandedQuestGroup,
+                    onToggleExpand = onToggleExpand,
                     onQuestClick = onQuestClick,
                 )
             }
@@ -105,6 +109,8 @@ fun QuestListScreen(
             QuestListTab.TRAINING -> {
                 QuestList(
                     quests = uiState.quests.filter { it.hubType == HubType.TRAINING },
+                    expandedQuestGroup = uiState.expandedQuestGroup,
+                    onToggleExpand = onToggleExpand,
                     onQuestClick = onQuestClick,
                 )
             }
@@ -115,11 +121,12 @@ fun QuestListScreen(
 @Composable
 fun QuestList(
     quests: List<Quest>,
+    expandedQuestGroup: Set<QuestGroup>,
     modifier: Modifier = Modifier,
+    onToggleExpand: (questGroup: QuestGroup) -> Unit = {},
     onQuestClick: (questId: Int) -> Unit = {},
 ) {
     val questGrouped = quests.groupBy { it.group }
-    val expandedGroupSections = remember { mutableStateSetOf<QuestGroup>() }
 
     val excludedStars = listOf(
         QuestGroup.TREASURE,
@@ -137,7 +144,7 @@ fun QuestList(
         modifier = modifier
     ) {
         questGrouped.forEach { (group, quests) ->
-            val isExpanded = group in expandedGroupSections
+            val isExpanded = group in expandedQuestGroup
             val numberOfStars = if (group !in excludedStars) {
                 quests.first().stars
             } else {
@@ -149,13 +156,7 @@ fun QuestList(
                     group = group,
                     numberOfStars = numberOfStars,
                     expanded = isExpanded,
-                    onToggleExpand = {
-                        if (isExpanded) {
-                            expandedGroupSections.remove(group)
-                        } else {
-                            expandedGroupSections.add(group)
-                        }
-                    }
+                    onToggleExpand = { onToggleExpand(group) }
                 )
             }
 
@@ -308,7 +309,7 @@ private class QuestListScreenPreviewParamProvider : PreviewParameterProvider<Que
         QuestListState(
             initialTab = QuestListTab.VILLAGE,
             quests = PreviewQuestData.questList,
-            expandedStarSectionsVillage = setOf(5),
+            expandedQuestGroup = setOf(QuestGroup.VILLAGE_1),
         ),
     )
 

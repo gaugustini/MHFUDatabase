@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.QuestRepository
 import com.gaugustini.mhfudatabase.domain.enums.Language
+import com.gaugustini.mhfudatabase.domain.enums.QuestGroup
 import com.gaugustini.mhfudatabase.domain.model.Quest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,9 +21,7 @@ import javax.inject.Inject
 data class QuestListState(
     val initialTab: QuestListTab = QuestListTab.VILLAGE,
     val quests: List<Quest> = emptyList(),
-    val expandedStarSectionsVillage: Set<Int> = emptySet(),
-    val expandedStarSectionsGuild: Set<Int> = emptySet(),
-    val expandedStarSectionsTraining: Set<Int> = emptySet(),
+    val expandedQuestGroup: Set<QuestGroup> = emptySet(),
 )
 
 @HiltViewModel
@@ -54,6 +53,17 @@ class QuestListViewModel @Inject constructor(
                     quests = questRepository.getQuestList(language.code),
                 )
             }
+        }
+    }
+
+    fun toggleExpansion(questGroup: QuestGroup) {
+        _uiState.update { state ->
+            val updatedExpansion =
+                if (questGroup in state.expandedQuestGroup)
+                    state.expandedQuestGroup - questGroup
+                else
+                    state.expandedQuestGroup + questGroup
+            state.copy(expandedQuestGroup = updatedExpansion)
         }
     }
 
