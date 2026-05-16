@@ -13,11 +13,13 @@
     <!-- What's New -->
     <string name="whats_new_title">¿Qué hay de nuevo?</string>
     <string name="whats_new_text">
-        Versión 1.0.3\n\n
-        • Corregido valores de armaduras\n
-        • Corregido valores de decoraciones\n
-        • Corregido valores de combinaciones\n
-        • Corregido valores de armas\n
+        Versión 1.1.0\n\n
+        • NUEVO: Recompensas de misiones\n
+        • NUEVO: Suministros de misiones\n
+        • NUEVO: Intercambios del Veggie Elder\n
+        • Añadido misiones faltantes\n
+        • Correcciones en las misiones\n
+        • Pequeñas mejoras y correcciones de errores\n
      </string>
 
     <!-- Screen Title: Main Routes -->
@@ -29,6 +31,7 @@
     <string name="screen_monster_list">Monstruos</string>
     <string name="screen_quest_list">Misiones</string>
     <string name="screen_skill_tree_list">Habilidades</string>
+    <string name="screen_veggie_list">Anciano Vegetal</string>
     <string name="screen_weapon_list">Armas</string>
     <string name="screen_user_set_list">Constructor de Sets</string>
     <string name="screen_settings">Ajustes</string>
@@ -43,6 +46,7 @@
     <string name="screen_monster_detail">Detalle de Monstruo</string>
     <string name="screen_quest_detail">Detalle de Misión</string>
     <string name="screen_skill_tree_detail">Detalle de Habilidad</string>
+    <string name="screen_veggie_detail">Detalle de Anciano Vegetal</string>
     <string name="screen_weapon_detail">Detalle de Arma</string>
     <string name="screen_user_set_detail">Detalle de Set</string>
 
@@ -95,6 +99,11 @@
     <!-- Tab Title: Quest List -->
     <string name="tab_quest_village">ALDEA</string>
     <string name="tab_quest_guild">GREMIO</string>
+    <string name="tab_quest_training">ENTRENAMIENTO</string>
+
+    <!-- Tab Title: Quest Detail -->
+    <string name="tab_quest_detail_summary">RESUMEN</string>
+    <string name="tab_quest_detail_reward">RECOMPENSA</string>
 
     <!-- Tab Title: Skill Tree Detail -->
     <string name="tab_skill_detail_summary">RESUMEN</string>
@@ -131,6 +140,10 @@
     <string name="search_monster">Monstruo</string>
     <string name="search_quest_village">Misión (Aldea)</string>
     <string name="search_quest_guild">Misión (Gremio)</string>
+    <string name="search_quest_event">Misión (Evento)</string>
+    <string name="search_quest_treasure">Misión (Tesoro)</string>
+    <string name="search_quest_training">Misión (Entren.)</string>
+    <string name="search_quest_challenge">Misión (Desafio)</string>
     <string name="search_skill_tree">Árbol de Habilidades</string>
     <string name="search_skill">Habilidad</string>
     <string name="search_weapon">Arma</string>
@@ -157,6 +170,7 @@
     <string name="item_buy_price">Precio de Compra</string>
     <string name="item_sell_price">Precio de Venta</string>
     <string name="item_crafting">Fabricación</string>
+    <string name="item_trade_veggie">Cambiar: Anciano Vegetal</string>
     <string name="item_armor">Armadura</string>
     <string name="item_decoration">Decoración</string>
     <string name="item_weapon">Arma</string>
@@ -167,6 +181,39 @@
     <string name="item_rank_g">RG</string>
     <string name="item_rank_treasure">Tesoro</string>
     <string name="item_rank_training">Entrenamiento</string>
+    <string name="item_quest">Misión</string>
+    <string name="item_quest_hub_village">Aldea</string>
+    <string name="item_quest_hub_guild">Sala de Reunión</string>
+    <string name="item_quest_hub_training">Escuela Entrenamiento</string>
+    <string name="item_quest_group_village_1">1★</string>
+    <string name="item_quest_group_village_2">2★</string>
+    <string name="item_quest_group_village_3">3★</string>
+    <string name="item_quest_group_village_4">4★</string>
+    <string name="item_quest_group_village_5">5★</string>
+    <string name="item_quest_group_village_6">6★</string>
+    <string name="item_quest_group_village_7">7★</string>
+    <string name="item_quest_group_village_8">8★</string>
+    <string name="item_quest_group_village_9">9★</string>
+    <string name="item_quest_group_hr_1_1">1★</string>
+    <string name="item_quest_group_hr_1_2">2★</string>
+    <string name="item_quest_group_hr_1_3">3★</string>
+    <string name="item_quest_group_hr_2">4★</string>
+    <string name="item_quest_group_hr_3">5★</string>
+    <string name="item_quest_group_hr_4">6★</string>
+    <string name="item_quest_group_hr_5">7★</string>
+    <string name="item_quest_group_hr_6">8★</string>
+    <string name="item_quest_group_hr_7">G1★</string>
+    <string name="item_quest_group_hr_8">G2★</string>
+    <string name="item_quest_group_hr_9">G3★</string>
+    <string name="item_quest_group_treasure">Tesoro</string>
+    <string name="item_quest_group_event">Evento</string>
+    <string name="item_quest_group_beginner_basic">Princ.</string>
+    <string name="item_quest_group_beginner_weapon">Princ.</string>
+    <string name="item_quest_group_training_battle">Solo</string>
+    <string name="item_quest_group_training_special">Solo</string>
+    <string name="item_quest_group_training_g">Solo</string>
+    <string name="item_quest_group_group_practice">Grupo</string>
+    <string name="item_quest_group_group_challenge">Desafio</string>
 
     <!-- Item Combination-->
     <string name="combination_treasure">Tesoro</string>
@@ -194,12 +241,42 @@
     <string name="monster_ailment_max">Máx.</string>
     <string name="monster_ailment_duration">Duración</string>
     <string name="monster_ailment_damage">Daño</string>
+    <string name="monster_quest_group_village_1">Aldea 1 ★</string>
+    <string name="monster_quest_group_village_2">Aldea 2 ★</string>
+    <string name="monster_quest_group_village_3">Aldea 3 ★</string>
+    <string name="monster_quest_group_village_4">Aldea 4 ★</string>
+    <string name="monster_quest_group_village_5">Aldea 5 ★</string>
+    <string name="monster_quest_group_village_6">Aldea 6 ★</string>
+    <string name="monster_quest_group_village_7">Aldea 7 ★</string>
+    <string name="monster_quest_group_village_8">Aldea 8 ★</string>
+    <string name="monster_quest_group_village_9">Aldea 9 ★</string>
+    <string name="monster_quest_group_hr_1_1">Gremio 1 ★</string>
+    <string name="monster_quest_group_hr_1_2">Gremio 2 ★</string>
+    <string name="monster_quest_group_hr_1_3">Gremio 3 ★</string>
+    <string name="monster_quest_group_hr_2">Gremio 4 ★</string>
+    <string name="monster_quest_group_hr_3">Gremio 5 ★</string>
+    <string name="monster_quest_group_hr_4">Gremio 6 ★</string>
+    <string name="monster_quest_group_hr_5">Gremio 7 ★</string>
+    <string name="monster_quest_group_hr_6">Gremio 8 ★</string>
+    <string name="monster_quest_group_hr_7">Gremio G1 ★</string>
+    <string name="monster_quest_group_hr_8">Gremio G2 ★</string>
+    <string name="monster_quest_group_hr_9">Gremio G3 ★</string>
+    <string name="monster_quest_group_treasure">Tesoro</string>
+    <string name="monster_quest_group_event">Evento</string>
+    <string name="monster_quest_group_beginner_basic">Entren.</string>
+    <string name="monster_quest_group_beginner_weapon">Entren.</string>
+    <string name="monster_quest_group_training_battle">Entren.</string>
+    <string name="monster_quest_group_training_special">Entren.</string>
+    <string name="monster_quest_group_training_g">Entren.</string>
+    <string name="monster_quest_group_group_practice">Entren.</string>
+    <string name="monster_quest_group_group_challenge">Desafio</string>
 
     <!-- Quest -->
     <string name="quest_type_key">Clave</string>
     <string name="quest_type_urgent">Urgente</string>
     <string name="quest_village_stars">Aldea %1$d ★</string>
     <string name="quest_guild_stars">Gremio %1$d ★</string>
+    <string name="quest_training_stars">Entren. %1$d ★</string>
     <string name="quest_reward">Recompensa</string>
     <string name="quest_fee">Cuota</string>
     <string name="quest_time_limit">Límite de Tiempo</string>
@@ -207,6 +284,65 @@
     <string name="quest_monsters">Monstruos</string>
     <string name="quest_description">Descripción</string>
     <string name="quest_client">Cliente: %1$s</string>
+    <string name="quest_supply_box">Caja de Suministros</string>
+    <string name="section_quest_group_village_1">1</string>
+    <string name="section_quest_group_village_2">2</string>
+    <string name="section_quest_group_village_3">3</string>
+    <string name="section_quest_group_village_4">4</string>
+    <string name="section_quest_group_village_5">5</string>
+    <string name="section_quest_group_village_6">6</string>
+    <string name="section_quest_group_village_7">7</string>
+    <string name="section_quest_group_village_8">8</string>
+    <string name="section_quest_group_village_9">9</string>
+    <string name="section_quest_group_hr_1_1">RC 1</string>
+    <string name="section_quest_group_hr_1_2">RC 1</string>
+    <string name="section_quest_group_hr_1_3">RC 1</string>
+    <string name="section_quest_group_hr_2">RC 2</string>
+    <string name="section_quest_group_hr_3">RC 3</string>
+    <string name="section_quest_group_hr_4">RC 4</string>
+    <string name="section_quest_group_hr_5">RC 5</string>
+    <string name="section_quest_group_hr_6">RC 6</string>
+    <string name="section_quest_group_hr_7">RC 7</string>
+    <string name="section_quest_group_hr_8">RC 8</string>
+    <string name="section_quest_group_hr_9">RC 9</string>
+    <string name="section_quest_group_treasure">Tesoro</string>
+    <string name="section_quest_group_event">Evento</string>
+    <string name="section_quest_group_beginner_basic">Principiante: Fundamentos</string>
+    <string name="section_quest_group_beginner_weapon">Principiante: Uso de las Armas</string>
+    <string name="section_quest_group_training_battle">Entrenamiento Solo: Batalla</string>
+    <string name="section_quest_group_training_special">Entrenamiento Solo: Especial</string>
+    <string name="section_quest_group_training_g">Entrenamiento Solo: Nivel G</string>
+    <string name="section_quest_group_group_practice">Entrenamiento Grupo: Entreno</string>
+    <string name="section_quest_group_group_challenge">Entrenamiento Grupo: Desafío</string>
+    <string name="detail_quest_group_village_1">Aldea 1 ★</string>
+    <string name="detail_quest_group_village_2">Aldea 2 ★</string>
+    <string name="detail_quest_group_village_3">Aldea 3 ★</string>
+    <string name="detail_quest_group_village_4">Aldea 4 ★</string>
+    <string name="detail_quest_group_village_5">Aldea 5 ★</string>
+    <string name="detail_quest_group_village_6">Aldea 6 ★</string>
+    <string name="detail_quest_group_village_7">Aldea 7 ★</string>
+    <string name="detail_quest_group_village_8">Aldea 8 ★</string>
+    <string name="detail_quest_group_village_9">Aldea 9 ★</string>
+    <string name="detail_quest_group_hr_1_1">Gremio 1 ★ (RC 1)</string>
+    <string name="detail_quest_group_hr_1_2">Gremio 2 ★ (RC 1)</string>
+    <string name="detail_quest_group_hr_1_3">Gremio 3 ★ (RC 1)</string>
+    <string name="detail_quest_group_hr_2">Gremio 4 ★ (RC 2)</string>
+    <string name="detail_quest_group_hr_3">Gremio 5 ★ (RC 3)</string>
+    <string name="detail_quest_group_hr_4">Gremio 6 ★ (RC 4)</string>
+    <string name="detail_quest_group_hr_5">Gremio 7 ★ (RC 5)</string>
+    <string name="detail_quest_group_hr_6">Gremio 8 ★ (RC 6)</string>
+    <string name="detail_quest_group_hr_7">Gremio G ★ (RC 7)</string>
+    <string name="detail_quest_group_hr_8">Gremio G ★★ (RC 8)</string>
+    <string name="detail_quest_group_hr_9">Gremio G ★★★ (RC 9)</string>
+    <string name="detail_quest_group_treasure">Caza de Tesoros</string>
+    <string name="detail_quest_group_event">Evento</string>
+    <string name="detail_quest_group_beginner_basic">Entrenamiento Principiante</string>
+    <string name="detail_quest_group_beginner_weapon">Entrenamiento Principiante</string>
+    <string name="detail_quest_group_training_battle">Entrenamiento Solo: Batalla</string>
+    <string name="detail_quest_group_training_special">Entrenamiento Solo: Especial</string>
+    <string name="detail_quest_group_training_g">Entrenamiento Solo: Nivel G</string>
+    <string name="detail_quest_group_group_practice">Entrenamiento Grupo</string>
+    <string name="detail_quest_group_group_challenge">Desafio</string>
 
     <!-- Skill Tree -->
     <string name="skill_empty_list">Ninguno</string>
@@ -285,6 +421,7 @@
     <string name="weapon_bow_coating_sleep">Sueño</string>
     <string name="weapon_path">Ruta</string>
     <string name="weapon_path_details">Ruta: %1$d</string>
+    <string name="weapon_upgrades">Mejoras</string>
     <string name="weapon_finals">Finales</string>
 
     <!-- User Equipment Set -->

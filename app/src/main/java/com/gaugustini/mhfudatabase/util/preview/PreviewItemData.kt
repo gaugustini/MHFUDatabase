@@ -12,7 +12,10 @@ import com.gaugustini.mhfudatabase.domain.model.ItemQuantity
 import com.gaugustini.mhfudatabase.domain.model.ItemSources
 import com.gaugustini.mhfudatabase.domain.model.ItemUsages
 import com.gaugustini.mhfudatabase.domain.model.MonsterSource
+import com.gaugustini.mhfudatabase.domain.model.QuestSource
 import com.gaugustini.mhfudatabase.domain.model.Usage
+import com.gaugustini.mhfudatabase.domain.model.VeggieSource
+import com.gaugustini.mhfudatabase.domain.model.VeggieUsage
 
 object PreviewItemData {
 
@@ -101,13 +104,53 @@ object PreviewItemData {
         monsterSource.copy(rank = Rank.TRAINING),
     )
 
+    val questSource = QuestSource(
+        quest = PreviewQuestData.quest,
+        condition = "Condition",
+        quantity = 1,
+        percentage = 100,
+    )
+
+    val questSourceList = listOf(
+        questSource.copy(quantity = 1),
+        questSource.copy(quantity = 2),
+        questSource.copy(quantity = 3),
+        questSource.copy(quantity = 4),
+    )
+
+    val veggieSource = VeggieSource(
+        location = PreviewLocationData.location,
+        area = 1,
+        trade = PreviewVeggieData.veggieTrade,
+    )
+
+    val veggieSourceList = listOf(
+        veggieSource.copy(area = 0),
+        veggieSource.copy(area = 1),
+        veggieSource.copy(area = 2),
+    )
+
     val itemSources = ItemSources(
         combinations = itemCombinationList,
         locations = gatheringSourceList,
         monsterRewards = monsterSourceList,
+        questRewards = questSourceList,
+        veggieTrades = veggieSourceList,
     )
 
     // Item Usages
+
+    val veggieUsage = VeggieUsage(
+        location = PreviewLocationData.location,
+        area = 1,
+        trade = PreviewVeggieData.veggieTrade,
+    )
+
+    val veggieUsageList = listOf(
+        veggieUsage.copy(area = 0),
+        veggieUsage.copy(area = 1),
+        veggieUsage.copy(area = 2),
+    )
 
     val itemUsageArmor = Usage(
         craftable = PreviewArmorData.armor,
@@ -144,6 +187,7 @@ object PreviewItemData {
 
     val itemUsages = ItemUsages(
         combinations = itemCombinationList,
+        veggieTrades = veggieUsageList,
         armors = itemUsageArmorList,
         decorations = itemUsageDecorationList,
         weapons = itemUsageWeaponList,

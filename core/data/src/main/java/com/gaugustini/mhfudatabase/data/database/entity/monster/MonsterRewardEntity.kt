@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
+import com.gaugustini.mhfudatabase.data.database.entity.common.RewardConditionEntity
 import com.gaugustini.mhfudatabase.data.database.entity.item.ItemEntity
 
 @Entity(

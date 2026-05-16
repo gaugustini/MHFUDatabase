@@ -4,6 +4,8 @@ import androidx.room.Dao
 import androidx.room.Query
 import com.gaugustini.mhfudatabase.data.database.relation.LocationWithText
 import com.gaugustini.mhfudatabase.data.database.relation.MonsterWithText
+import com.gaugustini.mhfudatabase.data.database.relation.QuestRewardWithItem
+import com.gaugustini.mhfudatabase.data.database.relation.QuestSupplyWithItem
 import com.gaugustini.mhfudatabase.data.database.relation.QuestWithText
 
 /**
@@ -84,8 +86,55 @@ interface QuestDao {
             ON monster.id = monster_text.monster_id
             AND monster_text.language = :language
         WHERE quest_monster.quest_id = :questId
+        ORDER BY monster_text.name ASC
         """
     )
     suspend fun getMonstersByQuestId(questId: Int, language: String): List<MonsterWithText>
+
+    @Query(
+        """
+        SELECT
+            qr.quest_id AS qr_quest_id, qr.reward_condition_id AS qr_reward_condition_id, qr.item_id AS qr_item_id, qr.quantity AS qr_quantity, qr.percentage AS qr_percentage,
+            rctxt.reward_condition_id AS rctxt_reward_condition_id, rctxt.language AS rctxt_language, rctxt.name AS rctxt_name,
+            item.*,
+            item_text.*
+        FROM quest_reward qr
+        JOIN reward_condition_text rctxt
+            ON qr.reward_condition_id = rctxt.reward_condition_id
+            AND rctxt.language = :language
+        JOIN item
+            ON qr.item_id = item.id
+        JOIN item_text
+            ON item.id = item_text.item_id
+            AND item_text.language = :language
+        WHERE qr.quest_id = :questId
+        ORDER BY rctxt.reward_condition_id ASC, qr.percentage DESC
+        """
+    )
+    suspend fun getQuestRewardsByQuestId(
+        questId: Int,
+        language: String
+    ): List<QuestRewardWithItem>
+
+    @Query(
+        """
+        SELECT
+            qs.quest_id AS qs_quest_id, qs.item_id AS qs_item_id, qs.quantity AS qs_quantity, qs.box_order AS qs_box_order,
+            item.*,
+            item_text.*
+        FROM quest_supply qs
+        JOIN item
+            ON qs.item_id = item.id
+        JOIN item_text
+            ON item.id = item_text.item_id
+            AND item_text.language = :language
+        WHERE qs.quest_id = :questId
+        ORDER BY qs.box_order ASC
+        """
+    )
+    suspend fun getQuestSuppliesByQuestId(
+        questId: Int,
+        language: String
+    ): List<QuestSupplyWithItem>
 
 }

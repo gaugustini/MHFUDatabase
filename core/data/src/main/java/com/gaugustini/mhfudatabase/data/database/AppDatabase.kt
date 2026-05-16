@@ -12,6 +12,7 @@ import com.gaugustini.mhfudatabase.data.database.dao.QuestDao
 import com.gaugustini.mhfudatabase.data.database.dao.SearchDao
 import com.gaugustini.mhfudatabase.data.database.dao.SkillDao
 import com.gaugustini.mhfudatabase.data.database.dao.UserEquipmentSetDao
+import com.gaugustini.mhfudatabase.data.database.dao.VeggieDao
 import com.gaugustini.mhfudatabase.data.database.dao.WeaponDao
 import com.gaugustini.mhfudatabase.data.database.entity.armor.ArmorEntity
 import com.gaugustini.mhfudatabase.data.database.entity.armor.ArmorRecipeEntity
@@ -19,6 +20,10 @@ import com.gaugustini.mhfudatabase.data.database.entity.armor.ArmorSkillEntity
 import com.gaugustini.mhfudatabase.data.database.entity.armor.ArmorTextEntity
 import com.gaugustini.mhfudatabase.data.database.entity.armorset.ArmorSetEntity
 import com.gaugustini.mhfudatabase.data.database.entity.armorset.ArmorSetTextEntity
+import com.gaugustini.mhfudatabase.data.database.entity.common.HitzoneEntity
+import com.gaugustini.mhfudatabase.data.database.entity.common.HitzoneTextEntity
+import com.gaugustini.mhfudatabase.data.database.entity.common.RewardConditionEntity
+import com.gaugustini.mhfudatabase.data.database.entity.common.RewardConditionTextEntity
 import com.gaugustini.mhfudatabase.data.database.entity.decoration.DecorationEntity
 import com.gaugustini.mhfudatabase.data.database.entity.decoration.DecorationRecipeEntity
 import com.gaugustini.mhfudatabase.data.database.entity.decoration.DecorationSkillEntity
@@ -28,18 +33,16 @@ import com.gaugustini.mhfudatabase.data.database.entity.item.ItemTextEntity
 import com.gaugustini.mhfudatabase.data.database.entity.location.LocationEntity
 import com.gaugustini.mhfudatabase.data.database.entity.location.LocationItemEntity
 import com.gaugustini.mhfudatabase.data.database.entity.location.LocationTextEntity
-import com.gaugustini.mhfudatabase.data.database.entity.monster.HitzoneEntity
-import com.gaugustini.mhfudatabase.data.database.entity.monster.HitzoneTextEntity
 import com.gaugustini.mhfudatabase.data.database.entity.monster.MonsterEntity
 import com.gaugustini.mhfudatabase.data.database.entity.monster.MonsterHitzoneEntity
 import com.gaugustini.mhfudatabase.data.database.entity.monster.MonsterItemEntity
 import com.gaugustini.mhfudatabase.data.database.entity.monster.MonsterRewardEntity
 import com.gaugustini.mhfudatabase.data.database.entity.monster.MonsterStatusEntity
 import com.gaugustini.mhfudatabase.data.database.entity.monster.MonsterTextEntity
-import com.gaugustini.mhfudatabase.data.database.entity.monster.RewardConditionEntity
-import com.gaugustini.mhfudatabase.data.database.entity.monster.RewardConditionTextEntity
 import com.gaugustini.mhfudatabase.data.database.entity.quest.QuestEntity
 import com.gaugustini.mhfudatabase.data.database.entity.quest.QuestMonsterEntity
+import com.gaugustini.mhfudatabase.data.database.entity.quest.QuestRewardEntity
+import com.gaugustini.mhfudatabase.data.database.entity.quest.QuestSupplyEntity
 import com.gaugustini.mhfudatabase.data.database.entity.quest.QuestTextEntity
 import com.gaugustini.mhfudatabase.data.database.entity.skill.SkillEntity
 import com.gaugustini.mhfudatabase.data.database.entity.skill.SkillTextEntity
@@ -48,6 +51,8 @@ import com.gaugustini.mhfudatabase.data.database.entity.skill.SkillTreeTextEntit
 import com.gaugustini.mhfudatabase.data.database.entity.userset.UserEquipmentSetArmorEntity
 import com.gaugustini.mhfudatabase.data.database.entity.userset.UserEquipmentSetDecorationEntity
 import com.gaugustini.mhfudatabase.data.database.entity.userset.UserEquipmentSetEntity
+import com.gaugustini.mhfudatabase.data.database.entity.veggie.VeggieEntity
+import com.gaugustini.mhfudatabase.data.database.entity.veggie.VeggieTradeEntity
 import com.gaugustini.mhfudatabase.data.database.entity.weapon.WeaponAmmoBowEntity
 import com.gaugustini.mhfudatabase.data.database.entity.weapon.WeaponAmmoBowgunEntity
 import com.gaugustini.mhfudatabase.data.database.entity.weapon.WeaponEntity
@@ -65,6 +70,9 @@ import com.gaugustini.mhfudatabase.data.database.entity.weapon.WeaponTextEntity
         ArmorSkillEntity::class, ArmorRecipeEntity::class,
         // Armor Set
         ArmorSetEntity::class, ArmorSetTextEntity::class,
+        // Common
+        HitzoneEntity::class, HitzoneTextEntity::class,
+        RewardConditionEntity::class, RewardConditionTextEntity::class,
         // Decoration
         DecorationEntity::class, DecorationSkillEntity::class, DecorationRecipeEntity::class,
         // Item
@@ -72,24 +80,25 @@ import com.gaugustini.mhfudatabase.data.database.entity.weapon.WeaponTextEntity
         // Location
         LocationEntity::class, LocationTextEntity::class, LocationItemEntity::class,
         // Monster
-        MonsterEntity::class, MonsterTextEntity::class,
-        HitzoneEntity::class, HitzoneTextEntity::class, MonsterHitzoneEntity::class,
-        MonsterStatusEntity::class, MonsterItemEntity::class,
-        RewardConditionEntity::class, RewardConditionTextEntity::class, MonsterRewardEntity::class,
+        MonsterEntity::class, MonsterTextEntity::class, MonsterHitzoneEntity::class,
+        MonsterStatusEntity::class, MonsterItemEntity::class, MonsterRewardEntity::class,
         // Quest
         QuestEntity::class, QuestTextEntity::class, QuestMonsterEntity::class,
+        QuestRewardEntity::class, QuestSupplyEntity::class,
         // Skill
         SkillTreeEntity::class, SkillTreeTextEntity::class,
         SkillEntity::class, SkillTextEntity::class,
         // User Equipment Set
         UserEquipmentSetEntity::class, UserEquipmentSetArmorEntity::class,
         UserEquipmentSetDecorationEntity::class,
+        // Veggie Elder
+        VeggieEntity::class, VeggieTradeEntity::class,
         // Weapon
         WeaponEntity::class, WeaponTextEntity::class, WeaponParentEntity::class,
         WeaponAmmoBowEntity::class, WeaponAmmoBowgunEntity::class,
         WeaponRecipeEntity::class,
     ],
-    version = 9,
+    version = 10,
     exportSchema = true,
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -113,6 +122,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun skillDao(): SkillDao
 
     abstract fun userEquipmentSetDao(): UserEquipmentSetDao
+
+    abstract fun veggieDao(): VeggieDao
 
     abstract fun weaponDao(): WeaponDao
 

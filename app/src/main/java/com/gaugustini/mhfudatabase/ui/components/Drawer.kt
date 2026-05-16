@@ -46,6 +46,7 @@ fun Drawer(
     navigateToMonsterList: () -> Unit = {},
     navigateToQuestList: () -> Unit = {},
     navigateToSkillTreeList: () -> Unit = {},
+    navigateToVeggieList: () -> Unit = {},
     navigateToWeaponList: () -> Unit = {},
     navigateToUserEquipmentSetList: () -> Unit = {},
     navigateToSettings: () -> Unit = {},
@@ -96,6 +97,11 @@ fun Drawer(
             label = stringResource(R.string.screen_decoration_list),
             icon = R.drawable.ic_ui_decoration,
             route = Destinations.DECORATION_LIST,
+        ),
+        DrawerItem(
+            label = stringResource(R.string.screen_veggie_list),
+            icon = R.drawable.ic_item_coin,
+            route = Destinations.VEGGIE_LIST,
         ),
         DrawerItem(
             label = stringResource(R.string.screen_user_set_list),
@@ -160,6 +166,7 @@ fun Drawer(
                             Destinations.MONSTER_LIST -> navigateToMonsterList()
                             Destinations.QUEST_LIST -> navigateToQuestList()
                             Destinations.SKILL_TREE_LIST -> navigateToSkillTreeList()
+                            Destinations.VEGGIE_LIST -> navigateToVeggieList()
                             Destinations.WEAPON_TYPE_LIST -> navigateToWeaponList()
                             Destinations.USER_EQUIPMENT_SET_LIST -> navigateToUserEquipmentSetList()
                         }

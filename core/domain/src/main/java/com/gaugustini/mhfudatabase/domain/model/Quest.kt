@@ -2,6 +2,7 @@ package com.gaugustini.mhfudatabase.domain.model
 
 import com.gaugustini.mhfudatabase.domain.enums.HubType
 import com.gaugustini.mhfudatabase.domain.enums.QuestGoal
+import com.gaugustini.mhfudatabase.domain.enums.QuestGroup
 import com.gaugustini.mhfudatabase.domain.enums.QuestType
 
 /**
@@ -12,6 +13,7 @@ import com.gaugustini.mhfudatabase.domain.enums.QuestType
  * @property goal The objective of the quest.
  * @property client The person that created the quest.
  * @property description The description of the quest in the game.
+ * @property group The group the quest belongs to (e.g., Village, Solo Training, Group Training)
  * @property questType The type of the quest (Normal, Key, Urgent or Special).
  * @property goalType The goal type of the quest (Gather, Hunt, Slay or Special).
  * @property hubType The hub where the quest is available (e.g., Village, Guild).
@@ -21,6 +23,8 @@ import com.gaugustini.mhfudatabase.domain.enums.QuestType
  * @property timeLimit The time limit for the quest in minutes.
  * @property location The location where the quest takes place.
  * @property monsters A list of monsters that appear in the quest.
+ * @property rewards A list of rewards the player can receive after completing the quest.
+ * @property supplies A list of items in the quest's supply box.
  */
 // TODO: Add ranks
 data class Quest(
@@ -29,6 +33,7 @@ data class Quest(
     val goal: String,
     val client: String,
     val description: String,
+    val group: QuestGroup,
     val questType: QuestType,
     val goalType: QuestGoal,
     val hubType: HubType,
@@ -38,4 +43,34 @@ data class Quest(
     val timeLimit: Int,
     val location: Location?,
     val monsters: List<Monster>?,
+    val rewards: List<QuestReward>?,
+    val supplies: List<QuestSupply>?,
+)
+
+/**
+ * Represents a reward for completing a quest.
+ *
+ * @property item The item rewarded.
+ * @property condition The condition required to receive the reward.
+ * @property quantity The quantity of the item rewarded.
+ * @property percentage The percentage chance of receiving the reward.
+ */
+data class QuestReward(
+    val item: Item,
+    val condition: String,
+    val quantity: Int,
+    val percentage: Int,
+)
+
+/**
+ * Represents an item in the quest's supply box.
+ *
+ * @property item The item in the supply box.
+ * @property quantity The quantity of the item in the supply box.
+ * @property boxOrder The order of the item in the supply box.
+ */
+data class QuestSupply(
+    val item: Item,
+    val quantity: Int,
+    val boxOrder: Int,
 )

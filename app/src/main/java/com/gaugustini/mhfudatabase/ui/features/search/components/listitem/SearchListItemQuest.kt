@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.domain.enums.HubType
+import com.gaugustini.mhfudatabase.domain.enums.QuestGroup
 import com.gaugustini.mhfudatabase.domain.model.Quest
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.QuestIcon
@@ -25,6 +25,26 @@ fun SearchListItem(
     modifier: Modifier = Modifier,
     onQuestClick: (questId: Int) -> Unit = {},
 ) {
+    val questGroup = when (quest.group) {
+        QuestGroup.VILLAGE_1, QuestGroup.VILLAGE_2, QuestGroup.VILLAGE_3, QuestGroup.VILLAGE_4,
+        QuestGroup.VILLAGE_5, QuestGroup.VILLAGE_6, QuestGroup.VILLAGE_7, QuestGroup.VILLAGE_8,
+        QuestGroup.VILLAGE_9 -> R.string.search_quest_village
+
+        QuestGroup.HR_1_1, QuestGroup.HR_1_2, QuestGroup.HR_1_3, QuestGroup.HR_2, QuestGroup.HR_3,
+        QuestGroup.HR_4, QuestGroup.HR_5, QuestGroup.HR_6, QuestGroup.HR_7, QuestGroup.HR_8,
+        QuestGroup.HR_9 -> R.string.search_quest_guild
+
+        QuestGroup.TREASURE -> R.string.search_quest_treasure
+
+        QuestGroup.EVENT -> R.string.search_quest_event
+
+        QuestGroup.BEGINNER_BASIC, QuestGroup.BEGINNER_WEAPON,
+        QuestGroup.TRAINING_BATTLE, QuestGroup.TRAINING_SPECIAL, QuestGroup.TRAINING_G,
+        QuestGroup.GROUP_PRACTICE -> R.string.search_quest_training
+
+        QuestGroup.GROUP_CHALLENGE -> R.string.search_quest_challenge
+    }
+
     Column(
         modifier = modifier.clickable { onQuestClick(quest.id) }
     ) {
@@ -46,12 +66,7 @@ fun SearchListItem(
             },
             trailingContent = {
                 Text(
-                    text = stringResource(
-                        when (quest.hubType) {
-                            HubType.VILLAGE -> R.string.search_quest_village
-                            HubType.GUILD -> R.string.search_quest_guild
-                        }
-                    ),
+                    text = stringResource(questGroup),
                     style = SearchListItemDefaults.TrailingTextStyle,
                     color = SearchListItemDefaults.TrailingTextColor,
                 )

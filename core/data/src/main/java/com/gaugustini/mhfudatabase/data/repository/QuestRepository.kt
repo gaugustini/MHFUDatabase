@@ -26,6 +26,8 @@ class QuestRepository @Inject constructor(
             quest = questDao.getQuest(questId, language),
             location = questDao.getLocationByQuestId(questId, language),
             monsters = questDao.getMonstersByQuestId(questId, language),
+            rewards = questDao.getQuestRewardsByQuestId(questId, language),
+            supplies = questDao.getQuestSuppliesByQuestId(questId, language),
         )
     }
 

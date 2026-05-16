@@ -62,6 +62,11 @@ class NavigationActions(
             launchSingleTop = true
         }
     }
+    val navigateToVeggieList: () -> Unit = {
+        navController.navigate(Destinations.VEGGIE_LIST) {
+            launchSingleTop = true
+        }
+    }
     val navigateToWeaponTypeList: () -> Unit = {
         navController.navigate(Destinations.WEAPON_TYPE_LIST) {
             launchSingleTop = true
@@ -105,6 +110,9 @@ class NavigationActions(
     }
     val navigateToSkillTreeDetail: (skillTreeId: Int) -> Unit = {
         navController.navigate(Destinations.skillTreeDetailRoute(it))
+    }
+    val navigateToVeggieDetail: (veggieId: Int) -> Unit = {
+        navController.navigate(Destinations.veggieDetailRoute(it))
     }
     val navigateToWeaponTree: (weaponType: WeaponType) -> Unit = {
         navController.navigate(Destinations.weaponTreeRoute(it.name))

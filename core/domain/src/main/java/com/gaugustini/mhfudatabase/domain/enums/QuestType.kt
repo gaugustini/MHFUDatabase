@@ -22,7 +22,27 @@ enum class QuestType {
     /**
      * A special quest, only used in Fatalis quests.
      */
-    SPECIAL;
+    SPECIAL,
+
+    /**
+     * A treasure quest.
+     */
+    TREASURE,
+
+    /**
+     * A training quest.
+     */
+    TRAINING,
+
+    /**
+     * An event quest.
+     */
+    EVENT,
+
+    /**
+     * A challenge quest.
+     */
+    CHALLENGE;
 
     companion object {
 
@@ -35,6 +55,10 @@ enum class QuestType {
                 "KEY" -> KEY
                 "URGENT" -> URGENT
                 "SPECIAL" -> SPECIAL
+                "TREASURE" -> TREASURE
+                "TRAINING" -> TRAINING
+                "EVENT" -> EVENT
+                "CHALLENGE" -> CHALLENGE
                 else -> throw IllegalArgumentException("Invalid quest type value: $string")
             }
         }

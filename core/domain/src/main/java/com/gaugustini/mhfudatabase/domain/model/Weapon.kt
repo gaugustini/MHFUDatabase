@@ -38,6 +38,7 @@ import com.gaugustini.mhfudatabase.domain.enums.WeaponType
  * @property recipesCreate The list of items required to create the weapon. Each list represents a different recipe.
  * @property recipeUpgrade The list of items required to create the weapon after upgrading it.
  * @property paths The list of paths to the root of the weapon tree.
+ * @property upgrades The list of weapons that are upgrades of the current weapon.
  * @property finals The list of weapons that are the finals of the weapon tree.
  */
 // TODO: Add better representation for sharpness, songNotes, ammo, rapid fire
@@ -70,6 +71,7 @@ data class Weapon(
     val recipesCreate: List<List<ItemQuantity>>?,
     val recipeUpgrade: List<ItemQuantity>?,
     val paths: List<List<Weapon>>?,
+    val upgrades: List<Weapon>?,
     val finals: List<Weapon>?,
 )
 

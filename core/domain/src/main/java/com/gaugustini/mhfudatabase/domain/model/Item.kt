@@ -35,7 +35,7 @@ data class Item(
 )
 
 /**
- * Represents a item and quantity used to craft or upgrade an equipment.
+ * Represents an item and quantity used to craft or upgrade equipment.
  */
 data class ItemQuantity(
     val item: Item,
@@ -80,21 +80,55 @@ data class MonsterSource(
 ) : ItemSource
 
 /**
+ * Represents a quest reward received after completing a quest.
+ *
+ * @property quest The quest that rewards the player.
+ * @property condition The condition required to receive the reward.
+ * @property quantity The quantity of the item rewarded.
+ * @property percentage The percentage chance of receiving the reward.
+ */
+data class QuestSource(
+    val quest: Quest,
+    val condition: String,
+    val quantity: Int,
+    val percentage: Int,
+) : ItemSource
+
+/**
+ * Represents an item received from a trade between a player and the Veggie Elder.
+ *
+ * @property location The location where the trade occurred.
+ * @property area The area of the location where the Veggie Elder can be found.
+ * @property trade The trade between the player and the Veggie Elder.
+ */
+data class VeggieSource(
+    val location: Location,
+    val area: Int,
+    val trade: VeggieTrade,
+) : ItemSource
+
+/**
  * Represents all the ways a specific item can be obtained.
  *
  * @property combinations The list of item combinations where the result is the item.
  * @property locations The list of locations where the item can be obtained.
  * @property monsterRewards The list of monsters that drop the item.
+ * @property questRewards The list of quests that reward the item.
+ * @property veggieTrades The list of trades between the player and the Veggie Elder.
  */
 data class ItemSources(
     val combinations: List<ItemCombination>,
     val locations: List<GatheringSource>,
     val monsterRewards: List<MonsterSource>,
+    val questRewards: List<QuestSource>,
+    val veggieTrades: List<VeggieSource>,
 ) {
     fun isEmpty(): Boolean {
         return combinations.isEmpty() &&
                 locations.isEmpty() &&
-                monsterRewards.isEmpty()
+                monsterRewards.isEmpty() &&
+                questRewards.isEmpty() &&
+                veggieTrades.isEmpty()
     }
 }
 
@@ -107,21 +141,37 @@ data class Usage<out T>(
 )
 
 /**
+ * Represents an item used to trade with the Veggie Elder.
+ *
+ * @property location The location where the trade occurred.
+ * @property area The area of the location where the Veggie Elder can be found.
+ * @property trade The trade between the player and the Veggie Elder.
+ */
+data class VeggieUsage(
+    val location: Location,
+    val area: Int,
+    val trade: VeggieTrade,
+)
+
+/**
  * Represents all the ways a specific item can be utilized.
  *
  * @property combinations The list of item combinations that require the item to be crafted.
+ * @property veggieTrades The list of trades between the player and the Veggie Elder that require the item to be used.
  * @property armors The list of armors that require the item to be crafted.
  * @property decorations The list of decorations that require the item to be crafted.
  * @property weapons The list of weapons that require the item to be crafted.
  */
 data class ItemUsages(
     val combinations: List<ItemCombination>,
+    val veggieTrades: List<VeggieUsage>,
     val armors: List<Usage<Armor>>,
     val decorations: List<Usage<Decoration>>,
     val weapons: List<Usage<Weapon>>,
 ) {
     fun isEmpty(): Boolean {
         return combinations.isEmpty() &&
+                veggieTrades.isEmpty() &&
                 armors.isEmpty() &&
                 decorations.isEmpty() &&
                 weapons.isEmpty()

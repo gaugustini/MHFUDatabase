@@ -2,8 +2,11 @@ package com.gaugustini.mhfudatabase.util.preview
 
 import com.gaugustini.mhfudatabase.domain.enums.HubType
 import com.gaugustini.mhfudatabase.domain.enums.QuestGoal
+import com.gaugustini.mhfudatabase.domain.enums.QuestGroup
 import com.gaugustini.mhfudatabase.domain.enums.QuestType
 import com.gaugustini.mhfudatabase.domain.model.Quest
+import com.gaugustini.mhfudatabase.domain.model.QuestReward
+import com.gaugustini.mhfudatabase.domain.model.QuestSupply
 
 object PreviewQuestData {
 
@@ -16,6 +19,7 @@ object PreviewQuestData {
         goalType = QuestGoal.HUNT,
         client = "Quest Client",
         description = "Quest Description",
+        group = QuestGroup.VILLAGE_1,
         hubType = HubType.VILLAGE,
         stars = 5,
         questType = QuestType.NORMAL,
@@ -24,6 +28,8 @@ object PreviewQuestData {
         timeLimit = 1,
         location = PreviewLocationData.location,
         monsters = PreviewMonsterData.monsterList,
+        rewards = null,
+        supplies = null,
     )
 
     val questList = listOf(
@@ -51,6 +57,31 @@ object PreviewQuestData {
             goalType = QuestGoal.SPECIAL,
             questType = QuestType.SPECIAL,
         ),
+    )
+
+    val questReward = QuestReward(
+        item = PreviewItemData.item,
+        condition = "Condition",
+        quantity = 1,
+        percentage = 100
+    )
+
+    val questRewardList = listOf(
+        questReward.copy(condition = "Condition 1"),
+        questReward.copy(condition = "Condition 2"),
+        questReward.copy(condition = "Condition 3"),
+    )
+
+    val questSupply = QuestSupply(
+        item = PreviewItemData.item,
+        quantity = 1,
+        boxOrder = 1,
+    )
+
+    val questSupplyList = listOf(
+        questSupply.copy(boxOrder = 1),
+        questSupply.copy(boxOrder = 2),
+        questSupply.copy(boxOrder = 3),
     )
 
 }

@@ -13,11 +13,13 @@
     <!-- What's New -->
     <string name="whats_new_title">What\'s New?</string>
     <string name="whats_new_text">
-        Version 1.0.3\n\n
-        • Correction in armor values\n
-        • Correction in decoration values\n
-        • Correction in combination values\n
-        • Correction in weapon values\n
+        Version 1.1.0\n\n
+        • NEW: Quest rewards\n
+        • NEW: Quest supplies\n
+        • NEW: Veggie Elder trades\n
+        • Added missing quests\n
+        • Quest fixes\n
+        • Minor improvements and bug fixes\n
     </string>
 
     <!-- Screen Title: Main Routes -->
@@ -29,6 +31,7 @@
     <string name="screen_monster_list">Monsters</string>
     <string name="screen_quest_list">Quests</string>
     <string name="screen_skill_tree_list">Skills</string>
+    <string name="screen_veggie_list">Veggie Elder</string>
     <string name="screen_weapon_list">Weapons</string>
     <string name="screen_user_set_list">Armor Set Builder</string>
     <string name="screen_settings">Settings</string>
@@ -43,6 +46,7 @@
     <string name="screen_monster_detail">Monster Detail</string>
     <string name="screen_quest_detail">Quest Detail</string>
     <string name="screen_skill_tree_detail">Skill Detail</string>
+    <string name="screen_veggie_detail">Veggie Elder Detail</string>
     <string name="screen_weapon_detail">Weapon Detail</string>
     <string name="screen_user_set_detail">Armor Set Detail</string>
 
@@ -95,6 +99,11 @@
     <!-- Tab Title: Quest List -->
     <string name="tab_quest_village">VILLAGE</string>
     <string name="tab_quest_guild">GUILD</string>
+    <string name="tab_quest_training">TRAINING</string>
+
+    <!-- Tab Title: Quest Detail -->
+    <string name="tab_quest_detail_summary">SUMMARY</string>
+    <string name="tab_quest_detail_reward">REWARD</string>
 
     <!-- Tab Title: Skill Tree Detail -->
     <string name="tab_skill_detail_summary">SUMMARY</string>
@@ -131,6 +140,10 @@
     <string name="search_monster">Monster</string>
     <string name="search_quest_village">Quest (Village)</string>
     <string name="search_quest_guild">Quest (Guild)</string>
+    <string name="search_quest_event">Quest (Event)</string>
+    <string name="search_quest_treasure">Quest (Treasure)</string>
+    <string name="search_quest_training">Quest (Training)</string>
+    <string name="search_quest_challenge">Quest (Challenge)</string>
     <string name="search_skill_tree">Skill Tree</string>
     <string name="search_skill">Skill</string>
     <string name="search_weapon">Weapon</string>
@@ -157,6 +170,7 @@
     <string name="item_buy_price">Buy Price</string>
     <string name="item_sell_price">Sell Price</string>
     <string name="item_crafting">Crafting</string>
+    <string name="item_trade_veggie">Trade: Veggie Elder</string>
     <string name="item_armor">Armor</string>
     <string name="item_decoration">Decoration</string>
     <string name="item_weapon">Weapon</string>
@@ -167,6 +181,39 @@
     <string name="item_rank_g">G</string>
     <string name="item_rank_treasure">Treasure</string>
     <string name="item_rank_training">Training</string>
+    <string name="item_quest">Quest</string>
+    <string name="item_quest_hub_village">Village</string>
+    <string name="item_quest_hub_guild">Gathering Hall</string>
+    <string name="item_quest_hub_training">Training School</string>
+    <string name="item_quest_group_village_1">1★</string>
+    <string name="item_quest_group_village_2">2★</string>
+    <string name="item_quest_group_village_3">3★</string>
+    <string name="item_quest_group_village_4">4★</string>
+    <string name="item_quest_group_village_5">5★</string>
+    <string name="item_quest_group_village_6">6★</string>
+    <string name="item_quest_group_village_7">7★</string>
+    <string name="item_quest_group_village_8">8★</string>
+    <string name="item_quest_group_village_9">9★</string>
+    <string name="item_quest_group_hr_1_1">1★</string>
+    <string name="item_quest_group_hr_1_2">2★</string>
+    <string name="item_quest_group_hr_1_3">3★</string>
+    <string name="item_quest_group_hr_2">4★</string>
+    <string name="item_quest_group_hr_3">5★</string>
+    <string name="item_quest_group_hr_4">6★</string>
+    <string name="item_quest_group_hr_5">7★</string>
+    <string name="item_quest_group_hr_6">8★</string>
+    <string name="item_quest_group_hr_7">G1★</string>
+    <string name="item_quest_group_hr_8">G2★</string>
+    <string name="item_quest_group_hr_9">G3★</string>
+    <string name="item_quest_group_treasure">Treas.</string>
+    <string name="item_quest_group_event">Event</string>
+    <string name="item_quest_group_beginner_basic">Beg.</string>
+    <string name="item_quest_group_beginner_weapon">Beg.</string>
+    <string name="item_quest_group_training_battle">Solo</string>
+    <string name="item_quest_group_training_special">Solo</string>
+    <string name="item_quest_group_training_g">Solo</string>
+    <string name="item_quest_group_group_practice">Group</string>
+    <string name="item_quest_group_group_challenge">Chall.</string>
 
     <!-- Item Combination-->
     <string name="combination_treasure">Treasure</string>
@@ -194,12 +241,42 @@
     <string name="monster_ailment_max">Max</string>
     <string name="monster_ailment_duration">Duration</string>
     <string name="monster_ailment_damage">Damage</string>
+    <string name="monster_quest_group_village_1">Village 1 ★</string>
+    <string name="monster_quest_group_village_2">Village 2 ★</string>
+    <string name="monster_quest_group_village_3">Village 3 ★</string>
+    <string name="monster_quest_group_village_4">Village 4 ★</string>
+    <string name="monster_quest_group_village_5">Village 5 ★</string>
+    <string name="monster_quest_group_village_6">Village 6 ★</string>
+    <string name="monster_quest_group_village_7">Village 7 ★</string>
+    <string name="monster_quest_group_village_8">Village 8 ★</string>
+    <string name="monster_quest_group_village_9">Village 9 ★</string>
+    <string name="monster_quest_group_hr_1_1">Guild 1 ★</string>
+    <string name="monster_quest_group_hr_1_2">Guild 2 ★</string>
+    <string name="monster_quest_group_hr_1_3">Guild 3 ★</string>
+    <string name="monster_quest_group_hr_2">Guild 4 ★</string>
+    <string name="monster_quest_group_hr_3">Guild 5 ★</string>
+    <string name="monster_quest_group_hr_4">Guild 6 ★</string>
+    <string name="monster_quest_group_hr_5">Guild 7 ★</string>
+    <string name="monster_quest_group_hr_6">Guild 8 ★</string>
+    <string name="monster_quest_group_hr_7">Guild G1 ★</string>
+    <string name="monster_quest_group_hr_8">Guild G2 ★</string>
+    <string name="monster_quest_group_hr_9">Guild G3 ★</string>
+    <string name="monster_quest_group_treasure">Treasure</string>
+    <string name="monster_quest_group_event">Event</string>
+    <string name="monster_quest_group_beginner_basic">Training</string>
+    <string name="monster_quest_group_beginner_weapon">Training</string>
+    <string name="monster_quest_group_training_battle">Training</string>
+    <string name="monster_quest_group_training_special">Training</string>
+    <string name="monster_quest_group_training_g">Training</string>
+    <string name="monster_quest_group_group_practice">Training</string>
+    <string name="monster_quest_group_group_challenge">Challenge</string>
 
     <!-- Quest -->
     <string name="quest_type_key">Key</string>
     <string name="quest_type_urgent">Urgent</string>
     <string name="quest_village_stars">Village %1$d ★</string>
     <string name="quest_guild_stars">Guild %1$d ★</string>
+    <string name="quest_training_stars">Training %1$d ★</string>
     <string name="quest_reward">Reward</string>
     <string name="quest_fee">Fee</string>
     <string name="quest_time_limit">Time Limit</string>
@@ -207,6 +284,65 @@
     <string name="quest_monsters">Monsters</string>
     <string name="quest_description">Description</string>
     <string name="quest_client">Client: %1$s</string>
+    <string name="quest_supply_box">Supply Box</string>
+    <string name="section_quest_group_village_1">1</string>
+    <string name="section_quest_group_village_2">2</string>
+    <string name="section_quest_group_village_3">3</string>
+    <string name="section_quest_group_village_4">4</string>
+    <string name="section_quest_group_village_5">5</string>
+    <string name="section_quest_group_village_6">6</string>
+    <string name="section_quest_group_village_7">7</string>
+    <string name="section_quest_group_village_8">8</string>
+    <string name="section_quest_group_village_9">9</string>
+    <string name="section_quest_group_hr_1_1">HR 1</string>
+    <string name="section_quest_group_hr_1_2">HR 1</string>
+    <string name="section_quest_group_hr_1_3">HR 1</string>
+    <string name="section_quest_group_hr_2">HR 2</string>
+    <string name="section_quest_group_hr_3">HR 3</string>
+    <string name="section_quest_group_hr_4">HR 4</string>
+    <string name="section_quest_group_hr_5">HR 5</string>
+    <string name="section_quest_group_hr_6">HR 6</string>
+    <string name="section_quest_group_hr_7">HR 7</string>
+    <string name="section_quest_group_hr_8">HR 8</string>
+    <string name="section_quest_group_hr_9">HR 9</string>
+    <string name="section_quest_group_treasure">Treasure</string>
+    <string name="section_quest_group_event">Event</string>
+    <string name="section_quest_group_beginner_basic">Beginner: Basic Practice</string>
+    <string name="section_quest_group_beginner_weapon">Beginner: Weapon Usage</string>
+    <string name="section_quest_group_training_battle">Solo Training: Battle</string>
+    <string name="section_quest_group_training_special">Solo Training: Special</string>
+    <string name="section_quest_group_training_g">Solo Training: G Level</string>
+    <string name="section_quest_group_group_practice">Group Training: Practice</string>
+    <string name="section_quest_group_group_challenge">Group Training: Challenge</string>
+    <string name="detail_quest_group_village_1">Village 1 ★</string>
+    <string name="detail_quest_group_village_2">Village 2 ★</string>
+    <string name="detail_quest_group_village_3">Village 3 ★</string>
+    <string name="detail_quest_group_village_4">Village 4 ★</string>
+    <string name="detail_quest_group_village_5">Village 5 ★</string>
+    <string name="detail_quest_group_village_6">Village 6 ★</string>
+    <string name="detail_quest_group_village_7">Village 7 ★</string>
+    <string name="detail_quest_group_village_8">Village 8 ★</string>
+    <string name="detail_quest_group_village_9">Village 9 ★</string>
+    <string name="detail_quest_group_hr_1_1">Guild 1 ★ (HR 1)</string>
+    <string name="detail_quest_group_hr_1_2">Guild 2 ★ (HR 1)</string>
+    <string name="detail_quest_group_hr_1_3">Guild 3 ★ (HR 1)</string>
+    <string name="detail_quest_group_hr_2">Guild 4 ★ (HR 2)</string>
+    <string name="detail_quest_group_hr_3">Guild 5 ★ (HR 3)</string>
+    <string name="detail_quest_group_hr_4">Guild 6 ★ (HR 4)</string>
+    <string name="detail_quest_group_hr_5">Guild 7 ★ (HR 5)</string>
+    <string name="detail_quest_group_hr_6">Guild 8 ★ (HR 6)</string>
+    <string name="detail_quest_group_hr_7">Guild G ★ (HR 7)</string>
+    <string name="detail_quest_group_hr_8">Guild G ★★ (HR 8)</string>
+    <string name="detail_quest_group_hr_9">Guild G ★★★ (HR 9)</string>
+    <string name="detail_quest_group_treasure">Treasure Hunt</string>
+    <string name="detail_quest_group_event">Event</string>
+    <string name="detail_quest_group_beginner_basic">Beginner Training</string>
+    <string name="detail_quest_group_beginner_weapon">Beginner Training</string>
+    <string name="detail_quest_group_training_battle">Solo Training: Battle</string>
+    <string name="detail_quest_group_training_special">Solo Training: Special</string>
+    <string name="detail_quest_group_training_g">Solo Training: G Level</string>
+    <string name="detail_quest_group_group_practice">Group Training</string>
+    <string name="detail_quest_group_group_challenge">Challenge</string>
 
     <!-- Skill Tree -->
     <string name="skill_empty_list">None</string>
@@ -285,6 +421,7 @@
     <string name="weapon_bow_coating_sleep">Sleep</string>
     <string name="weapon_path">Path</string>
     <string name="weapon_path_details">Path: %1$d</string>
+    <string name="weapon_upgrades">Upgrades</string>
     <string name="weapon_finals">Finals</string>
 
     <!-- User Equipment Set -->

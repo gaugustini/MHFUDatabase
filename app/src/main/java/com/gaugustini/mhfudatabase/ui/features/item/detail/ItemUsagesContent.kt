@@ -12,6 +12,7 @@ import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.features.item.components.UsageArmorListItem
 import com.gaugustini.mhfudatabase.ui.features.item.components.UsageDecorationListItem
 import com.gaugustini.mhfudatabase.ui.features.item.components.UsageWeaponListItem
+import com.gaugustini.mhfudatabase.ui.features.item.components.VeggieUsageListItem
 import com.gaugustini.mhfudatabase.ui.features.itemcombination.components.ItemCombinationListItem
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
@@ -41,6 +42,23 @@ fun ItemUsagesContent(
                     onItemClick = onItemClick,
                 )
                 if (index != usages.combinations.lastIndex) {
+                    HorizontalDivider()
+                }
+            }
+        }
+
+        if (usages.veggieTrades.isNotEmpty()) {
+            item {
+                SectionHeader(
+                    title = stringResource(R.string.item_trade_veggie),
+                )
+            }
+            itemsIndexed(usages.veggieTrades) { index, trade ->
+                VeggieUsageListItem(
+                    usage = trade,
+                    onItemClick = onItemClick,
+                )
+                if (index != usages.veggieTrades.lastIndex) {
                     HorizontalDivider()
                 }
             }
