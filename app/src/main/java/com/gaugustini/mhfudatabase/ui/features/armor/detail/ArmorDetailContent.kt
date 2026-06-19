@@ -48,6 +48,7 @@ fun ArmorDetailContent(
         EquipmentStats(
             numberOfSlots = armor.numberOfSlots,
             defense = armor.defense,
+            maxDefense = armor.maxDefense,
             fire = armor.fire,
             water = armor.water,
             thunder = armor.thunder,
