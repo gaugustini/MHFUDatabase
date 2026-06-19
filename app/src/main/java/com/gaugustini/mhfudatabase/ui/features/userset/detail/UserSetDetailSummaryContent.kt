@@ -67,6 +67,8 @@ fun UserSetDetailSummaryContent(
         equipmentSet.armors.let { armors ->
             EquipmentStats(
                 defense = (armors?.sumOf { it.defense } ?: 0) + (equipmentSet.weapon?.defense ?: 0),
+                maxDefense =
+                    (armors?.sumOf { it.maxDefense } ?: 0) + (equipmentSet.weapon?.defense ?: 0),
                 numberOfSlots = null,
                 fire = armors?.sumOf { it.fire } ?: 0,
                 water = armors?.sumOf { it.water } ?: 0,

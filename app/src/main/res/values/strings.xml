@@ -150,7 +150,7 @@
 
     <!-- Armor -->
     <string name="armor_rarity">Rarity %1$d</string>
-    <string name="armor_defense">Defense</string>
+    <string name="armor_defense">Defense (Max.)</string>
     <string name="armor_number_of_slots">Slots</string>
     <string name="armor_fire_resistance">Fire Resistance</string>
     <string name="armor_water_resistance">Water Resistance</string>
