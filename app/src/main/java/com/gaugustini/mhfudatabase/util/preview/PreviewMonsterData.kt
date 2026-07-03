@@ -101,7 +101,7 @@ object PreviewMonsterData {
         item = PreviewItemData.item,
         condition = "Condition",
         rank = Rank.LOW,
-        stackSize = 1,
+        quantity = 1,
         percentage = 10,
     )
 

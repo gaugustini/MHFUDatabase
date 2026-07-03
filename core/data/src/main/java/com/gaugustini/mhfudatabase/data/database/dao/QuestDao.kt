@@ -95,7 +95,7 @@ interface QuestDao {
         """
         SELECT
             qr.quest_id AS qr_quest_id, qr.reward_condition_id AS qr_reward_condition_id, qr.item_id AS qr_item_id, qr.quantity AS qr_quantity, qr.percentage AS qr_percentage,
-            rctxt.reward_condition_id AS rctxt_reward_condition_id, rctxt.language AS rctxt_language, rctxt.name AS rctxt_name,
+            rctxt.reward_condition_id AS rctxt_reward_condition_id, rctxt.language AS rctxt_language, rctxt.name AS rctxt_name, rctxt.description AS rctxt_description,
             item.*,
             item_text.*
         FROM quest_reward qr

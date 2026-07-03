@@ -41,7 +41,7 @@ fun MonsterRewardListItem(
                 )
                 Spacer(Modifier.width(Dimension.Spacing.medium))
                 Text(
-                    text = "x ${reward.stackSize}",
+                    text = "x ${reward.quantity}",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )

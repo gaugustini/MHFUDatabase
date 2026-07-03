@@ -90,8 +90,8 @@ interface MonsterDao {
     @Query(
         """
         SELECT
-            mr.monster_id AS mr_monster_id, mr.reward_condition_id AS mr_reward_condition_id, mr.item_id AS mr_item_id, mr.rank AS mr_rank, mr.stack_size AS mr_stack_size, mr.percentage AS mr_percentage,
-            rctxt.reward_condition_id AS rctxt_reward_condition_id, rctxt.language AS rctxt_language, rctxt.name AS rctxt_name,
+            mr.monster_id AS mr_monster_id, mr.reward_condition_id AS mr_reward_condition_id, mr.item_id AS mr_item_id, mr.rank AS mr_rank, mr.quantity AS mr_quantity, mr.percentage AS mr_percentage,
+            rctxt.reward_condition_id AS rctxt_reward_condition_id, rctxt.language AS rctxt_language, rctxt.name AS rctxt_name, rctxt.description AS rctxt_description,
             item.*,
             item_text.*
         FROM monster_reward mr
