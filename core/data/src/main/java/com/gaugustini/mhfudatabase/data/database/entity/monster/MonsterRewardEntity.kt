@@ -9,7 +9,7 @@ import com.gaugustini.mhfudatabase.data.database.entity.item.ItemEntity
 
 @Entity(
     tableName = "monster_reward",
-    primaryKeys = ["monster_id", "reward_condition_id", "item_id", "rank", "stack_size"],
+    primaryKeys = ["monster_id", "reward_condition_id", "item_id", "rank", "quantity"],
     foreignKeys = [
         ForeignKey(
             entity = MonsterEntity::class,
@@ -37,6 +37,6 @@ data class MonsterRewardEntity(
     @ColumnInfo(name = "reward_condition_id") val rewardConditionId: Int,
     @ColumnInfo(name = "item_id") val itemId: Int,
     @ColumnInfo(name = "rank") val rank: String,
-    @ColumnInfo(name = "stack_size") val stackSize: Int,
-    @ColumnInfo(name = "percentage") val percentage: Int?,
+    @ColumnInfo(name = "quantity") val quantity: Int,
+    @ColumnInfo(name = "percentage") val percentage: Int,
 )

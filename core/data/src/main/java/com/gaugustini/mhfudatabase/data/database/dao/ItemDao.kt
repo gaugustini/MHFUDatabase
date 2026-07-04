@@ -113,8 +113,8 @@ interface ItemDao {
     @Query(
         """
         SELECT
-            mr.monster_id AS mr_monster_id, mr.reward_condition_id AS mr_reward_condition_id, mr.item_id AS mr_item_id, mr.rank AS mr_rank, mr.stack_size AS mr_stack_size, mr.percentage AS mr_percentage,
-            rctxt.reward_condition_id AS rctxt_reward_condition_id, rctxt.language AS rctxt_language, rctxt.name AS rctxt_name,
+            mr.monster_id AS mr_monster_id, mr.reward_condition_id AS mr_reward_condition_id, mr.item_id AS mr_item_id, mr.rank AS mr_rank, mr.quantity AS mr_quantity, mr.percentage AS mr_percentage,
+            rctxt.reward_condition_id AS rctxt_reward_condition_id, rctxt.language AS rctxt_language, rctxt.name AS rctxt_name, rctxt.description AS rctxt_description,
             monster.*,
             monster_text.*
         FROM monster_reward mr
@@ -136,7 +136,7 @@ interface ItemDao {
         """
         SELECT
             qr.quest_id AS qr_quest_id, qr.reward_condition_id AS qr_reward_condition_id, qr.item_id AS qr_item_id, qr.quantity AS qr_quantity, qr.percentage AS qr_percentage,
-            rctxt.reward_condition_id AS rctxt_reward_condition_id, rctxt.language AS rctxt_language, rctxt.name AS rctxt_name,
+            rctxt.reward_condition_id AS rctxt_reward_condition_id, rctxt.language AS rctxt_language, rctxt.name AS rctxt_name, rctxt.description AS rctxt_description,
             quest.*,
             quest_text.*
         FROM quest_reward qr

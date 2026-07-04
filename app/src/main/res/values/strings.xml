@@ -176,9 +176,10 @@
     <string name="item_weapon">Weapon</string>
     <string name="item_location">Location</string>
     <string name="item_monster">Monster</string>
+    <string name="item_rank_unranked">Guild 1★~2★</string>
     <string name="item_rank_low">LR</string>
     <string name="item_rank_high">HR</string>
-    <string name="item_rank_g">G</string>
+    <string name="item_rank_g">GR</string>
     <string name="item_rank_treasure">Treasure</string>
     <string name="item_rank_training">Training</string>
     <string name="item_quest">Quest</string>

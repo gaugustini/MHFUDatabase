@@ -176,6 +176,7 @@
     <string name="item_weapon">Arma</string>
     <string name="item_location">Localización</string>
     <string name="item_monster">Monstruo</string>
+    <string name="item_rank_unranked">Gremio 1★~2★</string>
     <string name="item_rank_low">RB</string>
     <string name="item_rank_high">RA</string>
     <string name="item_rank_g">RG</string>

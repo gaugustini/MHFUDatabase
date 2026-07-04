@@ -96,7 +96,7 @@ object ItemMapper {
                 monster = MonsterMapper.toModel(MonsterWithText(it.monster, it.monsterText)),
                 condition = it.rewardConditionText.name,
                 rank = Rank.fromString(it.monsterReward.rank),
-                stackSize = it.monsterReward.stackSize,
+                quantity = it.monsterReward.quantity,
                 percentage = it.monsterReward.percentage,
             )
         }

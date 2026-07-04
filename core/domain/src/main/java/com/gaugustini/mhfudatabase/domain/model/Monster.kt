@@ -117,13 +117,13 @@ data class MonsterItemEffectiveness(
  * @property item The item rewarded.
  * @property condition The condition required to receive the reward (e.g., "Break Wings").
  * @property rank The rank of the monster required to receive the reward.
- * @property stackSize The number of items in a stack reward.
+ * @property quantity The quantity of the item rewarded.
  * @property percentage The percentage chance of receiving the reward.
  */
 data class MonsterReward(
     val item: Item,
     val condition: String,
     val rank: Rank,
-    val stackSize: Int,
+    val quantity: Int,
     val percentage: Int?,
 )
