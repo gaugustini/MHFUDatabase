@@ -67,6 +67,7 @@ fun ItemSourcesContent(
                 itemsPerRank.forEach { (rank, items) ->
                     item {
                         val rank = when (rank) {
+                            Rank.UNRANKED -> stringResource(R.string.item_rank_unranked)
                             Rank.LOW -> stringResource(R.string.item_rank_low)
                             Rank.HIGH -> stringResource(R.string.item_rank_high)
                             Rank.G -> stringResource(R.string.item_rank_g)
