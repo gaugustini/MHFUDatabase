@@ -16,7 +16,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.FilterList
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -47,7 +46,6 @@ import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.MHFUIcons
 import com.gaugustini.mhfudatabase.util.preview.PreviewWeaponData
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WeaponSelection(
     weapons: List<Weapon>,
@@ -120,7 +118,6 @@ fun WeaponSelection(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WeaponFilterSheet(
     sheetState: SheetState,

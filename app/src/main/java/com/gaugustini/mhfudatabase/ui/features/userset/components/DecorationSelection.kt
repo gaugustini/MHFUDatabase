@@ -20,7 +20,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.FilterList
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -54,7 +53,6 @@ import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.MHFUColors
 import com.gaugustini.mhfudatabase.util.preview.PreviewDecorationData
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DecorationSelection(
     decorations: List<Decoration>,
@@ -130,7 +128,6 @@ fun DecorationSelection(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DecorationFilterSheet(
     sheetState: SheetState,
