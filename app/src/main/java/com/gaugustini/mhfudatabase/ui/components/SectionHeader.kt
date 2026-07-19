@@ -4,6 +4,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +24,8 @@ fun SectionHeader(
     modifier: Modifier = Modifier,
     titleColor: Color = MaterialTheme.colorScheme.onSecondaryContainer,
     backgroundColor: Color = MaterialTheme.colorScheme.secondaryContainer,
+    isExpandable: Boolean = false,
+    expanded: Boolean = isExpandable,
 ) {
     Row(
         modifier = modifier
@@ -30,7 +37,20 @@ fun SectionHeader(
             text = title,
             style = MaterialTheme.typography.titleSmall,
             color = titleColor,
+            modifier = Modifier.weight(1f)
         )
+        if (isExpandable) {
+            Icon(
+                imageVector = if (expanded) {
+                    Icons.Default.KeyboardArrowUp
+                } else {
+                    Icons.Default.KeyboardArrowDown
+                },
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                modifier = Modifier.size(Dimension.Size.extraSmall)
+            )
+        }
     }
 }
 
