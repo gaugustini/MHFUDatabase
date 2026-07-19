@@ -26,7 +26,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import com.gaugustini.mhfudatabase.BuildConfig
 import com.gaugustini.mhfudatabase.R
@@ -99,7 +98,7 @@ fun AppDescription(
     Column(
         modifier = modifier
             .padding(horizontal = Dimension.Padding.medium)
-            .clip(RoundedCornerShape(4.dp))
+            .clip(RoundedCornerShape(Dimension.Radius.medium))
             .background(MaterialTheme.colorScheme.surface)
     ) {
         Text(
@@ -211,7 +210,7 @@ fun CreditsAndResourcesList(
     Column(
         modifier = modifier
             .padding(horizontal = Dimension.Padding.medium)
-            .clip(RoundedCornerShape(4.dp))
+            .clip(RoundedCornerShape(Dimension.Radius.medium))
             .background(MaterialTheme.colorScheme.surface)
     ) {
         SectionHeader(
