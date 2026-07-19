@@ -2,23 +2,31 @@ package com.gaugustini.mhfudatabase.ui.features.about
 
 import android.content.Intent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import com.gaugustini.mhfudatabase.BuildConfig
 import com.gaugustini.mhfudatabase.R
@@ -30,7 +38,7 @@ import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.LocalIsDarkTheme
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
-import com.gaugustini.mhfudatabase.util.ForEachWithDivider
+import com.gaugustini.mhfudatabase.util.ForEachWithSpacer
 
 private data class AboutItem(
     val icon: Int,
@@ -55,6 +63,8 @@ fun AboutScreen(
     navigateBack: () -> Unit = {},
     openSearch: () -> Unit = {},
 ) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+
     Scaffold(
         topBar = {
             TopBar(
@@ -62,10 +72,13 @@ fun AboutScreen(
                 navigationType = NavigationType.BACK,
                 navigation = navigateBack,
                 openSearch = openSearch,
+                scrollBehavior = scrollBehavior,
             )
         },
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
     ) { innerPadding ->
         Column(
+            verticalArrangement = Arrangement.spacedBy(Dimension.Padding.medium),
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
@@ -85,6 +98,9 @@ fun AppDescription(
 
     Column(
         modifier = modifier
+            .padding(horizontal = Dimension.Padding.medium)
+            .clip(RoundedCornerShape(4.dp))
+            .background(MaterialTheme.colorScheme.surface)
     ) {
         Text(
             text = stringResource(R.string.app_name),
@@ -194,11 +210,14 @@ fun CreditsAndResourcesList(
 
     Column(
         modifier = modifier
+            .padding(horizontal = Dimension.Padding.medium)
+            .clip(RoundedCornerShape(4.dp))
+            .background(MaterialTheme.colorScheme.surface)
     ) {
         SectionHeader(
             title = stringResource(R.string.about_credit_resources),
         )
-        links.ForEachWithDivider { link ->
+        links.ForEachWithSpacer { link ->
             ExternalLinkItem(
                 icon = link.icon,
                 title = link.title,
@@ -246,10 +265,7 @@ fun ExternalLinkItem(
                 )
             }
         },
-        contentPadding = PaddingValues(
-            horizontal = Dimension.Padding.large,
-            vertical = Dimension.Padding.medium,
-        ),
+        contentPadding = PaddingValues(Dimension.Padding.large),
         modifier = modifier.clickable {
             context.startActivity(intent)
         }
