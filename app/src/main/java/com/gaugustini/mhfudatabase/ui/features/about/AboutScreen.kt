@@ -38,7 +38,7 @@ import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.LocalIsDarkTheme
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
-import com.gaugustini.mhfudatabase.util.ForEachWithSpacer
+import com.gaugustini.mhfudatabase.util.ForEachWithDivider
 
 private data class AboutItem(
     val icon: Int,
@@ -217,7 +217,7 @@ fun CreditsAndResourcesList(
         SectionHeader(
             title = stringResource(R.string.about_credit_resources),
         )
-        links.ForEachWithSpacer { link ->
+        links.ForEachWithDivider { link ->
             ExternalLinkItem(
                 icon = link.icon,
                 title = link.title,
