@@ -21,32 +21,32 @@ import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
 
 @Composable
-fun ArmorDetailRoute(
+fun ArmorSetDetailRoute(
     navigateBack: () -> Unit,
     openSearch: () -> Unit,
-    onArmorSetClick: (armorSetId: Int) -> Unit,
+    onArmorClick: (armorId: Int) -> Unit,
     onSkillClick: (skillTreeId: Int) -> Unit,
     onItemClick: (itemId: Int) -> Unit,
-    viewModel: ArmorDetailViewModel = hiltViewModel(),
+    viewModel: ArmorSetDetailViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    ArmorDetailScreen(
+    ArmorSetDetailScreen(
         uiState = uiState,
         navigateBack = navigateBack,
         openSearch = openSearch,
-        onArmorSetClick = onArmorSetClick,
+        onArmorClick = onArmorClick,
         onSkillClick = onSkillClick,
         onItemClick = onItemClick,
     )
 }
 
 @Composable
-fun ArmorDetailScreen(
-    uiState: ArmorDetailState = ArmorDetailState(),
+fun ArmorSetDetailScreen(
+    uiState: ArmorSetDetailState = ArmorSetDetailState(),
     navigateBack: () -> Unit = {},
     openSearch: () -> Unit = {},
-    onArmorSetClick: (armorSetId: Int) -> Unit = {},
+    onArmorClick: (armorId: Int) -> Unit = {},
     onSkillClick: (skillTreeId: Int) -> Unit = {},
     onItemClick: (itemId: Int) -> Unit = {},
 ) {
@@ -55,7 +55,7 @@ fun ArmorDetailScreen(
     Scaffold(
         topBar = {
             TopBar(
-                title = uiState.armor?.name ?: stringResource(R.string.screen_armor_detail),
+                title = uiState.armorSet?.name ?: stringResource(R.string.screen_armor_detail),
                 navigationType = NavigationType.BACK,
                 navigation = navigateBack,
                 openSearch = openSearch,
@@ -64,10 +64,10 @@ fun ArmorDetailScreen(
         },
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
     ) { innerPadding ->
-        if (uiState.armor != null) {
-            ArmorDetailContent(
-                armor = uiState.armor,
-                onArmorSetClick = onArmorSetClick,
+        if (uiState.armorSet != null) {
+            ArmorSetDetailContent(
+                armorSet = uiState.armorSet,
+                onArmorClick = onArmorClick,
                 onSkillClick = onSkillClick,
                 onItemClick = onItemClick,
                 modifier = Modifier.padding(innerPadding)
@@ -78,19 +78,19 @@ fun ArmorDetailScreen(
 
 @DevicePreviews
 @Composable
-fun ArmorDetailScreenPreview(
-    @PreviewParameter(ArmorDetailScreenPreviewParamProvider::class) uiState: ArmorDetailState
+fun ArmorSetDetailScreenPreview(
+    @PreviewParameter(ArmorSetDetailScreenPreviewParamProvider::class) uiState: ArmorSetDetailState
 ) {
     Theme {
-        ArmorDetailScreen(uiState)
+        ArmorSetDetailScreen(uiState)
     }
 }
 
-private class ArmorDetailScreenPreviewParamProvider : PreviewParameterProvider<ArmorDetailState> {
+private class ArmorSetDetailScreenPreviewParamProvider : PreviewParameterProvider<ArmorSetDetailState> {
 
-    override val values: Sequence<ArmorDetailState> = sequenceOf(
-        ArmorDetailState(
-            armor = PreviewArmorData.armor,
+    override val values: Sequence<ArmorSetDetailState> = sequenceOf(
+        ArmorSetDetailState(
+            armorSet = PreviewArmorData.armorSet,
         ),
     )
 

@@ -23,7 +23,7 @@
     </string>
 
     <!-- Screen Title: Main Routes -->
-    <string name="screen_armor_set_list">Armor Sets</string>
+    <string name="screen_armor_set_list">Armors</string>
     <string name="screen_decoration_list">Decorations</string>
     <string name="screen_item_list">Items</string>
     <string name="screen_item_combination_list">Combinations</string>
@@ -39,6 +39,7 @@
 
     <!-- Screen Title: Detail Routes -->
     <string name="screen_armor_detail">Armor Detail</string>
+    <string name="screen_armor_set_detail">Armor Set Detail</string>
     <string name="screen_decoration_detail">Decoration Detail</string>
     <string name="screen_item_detail">Item Detail</string>
     <string name="screen_item_combination_detail">Combination Detail</string>
@@ -150,6 +151,7 @@
     <string name="search_weapon">Weapon</string>
 
     <!-- Armor -->
+    <string name="armor_set_details">Armor Set Details</string>
     <string name="armor_rarity">Rarity %1$d</string>
     <string name="armor_defense">Defense (Max.)</string>
     <string name="armor_number_of_slots">Slots</string>

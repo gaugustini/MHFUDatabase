@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.ArmorRepository
-import com.gaugustini.mhfudatabase.domain.enums.HunterType
 import com.gaugustini.mhfudatabase.domain.enums.Language
+import com.gaugustini.mhfudatabase.domain.filter.ArmorSetFilter
 import com.gaugustini.mhfudatabase.domain.model.ArmorSet
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,11 +19,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class ArmorSetListState(
-    val initialTab: ArmorSetListTab = ArmorSetListTab.BLADEMASTER,
-    val armorSetsBlade: List<ArmorSet> = emptyList(),
-    val armorSetsGunner: List<ArmorSet> = emptyList(),
-    val expandedArmorSetsBlade: Set<Int> = emptySet(),
-    val expandedArmorSetsGunner: Set<Int> = emptySet()
+    val language: Language = Language.ENGLISH,
+    val filter: ArmorSetFilter = ArmorSetFilter(),
+    val armorSets: List<ArmorSet> = emptyList(),
+    val expandedArmorSets: Set<Int> = emptySet()
 )
 
 @HiltViewModel
@@ -43,54 +42,41 @@ class ArmorSetListViewModel @Inject constructor(
         userPreferences.getLanguage()
             .distinctUntilChanged()
             .onEach { language ->
-                loadArmorSets(language)
+                _uiState.update { it.copy(language = language) }
+                loadArmorSets()
             }
             .launchIn(viewModelScope)
     }
 
-    private fun loadArmorSets(language: Language) {
+    private fun loadArmorSets() {
         viewModelScope.launch {
-            val armorSets = armorRepository.getArmorSetList(language.code)
-            val armorSetsBlade = armorSets.filter {
-                it.hunterType == HunterType.BLADE || it.hunterType == HunterType.BOTH
-            }
-            val armorSetsGunner = armorSets.filter {
-                it.hunterType == HunterType.GUNNER || it.hunterType == HunterType.BOTH
-            }
-
             _uiState.update { state ->
                 state.copy(
-                    armorSetsBlade = armorSetsBlade,
-                    armorSetsGunner = armorSetsGunner,
+                    armorSets = armorRepository.getArmorSetList(state.language.code)
                 )
             }
         }
     }
 
-    fun toggleExpansion(armorSetId: Int, hunterType: HunterType) {
+    fun onToggleExpansion(armorSetId: Int) {
         _uiState.update { state ->
-            when (hunterType) {
-                HunterType.BLADE -> {
-                    val newSet =
-                        if (armorSetId in state.expandedArmorSetsBlade)
-                            state.expandedArmorSetsBlade - armorSetId
-                        else
-                            state.expandedArmorSetsBlade + armorSetId
+            val newSet =
+                if (armorSetId in state.expandedArmorSets)
+                    state.expandedArmorSets - armorSetId
+                else
+                    state.expandedArmorSets + armorSetId
 
-                    state.copy(expandedArmorSetsBlade = newSet)
-                }
+            state.copy(expandedArmorSets = newSet)
+        }
+    }
 
-                HunterType.GUNNER -> {
-                    val newSet =
-                        if (armorSetId in state.expandedArmorSetsGunner)
-                            state.expandedArmorSetsGunner - armorSetId
-                        else
-                            state.expandedArmorSetsGunner + armorSetId
-
-                    state.copy(expandedArmorSetsGunner = newSet)
-                }
-
-                else -> state
+    fun onFilterChange(filter: ArmorSetFilter) {
+        viewModelScope.launch {
+            _uiState.update { state ->
+                state.copy(
+                    armorSets = armorRepository.getArmorSetList(state.language.code, filter),
+                    filter = filter
+                )
             }
         }
     }

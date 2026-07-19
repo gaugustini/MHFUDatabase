@@ -22,6 +22,7 @@ object Destinations {
     // Detail Routes
 
     const val ARMOR_DETAIL = "armor_detail/{armorId}"
+    const val ARMOR_SET_DETAIL = "armor_set_detail/{armorSetId}"
     const val DECORATION_DETAIL = "decoration_detail/{decorationId}"
     const val ITEM_DETAIL = "item_detail/{itemId}"
     const val LOCATION_DETAIL = "location_detail/{locationId}"
@@ -34,6 +35,7 @@ object Destinations {
     const val USER_EQUIPMENT_SET_DETAIL = "user_equipment_set_detail/{setId}/{hunterType}/{gender}"
 
     fun armorDetailRoute(armorId: Int): String = "armor_detail/$armorId"
+    fun armorSetDetailRoute(armorSetId: Int): String = "armor_set_detail/$armorSetId"
     fun decorationDetailRoute(decorationId: Int): String = "decoration_detail/$decorationId"
     fun itemDetailRoute(itemId: Int): String = "item_detail/$itemId"
     fun locationDetailRoute(locationId: Int): String = "location_detail/$locationId"

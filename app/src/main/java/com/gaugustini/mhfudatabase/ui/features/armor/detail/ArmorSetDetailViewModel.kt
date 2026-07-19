@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.ArmorRepository
 import com.gaugustini.mhfudatabase.domain.enums.Language
-import com.gaugustini.mhfudatabase.domain.model.Armor
+import com.gaugustini.mhfudatabase.domain.model.ArmorSet
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,21 +18,21 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class ArmorDetailState(
-    val armor: Armor? = null,
+data class ArmorSetDetailState(
+    val armorSet: ArmorSet? = null,
 )
 
 @HiltViewModel
-class ArmorDetailViewModel @Inject constructor(
+class ArmorSetDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val userPreferences: UserPreferences,
     private val armorRepository: ArmorRepository,
 ) : ViewModel() {
 
-    private val armorId: Int = checkNotNull(savedStateHandle["armorId"])
+    private val armorSetId: Int = checkNotNull(savedStateHandle["armorSetId"])
 
-    private val _uiState = MutableStateFlow(ArmorDetailState())
-    val uiState: StateFlow<ArmorDetailState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(ArmorSetDetailState())
+    val uiState: StateFlow<ArmorSetDetailState> = _uiState.asStateFlow()
 
     init {
         observeLanguage()
@@ -42,16 +42,16 @@ class ArmorDetailViewModel @Inject constructor(
         userPreferences.getLanguage()
             .distinctUntilChanged()
             .onEach { language ->
-                loadArmorDetails(language)
+                loadArmorSetDetails(language)
             }
             .launchIn(viewModelScope)
     }
 
-    private fun loadArmorDetails(language: Language) {
+    private fun loadArmorSetDetails(language: Language) {
         viewModelScope.launch {
             _uiState.update { state ->
                 state.copy(
-                    armor = armorRepository.getArmor(armorId, language.code),
+                    armorSet = armorRepository.getArmorSet(armorSetId, language.code),
                 )
             }
         }
