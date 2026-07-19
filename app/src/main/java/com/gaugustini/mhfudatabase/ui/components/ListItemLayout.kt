@@ -30,7 +30,7 @@ fun ListItemLayout(
     leadingContent: @Composable (() -> Unit)? = null,
     trailingContent: @Composable (() -> Unit)? = null,
     contentPadding: PaddingValues = PaddingValues(Dimension.Spacing.large),
-    backgroundColor: Color = MaterialTheme.colorScheme.surface,
+    backgroundColor: Color = Color.Unspecified,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
