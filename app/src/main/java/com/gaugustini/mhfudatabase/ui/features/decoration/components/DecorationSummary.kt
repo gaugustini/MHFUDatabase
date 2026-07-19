@@ -53,13 +53,13 @@ fun DecorationSummary(
                         } else {
                             MHFUColors.getItemColor(decoration.color)
                         },
-                        modifier = Modifier.size(Dimension.Size.extraSmall)
+                        modifier = Modifier.size(Dimension.Size.tiny)
                     )
                 }
             }
             Text(
                 text = stringResource(R.string.decoration_required_slots, decoration.requiredSlots),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurface,
             )
         }
@@ -76,7 +76,7 @@ fun DecorationSummary(
             )
             Text(
                 text = stringResource(R.string.decoration_buy_price),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurface,
             )
         }
@@ -93,7 +93,7 @@ fun DecorationSummary(
             )
             Text(
                 text = stringResource(R.string.decoration_sell_price),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurface,
             )
         }

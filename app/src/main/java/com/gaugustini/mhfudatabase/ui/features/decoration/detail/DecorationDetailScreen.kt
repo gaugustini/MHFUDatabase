@@ -1,11 +1,13 @@
 package com.gaugustini.mhfudatabase.ui.features.decoration.detail
 
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -45,6 +47,8 @@ fun DecorationDetailScreen(
     onSkillClick: (skillTreeId: Int) -> Unit = {},
     onItemClick: (itemId: Int) -> Unit = {},
 ) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+
     Scaffold(
         topBar = {
             TopBar(
@@ -52,17 +56,17 @@ fun DecorationDetailScreen(
                 navigationType = NavigationType.BACK,
                 navigation = navigateBack,
                 openSearch = openSearch,
+                scrollBehavior = scrollBehavior,
             )
         },
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
     ) { innerPadding ->
         if (uiState.decoration != null) {
             DecorationDetailContent(
                 decoration = uiState.decoration,
                 onSkillClick = onSkillClick,
                 onItemClick = onItemClick,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
+                modifier = Modifier.padding(innerPadding)
             )
         }
     }
