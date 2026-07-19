@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
@@ -19,7 +20,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class ArmorSetListState(
-    val language: Language = Language.ENGLISH,
     val filter: ArmorSetFilter = ArmorSetFilter(),
     val armorSets: List<ArmorSet> = emptyList(),
     val expandedArmorSets: Set<Int> = emptySet()
@@ -42,17 +42,16 @@ class ArmorSetListViewModel @Inject constructor(
         userPreferences.getLanguage()
             .distinctUntilChanged()
             .onEach { language ->
-                _uiState.update { it.copy(language = language) }
-                loadArmorSets()
+                loadArmorSets(language)
             }
             .launchIn(viewModelScope)
     }
 
-    private fun loadArmorSets() {
+    private fun loadArmorSets(language: Language) {
         viewModelScope.launch {
             _uiState.update { state ->
                 state.copy(
-                    armorSets = armorRepository.getArmorSetList(state.language.code)
+                    armorSets = armorRepository.getArmorSetList(language.code)
                 )
             }
         }
@@ -72,9 +71,10 @@ class ArmorSetListViewModel @Inject constructor(
 
     fun onFilterChange(filter: ArmorSetFilter) {
         viewModelScope.launch {
+            val language = userPreferences.getLanguage().first()
             _uiState.update { state ->
                 state.copy(
-                    armorSets = armorRepository.getArmorSetList(state.language.code, filter),
+                    armorSets = armorRepository.getArmorSetList(language.code, filter),
                     filter = filter
                 )
             }
