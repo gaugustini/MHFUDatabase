@@ -55,13 +55,11 @@ fun MonsterSourceListItem(
             )
         },
         trailingContent = {
-            if (source.percentage != null) {
-                Text(
-                    text = "${source.percentage}%",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
+            Text(
+                text = "${source.percentage}%",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         },
         contentPadding = PaddingValues(
             horizontal = Dimension.Padding.large,

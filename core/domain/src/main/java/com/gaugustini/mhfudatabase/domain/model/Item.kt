@@ -76,7 +76,7 @@ data class MonsterSource(
     val condition: String,
     val rank: Rank,
     val quantity: Int,
-    val percentage: Int?,
+    val percentage: Int,
 ) : ItemSource
 
 /**
