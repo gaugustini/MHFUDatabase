@@ -1,9 +1,20 @@
 package com.gaugustini.mhfudatabase.ui.features.location.detail
 
-import androidx.annotation.StringRes
-import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -11,20 +22,12 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.Rank
-import com.gaugustini.mhfudatabase.ui.components.EmptyContent
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
-import com.gaugustini.mhfudatabase.ui.components.TabbedLayout
 import com.gaugustini.mhfudatabase.ui.components.TopBar
+import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewLocationData
-
-enum class LocationDetailTab(@get:StringRes val title: Int) {
-    LOW_RANK(R.string.tab_location_low_rank),
-    HIGH_RANK(R.string.tab_location_high_rank),
-    G_RANK(R.string.tab_location_g_rank),
-    TREASURE(R.string.tab_location_treasure);
-}
 
 @Composable
 fun LocationDetailRoute(
@@ -39,6 +42,7 @@ fun LocationDetailRoute(
         uiState = uiState,
         navigateBack = navigateBack,
         openSearch = openSearch,
+        onChangeRank = viewModel::onChangeRank,
         onItemClick = onItemClick,
     )
 }
@@ -48,79 +52,65 @@ fun LocationDetailScreen(
     uiState: LocationDetailState = LocationDetailState(),
     navigateBack: () -> Unit = {},
     openSearch: () -> Unit = {},
+    onChangeRank: (rank: Rank) -> Unit = {},
     onItemClick: (itemId: Int) -> Unit = {},
 ) {
-    val pagerState = rememberPagerState(
-        initialPage = uiState.initialTab.ordinal,
-        pageCount = { LocationDetailTab.entries.size },
-    )
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
-    TabbedLayout(
-        pagerState = pagerState,
-        tabTitles = LocationDetailTab.entries.map { stringResource(it.title) },
+    Scaffold(
         topBar = {
             TopBar(
                 title = uiState.location?.name ?: stringResource(R.string.screen_location_detail),
                 navigationType = NavigationType.BACK,
                 navigation = navigateBack,
                 openSearch = openSearch,
+                scrollBehavior = scrollBehavior,
+                bottomContent = {
+                    LocationDetailRankFilter(
+                        selectedRank = uiState.rank,
+                        availableRanks = uiState.availableRanks,
+                        onChangeRank = onChangeRank,
+                    )
+                }
             )
         },
-    ) { tabIndex ->
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+    ) { innerPadding ->
         if (uiState.location != null) {
-            when (LocationDetailTab.entries[tabIndex]) {
-                LocationDetailTab.LOW_RANK -> {
-                    uiState.location.gatheringPoints?.get(Rank.LOW).let { points ->
-                        if (points?.isEmpty() ?: true) {
-                            EmptyContent()
-                        } else {
-                            LocationDetailRankContent(
-                                gatheringPoints = points,
-                                onItemClick = onItemClick,
-                            )
-                        }
-                    }
-                }
+            LocationDetailRankContent(
+                gatheringPoints = uiState.gatheringPoints,
+                onItemClick = onItemClick,
+                modifier = Modifier.padding(innerPadding),
+            )
+        }
+    }
+}
 
-                LocationDetailTab.HIGH_RANK -> {
-                    uiState.location.gatheringPoints?.get(Rank.HIGH).let { points ->
-                        if (points?.isEmpty() ?: true) {
-                            EmptyContent()
-                        } else {
-                            LocationDetailRankContent(
-                                gatheringPoints = points,
-                                onItemClick = onItemClick,
-                            )
-                        }
-                    }
-                }
+@Composable
+fun LocationDetailRankFilter(
+    selectedRank: Rank?,
+    availableRanks: List<Rank>,
+    modifier: Modifier = Modifier,
+    onChangeRank: (rank: Rank) -> Unit = {},
+) {
+    if (availableRanks.isEmpty() || selectedRank == null) return
 
-                LocationDetailTab.G_RANK -> {
-                    uiState.location.gatheringPoints?.get(Rank.G).let { points ->
-                        if (points?.isEmpty() ?: true) {
-                            EmptyContent()
-                        } else {
-                            LocationDetailRankContent(
-                                gatheringPoints = points,
-                                onItemClick = onItemClick,
-                            )
-                        }
-                    }
+    LazyRow(
+        contentPadding = PaddingValues(horizontal = Dimension.Padding.medium),
+        horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
+        modifier = modifier.fillMaxWidth(),
+    ) {
+        items(availableRanks) { rank ->
+            FilterChip(
+                selected = rank == selectedRank,
+                onClick = { onChangeRank(rank) },
+                label = {
+                    Text(
+                        rank.name.lowercase()
+                            .replaceFirstChar { it.uppercase() } // TODO: Change to string resources
+                    )
                 }
-
-                LocationDetailTab.TREASURE -> {
-                    uiState.location.gatheringPoints?.get(Rank.TREASURE).let { points ->
-                        if (points?.isEmpty() ?: true) {
-                            EmptyContent()
-                        } else {
-                            LocationDetailRankContent(
-                                gatheringPoints = points,
-                                onItemClick = onItemClick,
-                            )
-                        }
-                    }
-                }
-            }
+            )
         }
     }
 }
@@ -139,7 +129,7 @@ private class LocationDetailScreenPreviewParamProvider : PreviewParameterProvide
 
     override val values: Sequence<LocationDetailState> = sequenceOf(
         LocationDetailState(
-            initialTab = LocationDetailTab.LOW_RANK,
+            rank = Rank.LOW,
             location = PreviewLocationData.location,
         ),
     )
