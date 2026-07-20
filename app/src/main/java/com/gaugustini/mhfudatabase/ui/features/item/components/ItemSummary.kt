@@ -43,7 +43,7 @@ fun ItemSummary(
             )
             Text(
                 text = stringResource(R.string.item_carry_max),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurface,
             )
         }
@@ -60,7 +60,7 @@ fun ItemSummary(
             )
             Text(
                 text = stringResource(R.string.item_buy_price),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurface,
             )
         }
@@ -77,7 +77,7 @@ fun ItemSummary(
             )
             Text(
                 text = stringResource(R.string.item_sell_price),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurface,
             )
         }

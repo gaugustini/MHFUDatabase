@@ -168,6 +168,8 @@
     <string name="decoration_required_slots">Ranuras Requeridas</string>
 
     <!-- Item -->
+    <string name="item_usages">Usos</string>
+    <string name="item_sources">Obtención</string>
     <string name="item_rarity">Rareza %1$d</string>
     <string name="item_carry_max">Máx. para llevar</string>
     <string name="item_buy_price">Precio de Compra</string>
@@ -180,9 +182,9 @@
     <string name="item_location">Localización</string>
     <string name="item_monster">Monstruo</string>
     <string name="item_rank_unranked">Gremio 1★~2★</string>
-    <string name="item_rank_low">RB</string>
-    <string name="item_rank_high">RA</string>
-    <string name="item_rank_g">RG</string>
+    <string name="item_rank_low">Rango Bajo/Anciana</string>
+    <string name="item_rank_high">Rango Alto/Nekoht</string>
+    <string name="item_rank_g">Rango G</string>
     <string name="item_rank_treasure">Tesoro</string>
     <string name="item_rank_training">Entrenamiento</string>
     <string name="item_quest">Misión</string>

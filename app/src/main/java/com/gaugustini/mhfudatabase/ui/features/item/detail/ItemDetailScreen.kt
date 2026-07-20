@@ -1,27 +1,29 @@
 package com.gaugustini.mhfudatabase.ui.features.item.detail
 
-import androidx.annotation.StringRes
-import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.ui.components.EmptyContent
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
-import com.gaugustini.mhfudatabase.ui.components.TabbedLayout
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
 
-enum class ItemDetailTab(@get:StringRes val title: Int) {
-    ITEM_SUMMARY(R.string.tab_item_summary),
-    ITEM_USAGES(R.string.tab_item_usages),
-    ITEM_SOURCES(R.string.tab_item_sources);
+enum class ItemDetailPage {
+    ITEM_SUMMARY,
+    ITEM_USAGES,
+    ITEM_SOURCES;
 }
 
 @Composable
@@ -43,6 +45,7 @@ fun ItemDetailRoute(
         uiState = uiState,
         navigateBack = navigateBack,
         openSearch = openSearch,
+        onChangePage = viewModel::onChangePage,
         onArmorClick = onArmorClick,
         onDecorationClick = onDecorationClick,
         onItemClick = onItemClick,
@@ -58,6 +61,7 @@ fun ItemDetailScreen(
     uiState: ItemDetailState = ItemDetailState(),
     navigateBack: () -> Unit = {},
     openSearch: () -> Unit = {},
+    onChangePage: (ItemDetailPage) -> Unit = {},
     onArmorClick: (armorId: Int) -> Unit = {},
     onDecorationClick: (decorationId: Int) -> Unit = {},
     onItemClick: (itemId: Int) -> Unit = {},
@@ -66,60 +70,60 @@ fun ItemDetailScreen(
     onQuestClick: (questId: Int) -> Unit = {},
     onWeaponClick: (weaponId: Int) -> Unit = {},
 ) {
-    val pagerState = rememberPagerState(
-        initialPage = uiState.initialTab.ordinal,
-        pageCount = { ItemDetailTab.entries.size },
-    )
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
-    TabbedLayout(
-        pagerState = pagerState,
-        tabTitles = ItemDetailTab.entries.map { stringResource(it.title) },
+    Scaffold(
         topBar = {
             TopBar(
                 title = uiState.item?.name ?: stringResource(R.string.screen_item_detail),
                 navigationType = NavigationType.BACK,
-                navigation = navigateBack,
+                navigation = {
+                    if (uiState.page == ItemDetailPage.ITEM_SUMMARY)
+                        navigateBack()
+                    else
+                        onChangePage(ItemDetailPage.ITEM_SUMMARY)
+                },
                 openSearch = openSearch,
+                scrollBehavior = scrollBehavior,
             )
         },
-    ) { tabIndex ->
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+    ) { innerPadding ->
         if (uiState.item != null) {
-            when (ItemDetailTab.entries[tabIndex]) {
-                ItemDetailTab.ITEM_SUMMARY -> {
+            when (uiState.page) {
+                ItemDetailPage.ITEM_SUMMARY -> {
                     ItemSummaryContent(
                         item = uiState.item,
+                        onChangePage = onChangePage,
+                        modifier = Modifier.padding(innerPadding),
                     )
                 }
 
-                ItemDetailTab.ITEM_USAGES -> {
+                ItemDetailPage.ITEM_USAGES -> {
                     uiState.item.usages?.let { usages ->
-                        if (usages.isEmpty()) {
-                            EmptyContent()
-                        } else {
-                            ItemUsagesContent(
-                                usages = usages,
-                                onArmorClick = onArmorClick,
-                                onDecorationClick = onDecorationClick,
-                                onItemClick = onItemClick,
-                                onWeaponClick = onWeaponClick,
-                            )
-                        }
+                        ItemUsagesContent(
+                            usages = usages,
+                            onArmorClick = onArmorClick,
+                            onDecorationClick = onDecorationClick,
+                            onItemClick = onItemClick,
+                            onWeaponClick = onWeaponClick,
+                            onChangePage = onChangePage,
+                            modifier = Modifier.padding(innerPadding),
+                        )
                     }
                 }
 
-                ItemDetailTab.ITEM_SOURCES -> {
+                ItemDetailPage.ITEM_SOURCES -> {
                     uiState.item.sources?.let { sources ->
-                        if (sources.isEmpty()) {
-                            EmptyContent()
-                        } else {
-                            ItemSourcesContent(
-                                sources = sources,
-                                onItemClick = onItemClick,
-                                onLocationClick = onLocationClick,
-                                onMonsterClick = onMonsterClick,
-                                onQuestClick = onQuestClick,
-                            )
-                        }
+                        ItemSourcesContent(
+                            sources = sources,
+                            onItemClick = onItemClick,
+                            onLocationClick = onLocationClick,
+                            onMonsterClick = onMonsterClick,
+                            onQuestClick = onQuestClick,
+                            onChangePage = onChangePage,
+                            modifier = Modifier.padding(innerPadding),
+                        )
                     }
                 }
             }
@@ -141,15 +145,15 @@ private class ItemDetailScreenPreviewParamProvider : PreviewParameterProvider<It
 
     override val values: Sequence<ItemDetailState> = sequenceOf(
         ItemDetailState(
-            initialTab = ItemDetailTab.ITEM_SUMMARY,
+            page = ItemDetailPage.ITEM_SUMMARY,
             item = PreviewItemData.item,
         ),
         ItemDetailState(
-            initialTab = ItemDetailTab.ITEM_USAGES,
+            page = ItemDetailPage.ITEM_USAGES,
             item = PreviewItemData.item,
         ),
         ItemDetailState(
-            initialTab = ItemDetailTab.ITEM_SOURCES,
+            page = ItemDetailPage.ITEM_SOURCES,
             item = PreviewItemData.item,
         ),
     )

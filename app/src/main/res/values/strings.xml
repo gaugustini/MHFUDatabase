@@ -168,6 +168,8 @@
     <string name="decoration_required_slots">Required Slots</string>
 
     <!-- Item -->
+    <string name="item_usages">Usages</string>
+    <string name="item_sources">Obtaining</string>
     <string name="item_rarity">Rarity %1$d</string>
     <string name="item_carry_max">Carry Max</string>
     <string name="item_buy_price">Buy Price</string>
@@ -180,9 +182,9 @@
     <string name="item_location">Location</string>
     <string name="item_monster">Monster</string>
     <string name="item_rank_unranked">Guild 1★~2★</string>
-    <string name="item_rank_low">LR</string>
-    <string name="item_rank_high">HR</string>
-    <string name="item_rank_g">GR</string>
+    <string name="item_rank_low">Low Rank/Elder</string>
+    <string name="item_rank_high">High Rank/Nekoht</string>
+    <string name="item_rank_g">G Rank</string>
     <string name="item_rank_treasure">Treasure</string>
     <string name="item_rank_training">Training</string>
     <string name="item_quest">Quest</string>

@@ -1,7 +1,6 @@
 package com.gaugustini.mhfudatabase.ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
@@ -26,7 +24,6 @@ import com.gaugustini.mhfudatabase.util.DevicePreviews
 fun ButtonPage(
     title: String,
     modifier: Modifier = Modifier,
-    contentColor: Color = MaterialTheme.colorScheme.primary,
     backgroundColor: Color = MaterialTheme.colorScheme.surface,
     onButtonClick: () -> Unit = {}
 ) {
@@ -35,7 +32,6 @@ fun ButtonPage(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .border(2.dp, contentColor, shape)
             .background(backgroundColor, shape)
             .clip(shape)
             .clickable { onButtonClick() }
@@ -44,13 +40,13 @@ fun ButtonPage(
         Text(
             text = title,
             style = MaterialTheme.typography.titleSmall,
-            color = contentColor,
+            color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.weight(1f)
         )
         Icon(
             imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
             contentDescription = null,
-            tint = contentColor,
+            tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier.size(Dimension.Size.extraSmall)
         )
     }
