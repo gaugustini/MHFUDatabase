@@ -39,7 +39,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.HunterType
 import com.gaugustini.mhfudatabase.domain.filter.ArmorSetFilter
-import com.gaugustini.mhfudatabase.domain.model.ArmorSet
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.features.armor.components.ArmorSetListItem
@@ -100,16 +99,28 @@ fun ArmorSetListScreen(
         },
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
     ) { innerPadding ->
-        ArmorSetList(
-            armorSets = uiState.armorSets,
-            expandedArmorSets = uiState.expandedArmorSets,
-            onToggleExpand = { onToggleExpand(it) },
-            onArmorClick = onArmorClick,
-            onArmorSetClick = onArmorSetClick,
+        LazyColumn(
+            contentPadding = PaddingValues(Dimension.Padding.medium),
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-        )
+        ) {
+            itemsWithDivider(
+                items = uiState.armorSets,
+                key = { it.id }
+            ) { armorSet ->
+                ArmorSetListItem(
+                    armorSet = armorSet,
+                    expanded = armorSet.id in uiState.expandedArmorSets,
+                    onToggleExpand = { onToggleExpand(armorSet.id) },
+                    onArmorClick = onArmorClick,
+                    onArmorSetClick = onArmorSetClick,
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(Dimension.Radius.small))
+                        .background(MaterialTheme.colorScheme.surface)
+                )
+            }
+        }
     }
 }
 
@@ -171,37 +182,6 @@ fun ArmorSetListFilter(
                     )
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun ArmorSetList(
-    armorSets: List<ArmorSet>,
-    expandedArmorSets: Set<Int>,
-    modifier: Modifier = Modifier,
-    onToggleExpand: (armorSetId: Int) -> Unit = {},
-    onArmorClick: (armorId: Int) -> Unit = {},
-    onArmorSetClick: (armorSetId: Int) -> Unit = {},
-) {
-    LazyColumn(
-        contentPadding = PaddingValues(Dimension.Padding.medium),
-        modifier = modifier
-    ) {
-        itemsWithDivider(
-            items = armorSets,
-            key = { it.id }
-        ) { armorSet ->
-            ArmorSetListItem(
-                armorSet = armorSet,
-                expanded = armorSet.id in expandedArmorSets,
-                onToggleExpand = { onToggleExpand(armorSet.id) },
-                onArmorClick = onArmorClick,
-                onArmorSetClick = onArmorSetClick,
-                modifier = Modifier
-                    .clip(RoundedCornerShape(Dimension.Radius.small))
-                    .background(MaterialTheme.colorScheme.surface)
-            )
         }
     }
 }
