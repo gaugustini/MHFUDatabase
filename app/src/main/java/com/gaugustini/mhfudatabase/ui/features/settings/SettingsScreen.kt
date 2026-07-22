@@ -1,21 +1,26 @@
 package com.gaugustini.mhfudatabase.ui.features.settings
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -23,6 +28,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.Language
 import com.gaugustini.mhfudatabase.domain.enums.ThemeMode
+import com.gaugustini.mhfudatabase.ui.components.AppHDivider
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TopBar
@@ -57,6 +63,8 @@ fun SettingsScreen(
     onThemeChange: (ThemeMode) -> Unit = {},
     onLanguageChange: (Language) -> Unit = {},
 ) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+
     Scaffold(
         topBar = {
             TopBar(
@@ -64,19 +72,24 @@ fun SettingsScreen(
                 navigationType = NavigationType.BACK,
                 navigation = navigateBack,
                 openSearch = openSearch,
+                scrollBehavior = scrollBehavior,
             )
         },
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
     ) { innerPadding ->
         Column(
             modifier = Modifier
-                .fillMaxSize()
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
+                .padding(horizontal = Dimension.Padding.medium)
+                .clip(RoundedCornerShape(Dimension.Radius.medium))
+                .background(MaterialTheme.colorScheme.surface)
         ) {
             ThemeSettingsItem(
                 themeMode = uiState.themeMode,
                 onThemeChange = onThemeChange
             )
+            AppHDivider()
             LanguageSettingsItem(
                 language = uiState.language,
                 onLanguageChange = onLanguageChange
