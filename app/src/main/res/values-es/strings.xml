@@ -235,12 +235,23 @@
     <string name="location_gather_fish">Pesca</string>
 
     <!-- Monster -->
+    <string name="monster_damage_stats">Info. de Daño</string>
+    <string name="monster_reward">Recompensas (Brillos/Captura/Partes Rompibles)</string>
+    <string name="monster_quest">Misiones</string>
     <string name="monster_item_effectiveness">Efectividad de Objetos</string>
     <string name="monster_item_effectiveness_none">Ninguno</string>
     <string name="monster_state_normal">Normal</string>
     <string name="monster_state_enraged">Enfurecido</string>
     <string name="monster_physical_damage">Físico</string>
+    <string name="monster_cut_damage">Daño de corte</string>
+    <string name="monster_impact_damage">Daño de impacto</string>
+    <string name="monster_shot_damage">Daño de disparo</string>
     <string name="monster_elemental_damage">Elemental</string>
+    <string name="monster_fire_damage">Fuego</string>
+    <string name="monster_water_damage">Agua</string>
+    <string name="monster_thunder_damage">Trueno</string>
+    <string name="monster_ice_damage">Hielo</string>
+    <string name="monster_dragon_damage">Dragón</string>
     <string name="monster_ailment_status">Estado</string>
     <string name="monster_ailment_initial">Inicial</string>
     <string name="monster_ailment_increase">Aumento</string>

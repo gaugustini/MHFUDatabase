@@ -1,11 +1,18 @@
 package com.gaugustini.mhfudatabase.ui.features.monster.detail
 
+import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import com.gaugustini.mhfudatabase.domain.model.MonsterAilmentStats
 import com.gaugustini.mhfudatabase.domain.model.MonsterDamageStats
 import com.gaugustini.mhfudatabase.ui.features.monster.components.MonsterAilments
@@ -21,27 +28,52 @@ fun MonsterDetailDamageContent(
     damage: List<MonsterDamageStats>,
     ailments: List<MonsterAilmentStats>,
     modifier: Modifier = Modifier,
+    onChangePage: (MonsterDetailPage) -> Unit = {},
 ) {
+    BackHandler {
+        onChangePage(MonsterDetailPage.SUMMARY)
+    }
+
     Column(
+        verticalArrangement = Arrangement.spacedBy(Dimension.Padding.medium),
         modifier = modifier
+            .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(bottom = Dimension.Padding.endContent)
     ) {
-        MonsterDamagePhysical(
-            damage = damage,
-            modifier = Modifier.padding(bottom = Dimension.Padding.large)
-        )
+        Column(
+            modifier = Modifier
+                .padding(horizontal = Dimension.Padding.medium)
+                .clip(RoundedCornerShape(Dimension.Radius.medium))
+                .background(MaterialTheme.colorScheme.surface)
+        ) {
+            MonsterDamagePhysical(
+                damage = damage,
+            )
+        }
 
-        MonsterDamageElemental(
-            damage = damage,
-            modifier = Modifier.padding(bottom = Dimension.Padding.large)
-        )
+        Column(
+            modifier = Modifier
+                .padding(horizontal = Dimension.Padding.medium)
+                .clip(RoundedCornerShape(Dimension.Radius.medium))
+                .background(MaterialTheme.colorScheme.surface)
+        ) {
+            MonsterDamageElemental(
+                damage = damage,
+            )
+        }
 
         if (ailments.isNotEmpty()) {
-            MonsterAilments(
-                ailments = ailments,
-                modifier = Modifier.padding(bottom = Dimension.Padding.large)
-            )
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = Dimension.Padding.medium)
+                    .clip(RoundedCornerShape(Dimension.Radius.medium))
+                    .background(MaterialTheme.colorScheme.surface)
+            ) {
+                MonsterAilments(
+                    ailments = ailments,
+                )
+            }
         }
     }
 }

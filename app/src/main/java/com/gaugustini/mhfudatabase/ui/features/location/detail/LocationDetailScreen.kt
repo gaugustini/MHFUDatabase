@@ -1,11 +1,11 @@
 package com.gaugustini.mhfudatabase.ui.features.location.detail
 
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -95,12 +95,14 @@ fun LocationDetailRankFilter(
 ) {
     if (availableRanks.isEmpty() || selectedRank == null) return
 
-    LazyRow(
-        contentPadding = PaddingValues(horizontal = Dimension.Padding.medium),
+    Row(
         horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .horizontalScroll(rememberScrollState())
+            .padding(horizontal = Dimension.Padding.medium),
     ) {
-        items(availableRanks) { rank ->
+        availableRanks.forEach { rank ->
             FilterChip(
                 selected = rank == selectedRank,
                 onClick = { onChangeRank(rank) },

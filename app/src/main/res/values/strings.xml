@@ -235,12 +235,23 @@
     <string name="location_gather_fish">Fishing</string>
 
     <!-- Monster -->
+    <string name="monster_damage_stats">Damage Stats</string>
+    <string name="monster_reward">Rewards (Shiny/Capture/Breakable Parts)</string>
+    <string name="monster_quest">Quests</string>
     <string name="monster_item_effectiveness">Items Effectiveness</string>
     <string name="monster_item_effectiveness_none">None</string>
     <string name="monster_state_normal">Normal</string>
     <string name="monster_state_enraged">Enraged</string>
     <string name="monster_physical_damage">Physical</string>
+    <string name="monster_cut_damage">Cutting damage</string>
+    <string name="monster_impact_damage">Impact damage</string>
+    <string name="monster_shot_damage">Shot damage</string>
     <string name="monster_elemental_damage">Elemental</string>
+    <string name="monster_fire_damage">Fire</string>
+    <string name="monster_water_damage">Water</string>
+    <string name="monster_thunder_damage">Thunder</string>
+    <string name="monster_ice_damage">Ice</string>
+    <string name="monster_dragon_damage">Dragon</string>
     <string name="monster_ailment_status">Status</string>
     <string name="monster_ailment_initial">Initial</string>
     <string name="monster_ailment_increase">Increase</string>
