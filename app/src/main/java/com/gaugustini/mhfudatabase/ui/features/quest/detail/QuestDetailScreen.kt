@@ -1,26 +1,29 @@
 package com.gaugustini.mhfudatabase.ui.features.quest.detail
 
-import androidx.annotation.StringRes
-import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
-import com.gaugustini.mhfudatabase.ui.components.EmptyContent
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
-import com.gaugustini.mhfudatabase.ui.components.TabbedLayout
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewQuestData
 
-enum class QuestDetailTab(@get:StringRes val title: Int) {
-    SUMMARY(R.string.tab_quest_detail_summary),
-    REWARD(R.string.tab_quest_detail_reward);
+enum class QuestDetailPage {
+    SUMMARY,
+    SUPPLY_BOX,
+    REWARD;
 }
 
 @Composable
@@ -38,6 +41,7 @@ fun QuestDetailRoute(
         uiState = uiState,
         navigateBack = navigateBack,
         openSearch = openSearch,
+        onChangePage = viewModel::onChangePage,
         onItemClick = onItemClick,
         onLocationClick = onLocationClick,
         onMonsterClick = onMonsterClick,
@@ -49,49 +53,58 @@ fun QuestDetailScreen(
     uiState: QuestDetailState = QuestDetailState(),
     navigateBack: () -> Unit = {},
     openSearch: () -> Unit = {},
+    onChangePage: (QuestDetailPage) -> Unit = {},
     onItemClick: (itemId: Int) -> Unit = {},
     onLocationClick: (locationId: Int) -> Unit = {},
     onMonsterClick: (monsterId: Int) -> Unit = {},
 ) {
-    val pagerState = rememberPagerState(
-        initialPage = uiState.initialTab.ordinal,
-        pageCount = { QuestDetailTab.entries.size },
-    )
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
-    TabbedLayout(
-        pagerState = pagerState,
-        tabTitles = QuestDetailTab.entries.map { stringResource(it.title) },
+    Scaffold(
         topBar = {
             TopBar(
                 title = uiState.quest?.name ?: stringResource(R.string.screen_quest_detail),
                 navigationType = NavigationType.BACK,
-                navigation = navigateBack,
+                navigation = {
+                    if (uiState.page == QuestDetailPage.SUMMARY)
+                        navigateBack()
+                    else
+                        onChangePage(QuestDetailPage.SUMMARY)
+                },
                 openSearch = openSearch,
+                scrollBehavior = scrollBehavior,
             )
         },
-    ) { tabIndex ->
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+    ) { innerPadding ->
         if (uiState.quest != null) {
-            when (QuestDetailTab.entries[tabIndex]) {
-                QuestDetailTab.SUMMARY -> {
+            when (uiState.page) {
+                QuestDetailPage.SUMMARY -> {
                     QuestDetailSummaryContent(
                         quest = uiState.quest,
-                        onItemClick = onItemClick,
+                        onChangePage = onChangePage,
                         onLocationClick = onLocationClick,
                         onMonsterClick = onMonsterClick,
+                        modifier = Modifier.padding(innerPadding),
                     )
                 }
 
-                QuestDetailTab.REWARD -> {
-                    uiState.quest.rewards?.let { rewards ->
-                        if (rewards.isEmpty()) {
-                            EmptyContent()
-                        } else {
-                            QuestDetailRewardContent(
-                                rewards = rewards,
-                                onItemClick = onItemClick,
-                            )
-                        }
-                    }
+                QuestDetailPage.SUPPLY_BOX -> {
+                    QuestDetailSupplyContent(
+                        supplies = uiState.quest.supplies ?: emptyList(),
+                        onChangePage = onChangePage,
+                        onItemClick = onItemClick,
+                        modifier = Modifier.padding(innerPadding),
+                    )
+                }
+
+                QuestDetailPage.REWARD -> {
+                    QuestDetailRewardContent(
+                        rewards = uiState.quest.rewards ?: emptyList(),
+                        onChangePage = onChangePage,
+                        onItemClick = onItemClick,
+                        modifier = Modifier.padding(innerPadding),
+                    )
                 }
             }
         }
@@ -112,11 +125,11 @@ private class QuestDetailScreenPreviewParamProvider : PreviewParameterProvider<Q
 
     override val values: Sequence<QuestDetailState> = sequenceOf(
         QuestDetailState(
-            initialTab = QuestDetailTab.SUMMARY,
+            page = QuestDetailPage.SUMMARY,
             quest = PreviewQuestData.quest,
         ),
         QuestDetailState(
-            initialTab = QuestDetailTab.REWARD,
+            page = QuestDetailPage.REWARD,
             quest = PreviewQuestData.quest,
         ),
     )

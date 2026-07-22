@@ -295,6 +295,7 @@
     <string name="quest_guild_stars">Gremio %1$d ★</string>
     <string name="quest_training_stars">Entren. %1$d ★</string>
     <string name="quest_reward">Recompensa</string>
+    <string name="quest_rewards">Recompensas</string>
     <string name="quest_fee">Cuota</string>
     <string name="quest_time_limit">Límite de Tiempo</string>
     <string name="quest_location">Localización</string>

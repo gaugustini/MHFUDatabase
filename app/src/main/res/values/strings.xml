@@ -295,6 +295,7 @@
     <string name="quest_guild_stars">Guild %1$d ★</string>
     <string name="quest_training_stars">Training %1$d ★</string>
     <string name="quest_reward">Reward</string>
+    <string name="quest_rewards">Rewards</string>
     <string name="quest_fee">Fee</string>
     <string name="quest_time_limit">Time Limit</string>
     <string name="quest_location">Location</string>
