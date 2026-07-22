@@ -31,11 +31,7 @@ fun SearchListItem(
     modifier: Modifier = Modifier,
     onSkillClick: (skillTreeId: Int) -> Unit = {},
 ) {
-    Column(
-        modifier = modifier
-            .clip(RoundedCornerShape(Dimension.Radius.small))
-            .background(MaterialTheme.colorScheme.surface)
-    ) {
+    Column {
         ListItemLayout(
             leadingContent = {
                 ItemIcon(
@@ -64,7 +60,10 @@ fun SearchListItem(
                 horizontal = SearchListItemDefaults.HorizontalPadding,
                 vertical = SearchListItemDefaults.VerticalPadding,
             ),
-            modifier = Modifier.clickable { onSkillClick(skill.id) }
+            modifier = modifier
+                .clip(RoundedCornerShape(Dimension.Radius.small))
+                .background(MaterialTheme.colorScheme.surface)
+                .clickable { onSkillClick(skill.id) }
         )
         AppHDivider()
     }

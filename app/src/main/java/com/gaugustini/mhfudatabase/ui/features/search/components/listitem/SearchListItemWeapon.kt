@@ -29,11 +29,7 @@ fun SearchListItem(
     modifier: Modifier = Modifier,
     onWeaponClick: (weaponId: Int) -> Unit = {},
 ) {
-    Column(
-        modifier = modifier
-            .clip(RoundedCornerShape(Dimension.Radius.small))
-            .background(MaterialTheme.colorScheme.surface)
-    ) {
+    Column {
         ListItemLayout(
             leadingContent = {
                 WeaponIcon(
@@ -62,7 +58,10 @@ fun SearchListItem(
                 horizontal = SearchListItemDefaults.HorizontalPadding,
                 vertical = SearchListItemDefaults.VerticalPadding,
             ),
-            modifier = Modifier.clickable { onWeaponClick(weapon.id) }
+            modifier = modifier
+                .clip(RoundedCornerShape(Dimension.Radius.small))
+                .background(MaterialTheme.colorScheme.surface)
+                .clickable { onWeaponClick(weapon.id) }
         )
         AppHDivider()
     }

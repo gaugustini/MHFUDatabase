@@ -29,11 +29,7 @@ fun SearchListItem(
     modifier: Modifier = Modifier,
     onItemClick: (itemId: Int) -> Unit = {},
 ) {
-    Column(
-        modifier = modifier
-            .clip(RoundedCornerShape(Dimension.Radius.small))
-            .background(MaterialTheme.colorScheme.surface)
-    ) {
+    Column {
         ListItemLayout(
             leadingContent = {
                 ItemIcon(
@@ -62,7 +58,10 @@ fun SearchListItem(
                 horizontal = SearchListItemDefaults.HorizontalPadding,
                 vertical = SearchListItemDefaults.VerticalPadding,
             ),
-            modifier = Modifier.clickable { onItemClick(item.id) }
+            modifier = modifier
+                .clip(RoundedCornerShape(Dimension.Radius.small))
+                .background(MaterialTheme.colorScheme.surface)
+                .clickable { onItemClick(item.id) }
         )
         AppHDivider()
     }

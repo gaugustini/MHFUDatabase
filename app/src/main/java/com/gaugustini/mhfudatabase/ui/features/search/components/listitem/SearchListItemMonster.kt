@@ -29,11 +29,7 @@ fun SearchListItem(
     modifier: Modifier = Modifier,
     onMonsterClick: (monsterId: Int) -> Unit = {},
 ) {
-    Column(
-        modifier = modifier
-            .clip(RoundedCornerShape(Dimension.Radius.small))
-            .background(MaterialTheme.colorScheme.surface)
-    ) {
+    Column {
         ListItemLayout(
             leadingContent = {
                 MonsterIcon(
@@ -61,7 +57,10 @@ fun SearchListItem(
                 horizontal = SearchListItemDefaults.HorizontalPadding,
                 vertical = SearchListItemDefaults.VerticalPadding,
             ),
-            modifier = Modifier.clickable { onMonsterClick(monster.id) }
+            modifier = modifier
+                .clip(RoundedCornerShape(Dimension.Radius.small))
+                .background(MaterialTheme.colorScheme.surface)
+                .clickable { onMonsterClick(monster.id) }
         )
         AppHDivider()
     }

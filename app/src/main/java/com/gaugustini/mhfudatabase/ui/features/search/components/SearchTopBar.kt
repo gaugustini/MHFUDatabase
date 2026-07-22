@@ -2,9 +2,14 @@ package com.gaugustini.mhfudatabase.ui.features.search.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -14,10 +19,10 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
@@ -27,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -34,6 +40,7 @@ import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
+import kotlin.math.roundToInt
 
 @Composable
 fun SearchTopBar(
@@ -44,36 +51,39 @@ fun SearchTopBar(
     onQueryChange: (String) -> Unit = {},
     onClearQuery: () -> Unit = {},
 ) {
-    TopAppBar(
-        title = {
-            SearchInputText(
-                query = query,
-                onQueryChange = onQueryChange,
-                onClearQuery = onClearQuery,
-                modifier = Modifier.fillMaxWidth()
-            )
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.Transparent,
-            scrolledContainerColor = Color.Transparent,
-            navigationIconContentColor = MaterialTheme.colorScheme.onBackground,
-            titleContentColor = MaterialTheme.colorScheme.onBackground,
-            actionIconContentColor = MaterialTheme.colorScheme.onBackground,
-            subtitleContentColor = MaterialTheme.colorScheme.onBackground,
-        ),
-        navigationIcon = {
-            IconButton(
-                onClick = navigateBack,
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = null,
-                    modifier = Modifier.size(Dimension.Size.extraSmall)
-                )
+    Layout(
+        modifier = modifier,
+        measurePolicy = { measurables, constraints ->
+            val placeable = measurables.first().measure(constraints.copy(minHeight = 0))
+            val totalHeight = placeable.height
+
+            scrollBehavior.state.heightOffsetLimit = -totalHeight.toFloat()
+
+            val currentHeight =
+                (totalHeight + scrollBehavior.state.heightOffset.roundToInt()).coerceAtLeast(0)
+
+            layout(constraints.maxWidth, currentHeight) {
+                placeable.place(0, scrollBehavior.state.heightOffset.roundToInt())
             }
         },
-        scrollBehavior = scrollBehavior,
-        modifier = modifier
+        content = {
+            Surface(
+                color = Color.Transparent,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .windowInsetsPadding(
+                        WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Top)
+                    )
+            ) {
+                SearchInputText(
+                    query = query,
+                    onBackClick = navigateBack,
+                    onQueryChange = onQueryChange,
+                    onClearQuery = onClearQuery,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
     )
 }
 
@@ -81,6 +91,7 @@ fun SearchTopBar(
 fun SearchInputText(
     query: String,
     modifier: Modifier = Modifier,
+    onBackClick: () -> Unit = {},
     onQueryChange: (String) -> Unit = {},
     onClearQuery: () -> Unit = {},
 ) {
@@ -96,6 +107,17 @@ fun SearchInputText(
         onValueChange = onQueryChange,
         textStyle = MaterialTheme.typography.titleLarge,
         shape = MaterialTheme.shapes.medium,
+        leadingIcon = {
+            IconButton(
+                onClick = onBackClick,
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = null,
+                    modifier = Modifier.size(Dimension.Size.extraSmall)
+                )
+            }
+        },
         placeholder = {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
@@ -145,7 +167,10 @@ fun SearchInputText(
         ),
         modifier = modifier
             .focusRequester(focusRequester)
-            .padding(vertical = Dimension.Padding.medium)
+            .padding(
+                horizontal = Dimension.Padding.large,
+                vertical = Dimension.Padding.medium,
+            )
     )
 }
 

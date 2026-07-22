@@ -50,11 +50,7 @@ fun SearchListItem(
         QuestGroup.GROUP_CHALLENGE -> R.string.search_quest_challenge
     }
 
-    Column(
-        modifier = modifier
-            .clip(RoundedCornerShape(Dimension.Radius.small))
-            .background(MaterialTheme.colorScheme.surface)
-    ) {
+    Column {
         ListItemLayout(
             leadingContent = {
                 QuestIcon(
@@ -82,7 +78,10 @@ fun SearchListItem(
                 horizontal = SearchListItemDefaults.HorizontalPadding,
                 vertical = SearchListItemDefaults.VerticalPadding,
             ),
-            modifier = Modifier.clickable { onQuestClick(quest.id) }
+            modifier = modifier
+                .clip(RoundedCornerShape(Dimension.Radius.small))
+                .background(MaterialTheme.colorScheme.surface)
+                .clickable { onQuestClick(quest.id) }
         )
         AppHDivider()
     }

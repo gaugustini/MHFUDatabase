@@ -30,11 +30,7 @@ fun SearchListItem(
     modifier: Modifier = Modifier,
     onArmorClick: (armorId: Int) -> Unit = {},
 ) {
-    Column(
-        modifier = modifier
-            .clip(RoundedCornerShape(Dimension.Radius.small))
-            .background(MaterialTheme.colorScheme.surface)
-    ) {
+    Column {
         ListItemLayout(
             leadingContent = {
                 ArmorIcon(
@@ -69,7 +65,10 @@ fun SearchListItem(
                 horizontal = SearchListItemDefaults.HorizontalPadding,
                 vertical = SearchListItemDefaults.VerticalPadding,
             ),
-            modifier = Modifier.clickable { onArmorClick(armor.id) }
+            modifier = modifier
+                .clip(RoundedCornerShape(Dimension.Radius.small))
+                .background(MaterialTheme.colorScheme.surface)
+                .clickable { onArmorClick(armor.id) }
         )
         AppHDivider()
     }

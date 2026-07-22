@@ -224,7 +224,7 @@ fun QuestList(
                     expanded = isExpanded,
                     onToggleExpand = { onToggleExpand(group) },
                     modifier = Modifier
-                        .padding(bottom = if (isExpanded) 0.dp else Dimension.Padding.medium)
+                        .padding(bottom = if (isExpanded) 0.dp else Dimension.Padding.small)
                         .clip(
                             RoundedCornerShape(
                                 topStart = Dimension.Radius.medium,
@@ -264,7 +264,7 @@ fun QuestList(
                         }
                     }
                     if (isLastQuestInGroup) {
-                        Spacer(modifier = Modifier.height(Dimension.Spacing.medium))
+                        Spacer(modifier = Modifier.height(Dimension.Spacing.small))
                     }
                 }
             }
