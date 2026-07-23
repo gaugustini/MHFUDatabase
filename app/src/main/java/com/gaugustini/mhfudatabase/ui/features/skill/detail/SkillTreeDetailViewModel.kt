@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class SkillTreeDetailState(
-    val initialTab: SkillTreeDetailTab = SkillTreeDetailTab.SKILL_TREE_SUMMARY,
+    val page: SkillTreeDetailPage = SkillTreeDetailPage.SUMMARY,
     val skillTree: SkillTree? = null,
     val decorations: List<Decoration> = emptyList(),
     val armors: List<Armor> = emptyList(),
@@ -61,6 +61,14 @@ class SkillTreeDetailViewModel @Inject constructor(
                     armors = skillRepository.getArmorListWithSkill(skillTreeId, language.code),
                 )
             }
+        }
+    }
+
+    fun onChangePage(page: SkillTreeDetailPage) {
+        _uiState.update { state ->
+            state.copy(
+                page = page,
+            )
         }
     }
 

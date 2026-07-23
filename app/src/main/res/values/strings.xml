@@ -363,6 +363,7 @@
     <string name="detail_quest_group_group_challenge">Challenge</string>
 
     <!-- Skill Tree -->
+    <string name="skill_tree_equipment">Equipments</string>
     <string name="skill_empty_list">None</string>
     <string name="skill_decoration_list">Decoration</string>
     <string name="skill_armor_list">Armor</string>
