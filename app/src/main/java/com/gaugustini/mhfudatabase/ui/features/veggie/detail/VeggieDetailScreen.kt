@@ -1,14 +1,20 @@
 package com.gaugustini.mhfudatabase.ui.features.veggie.detail
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -18,8 +24,10 @@ import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.features.veggie.components.VeggieTradeListItem
+import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
+import com.gaugustini.mhfudatabase.util.itemsWithDivider
 import com.gaugustini.mhfudatabase.util.preview.PreviewVeggieData
 
 @Composable
@@ -46,6 +54,8 @@ fun VeggieDetailScreen(
     openSearch: () -> Unit = {},
     onItemClick: (itemId: Int) -> Unit = {},
 ) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+
     Scaffold(
         topBar = {
             TopBar(
@@ -54,21 +64,29 @@ fun VeggieDetailScreen(
                 navigationType = NavigationType.BACK,
                 navigation = navigateBack,
                 openSearch = openSearch,
+                scrollBehavior = scrollBehavior,
             )
         },
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
     ) { innerPadding ->
         uiState.veggieLocation?.trades?.let { trades ->
             LazyColumn(
+                contentPadding = PaddingValues(Dimension.Padding.medium),
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
             ) {
-                items(trades) { trade ->
+                itemsWithDivider(
+                    items = trades,
+                    key = { trade -> "${trade.itemTraded.id}_${trade.itemCommon.id}_${trade.itemRare.id}" }
+                ) { trade ->
                     VeggieTradeListItem(
                         veggieTrade = trade,
                         onItemClick = onItemClick,
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(Dimension.Radius.small))
+                            .background(MaterialTheme.colorScheme.surface)
                     )
-                    HorizontalDivider()
                 }
             }
         }
