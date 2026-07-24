@@ -105,7 +105,7 @@ fun Modifier.animateItemExpandCollapse(
                 easing = FastOutSlowInEasing
             ),
             placementSpec = spring(
-                dampingRatio = Spring.DampingRatioLowBouncy,
+                dampingRatio = 0.85f,
                 stiffness = Spring.StiffnessMediumLow
             )
         )

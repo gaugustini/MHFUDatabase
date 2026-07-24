@@ -444,7 +444,10 @@
     <string name="weapon_finals">Finales</string>
 
     <!-- User Equipment Set -->
+    <string name="user_set_empty_list">Toca \'Nuevo Set\' para empezar.</string>
     <string name="user_set_new">Nuevo Set</string>
+    <string name="user_set_equipment">Equipo</string>
+    <string name="user_set_summary">Resumen</string>
     <string name="user_set_nothing_equipped">Nada equipado</string>
     <string name="user_set_none">Ninguno</string>
     <string name="user_set_dialog_new_set_title">Nuevo Set</string>
