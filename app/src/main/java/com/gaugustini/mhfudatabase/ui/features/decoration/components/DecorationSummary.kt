@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.ItemIconColor
 import com.gaugustini.mhfudatabase.domain.model.Decoration
@@ -30,20 +31,23 @@ fun DecorationSummary(
     decoration: Decoration,
     modifier: Modifier = Modifier,
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(Dimension.Padding.small),
         modifier = modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surface)
             .padding(Dimension.Padding.large)
     ) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(Dimension.Padding.small),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.weight(1f)
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(Dimension.Padding.small),
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
         ) {
             Row(
+                horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.weight(1f)
             ) {
                 repeat(decoration.requiredSlots) {
                     SlotIcon(
@@ -58,43 +62,45 @@ fun DecorationSummary(
                 }
             }
             Text(
-                text = stringResource(R.string.decoration_required_slots, decoration.requiredSlots),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
-        }
-
-        Column(
-            verticalArrangement = Arrangement.spacedBy(Dimension.Padding.small),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.weight(1f)
-        ) {
-            Text(
                 text = "${decoration.buyPrice}z",
                 style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.weight(1f)
+            )
+            Text(
+                text = "${decoration.sellPrice}z",
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.weight(1f)
+            )
+        }
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(Dimension.Padding.small),
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = stringResource(R.string.decoration_required_slots),
+                style = MaterialTheme.typography.bodySmall,
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.weight(1f)
             )
             Text(
                 text = stringResource(R.string.decoration_buy_price),
                 style = MaterialTheme.typography.bodySmall,
+                textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurface,
-            )
-        }
-
-        Column(
-            verticalArrangement = Arrangement.spacedBy(Dimension.Padding.small),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.weight(1f)
-        ) {
-            Text(
-                text = "${decoration.sellPrice}z",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.weight(1f)
             )
             Text(
                 text = stringResource(R.string.decoration_sell_price),
                 style = MaterialTheme.typography.bodySmall,
+                textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.weight(1f)
             )
         }
     }
