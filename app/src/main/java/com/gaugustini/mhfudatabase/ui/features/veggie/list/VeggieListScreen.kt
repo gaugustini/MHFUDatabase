@@ -1,11 +1,12 @@
 package com.gaugustini.mhfudatabase.ui.features.veggie.list
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
@@ -27,7 +28,7 @@ import com.gaugustini.mhfudatabase.ui.features.veggie.components.VeggieLocationL
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
-import com.gaugustini.mhfudatabase.util.itemsWithDivider
+import com.gaugustini.mhfudatabase.util.ForEachWithDivider
 import com.gaugustini.mhfudatabase.util.preview.PreviewVeggieData
 
 @Composable
@@ -68,16 +69,14 @@ fun VeggieListScreen(
         },
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
     ) { innerPadding ->
-        LazyColumn(
-            contentPadding = PaddingValues(Dimension.Padding.medium),
+        Column(
             modifier = Modifier
+                .verticalScroll(rememberScrollState())
                 .fillMaxSize()
                 .padding(innerPadding)
+                .padding(Dimension.Padding.medium)
         ) {
-            itemsWithDivider(
-                items = uiState.veggieLocations,
-                key = { it.id }
-            ) { location ->
+            uiState.veggieLocations.ForEachWithDivider { location ->
                 VeggieLocationListItem(
                     veggieLocation = location,
                     onVeggieLocationClick = onVeggieLocationClick,
