@@ -121,10 +121,21 @@ data class AmmoBowgun(
 )
 
 /**
- * Represents a node in the weapon tree.
+ * Represents a node in the weapon tree with parents and children.
  */
 data class WeaponNode(
     val weapon: Weapon,
     val parents: MutableList<WeaponNode> = mutableListOf(),
     val children: MutableList<WeaponNode> = mutableListOf(),
+)
+
+/**
+ * Represents a node in the flattened weapon tree.
+ */
+data class FlattenedWeaponNode(
+    val uniqueId: Int,
+    val weapon: Weapon,
+    val depth: Int,
+    val hasChildren: Boolean,
+    val isLastInGroup: Boolean
 )

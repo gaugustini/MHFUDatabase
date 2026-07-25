@@ -5,6 +5,7 @@ import com.gaugustini.mhfudatabase.data.database.entity.weapon.WeaponParentEntit
 import com.gaugustini.mhfudatabase.data.mapper.WeaponMapper
 import com.gaugustini.mhfudatabase.domain.enums.WeaponType
 import com.gaugustini.mhfudatabase.domain.filter.WeaponFilter
+import com.gaugustini.mhfudatabase.domain.model.FlattenedWeaponNode
 import com.gaugustini.mhfudatabase.domain.model.Weapon
 import com.gaugustini.mhfudatabase.domain.model.WeaponNode
 import javax.inject.Inject
@@ -77,13 +78,13 @@ class WeaponRepository @Inject constructor(
     suspend fun getWeaponTree(
         weaponType: WeaponType,
         language: String,
-    ): List<WeaponNode> {
+    ): List<FlattenedWeaponNode> {
         val relatedWeapons = WeaponType.getRelatedWeapons(weaponType).map { it.name }
         val weaponList = weaponDao.getWeaponListByWeaponTypes(relatedWeapons, language)
             .map { WeaponMapper.toModel(it) }
         val weaponRelationList = weaponDao.getWeaponRelationsByWeaponIds(weaponList.map { it.id })
 
-        return WeaponGraph(weaponList, weaponRelationList).buildGraphByType(weaponType)
+        return WeaponGraph(weaponList, weaponRelationList).buildFlattenedGraph(weaponType)
     }
 
 }
@@ -177,6 +178,38 @@ class WeaponGraph(
         return nodes[weaponId]?.children
             ?.map { it.weapon }
             ?: emptyList()
+    }
+
+    fun buildFlattenedGraph(type: WeaponType): List<FlattenedWeaponNode> {
+        val rootNodes = buildGraphByType(type)
+        val flattenedList = mutableListOf<FlattenedWeaponNode>()
+
+        var nextUniqueId = 0
+
+        fun flatten(node: WeaponNode, depth: Int, isLast: Boolean) {
+            flattenedList.add(
+                FlattenedWeaponNode(
+                    uniqueId = nextUniqueId++,
+                    weapon = node.weapon,
+                    depth = depth,
+                    hasChildren = node.children.isNotEmpty(),
+                    isLastInGroup = isLast
+                )
+            )
+
+            val childrenCount = node.children.size
+            node.children
+                .sortedBy { it.weapon.rarity }
+                .forEachIndexed { index, child ->
+                    flatten(child, depth + 1, index == childrenCount - 1)
+                }
+        }
+
+        rootNodes.forEachIndexed { index, root ->
+            flatten(root, 0, index == rootNodes.size - 1)
+        }
+
+        return flattenedList
     }
 
 }
