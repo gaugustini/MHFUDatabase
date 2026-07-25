@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class WeaponDetailState(
-    val initialTab: WeaponDetailTab = WeaponDetailTab.SUMMARY,
+    val page: WeaponDetailPage = WeaponDetailPage.SUMMARY,
     val weapon: Weapon? = null,
 )
 
@@ -55,6 +55,14 @@ class WeaponDetailViewModel @Inject constructor(
                     weapon = weaponRepository.getWeapon(weaponId, language.code),
                 )
             }
+        }
+    }
+
+    fun onChangePage(page: WeaponDetailPage) {
+        _uiState.update { state ->
+            state.copy(
+                page = page,
+            )
         }
     }
 

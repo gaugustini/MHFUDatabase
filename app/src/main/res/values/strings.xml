@@ -128,6 +128,8 @@
     <string name="list_recipe_a">Required Materials (A)</string>
     <string name="list_recipe_b">Required Materials (B)</string>
     <string name="list_recipe_create">Required Materials (Create)</string>
+    <string name="list_recipe_create_a">Required Materials (Create) (A)</string>
+    <string name="list_recipe_create_b">Required Materials (Create) (B)</string>
     <string name="list_recipe_upgrade">Required Materials (Upgrade)</string>
 
     <!-- Search -->
@@ -380,9 +382,10 @@
     <string name="weapon_light_bowgun">Light Bowgun</string>
     <string name="weapon_heavy_bowgun">Heavy Bowgun</string>
     <string name="weapon_bow">Bow</string>
+    <string name="weapon_paths">Paths and Upgrades</string>
     <string name="weapon_rarity">Rarity %1$d</string>
     <string name="weapon_attack">Attack</string>
-    <string name="weapon_max_attack">Max Attack</string>
+    <string name="weapon_max_attack">Attack (Max.)</string>
     <string name="weapon_affinity">Affinity</string>
     <string name="weapon_slots">Slots</string>
     <string name="weapon_defense">Defense</string>
@@ -408,15 +411,15 @@
     <string name="weapon_recoil_light">Light</string>
     <string name="weapon_recoil_moderate">Moderate</string>
     <string name="weapon_ammo_bowgun">Ammo</string>
-    <string name="weapon_ammo_bowgun_normal">Normal</string>
-    <string name="weapon_ammo_bowgun_pierce">Pierce</string>
-    <string name="weapon_ammo_bowgun_pellet">Pellet</string>
-    <string name="weapon_ammo_bowgun_crag">Crag</string>
-    <string name="weapon_ammo_bowgun_clust">Clust</string>
-    <string name="weapon_ammo_bowgun_recovery">Recovery</string>
-    <string name="weapon_ammo_bowgun_poison">Poison</string>
-    <string name="weapon_ammo_bowgun_paralysis">Para</string>
-    <string name="weapon_ammo_bowgun_sleep">Sleep</string>
+    <string name="weapon_ammo_bowgun_normal">Normal (Lv 1, 2, 3)</string>
+    <string name="weapon_ammo_bowgun_pierce">Pierce (Lv 1, 2, 3)</string>
+    <string name="weapon_ammo_bowgun_pellet">Pellet (Lv 1, 2, 3)</string>
+    <string name="weapon_ammo_bowgun_crag">Crag (Lv 1, 2, 3)</string>
+    <string name="weapon_ammo_bowgun_clust">Clust (Lv 1, 2, 3)</string>
+    <string name="weapon_ammo_bowgun_recovery">Recovery (Lv 1, 2)</string>
+    <string name="weapon_ammo_bowgun_poison">Poison (Lv 1, 2)</string>
+    <string name="weapon_ammo_bowgun_paralysis">Para (Lv 1, 2)</string>
+    <string name="weapon_ammo_bowgun_sleep">Sleep (Lv 1, 2)</string>
     <string name="weapon_ammo_bowgun_flame">Flame</string>
     <string name="weapon_ammo_bowgun_water">Water</string>
     <string name="weapon_ammo_bowgun_thunder">Thunder</string>

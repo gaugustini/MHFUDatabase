@@ -137,13 +137,13 @@ fun WeaponListItem(
                         Column {
                             SharpnessIcon(
                                 sharpness = weapon.sharpness!!,
-                                height = 8.dp,
-                                width = 96.dp,
+                                height = 7.dp,
+                                width = 84.dp,
                             )
                             SharpnessIcon(
                                 sharpness = weapon.sharpnessPlus!!,
-                                height = 8.dp,
-                                width = 96.dp,
+                                height = 7.dp,
+                                width = 84.dp,
                             )
                         }
                     }

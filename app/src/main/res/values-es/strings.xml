@@ -128,6 +128,8 @@
     <string name="list_recipe_a">Materiales Requeridos (A)</string>
     <string name="list_recipe_b">Materiales Requeridos (B)</string>
     <string name="list_recipe_create">Materiales Requeridos (Crear)</string>
+    <string name="list_recipe_create_a">Materiales Requeridos (Crear) (A)</string>
+    <string name="list_recipe_create_b">Materiales Requeridos (Crear) (B)</string>
     <string name="list_recipe_upgrade">Materiales Requeridos (Mejorar)</string>
 
     <!-- Search -->
@@ -380,9 +382,10 @@
     <string name="weapon_light_bowgun">Ballesta Ligera</string>
     <string name="weapon_heavy_bowgun">Ballesta Pesada</string>
     <string name="weapon_bow">Arco</string>
+    <string name="weapon_paths">Rutas y Mejoras</string>
     <string name="weapon_rarity">Rareza %1$d</string>
     <string name="weapon_attack">Ataque</string>
-    <string name="weapon_max_attack">Ataque Máximo</string>
+    <string name="weapon_max_attack">Ataque (Máx.)</string>
     <string name="weapon_affinity">Afinidad</string>
     <string name="weapon_slots">Ranuras</string>
     <string name="weapon_defense">Defensa</string>
@@ -408,15 +411,15 @@
     <string name="weapon_recoil_light">Ligero</string>
     <string name="weapon_recoil_moderate">Moderado</string>
     <string name="weapon_ammo_bowgun">Munición</string>
-    <string name="weapon_ammo_bowgun_normal">Normal</string>
-    <string name="weapon_ammo_bowgun_pierce">Perforante</string>
-    <string name="weapon_ammo_bowgun_pellet">Perdigón</string>
-    <string name="weapon_ammo_bowgun_crag">Explosivo</string>
-    <string name="weapon_ammo_bowgun_clust">Grupo</string>
-    <string name="weapon_ammo_bowgun_recovery">Recuperación</string>
-    <string name="weapon_ammo_bowgun_poison">Veneno</string>
-    <string name="weapon_ammo_bowgun_paralysis">Parálisis</string>
-    <string name="weapon_ammo_bowgun_sleep">Sueño</string>
+    <string name="weapon_ammo_bowgun_normal">Normal (Nv 1, 2, 3)</string>
+    <string name="weapon_ammo_bowgun_pierce">Perforante (Nv 1, 2, 3)</string>
+    <string name="weapon_ammo_bowgun_pellet">Perdigón (Nv 1, 2, 3)</string>
+    <string name="weapon_ammo_bowgun_crag">Explosivo (Nv 1, 2, 3)</string>
+    <string name="weapon_ammo_bowgun_clust">Grupo (Nv 1, 2, 3)</string>
+    <string name="weapon_ammo_bowgun_recovery">Recuperación (Nv 1, 2)</string>
+    <string name="weapon_ammo_bowgun_poison">Veneno (Nv 1, 2)</string>
+    <string name="weapon_ammo_bowgun_paralysis">Parálisis (Nv 1, 2)</string>
+    <string name="weapon_ammo_bowgun_sleep">Sueño (Nv 1, 2)</string>
     <string name="weapon_ammo_bowgun_flame">Llama</string>
     <string name="weapon_ammo_bowgun_water">Agua</string>
     <string name="weapon_ammo_bowgun_thunder">Trueno</string>
