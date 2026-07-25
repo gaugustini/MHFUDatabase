@@ -56,24 +56,6 @@ fun MonsterDetailSummaryContent(
             )
         }
 
-        monster.itemEffectiveness?.let { items ->
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = Dimension.Padding.medium)
-                    .clip(RoundedCornerShape(Dimension.Radius.medium))
-                    .background(MaterialTheme.colorScheme.surface)
-            ) {
-                SectionHeader(
-                    title = stringResource(R.string.monster_item_effectiveness),
-                )
-                items.forEach { item ->
-                    MonsterItemEffectivenessListItem(
-                        item = item,
-                    )
-                }
-            }
-        }
-
         if (monster.damageStats?.isEmpty() == false) {
             ButtonPage(
                 title = stringResource(R.string.monster_damage_stats),
@@ -96,6 +78,24 @@ fun MonsterDetailSummaryContent(
                 onButtonClick = { onChangePage(MonsterDetailPage.QUEST) },
                 modifier = Modifier.padding(horizontal = Dimension.Padding.medium)
             )
+        }
+
+        monster.itemEffectiveness?.let { items ->
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = Dimension.Padding.medium)
+                    .clip(RoundedCornerShape(Dimension.Radius.medium))
+                    .background(MaterialTheme.colorScheme.surface)
+            ) {
+                SectionHeader(
+                    title = stringResource(R.string.monster_item_effectiveness),
+                )
+                items.forEach { item ->
+                    MonsterItemEffectivenessListItem(
+                        item = item,
+                    )
+                }
+            }
         }
     }
 }

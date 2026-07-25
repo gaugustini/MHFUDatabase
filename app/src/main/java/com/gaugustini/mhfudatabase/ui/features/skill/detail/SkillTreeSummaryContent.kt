@@ -71,7 +71,7 @@ fun SkillListItem(
                 text = skill.name,
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.Medium
             )
         },
         supportingContent = {

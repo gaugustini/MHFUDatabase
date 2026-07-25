@@ -153,7 +153,7 @@
     <string name="search_weapon">Weapon</string>
 
     <!-- Armor -->
-    <string name="armor_set_details">Armor Set Details</string>
+    <string name="armor_set_details">Armor Set</string>
     <string name="armor_rarity">Rarity %1$d</string>
     <string name="armor_defense">Defense (Max.)</string>
     <string name="armor_number_of_slots">Slots</string>

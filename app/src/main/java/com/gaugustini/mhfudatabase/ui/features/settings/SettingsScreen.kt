@@ -23,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
@@ -123,6 +124,7 @@ fun ThemeSettingsItem(
             Text(
                 text = stringResource(R.string.settings_theme),
                 style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Medium
             )
         },
         supportingContent = {
@@ -187,6 +189,7 @@ fun LanguageSettingsItem(
             Text(
                 text = stringResource(R.string.settings_language),
                 style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Medium
             )
         },
         supportingContent = {

@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.QuestGroup
 import com.gaugustini.mhfudatabase.domain.model.Quest
@@ -99,7 +100,13 @@ fun QuestDetailSummaryContent(
             AppHDivider()
             Text(
                 text = quest.description,
-                style = MaterialTheme.typography.bodyMedium,
+                style = if (quest.group != QuestGroup.TRAINING_G) {
+                    MaterialTheme.typography.bodyMedium
+                } else {
+                    MaterialTheme.typography.bodyMedium.copy(
+                        fontFamily = FontFamily.Monospace
+                    )
+                },
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(Dimension.Padding.large)
             )
@@ -108,6 +115,22 @@ fun QuestDetailSummaryContent(
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(Dimension.Padding.large)
+            )
+        }
+
+        if (quest.supplies?.isEmpty() == false) {
+            ButtonPage(
+                title = stringResource(R.string.quest_supply_box),
+                onButtonClick = { onChangePage(QuestDetailPage.SUPPLY_BOX) },
+                modifier = Modifier.padding(horizontal = Dimension.Padding.medium)
+            )
+        }
+
+        if (quest.rewards?.isEmpty() == false) {
+            ButtonPage(
+                title = stringResource(R.string.quest_rewards),
+                onButtonClick = { onChangePage(QuestDetailPage.REWARD) },
+                modifier = Modifier.padding(horizontal = Dimension.Padding.medium)
             )
         }
 
@@ -143,22 +166,6 @@ fun QuestDetailSummaryContent(
                     onMonsterClick = onMonsterClick,
                 )
             }
-        }
-
-        if (quest.supplies?.isEmpty() == false) {
-            ButtonPage(
-                title = stringResource(R.string.quest_supply_box),
-                onButtonClick = { onChangePage(QuestDetailPage.SUPPLY_BOX) },
-                modifier = Modifier.padding(horizontal = Dimension.Padding.medium)
-            )
-        }
-
-        if (quest.rewards?.isEmpty() == false) {
-            ButtonPage(
-                title = stringResource(R.string.quest_rewards),
-                onButtonClick = { onChangePage(QuestDetailPage.REWARD) },
-                modifier = Modifier.padding(horizontal = Dimension.Padding.medium)
-            )
         }
     }
 }
