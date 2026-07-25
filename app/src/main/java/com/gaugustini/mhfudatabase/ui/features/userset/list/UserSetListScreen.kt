@@ -1,12 +1,14 @@
 package com.gaugustini.mhfudatabase.ui.features.userset.list
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.AlertDialog
@@ -19,12 +21,16 @@ import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -34,12 +40,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.Gender
 import com.gaugustini.mhfudatabase.domain.enums.HunterType
-import com.gaugustini.mhfudatabase.ui.components.EmptyContent
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TopBar
+import com.gaugustini.mhfudatabase.ui.features.userset.components.EmptyUserSetList
 import com.gaugustini.mhfudatabase.ui.features.userset.components.UserSetListItem
+import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
+import com.gaugustini.mhfudatabase.util.itemsWithDivider
 import com.gaugustini.mhfudatabase.util.preview.PreviewUserEquipmentSet
 
 @Composable
@@ -66,6 +74,7 @@ fun UserSetListScreen(
     openSearch: () -> Unit = {},
     onEquipmentSetClick: (setId: Int, hunterType: HunterType, gender: Gender) -> Unit = { _, _, _ -> },
 ) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     var showNewSetDialog by rememberSaveable { mutableStateOf(false) }
 
     Scaffold(
@@ -75,6 +84,7 @@ fun UserSetListScreen(
                 navigationType = NavigationType.MENU,
                 navigation = openDrawer,
                 openSearch = openSearch,
+                scrollBehavior = scrollBehavior,
             )
         },
         floatingActionButton = {
@@ -95,25 +105,33 @@ fun UserSetListScreen(
                 },
             )
         },
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
     ) { innerPadding ->
         if (uiState.equipmentSets.isEmpty()) {
-            EmptyContent(
+            EmptyUserSetList(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding),
             )
         } else {
             LazyColumn(
+                contentPadding = PaddingValues(Dimension.Padding.medium),
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
             ) {
-                items(uiState.equipmentSets) { set ->
+                itemsWithDivider(
+                    items = uiState.equipmentSets,
+                    key = { it.id },
+                ) { set ->
                     UserSetListItem(
                         equipmentSet = set,
                         onEquipmentSetClick = {
                             onEquipmentSetClick(set.id, set.hunterType, set.gender)
                         },
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(Dimension.Radius.small))
+                            .background(MaterialTheme.colorScheme.surface)
                     )
                 }
             }

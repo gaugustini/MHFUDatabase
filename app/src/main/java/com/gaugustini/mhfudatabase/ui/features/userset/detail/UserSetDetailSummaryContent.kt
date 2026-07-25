@@ -1,14 +1,25 @@
 package com.gaugustini.mhfudatabase.ui.features.userset.detail
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.model.UserEquipmentSet
@@ -36,6 +47,13 @@ fun UserSetDetailSummaryContent(
     onItemClick: (itemId: Int) -> Unit = {},
     onSkillClick: (skillTreeId: Int) -> Unit = {},
 ) {
+    var statsExpanded by rememberSaveable { mutableStateOf(true) }
+    var activeSkillsExpanded by rememberSaveable { mutableStateOf(true) }
+    var skillsExpanded by rememberSaveable { mutableStateOf(true) }
+    var armorsExpanded by rememberSaveable { mutableStateOf(true) }
+    var decorationsExpanded by rememberSaveable { mutableStateOf(true) }
+    var recipeExpanded by rememberSaveable { mutableStateOf(true) }
+
     val noneText = @Composable {
         Text(
             text = stringResource(R.string.user_set_none),
@@ -51,9 +69,14 @@ fun UserSetDetailSummaryContent(
     }
 
     Column(
+        verticalArrangement = Arrangement.spacedBy(Dimension.Padding.medium),
         modifier = modifier
+            .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(bottom = Dimension.Padding.endContent)
+            .padding(
+                top = Dimension.Padding.medium,
+                bottom = Dimension.Padding.endContent
+            )
     ) {
         DetailHeader(
             icon = {
@@ -62,119 +85,211 @@ fun UserSetDetailSummaryContent(
                 )
             },
             title = equipmentSet.name.ifBlank { stringResource(R.string.user_set_new) },
+            modifier = Modifier
+                .padding(horizontal = Dimension.Padding.medium)
+                .clip(RoundedCornerShape(Dimension.Radius.medium))
+                .background(MaterialTheme.colorScheme.surface)
         )
 
         equipmentSet.armors.let { armors ->
-            EquipmentStats(
-                defense = (armors?.sumOf { it.defense } ?: 0) + (equipmentSet.weapon?.defense ?: 0),
-                maxDefense =
-                    (armors?.sumOf { it.maxDefense } ?: 0) + (equipmentSet.weapon?.defense ?: 0),
-                numberOfSlots = null,
-                fire = armors?.sumOf { it.fire } ?: 0,
-                water = armors?.sumOf { it.water } ?: 0,
-                thunder = armors?.sumOf { it.thunder } ?: 0,
-                ice = armors?.sumOf { it.ice } ?: 0,
-                dragon = armors?.sumOf { it.dragon } ?: 0,
-            )
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = Dimension.Padding.medium)
+                    .clip(RoundedCornerShape(Dimension.Radius.medium))
+                    .background(MaterialTheme.colorScheme.surface)
+            ) {
+                SectionHeader(
+                    title = stringResource(R.string.list_equipment_stats),
+                    isExpandable = true,
+                    expanded = statsExpanded,
+                    modifier = Modifier.clickable { statsExpanded = !statsExpanded }
+                )
+                AnimatedVisibility(
+                    visible = statsExpanded,
+                ) {
+                    EquipmentStats(
+                        numberOfSlots = null,
+                        defense =
+                            (armors?.sumOf { it.defense } ?: 0) + (equipmentSet.weapon?.defense ?: 0),
+                        maxDefense =
+                            (armors?.sumOf { it.maxDefense } ?: 0) + (equipmentSet.weapon?.defense ?: 0),
+                        fire = armors?.sumOf { it.fire } ?: 0,
+                        water = armors?.sumOf { it.water } ?: 0,
+                        thunder = armors?.sumOf { it.thunder } ?: 0,
+                        ice = armors?.sumOf { it.ice } ?: 0,
+                        dragon = armors?.sumOf { it.dragon } ?: 0,
+                    )
+                }
+            }
         }
 
-        SectionHeader(
-            title = stringResource(R.string.list_active_skills),
-        )
         equipmentSet.activeSkills.let { activeSkills ->
-            if (activeSkills?.isEmpty() ?: true) {
-                noneText()
-            } else {
-                Column {
-                    activeSkills.ForEachWithDivider { skill ->
-                        ActiveSkillListItem(
-                            skill = skill,
-                            onSkillClick = onSkillClick,
-                        )
-                    }
-                }
-            }
-        }
-
-        SectionHeader(
-            title = stringResource(R.string.list_skills),
-        )
-        equipmentSet.skills.let { skillPoints ->
-            if (skillPoints?.isEmpty() ?: true) {
-                noneText()
-            } else {
-                Column {
-                    skillPoints.ForEachWithDivider { skill ->
-                        SkillPointListItem(
-                            skill = skill,
-                            onSkillClick = onSkillClick,
-                        )
-                    }
-                }
-            }
-        }
-
-        SectionHeader(
-            title = stringResource(R.string.list_armors),
-        )
-        equipmentSet.armors.let { armors ->
-            if (armors?.isEmpty() ?: true) {
-                noneText()
-            } else {
-                Column {
-                    armors.forEach { armor ->
-                        ArmorListItem(
-                            armor = armor,
-                            onArmorClick = onArmorClick,
-                        )
-                    }
-                }
-            }
-        }
-
-        SectionHeader(
-            title = stringResource(R.string.list_decorations),
-        )
-        equipmentSet.decorations.let { decorations ->
-            if (decorations?.isEmpty() ?: true) {
-                noneText()
-            } else {
-                val summarizedDecorations = decorations
-                    .groupBy { it.decoration.id }
-                    .map { (_, decoration) ->
-                        decoration.first().copy(quantity = decoration.sumOf { it.quantity })
-                    }
-                    .sortedByDescending { it.quantity }
-                Column {
-                    summarizedDecorations.forEach { (_, decoration, quantity) ->
-                        DecorationListItem(
-                            decoration = decoration,
-                            onDecorationClick = onDecorationClick,
-                            trailingContent = {
-                                Text(
-                                    text = quantity.toString(),
-                                    style = MaterialTheme.typography.bodyMedium,
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = Dimension.Padding.medium)
+                    .clip(RoundedCornerShape(Dimension.Radius.medium))
+                    .background(MaterialTheme.colorScheme.surface)
+            ) {
+                SectionHeader(
+                    title = stringResource(R.string.list_active_skills),
+                    isExpandable = true,
+                    expanded = activeSkillsExpanded,
+                    modifier = Modifier.clickable { activeSkillsExpanded = !activeSkillsExpanded }
+                )
+                AnimatedVisibility(
+                    visible = activeSkillsExpanded,
+                ) {
+                    if (activeSkills?.isEmpty() ?: true) {
+                        noneText()
+                    } else {
+                        Column {
+                            activeSkills.ForEachWithDivider { skill ->
+                                ActiveSkillListItem(
+                                    skill = skill,
+                                    onSkillClick = onSkillClick,
                                 )
                             }
-                        )
+                        }
                     }
                 }
             }
         }
 
-        SectionHeader(
-            title = stringResource(R.string.list_recipe),
-        )
+        equipmentSet.skills.let { skillPoints ->
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = Dimension.Padding.medium)
+                    .clip(RoundedCornerShape(Dimension.Radius.medium))
+                    .background(MaterialTheme.colorScheme.surface)
+            ) {
+                SectionHeader(
+                    title = stringResource(R.string.list_skills),
+                    isExpandable = true,
+                    expanded = skillsExpanded,
+                    modifier = Modifier.clickable { skillsExpanded = !skillsExpanded }
+                )
+                AnimatedVisibility(
+                    visible = skillsExpanded,
+                ) {
+                    if (skillPoints?.isEmpty() ?: true) {
+                        noneText()
+                    } else {
+                        Column {
+                            skillPoints.ForEachWithDivider { skill ->
+                                SkillPointListItem(
+                                    skill = skill,
+                                    onSkillClick = onSkillClick,
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        equipmentSet.armors.let { armors ->
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = Dimension.Padding.medium)
+                    .clip(RoundedCornerShape(Dimension.Radius.medium))
+                    .background(MaterialTheme.colorScheme.surface)
+            ) {
+                SectionHeader(
+                    title = stringResource(R.string.list_armors),
+                    isExpandable = true,
+                    expanded = armorsExpanded,
+                    modifier = Modifier.clickable { armorsExpanded = !armorsExpanded }
+                )
+                AnimatedVisibility(
+                    visible = armorsExpanded,
+                ) {
+                    if (armors?.isEmpty() ?: true) {
+                        noneText()
+                    } else {
+                        Column {
+                            armors.ForEachWithDivider { armor ->
+                                ArmorListItem(
+                                    armor = armor,
+                                    onArmorClick = onArmorClick,
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        equipmentSet.decorations.let { decorations ->
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = Dimension.Padding.medium)
+                    .clip(RoundedCornerShape(Dimension.Radius.medium))
+                    .background(MaterialTheme.colorScheme.surface)
+            ) {
+                SectionHeader(
+                    title = stringResource(R.string.list_decorations),
+                    isExpandable = true,
+                    expanded = decorationsExpanded,
+                    modifier = Modifier.clickable { decorationsExpanded = !decorationsExpanded }
+                )
+                AnimatedVisibility(
+                    visible = decorationsExpanded,
+                ) {
+                    if (decorations?.isEmpty() ?: true) {
+                        noneText()
+                    } else {
+                        val summarizedDecorations = decorations
+                            .groupBy { it.decoration.id }
+                            .map { (_, decoration) ->
+                                decoration.first().copy(quantity = decoration.sumOf { it.quantity })
+                            }
+                            .sortedByDescending { it.quantity }
+                        Column {
+                            summarizedDecorations.forEach { (_, decoration, quantity) ->
+                                DecorationListItem(
+                                    decoration = decoration,
+                                    onDecorationClick = onDecorationClick,
+                                    trailingContent = {
+                                        Text(
+                                            text = quantity.toString(),
+                                            style = MaterialTheme.typography.bodyMedium,
+                                        )
+                                    }
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         equipmentSet.recipe.let { materials ->
-            if (materials?.isEmpty() ?: true) {
-                noneText()
-            } else {
-                Column {
-                    materials.ForEachWithDivider { item ->
-                        ItemQuantityListItem(
-                            item = item,
-                            onItemClick = onItemClick,
-                        )
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = Dimension.Padding.medium)
+                    .clip(RoundedCornerShape(Dimension.Radius.medium))
+                    .background(MaterialTheme.colorScheme.surface)
+            ) {
+                SectionHeader(
+                    title = stringResource(R.string.list_recipe),
+                    isExpandable = true,
+                    expanded = recipeExpanded,
+                    modifier = Modifier.clickable { recipeExpanded = !recipeExpanded }
+                )
+                AnimatedVisibility(
+                    visible = recipeExpanded,
+                ) {
+                    if (materials?.isEmpty() ?: true) {
+                        noneText()
+                    } else {
+                        Column {
+                            materials.ForEachWithDivider { item ->
+                                ItemQuantityListItem(
+                                    item = item,
+                                    onItemClick = onItemClick,
+                                )
+                            }
+                        }
                     }
                 }
             }

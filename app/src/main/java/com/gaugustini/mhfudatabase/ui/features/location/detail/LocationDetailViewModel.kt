@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.LocationRepository
 import com.gaugustini.mhfudatabase.domain.enums.Language
+import com.gaugustini.mhfudatabase.domain.enums.Rank
+import com.gaugustini.mhfudatabase.domain.model.GatheringPoint
 import com.gaugustini.mhfudatabase.domain.model.Location
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,8 +21,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class LocationDetailState(
-    val initialTab: LocationDetailTab = LocationDetailTab.LOW_RANK,
+    val rank: Rank? = null,
+    val availableRanks: List<Rank> = emptyList(),
     val location: Location? = null,
+    val gatheringPoints: List<GatheringPoint> = emptyList(),
 )
 
 @HiltViewModel
@@ -50,11 +54,28 @@ class LocationDetailViewModel @Inject constructor(
 
     private fun loadLocationDetails(language: Language) {
         viewModelScope.launch {
+            val location = locationRepository.getLocation(locationId, language.code)
+            val availableRanks = location.gatheringPoints?.keys?.toList() ?: emptyList()
+            val firstRank = availableRanks.minByOrNull { it.ordinal }
+            val firstRankGatheringPoints = location.gatheringPoints?.get(firstRank) ?: emptyList()
+
             _uiState.update { state ->
                 state.copy(
-                    location = locationRepository.getLocation(locationId, language.code),
+                    rank = firstRank,
+                    availableRanks = availableRanks.sortedBy { it.ordinal },
+                    location = location,
+                    gatheringPoints = firstRankGatheringPoints,
                 )
             }
+        }
+    }
+
+    fun onChangeRank(rank: Rank) {
+        _uiState.update { state ->
+            state.copy(
+                rank = rank,
+                gatheringPoints = state.location?.gatheringPoints?.get(rank) ?: emptyList(),
+            )
         }
     }
 

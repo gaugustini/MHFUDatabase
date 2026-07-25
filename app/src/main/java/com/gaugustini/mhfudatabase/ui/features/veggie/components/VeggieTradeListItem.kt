@@ -39,9 +39,9 @@ fun VeggieTradeListItem(
             )
     ) {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
+            horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.large),
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(9f)
         ) {
             ItemIcon(
                 type = veggieTrade.itemTraded.iconType,
@@ -60,7 +60,7 @@ fun VeggieTradeListItem(
         Column(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(7f)
         ) {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
@@ -74,15 +74,24 @@ fun VeggieTradeListItem(
                     color = veggieTrade.itemCommon.iconColor,
                     modifier = Modifier.size(Dimension.Size.small)
                 )
-                Text(
-                    text = if (veggieTrade.itemCommon.id == veggieTrade.itemRare.id) {
-                        "${veggieTrade.itemCommon.name}\n(100%)"
-                    } else {
-                        "${veggieTrade.itemCommon.name}\n(80%)"
-                    },
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
+                Column {
+                    Text(
+                        text = veggieTrade.itemCommon.name,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                    Text(
+                        text = if (veggieTrade.itemCommon.id == veggieTrade.itemRare.id) {
+                            "(100%)"
+                        } else {
+                            "(80%)"
+                        },
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
             }
 
             if (veggieTrade.itemCommon.id != veggieTrade.itemRare.id) {
@@ -98,11 +107,20 @@ fun VeggieTradeListItem(
                         color = veggieTrade.itemRare.iconColor,
                         modifier = Modifier.size(Dimension.Size.small)
                     )
-                    Text(
-                        text = "${veggieTrade.itemRare.name}\n(20%)",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
+                    Column {
+                        Text(
+                            text = veggieTrade.itemRare.name,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                        Text(
+                            text = "(20%)",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
                 }
             }
         }

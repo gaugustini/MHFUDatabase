@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.ItemCombinationType
 import com.gaugustini.mhfudatabase.domain.model.ItemCombination
@@ -38,13 +39,13 @@ fun ItemCombinationListItem(
             ItemIcon(
                 type = combination.itemCreated.iconType,
                 color = combination.itemCreated.iconColor,
-                modifier = Modifier.size(Dimension.Size.large)
+                modifier = Modifier.size(Dimension.Size.medium)
             )
         },
         headlineContent = {
             Text(
                 text = combination.itemCreated.name,
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
         },
@@ -53,9 +54,9 @@ fun ItemCombinationListItem(
                 Text(
                     text = "${combination.percentage}%",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
-                Spacer(modifier = Modifier.width(Dimension.Spacing.large))
+                Spacer(modifier = Modifier.width(Dimension.Spacing.medium))
                 Text(
                     text = if (combination.quantityMin == combination.quantityMax) {
                         "x ${combination.quantityMin}"
@@ -63,14 +64,16 @@ fun ItemCombinationListItem(
                         "x ${combination.quantityMin}~${combination.quantityMax}"
                     },
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
-                Spacer(modifier = Modifier.width(Dimension.Spacing.large))
+                Spacer(modifier = Modifier.width(Dimension.Spacing.medium))
                 if (combination.type == ItemCombinationType.TREASURE) {
                     Text(
                         text = stringResource(R.string.combination_treasure),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onTertiaryContainer,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                         modifier = Modifier
                             .background(
                                 color = MaterialTheme.colorScheme.tertiaryContainer,
@@ -84,6 +87,8 @@ fun ItemCombinationListItem(
                         text = stringResource(R.string.combination_alchemy),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onTertiaryContainer,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                         modifier = Modifier
                             .background(
                                 color = MaterialTheme.colorScheme.tertiaryContainer,
@@ -108,7 +113,7 @@ fun ItemCombinationListItem(
                     Text(
                         text = combination.itemA.name,
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = MaterialTheme.colorScheme.onSurface,
                     )
                     ItemIcon(
                         type = combination.itemA.iconType,
@@ -126,7 +131,7 @@ fun ItemCombinationListItem(
                     Text(
                         text = combination.itemB.name,
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = MaterialTheme.colorScheme.onSurface,
                     )
                     ItemIcon(
                         type = combination.itemB.iconType,

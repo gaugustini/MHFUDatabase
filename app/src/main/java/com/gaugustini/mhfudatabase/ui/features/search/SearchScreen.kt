@@ -1,13 +1,17 @@
 package com.gaugustini.mhfudatabase.ui.features.search
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -15,6 +19,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.domain.model.SearchResults
 import com.gaugustini.mhfudatabase.ui.features.search.components.SearchTopBar
 import com.gaugustini.mhfudatabase.ui.features.search.components.listitem.SearchListItem
+import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
@@ -75,6 +80,8 @@ fun SearchScreen(
     onSkillClick: (skillTreeId: Int) -> Unit = {},
     onWeaponClick: (weaponId: Int) -> Unit = {},
 ) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+
     Scaffold(
         topBar = {
             SearchTopBar(
@@ -82,8 +89,10 @@ fun SearchScreen(
                 onQueryChange = onQueryChange,
                 onClearQuery = onClearQuery,
                 navigateBack = navigateBack,
+                scrollBehavior = scrollBehavior,
             )
         },
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
     ) { innerPadding ->
         SearchResultsList(
             results = uiState.results,
@@ -96,9 +105,7 @@ fun SearchScreen(
             onSkillTreeClick = onSkillTreeClick,
             onSkillClick = onSkillClick,
             onWeaponClick = onWeaponClick,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
+            modifier = Modifier.padding(innerPadding)
         )
     }
 }
@@ -118,57 +125,86 @@ fun SearchResultsList(
     onWeaponClick: (weaponId: Int) -> Unit = {},
 ) {
     LazyColumn(
-        modifier = modifier
+        contentPadding = PaddingValues(Dimension.Padding.medium),
+        userScrollEnabled = !results.isEmpty,
+        modifier = modifier.fillMaxSize()
     ) {
-        items(results.locations) { location ->
+        items(
+            items = results.locations,
+            key = { "location_${it.id}" },
+        ) { location ->
             SearchListItem(
                 location = location,
                 onLocationClick = onLocationClick,
             )
         }
-        items(results.monsters) { monster ->
+        items(
+            items = results.monsters,
+            key = { "monster_${it.id}" },
+        ) { monster ->
             SearchListItem(
                 monster = monster,
                 onMonsterClick = onMonsterClick,
             )
         }
-        items(results.skillTrees) { skillTree ->
+        items(
+            items = results.skillTrees,
+            key = { "skillTree_${it.id}" },
+        ) { skillTree ->
             SearchListItem(
                 skillTree = skillTree,
                 onSkillTreeClick = onSkillTreeClick,
             )
         }
-        items(results.skills) { skill ->
+        items(
+            items = results.skills,
+            key = { "skill_${it.id}" },
+        ) { skill ->
             SearchListItem(
                 skill = skill,
                 onSkillClick = onSkillClick,
             )
         }
-        items(results.quests) { quest ->
+        items(
+            items = results.quests,
+            key = { "quest_${it.id}" },
+        ) { quest ->
             SearchListItem(
                 quest = quest,
                 onQuestClick = onQuestClick,
             )
         }
-        items(results.items) { item ->
+        items(
+            items = results.items,
+            key = { "item_${it.id}" },
+        ) { item ->
             SearchListItem(
                 item = item,
                 onItemClick = onItemClick,
             )
         }
-        items(results.decorations) { decoration ->
+        items(
+            items = results.decorations,
+            key = { "decoration_${it.id}" },
+        ) { decoration ->
             SearchListItem(
                 decoration = decoration,
                 onDecorationClick = onDecorationClick,
             )
         }
-        items(results.armors) { armor ->
+        items(
+            items = results.armors,
+            key = { "armor_${it.id}" },
+        ) { armor ->
             SearchListItem(
                 armor = armor,
                 onArmorClick = onArmorClick,
             )
         }
-        items(results.weapons) { weapon ->
+        items(
+            items = results.weapons,
+            key = { "weapon_${it.id}" },
+        ) { weapon ->
             SearchListItem(
                 weapon = weapon,
                 onWeaponClick = onWeaponClick,

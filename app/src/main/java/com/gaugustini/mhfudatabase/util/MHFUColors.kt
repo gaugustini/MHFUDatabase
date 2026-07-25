@@ -67,7 +67,7 @@ object MHFUColors {
         val Blue = Color(0xFF316BEF)
         val White = Color(0xFFF7F7F7)
         val Purple = Color(0xFFF700F7)
-        val None = Color(0xFF222222)
+        val None = Color(0xFF1A1A1A)
     }
 
     object SongNotes {

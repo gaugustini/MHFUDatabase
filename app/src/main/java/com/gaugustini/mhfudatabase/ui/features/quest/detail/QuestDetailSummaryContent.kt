@@ -1,35 +1,42 @@
 package com.gaugustini.mhfudatabase.ui.features.quest.detail
 
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.QuestGroup
 import com.gaugustini.mhfudatabase.domain.model.Quest
+import com.gaugustini.mhfudatabase.ui.components.AppHDivider
+import com.gaugustini.mhfudatabase.ui.components.ButtonPage
 import com.gaugustini.mhfudatabase.ui.components.DetailHeader
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.components.icons.QuestIcon
 import com.gaugustini.mhfudatabase.ui.features.location.components.LocationListItem
 import com.gaugustini.mhfudatabase.ui.features.monster.components.MonsterListItem
 import com.gaugustini.mhfudatabase.ui.features.quest.components.QuestSummary
-import com.gaugustini.mhfudatabase.ui.features.quest.components.QuestSupplyListItem
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
+import com.gaugustini.mhfudatabase.util.ForEachWithDivider
 import com.gaugustini.mhfudatabase.util.preview.PreviewQuestData
 
 @Composable
 fun QuestDetailSummaryContent(
     quest: Quest,
     modifier: Modifier = Modifier,
-    onItemClick: (itemId: Int) -> Unit = {},
+    onChangePage: (QuestDetailPage) -> Unit = {},
     onLocationClick: (locationId: Int) -> Unit = {},
     onMonsterClick: (monsterId: Int) -> Unit = {},
 ) {
@@ -65,11 +72,19 @@ fun QuestDetailSummaryContent(
         QuestGroup.GROUP_CHALLENGE -> R.string.detail_quest_group_group_challenge
     }
 
-    LazyColumn(
-        contentPadding = PaddingValues(bottom = Dimension.Padding.endContent),
+    Column(
+        verticalArrangement = Arrangement.spacedBy(Dimension.Padding.medium),
         modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(bottom = Dimension.Padding.endContent)
     ) {
-        item {
+        Column(
+            modifier = Modifier
+                .padding(horizontal = Dimension.Padding.medium)
+                .clip(RoundedCornerShape(Dimension.Radius.medium))
+                .background(MaterialTheme.colorScheme.surface)
+        ) {
             DetailHeader(
                 icon = {
                     QuestIcon(goalType = quest.goalType)
@@ -78,17 +93,20 @@ fun QuestDetailSummaryContent(
                 subtitle = stringResource(questGroup),
                 description = quest.goal,
             )
-
+            AppHDivider()
             QuestSummary(
                 quest = quest,
             )
-
-            SectionHeader(
-                title = stringResource(R.string.quest_description),
-            )
+            AppHDivider()
             Text(
                 text = quest.description,
-                style = MaterialTheme.typography.bodyMedium,
+                style = if (quest.group != QuestGroup.TRAINING_G) {
+                    MaterialTheme.typography.bodyMedium
+                } else {
+                    MaterialTheme.typography.bodyMedium.copy(
+                        fontFamily = FontFamily.Monospace
+                    )
+                },
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(Dimension.Padding.large)
             )
@@ -98,7 +116,30 @@ fun QuestDetailSummaryContent(
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(Dimension.Padding.large)
             )
+        }
 
+        if (quest.supplies?.isEmpty() == false) {
+            ButtonPage(
+                title = stringResource(R.string.quest_supply_box),
+                onButtonClick = { onChangePage(QuestDetailPage.SUPPLY_BOX) },
+                modifier = Modifier.padding(horizontal = Dimension.Padding.medium)
+            )
+        }
+
+        if (quest.rewards?.isEmpty() == false) {
+            ButtonPage(
+                title = stringResource(R.string.quest_rewards),
+                onButtonClick = { onChangePage(QuestDetailPage.REWARD) },
+                modifier = Modifier.padding(horizontal = Dimension.Padding.medium)
+            )
+        }
+
+        Column(
+            modifier = Modifier
+                .padding(horizontal = Dimension.Padding.medium)
+                .clip(RoundedCornerShape(Dimension.Radius.medium))
+                .background(MaterialTheme.colorScheme.surface)
+        ) {
             SectionHeader(
                 title = stringResource(R.string.quest_location),
             )
@@ -108,34 +149,22 @@ fun QuestDetailSummaryContent(
                     onLocationClick = onLocationClick,
                 )
             }
+        }
 
+        Column(
+            modifier = Modifier
+                .padding(horizontal = Dimension.Padding.medium)
+                .clip(RoundedCornerShape(Dimension.Radius.medium))
+                .background(MaterialTheme.colorScheme.surface)
+        ) {
             SectionHeader(
                 title = stringResource(R.string.quest_monsters),
             )
-            quest.monsters?.forEach { monster ->
+            quest.monsters?.ForEachWithDivider { monster ->
                 MonsterListItem(
                     monster = monster,
                     onMonsterClick = onMonsterClick,
                 )
-            }
-        }
-
-        quest.supplies?.let { supplies ->
-            if (supplies.isNotEmpty()) {
-                item {
-                    SectionHeader(
-                        title = stringResource(R.string.quest_supply_box),
-                    )
-                }
-                itemsIndexed(supplies) { index, supply ->
-                    QuestSupplyListItem(
-                        supply = supply,
-                        onItemClick = onItemClick,
-                    )
-                    if (index != supplies.lastIndex) {
-                        HorizontalDivider()
-                    }
-                }
             }
         }
     }

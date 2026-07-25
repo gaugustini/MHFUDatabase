@@ -1,4 +1,4 @@
-package com.gaugustini.mhfudatabase.ui.features.decoration.detail
+package com.gaugustini.mhfudatabase.ui.features.armor.detail
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -18,32 +18,35 @@ import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
-import com.gaugustini.mhfudatabase.util.preview.PreviewDecorationData
+import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
 
 @Composable
-fun DecorationDetailRoute(
+fun ArmorSetDetailRoute(
     navigateBack: () -> Unit,
     openSearch: () -> Unit,
-    onSkillClick: (skillTreeId: Int) -> Unit = {},
-    onItemClick: (itemId: Int) -> Unit = {},
-    viewModel: DecorationDetailViewModel = hiltViewModel(),
+    onArmorClick: (armorId: Int) -> Unit,
+    onSkillClick: (skillTreeId: Int) -> Unit,
+    onItemClick: (itemId: Int) -> Unit,
+    viewModel: ArmorSetDetailViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    DecorationDetailScreen(
+    ArmorSetDetailScreen(
         uiState = uiState,
         navigateBack = navigateBack,
         openSearch = openSearch,
+        onArmorClick = onArmorClick,
         onSkillClick = onSkillClick,
         onItemClick = onItemClick,
     )
 }
 
 @Composable
-fun DecorationDetailScreen(
-    uiState: DecorationDetailState = DecorationDetailState(),
+fun ArmorSetDetailScreen(
+    uiState: ArmorSetDetailState = ArmorSetDetailState(),
     navigateBack: () -> Unit = {},
     openSearch: () -> Unit = {},
+    onArmorClick: (armorId: Int) -> Unit = {},
     onSkillClick: (skillTreeId: Int) -> Unit = {},
     onItemClick: (itemId: Int) -> Unit = {},
 ) {
@@ -52,7 +55,7 @@ fun DecorationDetailScreen(
     Scaffold(
         topBar = {
             TopBar(
-                title = uiState.decoration?.name ?: stringResource(R.string.screen_decoration_detail),
+                title = uiState.armorSet?.name ?: stringResource(R.string.screen_armor_detail),
                 navigationType = NavigationType.BACK,
                 navigation = navigateBack,
                 openSearch = openSearch,
@@ -61,9 +64,10 @@ fun DecorationDetailScreen(
         },
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
     ) { innerPadding ->
-        if (uiState.decoration != null) {
-            DecorationDetailContent(
-                decoration = uiState.decoration,
+        if (uiState.armorSet != null) {
+            ArmorSetDetailContent(
+                armorSet = uiState.armorSet,
+                onArmorClick = onArmorClick,
                 onSkillClick = onSkillClick,
                 onItemClick = onItemClick,
                 modifier = Modifier.padding(innerPadding)
@@ -74,20 +78,19 @@ fun DecorationDetailScreen(
 
 @DevicePreviews
 @Composable
-fun DecorationDetailPreview(
-    @PreviewParameter(DecorationDetailScreenPreviewParamProvider::class) uiState: DecorationDetailState
+fun ArmorSetDetailScreenPreview(
+    @PreviewParameter(ArmorSetDetailScreenPreviewParamProvider::class) uiState: ArmorSetDetailState
 ) {
     Theme {
-        DecorationDetailScreen(uiState)
+        ArmorSetDetailScreen(uiState)
     }
 }
 
-private class DecorationDetailScreenPreviewParamProvider :
-    PreviewParameterProvider<DecorationDetailState> {
+private class ArmorSetDetailScreenPreviewParamProvider : PreviewParameterProvider<ArmorSetDetailState> {
 
-    override val values: Sequence<DecorationDetailState> = sequenceOf(
-        DecorationDetailState(
-            decoration = PreviewDecorationData.decoration,
+    override val values: Sequence<ArmorSetDetailState> = sequenceOf(
+        ArmorSetDetailState(
+            armorSet = PreviewArmorData.armorSet,
         ),
     )
 

@@ -1,4 +1,4 @@
-package com.gaugustini.mhfudatabase.ui.features.search.components
+package com.gaugustini.mhfudatabase.ui.features.userset.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -15,7 +15,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -26,11 +26,12 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalFocusManager
@@ -38,18 +39,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
-import com.gaugustini.mhfudatabase.ui.theme.Theme
-import com.gaugustini.mhfudatabase.util.DevicePreviews
 import kotlin.math.roundToInt
 
 @Composable
-fun SearchTopBar(
+fun SelectionTopBar(
     modifier: Modifier = Modifier,
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
-    query: String = "",
     navigateBack: () -> Unit = {},
+    onFilterClick: () -> Unit = {},
     onQueryChange: (String) -> Unit = {},
-    onClearQuery: () -> Unit = {},
+    onDismiss: () -> Unit = {},
 ) {
     Layout(
         modifier = modifier,
@@ -75,11 +74,11 @@ fun SearchTopBar(
                         WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Top)
                     )
             ) {
-                SearchInputText(
-                    query = query,
+                SelectionInputText(
                     onBackClick = navigateBack,
+                    onFilterClick = onFilterClick,
                     onQueryChange = onQueryChange,
-                    onClearQuery = onClearQuery,
+                    onDismiss = onDismiss,
                     modifier = Modifier.fillMaxWidth()
                 )
             }
@@ -88,24 +87,23 @@ fun SearchTopBar(
 }
 
 @Composable
-fun SearchInputText(
-    query: String,
+fun SelectionInputText(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit = {},
+    onFilterClick: () -> Unit = {},
     onQueryChange: (String) -> Unit = {},
-    onClearQuery: () -> Unit = {},
+    onDismiss: () -> Unit = {},
 ) {
+    var query by rememberSaveable { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
-    val focusRequester = remember { FocusRequester() }
-
-    LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
-    }
 
     TextField(
         value = query,
-        onValueChange = onQueryChange,
-        textStyle = MaterialTheme.typography.titleLarge,
+        onValueChange = {
+            query = it
+            onQueryChange(it)
+        },
+        textStyle = MaterialTheme.typography.bodyLarge,
         shape = MaterialTheme.shapes.medium,
         leadingIcon = {
             IconButton(
@@ -119,40 +117,46 @@ fun SearchInputText(
             }
         },
         placeholder = {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = null,
-                    modifier = Modifier.size(Dimension.Size.extraSmall)
-                )
-                Text(
-                    text = stringResource(R.string.search_hint),
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-            }
+            Text(
+                text = stringResource(R.string.user_set_selection_search),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
         },
         trailingIcon = {
-            if (query.isNotEmpty()) {
-                IconButton(
-                    onClick = {
-                        onClearQuery()
-                        focusRequester.requestFocus()
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                if (query.isNotEmpty()) {
+                    IconButton(
+                        onClick = {
+                            query = ""
+                            focusManager.clearFocus()
+                            onDismiss()
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Clear,
+                            contentDescription = null,
+                            modifier = Modifier.size(Dimension.Size.extraSmall)
+                        )
                     }
+                }
+                IconButton(
+                    onClick = onFilterClick,
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.Clear,
+                        imageVector = Icons.Default.FilterList,
                         contentDescription = null,
                         modifier = Modifier.size(Dimension.Size.extraSmall)
                     )
                 }
             }
         },
-        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
+        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Default),
         keyboardActions = KeyboardActions(
-            onSearch = { focusManager.clearFocus() },
+            onDone = { focusManager.clearFocus() },
         ),
         singleLine = true,
         colors = TextFieldDefaults.colors(
@@ -165,29 +169,9 @@ fun SearchInputText(
             focusedTextColor = MaterialTheme.colorScheme.onSurface,
             unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
         ),
-        modifier = modifier
-            .focusRequester(focusRequester)
-            .padding(
-                horizontal = Dimension.Padding.large,
-                vertical = Dimension.Padding.medium,
-            )
-    )
-}
-
-@DevicePreviews
-@Composable
-fun SearchTopBarPreview() {
-    Theme {
-        SearchTopBar()
-    }
-}
-
-@DevicePreviews
-@Composable
-fun SearchTopBarWithTextPreview() {
-    Theme {
-        SearchTopBar(
-            query = "Query Text",
+        modifier = modifier.padding(
+            horizontal = Dimension.Padding.large,
+            vertical = Dimension.Padding.medium,
         )
-    }
+    )
 }

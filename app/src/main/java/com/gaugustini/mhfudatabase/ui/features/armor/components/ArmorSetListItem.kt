@@ -1,7 +1,8 @@
 package com.gaugustini.mhfudatabase.ui.features.armor.components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.size
@@ -28,6 +29,7 @@ fun ArmorSetListItem(
     expanded: Boolean = false,
     onToggleExpand: () -> Unit = {},
     onArmorClick: (armorId: Int) -> Unit = {},
+    onArmorSetClick: (armorSetId: Int) -> Unit = {},
 ) {
     Column(
         modifier = modifier
@@ -67,13 +69,24 @@ fun ArmorSetListItem(
             } else {
                 MaterialTheme.colorScheme.surface
             },
-            modifier = Modifier.clickable { onToggleExpand() }
+            modifier = Modifier.combinedClickable(
+                onClick = { onToggleExpand() },
+                onLongClick = { onArmorSetClick(armorSet.id) }
+            ),
         )
 
         AnimatedVisibility(
             visible = expanded,
         ) {
-            Column {
+            Column(
+                modifier = Modifier.background(
+                    if (expanded) {
+                        MaterialTheme.colorScheme.surfaceContainer
+                    } else {
+                        MaterialTheme.colorScheme.surface
+                    }
+                )
+            ) {
                 armorSet.armors?.forEach { armor ->
                     ArmorListItem(
                         armor = armor,

@@ -1,15 +1,18 @@
 package com.gaugustini.mhfudatabase.ui.features.monster.detail
 
+import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import com.gaugustini.mhfudatabase.R
@@ -20,6 +23,7 @@ import com.gaugustini.mhfudatabase.ui.components.icons.QuestIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
+import com.gaugustini.mhfudatabase.util.itemsWithDivider
 import com.gaugustini.mhfudatabase.util.preview.PreviewQuestData
 
 @Composable
@@ -27,18 +31,27 @@ fun MonsterDetailQuestContent(
     quests: List<Quest>,
     modifier: Modifier = Modifier,
     onQuestClick: (questId: Int) -> Unit = {},
+    onChangePage: (MonsterDetailPage) -> Unit = {},
 ) {
+    BackHandler {
+        onChangePage(MonsterDetailPage.SUMMARY)
+    }
+
     LazyColumn(
-        modifier = modifier
+        contentPadding = PaddingValues(Dimension.Padding.medium),
+        modifier = modifier.fillMaxSize()
     ) {
-        itemsIndexed(quests) { index, quest ->
+        itemsWithDivider(
+            items = quests,
+            key = { it.id }
+        ) { quest ->
             MonsterDetailQuestListItem(
                 quest = quest,
                 onQuestClick = onQuestClick,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(Dimension.Radius.small))
+                    .background(MaterialTheme.colorScheme.surface)
             )
-            if (index != quests.lastIndex) {
-                HorizontalDivider()
-            }
         }
     }
 }

@@ -93,6 +93,9 @@ class NavigationActions(
     val navigateToArmorDetail: (armorId: Int) -> Unit = {
         navController.navigate(Destinations.armorDetailRoute(it))
     }
+    val navigateToArmorSetDetail: (armorSetId: Int) -> Unit = {
+        navController.navigate(Destinations.armorSetDetailRoute(it))
+    }
     val navigateToDecorationDetail: (decorationId: Int) -> Unit = {
         navController.navigate(Destinations.decorationDetailRoute(it))
     }

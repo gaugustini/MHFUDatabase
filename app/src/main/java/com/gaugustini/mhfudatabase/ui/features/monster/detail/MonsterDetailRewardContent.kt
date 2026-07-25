@@ -1,4 +1,4 @@
-package com.gaugustini.mhfudatabase.ui.features.quest.detail
+package com.gaugustini.mhfudatabase.ui.features.monster.detail
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -22,25 +22,25 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.gaugustini.mhfudatabase.domain.model.QuestReward
+import com.gaugustini.mhfudatabase.domain.model.MonsterReward
 import com.gaugustini.mhfudatabase.ui.components.AppHDivider
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
-import com.gaugustini.mhfudatabase.ui.features.quest.components.QuestRewardListItem
+import com.gaugustini.mhfudatabase.ui.features.monster.components.MonsterRewardListItem
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.animateItemExpandCollapse
-import com.gaugustini.mhfudatabase.util.preview.PreviewQuestData
+import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
 
 @Composable
-fun QuestDetailRewardContent(
-    rewards: List<QuestReward>,
+fun MonsterDetailRewardContent(
+    rewards: List<MonsterReward>,
     modifier: Modifier = Modifier,
-    onChangePage: (QuestDetailPage) -> Unit = {},
     onItemClick: (itemId: Int) -> Unit = {},
+    onChangePage: (MonsterDetailPage) -> Unit = {},
 ) {
     BackHandler {
-        onChangePage(QuestDetailPage.SUMMARY)
+        onChangePage(MonsterDetailPage.SUMMARY)
     }
 
     val rewardsPerCondition = rewards.groupBy { it.condition }
@@ -80,7 +80,7 @@ fun QuestDetailRewardContent(
             if (isConditionExpanded) {
                 itemsIndexed(
                     items = rewards,
-                    key = { _, reward -> "reward_${reward.item.id}_${reward.condition}_${reward.quantity}_${reward.percentage}" }
+                    key = { _, reward -> "reward_${reward.item.id}_${reward.condition}_${reward.percentage}" }
                 ) { index, reward ->
                     val isLastItemInCondition = index == rewards.lastIndex
 
@@ -96,7 +96,7 @@ fun QuestDetailRewardContent(
                             .background(MaterialTheme.colorScheme.surface)
                             .animateItemExpandCollapse(this)
                     ) {
-                        QuestRewardListItem(
+                        MonsterRewardListItem(
                             reward = reward,
                             onItemClick = onItemClick,
                         )
@@ -115,10 +115,10 @@ fun QuestDetailRewardContent(
 
 @DevicePreviews
 @Composable
-fun QuestDetailRewardContentPreview() {
+fun MonsterDetailRewardContentPreview() {
     Theme {
-        QuestDetailRewardContent(
-            rewards = PreviewQuestData.questRewardList,
+        MonsterDetailRewardContent(
+            rewards = PreviewMonsterData.monsterRewardList,
         )
     }
 }

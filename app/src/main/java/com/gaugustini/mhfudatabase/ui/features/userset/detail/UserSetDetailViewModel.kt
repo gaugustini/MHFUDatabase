@@ -35,7 +35,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class UserSetDetailState(
-    val initialTab: UserSetDetailTab = UserSetDetailTab.EQUIPMENT,
+    val page: UserSetDetailPage = UserSetDetailPage.EQUIPMENT,
     val language: Language = Language.ENGLISH,
     val equipmentSet: UserEquipmentSet = UserEquipmentSet(),
 
@@ -62,6 +62,7 @@ enum class SelectionType {
 }
 
 sealed interface UserSetEvent {
+    data class ChangePage(val page: UserSetDetailPage) : UserSetEvent
     data class Rename(val name: String) : UserSetEvent
     object Delete : UserSetEvent
     data class ChangeWeapon(val weaponId: Int) : UserSetEvent
@@ -161,6 +162,7 @@ class UserSetDetailViewModel @Inject constructor(
 
     fun onEvent(event: UserSetEvent) {
         when (event) {
+            is UserSetEvent.ChangePage -> changePage(event.page)
             is UserSetEvent.Rename -> renameUserSet(event.name)
             is UserSetEvent.Delete -> deleteUserSet()
             is UserSetEvent.ChangeWeapon -> changeWeapon(event.weaponId)
@@ -176,6 +178,12 @@ class UserSetDetailViewModel @Inject constructor(
             is UserSetEvent.ApplyDecorationFilter -> applyFilter(decorationFilter = event.filter)
             is UserSetEvent.ApplySkillTreeFilter -> applyFilter(skillFilter = event.filter)
             is UserSetEvent.SkillToFilter -> skillToFilter(event.skillTreeId)
+        }
+    }
+
+    private fun changePage(page: UserSetDetailPage) {
+        _uiState.update { state ->
+            state.copy(page = page)
         }
     }
 

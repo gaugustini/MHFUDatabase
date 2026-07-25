@@ -23,7 +23,7 @@
     </string>
 
     <!-- Screen Title: Main Routes -->
-    <string name="screen_armor_set_list">Armor Sets</string>
+    <string name="screen_armor_set_list">Armors</string>
     <string name="screen_decoration_list">Decorations</string>
     <string name="screen_item_list">Items</string>
     <string name="screen_item_combination_list">Combinations</string>
@@ -39,6 +39,7 @@
 
     <!-- Screen Title: Detail Routes -->
     <string name="screen_armor_detail">Armor Detail</string>
+    <string name="screen_armor_set_detail">Armor Set Detail</string>
     <string name="screen_decoration_detail">Decoration Detail</string>
     <string name="screen_item_detail">Item Detail</string>
     <string name="screen_item_combination_detail">Combination Detail</string>
@@ -120,12 +121,15 @@
     <!-- List Header -->
     <string name="list_armors">Armor Pieces</string>
     <string name="list_decorations">Decorations</string>
+    <string name="list_equipment_stats">Equipment Stats</string>
     <string name="list_active_skills">Active Skills</string>
     <string name="list_skills">Skills</string>
     <string name="list_recipe">Required Materials</string>
     <string name="list_recipe_a">Required Materials (A)</string>
     <string name="list_recipe_b">Required Materials (B)</string>
     <string name="list_recipe_create">Required Materials (Create)</string>
+    <string name="list_recipe_create_a">Required Materials (Create) (A)</string>
+    <string name="list_recipe_create_b">Required Materials (Create) (B)</string>
     <string name="list_recipe_upgrade">Required Materials (Upgrade)</string>
 
     <!-- Search -->
@@ -149,6 +153,7 @@
     <string name="search_weapon">Weapon</string>
 
     <!-- Armor -->
+    <string name="armor_set_details">Armor Set</string>
     <string name="armor_rarity">Rarity %1$d</string>
     <string name="armor_defense">Defense (Max.)</string>
     <string name="armor_number_of_slots">Slots</string>
@@ -165,6 +170,8 @@
     <string name="decoration_required_slots">Required Slots</string>
 
     <!-- Item -->
+    <string name="item_usages">Usages</string>
+    <string name="item_sources">Obtaining</string>
     <string name="item_rarity">Rarity %1$d</string>
     <string name="item_carry_max">Carry Max</string>
     <string name="item_buy_price">Buy Price</string>
@@ -177,9 +184,9 @@
     <string name="item_location">Location</string>
     <string name="item_monster">Monster</string>
     <string name="item_rank_unranked">Guild 1★~2★</string>
-    <string name="item_rank_low">LR</string>
-    <string name="item_rank_high">HR</string>
-    <string name="item_rank_g">GR</string>
+    <string name="item_rank_low">Low Rank/Elder</string>
+    <string name="item_rank_high">High Rank/Nekoht</string>
+    <string name="item_rank_g">G Rank</string>
     <string name="item_rank_treasure">Treasure</string>
     <string name="item_rank_training">Training</string>
     <string name="item_quest">Quest</string>
@@ -230,12 +237,23 @@
     <string name="location_gather_fish">Fishing</string>
 
     <!-- Monster -->
+    <string name="monster_damage_stats">Damage Stats</string>
+    <string name="monster_reward">Rewards (Shiny/Capture/Breakable Parts)</string>
+    <string name="monster_quest">Quests</string>
     <string name="monster_item_effectiveness">Items Effectiveness</string>
     <string name="monster_item_effectiveness_none">None</string>
     <string name="monster_state_normal">Normal</string>
     <string name="monster_state_enraged">Enraged</string>
     <string name="monster_physical_damage">Physical</string>
+    <string name="monster_cut_damage">Cutting damage</string>
+    <string name="monster_impact_damage">Impact damage</string>
+    <string name="monster_shot_damage">Shot damage</string>
     <string name="monster_elemental_damage">Elemental</string>
+    <string name="monster_fire_damage">Fire</string>
+    <string name="monster_water_damage">Water</string>
+    <string name="monster_thunder_damage">Thunder</string>
+    <string name="monster_ice_damage">Ice</string>
+    <string name="monster_dragon_damage">Dragon</string>
     <string name="monster_ailment_status">Status</string>
     <string name="monster_ailment_initial">Initial</string>
     <string name="monster_ailment_increase">Increase</string>
@@ -279,6 +297,7 @@
     <string name="quest_guild_stars">Guild %1$d ★</string>
     <string name="quest_training_stars">Training %1$d ★</string>
     <string name="quest_reward">Reward</string>
+    <string name="quest_rewards">Rewards</string>
     <string name="quest_fee">Fee</string>
     <string name="quest_time_limit">Time Limit</string>
     <string name="quest_location">Location</string>
@@ -346,6 +365,7 @@
     <string name="detail_quest_group_group_challenge">Challenge</string>
 
     <!-- Skill Tree -->
+    <string name="skill_tree_equipment">Equipments</string>
     <string name="skill_empty_list">None</string>
     <string name="skill_decoration_list">Decoration</string>
     <string name="skill_armor_list">Armor</string>
@@ -362,9 +382,10 @@
     <string name="weapon_light_bowgun">Light Bowgun</string>
     <string name="weapon_heavy_bowgun">Heavy Bowgun</string>
     <string name="weapon_bow">Bow</string>
+    <string name="weapon_paths">Paths and Upgrades</string>
     <string name="weapon_rarity">Rarity %1$d</string>
     <string name="weapon_attack">Attack</string>
-    <string name="weapon_max_attack">Max Attack</string>
+    <string name="weapon_max_attack">Attack (Max.)</string>
     <string name="weapon_affinity">Affinity</string>
     <string name="weapon_slots">Slots</string>
     <string name="weapon_defense">Defense</string>
@@ -390,15 +411,15 @@
     <string name="weapon_recoil_light">Light</string>
     <string name="weapon_recoil_moderate">Moderate</string>
     <string name="weapon_ammo_bowgun">Ammo</string>
-    <string name="weapon_ammo_bowgun_normal">Normal</string>
-    <string name="weapon_ammo_bowgun_pierce">Pierce</string>
-    <string name="weapon_ammo_bowgun_pellet">Pellet</string>
-    <string name="weapon_ammo_bowgun_crag">Crag</string>
-    <string name="weapon_ammo_bowgun_clust">Clust</string>
-    <string name="weapon_ammo_bowgun_recovery">Recovery</string>
-    <string name="weapon_ammo_bowgun_poison">Poison</string>
-    <string name="weapon_ammo_bowgun_paralysis">Para</string>
-    <string name="weapon_ammo_bowgun_sleep">Sleep</string>
+    <string name="weapon_ammo_bowgun_normal">Normal (Lv 1, 2, 3)</string>
+    <string name="weapon_ammo_bowgun_pierce">Pierce (Lv 1, 2, 3)</string>
+    <string name="weapon_ammo_bowgun_pellet">Pellet (Lv 1, 2, 3)</string>
+    <string name="weapon_ammo_bowgun_crag">Crag (Lv 1, 2, 3)</string>
+    <string name="weapon_ammo_bowgun_clust">Clust (Lv 1, 2, 3)</string>
+    <string name="weapon_ammo_bowgun_recovery">Recovery (Lv 1, 2)</string>
+    <string name="weapon_ammo_bowgun_poison">Poison (Lv 1, 2)</string>
+    <string name="weapon_ammo_bowgun_paralysis">Para (Lv 1, 2)</string>
+    <string name="weapon_ammo_bowgun_sleep">Sleep (Lv 1, 2)</string>
     <string name="weapon_ammo_bowgun_flame">Flame</string>
     <string name="weapon_ammo_bowgun_water">Water</string>
     <string name="weapon_ammo_bowgun_thunder">Thunder</string>
@@ -426,7 +447,10 @@
     <string name="weapon_finals">Finals</string>
 
     <!-- User Equipment Set -->
+    <string name="user_set_empty_list">Tap \'New Set\' to get started.</string>
     <string name="user_set_new">New Set</string>
+    <string name="user_set_equipment">Equipment</string>
+    <string name="user_set_summary">Summary</string>
     <string name="user_set_nothing_equipped">Nothing Equipped</string>
     <string name="user_set_none">None</string>
     <string name="user_set_dialog_new_set_title">New Set</string>

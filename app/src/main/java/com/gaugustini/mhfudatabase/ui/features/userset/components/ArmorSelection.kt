@@ -13,23 +13,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.FilterList
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,6 +34,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.filter.ArmorFilter
@@ -48,9 +47,9 @@ import com.gaugustini.mhfudatabase.ui.components.icons.SlotsIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
+import com.gaugustini.mhfudatabase.util.itemsWithDivider
 import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArmorSelection(
     armors: List<Armor>,
@@ -60,6 +59,7 @@ fun ArmorSelection(
     onBack: () -> Unit = {},
     openSkillSelection: () -> Unit = {},
 ) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     var showFilterSheet by rememberSaveable { mutableStateOf(false) }
     val filterSheetState = rememberModalBottomSheetState(true)
 
@@ -67,49 +67,34 @@ fun ArmorSelection(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    SearchTextField(
-                        onQueryChange = { onFilterChange(filter.copy(name = it)) },
-                        onDismiss = { onFilterChange(filter.copy(name = null)) },
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                },
-                navigationIcon = {
-                    IconButton(
-                        onClick = onBack,
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = null,
-                            modifier = Modifier.size(Dimension.Size.extraSmall)
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(
-                        onClick = { showFilterSheet = true },
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.FilterList,
-                            contentDescription = null,
-                            modifier = Modifier.size(Dimension.Size.extraSmall)
-                        )
-                    }
-                },
+            SelectionTopBar(
+                scrollBehavior = scrollBehavior,
+                navigateBack = onBack,
+                onFilterClick = { showFilterSheet = true },
+                onQueryChange = { onFilterChange(filter.copy(name = it)) },
+                onDismiss = { onFilterChange(filter.copy(name = null)) },
             )
         },
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
     ) { innerPadding ->
         LazyColumn(
+            contentPadding = PaddingValues(Dimension.Padding.medium),
+            userScrollEnabled = armors.isNotEmpty(),
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            items(armors) { armor ->
+            itemsWithDivider(
+                items = armors,
+                key = { it.id }
+            ) { armor ->
                 ArmorSelectionListItem(
                     armor = armor,
                     onArmorClick = onArmorClick,
                     selectedSkills = filter.skills ?: emptyList(),
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(Dimension.Radius.small))
+                        .background(MaterialTheme.colorScheme.surface)
                 )
             }
         }
@@ -126,7 +111,6 @@ fun ArmorSelection(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArmorFilterSheet(
     sheetState: SheetState,

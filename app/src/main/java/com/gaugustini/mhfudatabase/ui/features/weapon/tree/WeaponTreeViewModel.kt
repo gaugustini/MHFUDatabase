@@ -7,7 +7,7 @@ import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.WeaponRepository
 import com.gaugustini.mhfudatabase.domain.enums.Language
 import com.gaugustini.mhfudatabase.domain.enums.WeaponType
-import com.gaugustini.mhfudatabase.domain.model.WeaponNode
+import com.gaugustini.mhfudatabase.domain.model.FlattenedWeaponNode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,7 +21,7 @@ import javax.inject.Inject
 
 data class WeaponTreeState(
     val weaponType: WeaponType = WeaponType.GREAT_SWORD,
-    val nodes: List<WeaponNode> = emptyList(),
+    val nodes: List<FlattenedWeaponNode> = emptyList(),
 )
 
 @HiltViewModel

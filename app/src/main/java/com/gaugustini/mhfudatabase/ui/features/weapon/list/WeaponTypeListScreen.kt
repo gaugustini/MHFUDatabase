@@ -1,5 +1,6 @@
 package com.gaugustini.mhfudatabase.ui.features.weapon.list
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -7,12 +8,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.WeaponType
@@ -44,6 +50,8 @@ fun WeaponTypeListScreen(
     openSearch: () -> Unit = {},
     onWeaponTypeClick: (WeaponType) -> Unit = {},
 ) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+
     Scaffold(
         topBar = {
             TopBar(
@@ -51,19 +59,25 @@ fun WeaponTypeListScreen(
                 navigationType = NavigationType.MENU,
                 navigation = openDrawer,
                 openSearch = openSearch,
+                scrollBehavior = scrollBehavior,
             )
         },
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .fillMaxSize()
                 .padding(innerPadding)
+                .padding(Dimension.Padding.medium)
         ) {
             WeaponType.entries.ForEachWithDivider { weaponType ->
                 WeaponTypeListItem(
                     weaponType = weaponType,
                     onWeaponTypeClick = onWeaponTypeClick,
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(Dimension.Radius.small))
+                        .background(MaterialTheme.colorScheme.surface)
                 )
             }
         }

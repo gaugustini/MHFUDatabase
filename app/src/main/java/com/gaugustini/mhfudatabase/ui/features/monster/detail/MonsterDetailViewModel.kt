@@ -6,7 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.MonsterRepository
 import com.gaugustini.mhfudatabase.domain.enums.Language
+import com.gaugustini.mhfudatabase.domain.enums.Rank
 import com.gaugustini.mhfudatabase.domain.model.Monster
+import com.gaugustini.mhfudatabase.domain.model.MonsterReward
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,8 +21,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class MonsterDetailState(
-    val initialTab: MonsterDetailTab = MonsterDetailTab.SUMMARY,
+    val page: MonsterDetailPage = MonsterDetailPage.SUMMARY,
     val monster: Monster? = null,
+    val rewardRank: Rank? = null,
+    val availableRewardRanks: List<Rank> = emptyList(),
+    val rewards: List<MonsterReward> = emptyList(),
 )
 
 @HiltViewModel
@@ -50,11 +55,36 @@ class MonsterDetailViewModel @Inject constructor(
 
     private fun loadMonsterDetails(language: Language) {
         viewModelScope.launch {
+            val monster = monsterRepository.getMonster(monsterId, language.code)
+            val availableRewardRanks = monster.rewards?.keys?.toList() ?: emptyList()
+            val firstRewardRank = availableRewardRanks.minByOrNull { it.ordinal }
+            val firstRewardRankRewards = monster.rewards?.get(firstRewardRank) ?: emptyList()
+
             _uiState.update { state ->
                 state.copy(
-                    monster = monsterRepository.getMonster(monsterId, language.code),
+                    monster = monster,
+                    rewardRank = firstRewardRank,
+                    availableRewardRanks = availableRewardRanks.sortedBy { it.ordinal },
+                    rewards = firstRewardRankRewards,
                 )
             }
+        }
+    }
+
+    fun onChangePage(page: MonsterDetailPage) {
+        _uiState.update { state ->
+            state.copy(
+                page = page,
+            )
+        }
+    }
+
+    fun onChangeRank(rank: Rank) {
+        _uiState.update { state ->
+            state.copy(
+                rewardRank = rank,
+                rewards = state.monster?.rewards?.get(rank) ?: emptyList(),
+            )
         }
     }
 

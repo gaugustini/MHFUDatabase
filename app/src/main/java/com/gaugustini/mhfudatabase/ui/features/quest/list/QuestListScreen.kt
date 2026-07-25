@@ -1,49 +1,66 @@
 package com.gaugustini.mhfudatabase.ui.features.quest.list
 
-import androidx.annotation.StringRes
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.twotone.Star
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.HubType
 import com.gaugustini.mhfudatabase.domain.enums.QuestGroup
+import com.gaugustini.mhfudatabase.domain.filter.QuestFilter
 import com.gaugustini.mhfudatabase.domain.model.Quest
+import com.gaugustini.mhfudatabase.ui.components.AppHDivider
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
-import com.gaugustini.mhfudatabase.ui.components.TabbedLayout
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.features.quest.components.QuestListItem
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
+import com.gaugustini.mhfudatabase.util.animateItemExpandCollapse
 import com.gaugustini.mhfudatabase.util.preview.PreviewQuestData
-
-enum class QuestListTab(@get:StringRes val title: Int) {
-    VILLAGE(R.string.tab_quest_village),
-    GUILD(R.string.tab_quest_guild),
-    TRAINING(R.string.tab_quest_training);
-}
 
 @Composable
 fun QuestListRoute(
@@ -58,7 +75,8 @@ fun QuestListRoute(
         uiState = uiState,
         openDrawer = openDrawer,
         openSearch = openSearch,
-        onToggleExpand = viewModel::toggleExpansion,
+        onToggleExpand = viewModel::onToggleExpansion,
+        onFilterChange = viewModel::onFilterChange,
         onQuestClick = onQuestClick,
     )
 }
@@ -69,50 +87,97 @@ fun QuestListScreen(
     openDrawer: () -> Unit = {},
     openSearch: () -> Unit = {},
     onToggleExpand: (questGroup: QuestGroup) -> Unit = {},
+    onFilterChange: (filter: QuestFilter) -> Unit = {},
     onQuestClick: (questId: Int) -> Unit = {},
 ) {
-    val pagerState = rememberPagerState(
-        initialPage = uiState.initialTab.ordinal,
-        pageCount = { QuestListTab.entries.size },
-    )
-    TabbedLayout(
-        pagerState = pagerState,
-        tabTitles = QuestListTab.entries.map { stringResource(it.title) },
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+
+    Scaffold(
         topBar = {
             TopBar(
                 title = stringResource(R.string.screen_quest_list),
                 navigationType = NavigationType.MENU,
                 navigation = openDrawer,
                 openSearch = openSearch,
+                scrollBehavior = scrollBehavior,
+                bottomContent = {
+                    QuestListFilter(
+                        filter = uiState.filter,
+                        onFilterChange = onFilterChange,
+                    )
+                }
             )
         },
-    ) { tabIndex ->
-        when (QuestListTab.entries[tabIndex]) {
-            QuestListTab.VILLAGE -> {
-                QuestList(
-                    quests = uiState.quests.filter { it.hubType == HubType.VILLAGE },
-                    expandedQuestGroup = uiState.expandedQuestGroup,
-                    onToggleExpand = onToggleExpand,
-                    onQuestClick = onQuestClick,
-                )
-            }
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+    ) { innerPadding ->
+        QuestList(
+            quests = uiState.quests,
+            expandedQuestGroup = uiState.expandedQuestGroup,
+            onToggleExpand = onToggleExpand,
+            onQuestClick = onQuestClick,
+            modifier = Modifier.padding(innerPadding)
+        )
+    }
+}
 
-            QuestListTab.GUILD -> {
-                QuestList(
-                    quests = uiState.quests.filter { it.hubType == HubType.GUILD },
-                    expandedQuestGroup = uiState.expandedQuestGroup,
-                    onToggleExpand = onToggleExpand,
-                    onQuestClick = onQuestClick,
-                )
-            }
+@Composable
+fun QuestListFilter(
+    filter: QuestFilter,
+    modifier: Modifier = Modifier,
+    onFilterChange: (filter: QuestFilter) -> Unit = {},
+) {
+    var typeMenuExpanded by remember { mutableStateOf(false) }
 
-            QuestListTab.TRAINING -> {
-                QuestList(
-                    quests = uiState.quests.filter { it.hubType == HubType.TRAINING },
-                    expandedQuestGroup = uiState.expandedQuestGroup,
-                    onToggleExpand = onToggleExpand,
-                    onQuestClick = onQuestClick,
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = Dimension.Padding.medium),
+        horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium)
+    ) {
+        Box {
+            FilterChip(
+                selected = filter.hub != null,
+                onClick = { typeMenuExpanded = true },
+                label = {
+                    Text(
+                        filter.hub?.name?.lowercase()
+                            ?.replaceFirstChar { it.uppercase() } // TODO: Change to string resources
+                            ?: "All Types"
+                    )
+                },
+                trailingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.ArrowDropDown,
+                        contentDescription = null,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+            )
+
+            DropdownMenu(
+                expanded = typeMenuExpanded,
+                onDismissRequest = { typeMenuExpanded = false }
+            ) {
+                DropdownMenuItem(
+                    text = { Text("All Types") },
+                    onClick = {
+                        onFilterChange(filter.copy(hub = null))
+                        typeMenuExpanded = false
+                    }
                 )
+                HubType.entries.forEach { type ->
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                type.name.lowercase().replaceFirstChar { it.uppercase() }
+                            )
+                        },
+                        onClick = {
+                            onFilterChange(filter.copy(hub = type))
+                            typeMenuExpanded = false
+                        }
+                    )
+                }
             }
         }
     }
@@ -141,7 +206,8 @@ fun QuestList(
     )
 
     LazyColumn(
-        modifier = modifier
+        contentPadding = PaddingValues(Dimension.Padding.medium),
+        modifier = modifier.fillMaxSize()
     ) {
         questGrouped.forEach { (group, quests) ->
             val isExpanded = group in expandedQuestGroup
@@ -151,28 +217,54 @@ fun QuestList(
                 0
             }
 
-            stickyHeader(key = group) {
+            item(key = group) {
                 QuestGroupSectionHeader(
                     group = group,
                     numberOfStars = numberOfStars,
                     expanded = isExpanded,
-                    onToggleExpand = { onToggleExpand(group) }
+                    onToggleExpand = { onToggleExpand(group) },
+                    modifier = Modifier
+                        .padding(bottom = if (isExpanded) 0.dp else Dimension.Padding.small)
+                        .clip(
+                            RoundedCornerShape(
+                                topStart = Dimension.Radius.medium,
+                                topEnd = Dimension.Radius.medium,
+                                bottomStart = if (isExpanded) 0.dp else Dimension.Radius.medium,
+                                bottomEnd = if (isExpanded) 0.dp else Dimension.Radius.medium,
+                            )
+                        )
                 )
             }
 
             if (isExpanded) {
-                items(
+                itemsIndexed(
                     items = quests,
-                    key = { it.id }
-                ) { quest ->
+                    key = { _, quest -> quest.id }
+                ) { index, quest ->
+                    val isLastQuestInGroup = index == quests.lastIndex
+
                     Column(
-                        modifier = Modifier.animateItem()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(
+                                RoundedCornerShape(
+                                    bottomStart = if (isLastQuestInGroup) Dimension.Radius.medium else 0.dp,
+                                    bottomEnd = if (isLastQuestInGroup) Dimension.Radius.medium else 0.dp,
+                                )
+                            )
+                            .background(MaterialTheme.colorScheme.surface)
+                            .animateItemExpandCollapse(this)
                     ) {
                         QuestListItem(
                             quest = quest,
                             onQuestClick = onQuestClick,
                         )
-                        HorizontalDivider()
+                        if (!isLastQuestInGroup) {
+                            AppHDivider()
+                        }
+                    }
+                    if (isLastQuestInGroup) {
+                        Spacer(modifier = Modifier.height(Dimension.Spacing.small))
                     }
                 }
             }
@@ -307,7 +399,6 @@ private class QuestListScreenPreviewParamProvider : PreviewParameterProvider<Que
 
     override val values: Sequence<QuestListState> = sequenceOf(
         QuestListState(
-            initialTab = QuestListTab.VILLAGE,
             quests = PreviewQuestData.questList,
             expandedQuestGroup = setOf(QuestGroup.VILLAGE_1),
         ),
