@@ -76,7 +76,9 @@ fun ItemCombinationListScreen(
         ) {
             itemsWithDivider(
                 items = uiState.itemCombinations,
-                key = { combination -> "${combination.itemCreated.id}_${combination.itemA.id}_${combination.itemB.id}" }
+                key = { combination ->
+                    "${combination.itemCreated.id}_${combination.itemA.id}_${combination.itemB.id}"
+                }
             ) { combination ->
                 ItemCombinationListItem(
                     combination = combination,

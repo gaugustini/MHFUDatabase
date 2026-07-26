@@ -84,7 +84,9 @@ fun ItemUsagesContent(
             if (combinationsExpanded) {
                 itemsIndexed(
                     items = usages.combinations,
-                    key = { _, combination -> "comb_${combination.itemCreated.id}" }
+                    key = { _, combination ->
+                        "comb_${combination.itemCreated.id}_${combination.itemA.id}_${combination.itemB.id}"
+                    }
                 ) { index, combination ->
                     val isLastItem = index == usages.combinations.lastIndex
 
@@ -138,7 +140,9 @@ fun ItemUsagesContent(
             if (veggieExpanded) {
                 itemsIndexed(
                     items = usages.veggieTrades,
-                    key = { _, trade -> "veg_${trade.location.id}_${trade.trade.itemTraded.id}" }
+                    key = { _, trade ->
+                        "veg_${trade.location.id}_${trade.trade.itemTraded.id}"
+                    }
                 ) { index, trade ->
                     val isLastItem = index == usages.veggieTrades.lastIndex
 
@@ -192,7 +196,9 @@ fun ItemUsagesContent(
             if (armorExpanded) {
                 itemsIndexed(
                     items = usages.armors,
-                    key = { _, armor -> "armor_${armor.craftable.id}_${armor.quantity}" }
+                    key = { _, armor ->
+                        "armor_${armor.craftable.id}_${armor.quantity}"
+                    }
                 ) { index, armor ->
                     val isLastItem = index == usages.armors.lastIndex
 
@@ -246,7 +252,9 @@ fun ItemUsagesContent(
             if (decorationExpanded) {
                 itemsIndexed(
                     items = usages.decorations,
-                    key = { _, decoration -> "dec_${decoration.craftable.id}_${decoration.quantity}" }
+                    key = { _, decoration ->
+                        "dec_${decoration.craftable.id}_${decoration.quantity}"
+                    }
                 ) { index, decoration ->
                     val isLastItem = index == usages.decorations.lastIndex
 
@@ -300,7 +308,9 @@ fun ItemUsagesContent(
             if (weaponExpanded) {
                 itemsIndexed(
                     items = usages.weapons,
-                    key = { _, weapon -> "weapon_${weapon.craftable.id}_${weapon.quantity}" } // TODO: resolve conflicted keys, eq. `Hunter's Bow III`
+                    key = { _, weapon ->
+                        "weapon_${weapon.craftable.id}_${weapon.quantity}"
+                    }
                 ) { index, weapon ->
                     val isLastItem = index == usages.weapons.lastIndex
 

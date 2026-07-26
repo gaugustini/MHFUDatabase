@@ -80,7 +80,9 @@ fun MonsterDetailRewardContent(
             if (isConditionExpanded) {
                 itemsIndexed(
                     items = rewards,
-                    key = { _, reward -> "reward_${reward.item.id}_${reward.condition}_${reward.percentage}" }
+                    key = { _, reward ->
+                        "${reward.item.id}_${reward.condition}_${reward.rank}_${reward.quantity}_${reward.percentage}"
+                    }
                 ) { index, reward ->
                     val isLastItemInCondition = index == rewards.lastIndex
 
