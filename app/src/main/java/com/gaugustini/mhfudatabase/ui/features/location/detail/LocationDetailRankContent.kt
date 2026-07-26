@@ -24,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.GatherType
+import com.gaugustini.mhfudatabase.domain.enums.Rank
 import com.gaugustini.mhfudatabase.domain.model.GatheringPoint
 import com.gaugustini.mhfudatabase.ui.components.AppHDivider
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
@@ -38,10 +39,11 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewLocationData
 fun LocationDetailRankContent(
     gatheringPoints: List<GatheringPoint>,
     modifier: Modifier = Modifier,
+    rank: Rank? = null,
     onItemClick: (itemId: Int) -> Unit = {},
 ) {
     val itemsPerArea = gatheringPoints.groupBy { it.area }
-    var expandedAreas by rememberSaveable(itemsPerArea.keys) {
+    var expandedAreas by rememberSaveable(rank) {
         mutableStateOf(itemsPerArea.keys.toSet())
     }
 

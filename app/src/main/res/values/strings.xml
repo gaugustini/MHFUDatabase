@@ -153,6 +153,9 @@
     <string name="search_weapon">Weapon</string>
 
     <!-- Armor -->
+    <string name="armor_set_filter_hunter_all">All</string>
+    <string name="armor_set_filter_hunter_blade">Blademaster</string>
+    <string name="armor_set_filter_hunter_gunner">Gunner</string>
     <string name="armor_set_details">Armor Set</string>
     <string name="armor_rarity">Rarity %1$d</string>
     <string name="armor_defense">Defense (Max.)</string>
@@ -184,8 +187,8 @@
     <string name="item_location">Location</string>
     <string name="item_monster">Monster</string>
     <string name="item_rank_unranked">Guild 1★~2★</string>
-    <string name="item_rank_low">Low Rank/Elder</string>
-    <string name="item_rank_high">High Rank/Nekoht</string>
+    <string name="item_rank_low">Low Rank</string>
+    <string name="item_rank_high">High Rank</string>
     <string name="item_rank_g">G Rank</string>
     <string name="item_rank_treasure">Treasure</string>
     <string name="item_rank_training">Training</string>
@@ -228,6 +231,12 @@
     <string name="combination_alchemy">Alchemy</string>
 
     <!-- Location -->
+    <string name="location_filter_rank_unranked">Beginner</string>
+    <string name="location_filter_rank_low">Low Rank</string>
+    <string name="location_filter_rank_high">High Rank</string>
+    <string name="location_filter_rank_g">G Rank</string>
+    <string name="location_filter_rank_treasure">Treasure</string>
+    <string name="location_filter_rank_training">Training</string>
     <string name="location_secret_area">Secret Area</string>
     <string name="location_base_camp">Base Camp</string>
     <string name="location_area">Area %1$d</string>
@@ -237,6 +246,15 @@
     <string name="location_gather_fish">Fishing</string>
 
     <!-- Monster -->
+    <string name="monster_filter_size_all">All</string>
+    <string name="monster_filter_size_small">Small</string>
+    <string name="monster_filter_size_large">Large</string>
+    <string name="monster_reward_filter_rank_unranked">Guild 1★~2★</string>
+    <string name="monster_reward_filter_rank_low">Low Rank</string>
+    <string name="monster_reward_filter_rank_high">High Rank</string>
+    <string name="monster_reward_filter_rank_g">G Rank</string>
+    <string name="monster_reward_filter_rank_treasure">Treasure</string>
+    <string name="monster_reward_filter_rank_training">Training</string>
     <string name="monster_damage_stats">Damage Stats</string>
     <string name="monster_reward">Rewards (Shiny/Capture/Breakable Parts)</string>
     <string name="monster_quest">Quests</string>
@@ -291,6 +309,10 @@
     <string name="monster_quest_group_group_challenge">Challenge</string>
 
     <!-- Quest -->
+    <string name="quest_filter_hub_all">All</string>
+    <string name="quest_filter_hub_village">Village</string>
+    <string name="quest_filter_hub_guild">Guild</string>
+    <string name="quest_filter_hub_training">Training</string>
     <string name="quest_type_key">Key</string>
     <string name="quest_type_urgent">Urgent</string>
     <string name="quest_village_stars">Village %1$d ★</string>

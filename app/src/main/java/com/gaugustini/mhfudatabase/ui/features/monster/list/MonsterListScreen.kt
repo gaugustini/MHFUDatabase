@@ -125,10 +125,10 @@ fun MonsterListFilter(
     var typeMenuExpanded by remember { mutableStateOf(false) }
 
     Row(
+        horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = Dimension.Padding.medium),
-        horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium)
     ) {
         Box {
             FilterChip(
@@ -136,9 +136,13 @@ fun MonsterListFilter(
                 onClick = { typeMenuExpanded = true },
                 label = {
                     Text(
-                        filter.type?.name?.lowercase()
-                            ?.replaceFirstChar { it.uppercase() } // TODO: Change to string resources
-                            ?: "All Types"
+                        text = stringResource(
+                            when (filter.type) {
+                                MonsterType.SMALL -> R.string.monster_filter_size_small
+                                MonsterType.LARGE -> R.string.monster_filter_size_large
+                                else -> R.string.monster_filter_size_all
+                            }
+                        )
                     )
                 },
                 trailingIcon = {
@@ -155,7 +159,11 @@ fun MonsterListFilter(
                 onDismissRequest = { typeMenuExpanded = false }
             ) {
                 DropdownMenuItem(
-                    text = { Text("All Types") },
+                    text = {
+                        Text(
+                            text = stringResource(R.string.monster_filter_size_all),
+                        )
+                    },
                     onClick = {
                         onFilterChange(filter.copy(type = null))
                         typeMenuExpanded = false
@@ -165,7 +173,12 @@ fun MonsterListFilter(
                     DropdownMenuItem(
                         text = {
                             Text(
-                                type.name.lowercase().replaceFirstChar { it.uppercase() }
+                                text = stringResource(
+                                    when (type) {
+                                        MonsterType.SMALL -> R.string.monster_filter_size_small
+                                        MonsterType.LARGE -> R.string.monster_filter_size_large
+                                    }
+                                )
                             )
                         },
                         onClick = {

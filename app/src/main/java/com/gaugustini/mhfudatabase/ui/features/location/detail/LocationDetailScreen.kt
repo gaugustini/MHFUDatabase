@@ -1,18 +1,27 @@
 package com.gaugustini.mhfudatabase.ui.features.location.detail
 
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
@@ -78,6 +87,7 @@ fun LocationDetailScreen(
     ) { innerPadding ->
         if (uiState.location != null) {
             LocationDetailRankContent(
+                rank = uiState.rank,
                 gatheringPoints = uiState.gatheringPoints,
                 onItemClick = onItemClick,
                 modifier = Modifier.padding(innerPadding),
@@ -95,24 +105,68 @@ fun LocationDetailRankFilter(
 ) {
     if (availableRanks.isEmpty() || selectedRank == null) return
 
+    var typeMenuExpanded by remember { mutableStateOf(false) }
+
     Row(
         horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
         modifier = modifier
             .fillMaxWidth()
-            .horizontalScroll(rememberScrollState())
             .padding(horizontal = Dimension.Padding.medium),
     ) {
-        availableRanks.forEach { rank ->
+        Box {
             FilterChip(
-                selected = rank == selectedRank,
-                onClick = { onChangeRank(rank) },
+                selected = true,
+                onClick = { typeMenuExpanded = true },
                 label = {
                     Text(
-                        rank.name.lowercase()
-                            .replaceFirstChar { it.uppercase() } // TODO: Change to string resources
+                        text = stringResource(
+                            when (selectedRank) {
+                                Rank.UNRANKED -> R.string.location_filter_rank_unranked
+                                Rank.LOW -> R.string.location_filter_rank_low
+                                Rank.HIGH -> R.string.location_filter_rank_high
+                                Rank.G -> R.string.location_filter_rank_g
+                                Rank.TREASURE -> R.string.location_filter_rank_treasure
+                                Rank.TRAINING -> R.string.location_filter_rank_training
+                            }
+                        )
+                    )
+                },
+                trailingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.ArrowDropDown,
+                        contentDescription = null,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+            )
+
+            DropdownMenu(
+                expanded = typeMenuExpanded,
+                onDismissRequest = { typeMenuExpanded = false }
+            ) {
+                availableRanks.forEach { rank ->
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                text = stringResource(
+                                    when (rank) {
+                                        Rank.UNRANKED -> R.string.location_filter_rank_unranked
+                                        Rank.LOW -> R.string.location_filter_rank_low
+                                        Rank.HIGH -> R.string.location_filter_rank_high
+                                        Rank.G -> R.string.location_filter_rank_g
+                                        Rank.TREASURE -> R.string.location_filter_rank_treasure
+                                        Rank.TRAINING -> R.string.location_filter_rank_training
+                                    }
+                                )
+                            )
+                        },
+                        onClick = {
+                            onChangeRank(rank)
+                            typeMenuExpanded = false
+                        }
                     )
                 }
-            )
+            }
         }
     }
 }

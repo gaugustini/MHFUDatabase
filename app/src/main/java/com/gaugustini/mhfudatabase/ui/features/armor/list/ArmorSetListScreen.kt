@@ -133,19 +133,24 @@ fun ArmorSetListFilter(
     var typeMenuExpanded by remember { mutableStateOf(false) }
 
     Row(
+        horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = Dimension.Padding.medium),
-        horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium)
     ) {
         Box {
             FilterChip(
-                selected = filter.hunterType != null,
+                selected = filter.hunterType != null && filter.hunterType != HunterType.BOTH,
                 onClick = { typeMenuExpanded = true },
                 label = {
                     Text(
-                        filter.hunterType?.name?.lowercase()?.replaceFirstChar { it.uppercase() }
-                            ?: "All Types"
+                        text = stringResource(
+                            when (filter.hunterType) {
+                                HunterType.BLADE -> R.string.armor_set_filter_hunter_blade
+                                HunterType.GUNNER -> R.string.armor_set_filter_hunter_gunner
+                                else -> R.string.armor_set_filter_hunter_all
+                            }
+                        )
                     )
                 },
                 trailingIcon = {
@@ -161,22 +166,23 @@ fun ArmorSetListFilter(
                 expanded = typeMenuExpanded,
                 onDismissRequest = { typeMenuExpanded = false }
             ) {
-                DropdownMenuItem(
-                    text = { Text("All Types") },
-                    onClick = {
-                        onFilterChange(filter.copy(hunterType = null))
-                        typeMenuExpanded = false
-                    }
-                )
                 HunterType.entries.forEach { type ->
                     DropdownMenuItem(
                         text = {
                             Text(
-                                type.name.lowercase().replaceFirstChar { it.uppercase() }
+                                text = stringResource(
+                                    when (type) {
+                                        HunterType.BOTH -> R.string.armor_set_filter_hunter_all
+                                        HunterType.BLADE -> R.string.armor_set_filter_hunter_blade
+                                        HunterType.GUNNER -> R.string.armor_set_filter_hunter_gunner
+                                    }
+                                )
                             )
                         },
                         onClick = {
-                            onFilterChange(filter.copy(hunterType = type))
+                            onFilterChange(
+                                filter.copy(hunterType = if (type == HunterType.BOTH) null else type)
+                            )
                             typeMenuExpanded = false
                         }
                     )
