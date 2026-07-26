@@ -94,7 +94,7 @@ interface ItemDao {
 
     @Query(
         """
-        SELECT 
+        SELECT DISTINCT
             li.location_id AS li_location_id, li.item_id AS li_item_id, li.rank AS li_rank, li.gather_type AS li_gather_type, li.area AS li_area,
             location.*,
             location_text.*
@@ -187,7 +187,7 @@ interface ItemDao {
 
     @Query(
         """
-        SELECT 
+        SELECT DISTINCT
             armor.*,
             armor_text.*,
             armor_recipe.quantity
@@ -205,7 +205,7 @@ interface ItemDao {
 
     @Query(
         """
-        SELECT
+        SELECT DISTINCT
             decoration.id AS dec_id, decoration.shop_order AS dec_shop_order, decoration.required_slots AS dec_required_slots,
             item.*,
             item_text.*,
@@ -244,7 +244,7 @@ interface ItemDao {
 
     @Query(
         """
-        SELECT
+        SELECT DISTINCT
             weapon.*,
             weapon_text.*,
             weapon_recipe.quantity

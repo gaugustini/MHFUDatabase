@@ -41,7 +41,7 @@ interface LocationDao {
 
     @Query(
         """
-        SELECT 
+        SELECT DISTINCT
             li.location_id AS li_location_id, li.item_id AS li_item_id, li.rank AS li_rank, li.gather_type AS li_gather_type, li.area AS li_area,
             item.*,
             item_text.*

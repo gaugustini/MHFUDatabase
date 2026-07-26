@@ -78,7 +78,9 @@ fun VeggieDetailScreen(
             ) {
                 itemsWithDivider(
                     items = trades,
-                    key = { trade -> "${trade.itemTraded.id}_${trade.itemCommon.id}_${trade.itemRare.id}" }
+                    key = { trade ->
+                        "${trade.itemTraded.id}_${trade.itemCommon.id}_${trade.itemRare.id}"
+                    }
                 ) { trade ->
                     VeggieTradeListItem(
                         veggieTrade = trade,

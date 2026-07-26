@@ -86,7 +86,9 @@ fun ItemSourcesContent(
             if (combinationsExpanded) {
                 itemsIndexed(
                     items = sources.combinations,
-                    key = { _, combination -> "comb_${combination.itemA.id}" }
+                    key = { _, combination ->
+                        "comb_${combination.itemCreated.id}_${combination.itemA.id}_${combination.itemB.id}"
+                    }
                 ) { index, combination ->
                     val isLastItem = index == sources.combinations.lastIndex
 
@@ -166,7 +168,9 @@ fun ItemSourcesContent(
                         }
                         itemsIndexed(
                             items = items,
-                            key = { _, location -> "loc_${location.location.id}_${location.rank}_${location.area}_${location.type}" }
+                            key = { _, location ->
+                                "loc_${location.location.id}_${location.rank}_${location.type}_${location.area}"
+                            }
                         ) { index, location ->
                             val isLastItemInRank = index == items.lastIndex
                             val isLastItemInLocation = isLastItemInRank && (rank == lastRank)
@@ -224,7 +228,9 @@ fun ItemSourcesContent(
             if (monsterRewardsExpanded) {
                 itemsIndexed(
                     items = sources.monsterRewards,
-                    key = { _, monster -> "mr_${monster.monster.id}_${monster.rank}_${monster.condition}_${monster.percentage}" }
+                    key = { _, monster ->
+                        "mr_${monster.monster.id}_${monster.condition}_${monster.rank}_${monster.quantity}_${monster.percentage}"
+                    }
                 ) { index, monster ->
                     val isLastItem = index == sources.monsterRewards.lastIndex
 
@@ -296,7 +302,9 @@ fun ItemSourcesContent(
                     }
                     itemsIndexed(
                         items = quests,
-                        key = { _, quest -> "qr_${quest.quest.id}_${quest.condition}_${quest.percentage}" }
+                        key = { _, quest ->
+                            "qr_${quest.quest.id}_${quest.condition}_${quest.quantity}_${quest.percentage}"
+                        }
                     ) { index, quest ->
                         val isLastItemInHub = index == quests.lastIndex
                         val isGlobalLastItem = isLastItemInHub && (hub == lastHub)
@@ -352,7 +360,9 @@ fun ItemSourcesContent(
             if (veggieExpanded) {
                 itemsIndexed(
                     items = sources.veggieTrades,
-                    key = { _, trade -> "veg_${trade.location.id}_${trade.trade.itemTraded.id}" }
+                    key = { _, trade ->
+                        "veg_${trade.location.id}_${trade.trade.itemTraded.id}"
+                    }
                 ) { index, trade ->
                     val isLastItem = index == sources.veggieTrades.lastIndex
 

@@ -101,7 +101,9 @@ fun LocationDetailRankContent(
                     }
                     itemsIndexed(
                         items = items,
-                        key = { _, point -> "point_${point.rank}_${point.area}_${point.type}_${point.item.id}" }
+                        key = { _, point ->
+                            "point_${point.rank}_${point.area}_${point.type}_${point.item.id}"
+                        }
                     ) { index, point ->
                         val isLastType = type == itemsPerType.keys.last()
                         val isLastItemInType = index == items.lastIndex
