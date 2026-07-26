@@ -129,10 +129,10 @@ fun QuestListFilter(
     var typeMenuExpanded by remember { mutableStateOf(false) }
 
     Row(
+        horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = Dimension.Padding.medium),
-        horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium)
     ) {
         Box {
             FilterChip(
@@ -140,9 +140,14 @@ fun QuestListFilter(
                 onClick = { typeMenuExpanded = true },
                 label = {
                     Text(
-                        filter.hub?.name?.lowercase()
-                            ?.replaceFirstChar { it.uppercase() } // TODO: Change to string resources
-                            ?: "All Types"
+                        text = stringResource(
+                            when (filter.hub) {
+                                HubType.VILLAGE -> R.string.quest_filter_hub_village
+                                HubType.GUILD -> R.string.quest_filter_hub_guild
+                                HubType.TRAINING -> R.string.quest_filter_hub_training
+                                else -> R.string.quest_filter_hub_all
+                            }
+                        )
                     )
                 },
                 trailingIcon = {
@@ -159,7 +164,11 @@ fun QuestListFilter(
                 onDismissRequest = { typeMenuExpanded = false }
             ) {
                 DropdownMenuItem(
-                    text = { Text("All Types") },
+                    text = {
+                        Text(
+                            text = stringResource(R.string.quest_filter_hub_all),
+                        )
+                    },
                     onClick = {
                         onFilterChange(filter.copy(hub = null))
                         typeMenuExpanded = false
@@ -169,7 +178,13 @@ fun QuestListFilter(
                     DropdownMenuItem(
                         text = {
                             Text(
-                                type.name.lowercase().replaceFirstChar { it.uppercase() }
+                                text = stringResource(
+                                    when (type) {
+                                        HubType.VILLAGE -> R.string.quest_filter_hub_village
+                                        HubType.GUILD -> R.string.quest_filter_hub_guild
+                                        HubType.TRAINING -> R.string.quest_filter_hub_training
+                                    }
+                                )
                             )
                         },
                         onClick = {

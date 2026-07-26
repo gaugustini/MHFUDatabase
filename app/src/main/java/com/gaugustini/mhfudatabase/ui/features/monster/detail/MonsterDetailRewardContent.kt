@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.gaugustini.mhfudatabase.domain.enums.Rank
 import com.gaugustini.mhfudatabase.domain.model.MonsterReward
 import com.gaugustini.mhfudatabase.ui.components.AppHDivider
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
@@ -36,6 +37,7 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
 fun MonsterDetailRewardContent(
     rewards: List<MonsterReward>,
     modifier: Modifier = Modifier,
+    rank: Rank? = null,
     onItemClick: (itemId: Int) -> Unit = {},
     onChangePage: (MonsterDetailPage) -> Unit = {},
 ) {
@@ -44,7 +46,7 @@ fun MonsterDetailRewardContent(
     }
 
     val rewardsPerCondition = rewards.groupBy { it.condition }
-    var expandedConditions by rememberSaveable(rewardsPerCondition.keys) {
+    var expandedConditions by rememberSaveable(rank) {
         mutableStateOf(rewardsPerCondition.keys.toSet())
     }
 

@@ -153,6 +153,9 @@
     <string name="search_weapon">Arma</string>
 
     <!-- Armor -->
+    <string name="armor_set_filter_hunter_all">Todos</string>
+    <string name="armor_set_filter_hunter_blade">Maestro Espada</string>
+    <string name="armor_set_filter_hunter_gunner">Artillero</string>
     <string name="armor_set_details">Conjunto de armadura</string>
     <string name="armor_rarity">Rareza %1$d</string>
     <string name="armor_defense">Defensa (Max.)</string>
@@ -184,8 +187,8 @@
     <string name="item_location">Localización</string>
     <string name="item_monster">Monstruo</string>
     <string name="item_rank_unranked">Gremio 1★~2★</string>
-    <string name="item_rank_low">Rango Bajo/Anciana</string>
-    <string name="item_rank_high">Rango Alto/Nekoht</string>
+    <string name="item_rank_low">Rango Bajo</string>
+    <string name="item_rank_high">Rango Alto</string>
     <string name="item_rank_g">Rango G</string>
     <string name="item_rank_treasure">Tesoro</string>
     <string name="item_rank_training">Entrenamiento</string>
@@ -228,6 +231,12 @@
     <string name="combination_alchemy">Alquimia</string>
 
     <!-- Location -->
+    <string name="location_filter_rank_unranked">Principiante</string>
+    <string name="location_filter_rank_low">Rango Bajo</string>
+    <string name="location_filter_rank_high">Rango Alto</string>
+    <string name="location_filter_rank_g">Rango G</string>
+    <string name="location_filter_rank_treasure">Tesoros</string>
+    <string name="location_filter_rank_training">Entrenamiento</string>
     <string name="location_secret_area">Área Secreta</string>
     <string name="location_base_camp">Campamento Base</string>
     <string name="location_area">Área %1$d</string>
@@ -237,6 +246,15 @@
     <string name="location_gather_fish">Pesca</string>
 
     <!-- Monster -->
+    <string name="monster_filter_size_all">Todos</string>
+    <string name="monster_filter_size_small">Pequeño</string>
+    <string name="monster_filter_size_large">Grande</string>
+    <string name="monster_reward_filter_rank_unranked">Gremio 1★~2★</string>
+    <string name="monster_reward_filter_rank_low">Rango Bajo</string>
+    <string name="monster_reward_filter_rank_high">Rango Alto</string>
+    <string name="monster_reward_filter_rank_g">Rango G</string>
+    <string name="monster_reward_filter_rank_treasure">Tesoros</string>
+    <string name="monster_reward_filter_rank_training">Entrenamiento</string>
     <string name="monster_damage_stats">Info. de Daño</string>
     <string name="monster_reward">Recompensas (Brillos/Captura/Partes Rompibles)</string>
     <string name="monster_quest">Misiones</string>
@@ -291,6 +309,10 @@
     <string name="monster_quest_group_group_challenge">Desafio</string>
 
     <!-- Quest -->
+    <string name="quest_filter_hub_all">Todos</string>
+    <string name="quest_filter_hub_village">Aldea</string>
+    <string name="quest_filter_hub_guild">Gremio</string>
+    <string name="quest_filter_hub_training">Entrenamiento</string>
     <string name="quest_type_key">Clave</string>
     <string name="quest_type_urgent">Urgente</string>
     <string name="quest_village_stars">Aldea %1$d ★</string>
