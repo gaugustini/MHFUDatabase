@@ -13,13 +13,11 @@
     <!-- What's New -->
     <string name="whats_new_title">¿Qué hay de nuevo?</string>
     <string name="whats_new_text">
-        Versión 1.1.0\n\n
-        • NUEVO: Recompensas de misiones\n
-        • NUEVO: Suministros de misiones\n
-        • NUEVO: Intercambios del Veggie Elder\n
-        • Añadido misiones faltantes\n
-        • Correcciones en las misiones\n
-        • Pequeñas mejoras y correcciones de errores\n
+        Versión 1.2.0-beta01\n\n
+        • Corrección en los valores de recompensa de monstruos (brillos, capturas y roturas)\n
+        • Añadidos los valores de defensa máxima para armaduras\n
+        • Actualización del estilo de la interfaz de usuari\n
+        • Mejoras menores y corrección de errores\n
      </string>
 
     <!-- Screen Title: Main Routes -->
