@@ -92,23 +92,29 @@ data class MonsterAilmentStats(
  * Represents the effectiveness of certain items on a monster in different states.
  *
  * @property monsterId The unique identifier of the monster.
- * @property monsterState The state of the monster (e.g., Normal, Enraged).
- * @property canUsePitfallTrap Whether a pitfall trap can be used.
- * @property canUseShockTrap Whether a shock trap can be used.
+ * @property monsterState The state of the monster (e.g., Normal, Enraged, Unseen).
  * @property canUseFlashBomb Whether a flash bomb can be used.
+ * @property timeFlash The time the flash bomb lasts.
  * @property canUseSonicBomb Whether a sonic bomb can be used.
+ * @property canUseShockTrap Whether a shock trap can be used.
+ * @property timeShock The time the shock trap lasts.
+ * @property canUsePitfallTrap Whether a pitfall trap can be used.
+ * @property timePitfall The time the pitfall trap lasts.
+ * @property canUseMeat Whether a meat can be used.
  * @property canUseDungBomb Whether a dung bomb can be used.
- * @property canUseMeat Whether meat can be used.
  */
 data class MonsterItemEffectiveness(
     val monsterId: Int,
     val monsterState: MonsterState,
-    val canUsePitfallTrap: Boolean,
-    val canUseShockTrap: Boolean,
     val canUseFlashBomb: Boolean,
+    val timeFlash: Int?,
     val canUseSonicBomb: Boolean,
-    val canUseDungBomb: Boolean,
+    val canUseShockTrap: Boolean,
+    val timeShock: Int?,
+    val canUsePitfallTrap: Boolean,
+    val timePitfall: Int?,
     val canUseMeat: Boolean,
+    val canUseDungBomb: Boolean,
 )
 
 /**

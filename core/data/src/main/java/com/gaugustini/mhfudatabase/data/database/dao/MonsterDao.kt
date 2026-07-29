@@ -82,7 +82,6 @@ interface MonsterDao {
             monster_item.*
         FROM monster_item
         WHERE monster_id = :monsterId
-        ORDER BY monster_item.state DESC
         """
     )
     suspend fun getMonsterItemByMonsterId(monsterId: Int): List<MonsterItemEntity>

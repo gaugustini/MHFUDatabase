@@ -82,12 +82,15 @@ object PreviewMonsterData {
     val monsterItemEffectiveness = MonsterItemEffectiveness(
         monsterId = 1,
         monsterState = MonsterState.NORMAL,
-        canUsePitfallTrap = true,
-        canUseShockTrap = true,
         canUseFlashBomb = true,
+        timeFlash = 10,
         canUseSonicBomb = true,
-        canUseDungBomb = true,
+        canUseShockTrap = true,
+        timeShock = 10,
+        canUsePitfallTrap = true,
+        timePitfall = 10,
         canUseMeat = true,
+        canUseDungBomb = true
     )
 
     val monsterItemEffectivenessList = listOf(

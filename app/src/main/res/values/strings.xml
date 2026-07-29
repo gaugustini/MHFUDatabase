@@ -262,6 +262,7 @@
     <string name="monster_item_effectiveness_none">None</string>
     <string name="monster_state_normal">Normal</string>
     <string name="monster_state_enraged">Enraged</string>
+    <string name="monster_state_unseen">Not Detected</string>
     <string name="monster_physical_damage">Physical</string>
     <string name="monster_cut_damage">Cutting damage</string>
     <string name="monster_impact_damage">Impact damage</string>

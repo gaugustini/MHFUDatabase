@@ -42,7 +42,10 @@ object MonsterMapper {
             sizeLargestMax = monster.monster.sizeLargestMax,
             damageStats = damageStats?.map { toMonsterDamageStats(it) },
             ailmentStats = ailmentStats?.map { toMonsterAilmentStats(it) },
-            itemEffectiveness = itemEffectiveness?.map { toMonsterItemEffectiveness(it) },
+            itemEffectiveness =
+                itemEffectiveness
+                    ?.map { toMonsterItemEffectiveness(it) }
+                    ?.sortedBy { it.monsterState.ordinal },
             rewards = rewards?.map { toMonsterReward(it) }?.groupBy { it.rank },
             quests = quests?.map { QuestMapper.toModel(it) },
         )
@@ -85,12 +88,15 @@ object MonsterMapper {
         return MonsterItemEffectiveness(
             monsterId = monsterItemEntity.monsterId,
             monsterState = MonsterState.fromString(monsterItemEntity.state),
-            canUsePitfallTrap = monsterItemEntity.pitfall,
-            canUseShockTrap = monsterItemEntity.shock,
             canUseFlashBomb = monsterItemEntity.flash,
+            timeFlash = monsterItemEntity.timeFlash,
             canUseSonicBomb = monsterItemEntity.sonic,
-            canUseDungBomb = monsterItemEntity.dung,
+            canUseShockTrap = monsterItemEntity.shock,
+            timeShock = monsterItemEntity.timeShock,
+            canUsePitfallTrap = monsterItemEntity.pitfall,
+            timePitfall = monsterItemEntity.timePitfall,
             canUseMeat = monsterItemEntity.meat,
+            canUseDungBomb = monsterItemEntity.dung,
         )
     }
 

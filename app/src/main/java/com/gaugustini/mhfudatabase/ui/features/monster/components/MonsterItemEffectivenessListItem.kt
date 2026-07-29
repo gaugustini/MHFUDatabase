@@ -47,6 +47,7 @@ fun MonsterItemEffectivenessListItem(
                 when (item.monsterState) {
                     MonsterState.NORMAL -> R.string.monster_state_normal
                     MonsterState.ENRAGED -> R.string.monster_state_enraged
+                    MonsterState.UNSEEN -> R.string.monster_state_unseen
                 }
             ),
             style = MaterialTheme.typography.bodyMedium,
