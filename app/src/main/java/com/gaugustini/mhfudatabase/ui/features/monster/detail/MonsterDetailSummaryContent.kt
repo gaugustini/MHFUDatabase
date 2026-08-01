@@ -17,9 +17,8 @@ import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.model.Monster
 import com.gaugustini.mhfudatabase.ui.components.ButtonPage
 import com.gaugustini.mhfudatabase.ui.components.DetailHeader
-import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.components.icons.MonsterIcon
-import com.gaugustini.mhfudatabase.ui.features.monster.components.MonsterItemEffectivenessListItem
+import com.gaugustini.mhfudatabase.ui.features.monster.components.MonsterItemEffectivenessSummary
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
@@ -80,22 +79,14 @@ fun MonsterDetailSummaryContent(
             )
         }
 
-        monster.itemEffectiveness?.let { items ->
-            Column(
+        monster.itemEffectiveness?.let { item ->
+            MonsterItemEffectivenessSummary(
+                item = item,
                 modifier = Modifier
                     .padding(horizontal = Dimension.Padding.medium)
                     .clip(RoundedCornerShape(Dimension.Radius.medium))
                     .background(MaterialTheme.colorScheme.surface)
-            ) {
-                SectionHeader(
-                    title = stringResource(R.string.monster_item_effectiveness),
-                )
-                items.forEach { item ->
-                    MonsterItemEffectivenessListItem(
-                        item = item,
-                    )
-                }
-            }
+            )
         }
     }
 }

@@ -1,7 +1,6 @@
 package com.gaugustini.mhfudatabase.util.preview
 
 import com.gaugustini.mhfudatabase.domain.enums.MonsterAilment
-import com.gaugustini.mhfudatabase.domain.enums.MonsterState
 import com.gaugustini.mhfudatabase.domain.enums.MonsterType
 import com.gaugustini.mhfudatabase.domain.enums.Rank
 import com.gaugustini.mhfudatabase.domain.model.Monster
@@ -81,18 +80,19 @@ object PreviewMonsterData {
 
     val monsterItemEffectiveness = MonsterItemEffectiveness(
         monsterId = 1,
-        monsterState = MonsterState.NORMAL,
-        canUsePitfallTrap = true,
-        canUseShockTrap = true,
-        canUseFlashBomb = true,
-        canUseSonicBomb = true,
-        canUseDungBomb = true,
+        flashBomb = true,
+        timeFlashBomb = 10,
+        sonicBombNormal = true,
+        sonicBombEnraged = true,
+        shockTrap = true,
+        timeShockTrap = 10,
+        pitfallTrapNormal = true,
+        pitfallTrapEnraged = true,
+        timePitfallTrapUnseen = 10,
+        timePitfallTrapNormal = 10,
+        timePitfallTrapEnraged = 10,
         canUseMeat = true,
-    )
-
-    val monsterItemEffectivenessList = listOf(
-        monsterItemEffectiveness.copy(monsterState = MonsterState.NORMAL),
-        monsterItemEffectiveness.copy(monsterState = MonsterState.ENRAGED),
+        canUseDungBomb = true
     )
 
     // Monster Reward
