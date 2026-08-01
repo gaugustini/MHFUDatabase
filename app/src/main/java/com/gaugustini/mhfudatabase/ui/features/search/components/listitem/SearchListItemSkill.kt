@@ -63,7 +63,7 @@ fun SearchListItem(
             modifier = modifier
                 .clip(RoundedCornerShape(Dimension.Radius.small))
                 .background(MaterialTheme.colorScheme.surface)
-                .clickable { onSkillClick(skill.id) }
+                .clickable { onSkillClick(skill.skillTreeId) }
         )
         AppHDivider()
     }
