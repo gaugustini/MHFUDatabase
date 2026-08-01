@@ -1,5 +1,8 @@
 package com.gaugustini.mhfudatabase.ui.components
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,10 +28,14 @@ fun WhatsNewDialog(
             )
         },
         text = {
-            Text(
-                text = stringResource(R.string.whats_new_text),
-                style = MaterialTheme.typography.bodyMedium,
-            )
+            Column(
+                modifier = Modifier.verticalScroll(rememberScrollState()),
+            ) {
+                Text(
+                    text = stringResource(R.string.whats_new_text),
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+            }
         },
         confirmButton = {
             TextButton(onClick = onConfirm) {
