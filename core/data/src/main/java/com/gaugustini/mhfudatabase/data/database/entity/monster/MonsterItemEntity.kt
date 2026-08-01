@@ -6,7 +6,7 @@ import androidx.room.ForeignKey
 
 @Entity(
     tableName = "monster_item",
-    primaryKeys = ["monster_id", "state"],
+    primaryKeys = ["monster_id"],
     foreignKeys = [
         ForeignKey(
             entity = MonsterEntity::class,
@@ -17,14 +17,17 @@ import androidx.room.ForeignKey
 )
 data class MonsterItemEntity(
     @ColumnInfo(name = "monster_id") val monsterId: Int,
-    @ColumnInfo(name = "state") val state: String,
     @ColumnInfo(name = "flash") val flash: Boolean,
     @ColumnInfo(name = "time_flash") val timeFlash: Int?,
-    @ColumnInfo(name = "sonic") val sonic: Boolean,
+    @ColumnInfo(name = "sonic_normal") val sonicNormal: Boolean,
+    @ColumnInfo(name = "sonic_enraged") val sonicEnraged: Boolean,
     @ColumnInfo(name = "shock") val shock: Boolean,
     @ColumnInfo(name = "time_shock") val timeShock: Int?,
-    @ColumnInfo(name = "pitfall") val pitfall: Boolean,
-    @ColumnInfo(name = "time_pitfall") val timePitfall: Int?,
+    @ColumnInfo(name = "pitfall_normal") val pitfallNormal: Boolean,
+    @ColumnInfo(name = "pitfall_enraged") val pitfallEnraged: Boolean,
+    @ColumnInfo(name = "time_pitfall_unseen") val timePitfallUnseen: Int?,
+    @ColumnInfo(name = "time_pitfall_normal") val timePitfallNormal: Int?,
+    @ColumnInfo(name = "time_pitfall_enraged") val timePitfallEnraged: Int?,
     @ColumnInfo(name = "meat") val meat: Boolean,
     @ColumnInfo(name = "dung") val dung: Boolean,
 )

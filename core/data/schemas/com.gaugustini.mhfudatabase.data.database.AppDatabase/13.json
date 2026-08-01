@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 13,
-    "identityHash": "6f78d48a6bbbdf8c48bf10ac48d85a26",
+    "identityHash": "8a53b002aa7852871fb6227b0765a370",
     "entities": [
       {
         "tableName": "armor",
@@ -1358,18 +1358,12 @@
       },
       {
         "tableName": "monster_item",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`monster_id` INTEGER NOT NULL, `state` TEXT NOT NULL, `flash` INTEGER NOT NULL, `time_flash` INTEGER, `sonic` INTEGER NOT NULL, `shock` INTEGER NOT NULL, `time_shock` INTEGER, `pitfall` INTEGER NOT NULL, `time_pitfall` INTEGER, `meat` INTEGER NOT NULL, `dung` INTEGER NOT NULL, PRIMARY KEY(`monster_id`, `state`), FOREIGN KEY(`monster_id`) REFERENCES `monster`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`monster_id` INTEGER NOT NULL, `flash` INTEGER NOT NULL, `time_flash` INTEGER, `sonic_normal` INTEGER NOT NULL, `sonic_enraged` INTEGER NOT NULL, `shock` INTEGER NOT NULL, `time_shock` INTEGER, `pitfall_normal` INTEGER NOT NULL, `pitfall_enraged` INTEGER NOT NULL, `time_pitfall_unseen` INTEGER, `time_pitfall_normal` INTEGER, `time_pitfall_enraged` INTEGER, `meat` INTEGER NOT NULL, `dung` INTEGER NOT NULL, PRIMARY KEY(`monster_id`), FOREIGN KEY(`monster_id`) REFERENCES `monster`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "monsterId",
             "columnName": "monster_id",
             "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "state",
-            "columnName": "state",
-            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -1384,8 +1378,14 @@
             "affinity": "INTEGER"
           },
           {
-            "fieldPath": "sonic",
-            "columnName": "sonic",
+            "fieldPath": "sonicNormal",
+            "columnName": "sonic_normal",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sonicEnraged",
+            "columnName": "sonic_enraged",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -1401,14 +1401,30 @@
             "affinity": "INTEGER"
           },
           {
-            "fieldPath": "pitfall",
-            "columnName": "pitfall",
+            "fieldPath": "pitfallNormal",
+            "columnName": "pitfall_normal",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "timePitfall",
-            "columnName": "time_pitfall",
+            "fieldPath": "pitfallEnraged",
+            "columnName": "pitfall_enraged",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timePitfallUnseen",
+            "columnName": "time_pitfall_unseen",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "timePitfallNormal",
+            "columnName": "time_pitfall_normal",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "timePitfallEnraged",
+            "columnName": "time_pitfall_enraged",
             "affinity": "INTEGER"
           },
           {
@@ -1427,8 +1443,7 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "monster_id",
-            "state"
+            "monster_id"
           ]
         },
         "foreignKeys": [
@@ -3073,7 +3088,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6f78d48a6bbbdf8c48bf10ac48d85a26')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8a53b002aa7852871fb6227b0765a370')"
     ]
   }
 }

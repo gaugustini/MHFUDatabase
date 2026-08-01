@@ -8,7 +8,6 @@ import com.gaugustini.mhfudatabase.data.database.relation.MonsterRewardWithItem
 import com.gaugustini.mhfudatabase.data.database.relation.MonsterWithText
 import com.gaugustini.mhfudatabase.data.database.relation.QuestWithText
 import com.gaugustini.mhfudatabase.domain.enums.MonsterAilment
-import com.gaugustini.mhfudatabase.domain.enums.MonsterState
 import com.gaugustini.mhfudatabase.domain.enums.MonsterType
 import com.gaugustini.mhfudatabase.domain.enums.Rank
 import com.gaugustini.mhfudatabase.domain.model.Monster
@@ -26,7 +25,7 @@ object MonsterMapper {
         monster: MonsterWithText,
         damageStats: List<MonsterHitzoneWithText>? = null,
         ailmentStats: List<MonsterStatusEntity>? = null,
-        itemEffectiveness: List<MonsterItemEntity>? = null,
+        itemEffectiveness: MonsterItemEntity? = null,
         rewards: List<MonsterRewardWithItem>? = null,
         quests: List<QuestWithText>? = null,
     ): Monster {
@@ -42,10 +41,7 @@ object MonsterMapper {
             sizeLargestMax = monster.monster.sizeLargestMax,
             damageStats = damageStats?.map { toMonsterDamageStats(it) },
             ailmentStats = ailmentStats?.map { toMonsterAilmentStats(it) },
-            itemEffectiveness =
-                itemEffectiveness
-                    ?.map { toMonsterItemEffectiveness(it) }
-                    ?.sortedBy { it.monsterState.ordinal },
+            itemEffectiveness = itemEffectiveness?.let { toMonsterItemEffectiveness(it) },
             rewards = rewards?.map { toMonsterReward(it) }?.groupBy { it.rank },
             quests = quests?.map { QuestMapper.toModel(it) },
         )
@@ -87,14 +83,17 @@ object MonsterMapper {
     ): MonsterItemEffectiveness {
         return MonsterItemEffectiveness(
             monsterId = monsterItemEntity.monsterId,
-            monsterState = MonsterState.fromString(monsterItemEntity.state),
-            canUseFlashBomb = monsterItemEntity.flash,
-            timeFlash = monsterItemEntity.timeFlash,
-            canUseSonicBomb = monsterItemEntity.sonic,
-            canUseShockTrap = monsterItemEntity.shock,
-            timeShock = monsterItemEntity.timeShock,
-            canUsePitfallTrap = monsterItemEntity.pitfall,
-            timePitfall = monsterItemEntity.timePitfall,
+            flashBomb = monsterItemEntity.flash,
+            timeFlashBomb = monsterItemEntity.timeFlash,
+            sonicBombNormal = monsterItemEntity.sonicNormal,
+            sonicBombEnraged = monsterItemEntity.sonicEnraged,
+            shockTrap = monsterItemEntity.shock,
+            timeShockTrap = monsterItemEntity.timeShock,
+            pitfallTrapNormal = monsterItemEntity.pitfallNormal,
+            pitfallTrapEnraged = monsterItemEntity.pitfallEnraged,
+            timePitfallTrapUnseen = monsterItemEntity.timePitfallUnseen,
+            timePitfallTrapNormal = monsterItemEntity.timePitfallNormal,
+            timePitfallTrapEnraged = monsterItemEntity.timePitfallEnraged,
             canUseMeat = monsterItemEntity.meat,
             canUseDungBomb = monsterItemEntity.dung,
         )

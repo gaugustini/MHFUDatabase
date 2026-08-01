@@ -90,11 +90,9 @@ fun MonsterDetailSummaryContent(
                 SectionHeader(
                     title = stringResource(R.string.monster_item_effectiveness),
                 )
-                items.forEach { item ->
-                    MonsterItemEffectivenessListItem(
-                        item = item,
-                    )
-                }
+                MonsterItemEffectivenessListItem(
+                    item = items,
+                )
             }
         }
     }

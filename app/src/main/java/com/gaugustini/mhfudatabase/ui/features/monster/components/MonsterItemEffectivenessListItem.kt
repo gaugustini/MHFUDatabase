@@ -36,10 +36,10 @@ fun MonsterItemEffectivenessListItem(
     modifier: Modifier = Modifier,
 ) {
     val items = listOf(
-        item.canUseFlashBomb to (R.drawable.ic_item_ball to ItemIconColor.YELLOW),
-        item.canUseSonicBomb to (R.drawable.ic_item_ball to ItemIconColor.GRAY),
-        item.canUseShockTrap to (R.drawable.ic_item_trap to ItemIconColor.PURPLE),
-        item.canUsePitfallTrap to (R.drawable.ic_item_trap to ItemIconColor.GREEN),
+        item.flashBomb to (R.drawable.ic_item_ball to ItemIconColor.YELLOW),
+        (item.sonicBombNormal || item.sonicBombEnraged) to (R.drawable.ic_item_ball to ItemIconColor.GRAY),
+        item.shockTrap to (R.drawable.ic_item_trap to ItemIconColor.PURPLE),
+        (item.pitfallTrapNormal || item.pitfallTrapEnraged) to (R.drawable.ic_item_trap to ItemIconColor.GREEN),
         item.canUseMeat to (R.drawable.ic_item_meat to ItemIconColor.RED),
         item.canUseDungBomb to (R.drawable.ic_item_dung to ItemIconColor.YELLOW),
     )

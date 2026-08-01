@@ -84,7 +84,7 @@ interface MonsterDao {
         WHERE monster_id = :monsterId
         """
     )
-    suspend fun getMonsterItemByMonsterId(monsterId: Int): List<MonsterItemEntity>
+    suspend fun getMonsterItemByMonsterId(monsterId: Int): MonsterItemEntity
 
     @Query(
         """
