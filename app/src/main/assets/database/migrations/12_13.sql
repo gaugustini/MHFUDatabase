@@ -49,10 +49,10 @@ INSERT INTO `monster_item` VALUES ('42','1','30','1','0','1','10','0','0',NULL,N
 INSERT INTO `monster_item` VALUES ('43','1','30','1','0','1','10','0','0',NULL,NULL,NULL,'0','0');
 INSERT INTO `monster_item` VALUES ('44','1','30','1','0','1','10','0','0',NULL,NULL,NULL,'0','0');
 INSERT INTO `monster_item` VALUES ('45','1','30','1','0','1','10','0','0',NULL,NULL,NULL,'0','0');
-INSERT INTO `monster_item` VALUES ('46','1','30','0','0','1','8','1','1','20','20','20','1','0');
+INSERT INTO `monster_item` VALUES ('46','1','30','0','0','1','8','1','1',NULL,'20',NULL,'1','0');
 INSERT INTO `monster_item` VALUES ('47','1','30','1','0','1','8','0','1',NULL,NULL,'20','1','0');
-INSERT INTO `monster_item` VALUES ('48','1','7','1','0','0',NULL,'0','0',NULL,NULL,NULL,'0','0');
-INSERT INTO `monster_item` VALUES ('49','1','7','1','0','0',NULL,'0','0',NULL,NULL,NULL,'0','0');
+INSERT INTO `monster_item` VALUES ('48','1','7','1','1','0',NULL,'0','0',NULL,NULL,NULL,'0','0');
+INSERT INTO `monster_item` VALUES ('49','1','7','1','1','0',NULL,'0','0',NULL,NULL,NULL,'0','0');
 INSERT INTO `monster_item` VALUES ('50','0',NULL,'1','1','0',NULL,'0','0',NULL,NULL,NULL,'0','0');
 INSERT INTO `monster_item` VALUES ('51','0',NULL,'1','1','1','15','0','0',NULL,NULL,NULL,'0','0');
 INSERT INTO `monster_item` VALUES ('52','0',NULL,'1','1','1','15','1','1','27','17','10','0','0');
@@ -74,7 +74,7 @@ INSERT INTO `monster_item` VALUES ('67','1',NULL,'0','0','0',NULL,'0','0',NULL,N
 INSERT INTO `monster_item` VALUES ('68','1','30','0','0','1','10','1','1','27','17','10','1','0');
 INSERT INTO `monster_item` VALUES ('69','1','30','0','0','1','10','1','1','27','17','10','1','0');
 INSERT INTO `monster_item` VALUES ('70','1','30','0','0','1','8','0','1',NULL,NULL,'17','0','0');
-INSERT INTO `monster_item` VALUES ('71','1','30','0','0','1','8','1','0','10','10',NULL,'0','0');
+INSERT INTO `monster_item` VALUES ('71','1','30','0','0','1','8','1','0',NULL,'10',NULL,'0','0');
 INSERT INTO `monster_item` VALUES ('72','0',NULL,'0','0','0',NULL,'0','0',NULL,NULL,NULL,'0','0');
 INSERT INTO `monster_item` VALUES ('73','1','15','0','0','0',NULL,'0','0',NULL,NULL,NULL,'0','0');
 INSERT INTO `monster_item` VALUES ('74','1','15','0','0','0',NULL,'0','0',NULL,NULL,NULL,'0','0');
