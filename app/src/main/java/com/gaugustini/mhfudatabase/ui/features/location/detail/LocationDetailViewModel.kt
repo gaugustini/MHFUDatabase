@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class LocationDetailState(
+    val page: LocationDetailPage = LocationDetailPage.LOCATION_SUMMARY,
     val rank: Rank? = null,
     val area: Int? = null,
     val availableRanks: List<Rank> = emptyList(),
@@ -77,6 +78,14 @@ class LocationDetailViewModel @Inject constructor(
                     gatheringPoints = gatheringPoints,
                 )
             }
+        }
+    }
+
+    fun onChangePage(page: LocationDetailPage) {
+        _uiState.update { state ->
+            state.copy(
+                page = page,
+            )
         }
     }
 

@@ -1,5 +1,6 @@
 package com.gaugustini.mhfudatabase.ui.features.location.detail
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -32,8 +33,13 @@ fun LocationDetailRankContent(
     gatheringPoints: List<GatheringPoint>,
     modifier: Modifier = Modifier,
     onItemClick: (itemId: Int) -> Unit = {},
+    onChangePage: (LocationDetailPage) -> Unit = {},
 ) {
     val itemsPerNode = gatheringPoints.groupBy { it.node }
+
+    BackHandler {
+        onChangePage(LocationDetailPage.LOCATION_SUMMARY)
+    }
 
     LazyColumn(
         contentPadding = PaddingValues(Dimension.Padding.medium),
