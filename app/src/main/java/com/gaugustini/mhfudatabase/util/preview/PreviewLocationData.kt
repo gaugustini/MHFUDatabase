@@ -14,6 +14,7 @@ object PreviewLocationData {
         id = 1,
         name = "Location",
         gatheringPoints = null,
+        quests = null,
     )
 
     val locationList = listOf(

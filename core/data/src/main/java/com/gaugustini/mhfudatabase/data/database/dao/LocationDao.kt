@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import com.gaugustini.mhfudatabase.data.database.relation.LocationItemWithItem
 import com.gaugustini.mhfudatabase.data.database.relation.LocationWithText
+import com.gaugustini.mhfudatabase.data.database.relation.QuestWithText
 
 /**
  * [Dao] for Location related database operations.
@@ -59,5 +60,22 @@ interface LocationDao {
         locationId: Int,
         language: String
     ): List<LocationItemWithItem>
+
+    @Query(
+        """
+        SELECT
+            quest.*,
+            quest_text.*
+        FROM quest
+        JOIN quest_text
+            ON quest.id = quest_text.quest_id
+            AND quest_text.language = :language
+        WHERE quest.location_id = :locationId
+        """
+    )
+    suspend fun getQuestListByLocationId(
+        locationId: Int,
+        language: String
+    ): List<QuestWithText>
 
 }
