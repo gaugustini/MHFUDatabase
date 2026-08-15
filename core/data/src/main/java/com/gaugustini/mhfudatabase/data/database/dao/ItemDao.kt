@@ -42,6 +42,7 @@ interface ItemDao {
             ON item.id = item_text.item_id
             AND item_text.language = :language
         WHERE
+            item.id != 0 AND
             (:name IS NULL OR (item_text.name LIKE '%' || :name || '%' OR item_text.full_name LIKE '%' || :name || '%'))
             AND (:hasRarityFilter = 0 OR item.rarity IN (:rarity))
             AND (:hasIconFilter = 0 OR item.icon_type IN (:icons)

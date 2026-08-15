@@ -63,6 +63,7 @@ interface SearchDao {
             ON item.id = item_text.item_id
             AND item_text.language = :language
         WHERE
+            item.id != 0 AND
             item_text.name LIKE '%' || :query || '%'
             OR item_text.full_name LIKE '%' || :query || '%'
         """

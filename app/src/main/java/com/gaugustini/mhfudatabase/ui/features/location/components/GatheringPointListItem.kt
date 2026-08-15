@@ -40,7 +40,11 @@ fun GatheringPointListItem(
             horizontal = Dimension.Padding.large,
             vertical = Dimension.Padding.medium,
         ),
-        modifier = modifier.clickable { onItemClick(gatheringPoint.item.id) }
+        modifier = modifier.clickable {
+            if (gatheringPoint.item.id != 0) {
+                onItemClick(gatheringPoint.item.id)
+            }
+        }
     )
 }
 
