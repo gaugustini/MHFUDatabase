@@ -30,8 +30,12 @@ object LocationMapper {
         return GatheringPoint(
             rank = Rank.fromString(item.locationItem.rank),
             area = item.locationItem.area,
+            node = item.locationItem.node,
             type = GatherType.fromString(item.locationItem.type),
+            min = item.locationItem.min,
+            max = item.locationItem.max,
             item = ItemMapper.toModel(ItemWithText(item.item, item.itemText)),
+            percentage = item.locationItem.percentage,
         )
     }
 
