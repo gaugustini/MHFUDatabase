@@ -240,6 +240,7 @@
     <string name="location_secret_area">Secret Area</string>
     <string name="location_base_camp">Base Camp</string>
     <string name="location_area">Area %1$d</string>
+    <string name="location_node">Node %1$d: %2$s (%3$s)</string>
     <string name="location_gather_collect">Gather</string>
     <string name="location_gather_mine">Mining</string>
     <string name="location_gather_bug">Bugnet</string>
