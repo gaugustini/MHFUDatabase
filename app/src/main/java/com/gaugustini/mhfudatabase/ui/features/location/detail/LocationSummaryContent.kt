@@ -60,6 +60,14 @@ fun LocationSummaryContent(
                 modifier = Modifier.padding(horizontal = Dimension.Padding.medium)
             )
         }
+
+        if (location.quests?.isEmpty() == false) {
+            ButtonPage(
+                title = stringResource(R.string.location_quest),
+                onButtonClick = { onChangePage(LocationDetailPage.LOCATION_QUEST) },
+                modifier = Modifier.padding(horizontal = Dimension.Padding.medium)
+            )
+        }
     }
 }
 

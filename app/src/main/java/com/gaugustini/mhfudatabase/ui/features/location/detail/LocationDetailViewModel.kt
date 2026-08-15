@@ -9,6 +9,7 @@ import com.gaugustini.mhfudatabase.domain.enums.Language
 import com.gaugustini.mhfudatabase.domain.enums.Rank
 import com.gaugustini.mhfudatabase.domain.model.GatheringPoint
 import com.gaugustini.mhfudatabase.domain.model.Location
+import com.gaugustini.mhfudatabase.domain.model.Quest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,6 +29,7 @@ data class LocationDetailState(
     val availableAreas: List<Int> = emptyList(),
     val location: Location? = null,
     val gatheringPoints: List<GatheringPoint> = emptyList(),
+    val quests: List<Quest> = emptyList(),
 )
 
 @HiltViewModel
@@ -76,6 +78,7 @@ class LocationDetailViewModel @Inject constructor(
                     availableAreas = availableAreas.sorted(),
                     location = location,
                     gatheringPoints = gatheringPoints,
+                    quests = location.quests ?: emptyList(),
                 )
             }
         }

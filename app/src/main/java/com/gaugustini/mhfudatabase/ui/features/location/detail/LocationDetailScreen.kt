@@ -45,7 +45,7 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewLocationData
 enum class LocationDetailPage {
     LOCATION_SUMMARY,
     LOCATION_GATHERING,
-//    LOCATION_QUEST;
+    LOCATION_QUEST;
 }
 
 @Composable
@@ -53,6 +53,7 @@ fun LocationDetailRoute(
     navigateBack: () -> Unit,
     openSearch: () -> Unit,
     onItemClick: (itemId: Int) -> Unit,
+    onQuestClick: (questId: Int) -> Unit,
     viewModel: LocationDetailViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -65,6 +66,7 @@ fun LocationDetailRoute(
         onChangeRank = viewModel::onChangeRank,
         onChangeArea = viewModel::onChangeArea,
         onItemClick = onItemClick,
+        onQuestClick = onQuestClick,
     )
 }
 
@@ -77,6 +79,7 @@ fun LocationDetailScreen(
     onChangeRank: (rank: Rank) -> Unit = {},
     onChangeArea: (area: Int) -> Unit = {},
     onItemClick: (itemId: Int) -> Unit = {},
+    onQuestClick: (questId: Int) -> Unit = {},
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     var showMapDialog by remember { mutableStateOf(false) }
@@ -137,6 +140,15 @@ fun LocationDetailScreen(
                     LocationDetailRankContent(
                         gatheringPoints = uiState.gatheringPoints,
                         onItemClick = onItemClick,
+                        onChangePage = onChangePage,
+                        modifier = Modifier.padding(innerPadding),
+                    )
+                }
+
+                LocationDetailPage.LOCATION_QUEST -> {
+                    LocationDetailQuestContent(
+                        quests = uiState.quests,
+                        onQuestClick = onQuestClick,
                         onChangePage = onChangePage,
                         modifier = Modifier.padding(innerPadding),
                     )
