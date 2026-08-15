@@ -38,13 +38,6 @@ fun GatheringSourceListItem(
                 else -> stringResource(R.string.location_area, source.area)
             }
 
-            Text(
-                text = area,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
-        },
-        trailingContent = {
             val gatherType = when (source.type) {
                 GatherType.COLLECT -> stringResource(R.string.location_gather_collect)
                 GatherType.MINE -> stringResource(R.string.location_gather_mine)
@@ -52,8 +45,21 @@ fun GatheringSourceListItem(
                 GatherType.FISH -> stringResource(R.string.location_gather_fish)
             }
 
+            val minMax = when (source.min) {
+                -1 -> "∞"
+                source.max -> "${source.min}"
+                else -> "${source.min}~${source.max}"
+            }
+
             Text(
-                text = gatherType,
+                text = "$area: $gatherType ($minMax)",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+        },
+        trailingContent = {
+            Text(
+                text = "${source.percentage}%",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )

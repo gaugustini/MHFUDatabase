@@ -50,17 +50,9 @@ fun LocationDetailRankContent(
             }
 
             val nodeMinMax = when (firstItem.min) {
-                -1 -> {
-                    "∞"
-                }
-
-                firstItem.max -> {
-                    "${firstItem.min}"
-                }
-
-                else -> {
-                    "${firstItem.min}~${firstItem.max}"
-                }
+                -1 -> "∞"
+                firstItem.max -> "${firstItem.min}"
+                else -> "${firstItem.min}~${firstItem.max}"
             }
 
             item {

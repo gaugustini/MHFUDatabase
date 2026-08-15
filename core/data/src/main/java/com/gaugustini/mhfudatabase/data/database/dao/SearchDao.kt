@@ -64,8 +64,8 @@ interface SearchDao {
             AND item_text.language = :language
         WHERE
             item.id != 0 AND
-            item_text.name LIKE '%' || :query || '%'
-            OR item_text.full_name LIKE '%' || :query || '%'
+            (item_text.name LIKE '%' || :query || '%'
+            OR item_text.full_name LIKE '%' || :query || '%')
         """
     )
     suspend fun searchItem(query: String, language: String): List<ItemWithText>
