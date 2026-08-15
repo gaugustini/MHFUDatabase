@@ -169,7 +169,7 @@ fun ItemSourcesContent(
                         itemsIndexed(
                             items = items,
                             key = { _, location ->
-                                "loc_${location.location.id}_${location.rank}_${location.type}_${location.area}"
+                                "loc_${location.location.id}_${location.rank}_${location.area}_${location.node}"
                             }
                         ) { index, location ->
                             val isLastItemInRank = index == items.lastIndex

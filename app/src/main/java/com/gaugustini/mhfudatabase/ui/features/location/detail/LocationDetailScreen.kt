@@ -52,6 +52,7 @@ fun LocationDetailRoute(
         navigateBack = navigateBack,
         openSearch = openSearch,
         onChangeRank = viewModel::onChangeRank,
+        onChangeArea = viewModel::onChangeArea,
         onItemClick = onItemClick,
     )
 }
@@ -62,6 +63,7 @@ fun LocationDetailScreen(
     navigateBack: () -> Unit = {},
     openSearch: () -> Unit = {},
     onChangeRank: (rank: Rank) -> Unit = {},
+    onChangeArea: (area: Int) -> Unit = {},
     onItemClick: (itemId: Int) -> Unit = {},
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
@@ -77,8 +79,11 @@ fun LocationDetailScreen(
                 bottomContent = {
                     LocationDetailRankFilter(
                         selectedRank = uiState.rank,
+                        selectedArea = uiState.area,
                         availableRanks = uiState.availableRanks,
+                        availableAreas = uiState.availableAreas,
                         onChangeRank = onChangeRank,
+                        onChangeArea = onChangeArea,
                     )
                 }
             )
@@ -87,7 +92,6 @@ fun LocationDetailScreen(
     ) { innerPadding ->
         if (uiState.location != null) {
             LocationDetailRankContent(
-                rank = uiState.rank,
                 gatheringPoints = uiState.gatheringPoints,
                 onItemClick = onItemClick,
                 modifier = Modifier.padding(innerPadding),
@@ -99,13 +103,17 @@ fun LocationDetailScreen(
 @Composable
 fun LocationDetailRankFilter(
     selectedRank: Rank?,
+    selectedArea: Int?,
     availableRanks: List<Rank>,
+    availableAreas: List<Int>,
     modifier: Modifier = Modifier,
     onChangeRank: (rank: Rank) -> Unit = {},
+    onChangeArea: (area: Int) -> Unit = {},
 ) {
     if (availableRanks.isEmpty() || selectedRank == null) return
 
-    var typeMenuExpanded by remember { mutableStateOf(false) }
+    var rankMenuExpanded by remember { mutableStateOf(false) }
+    var areaMenuExpanded by remember { mutableStateOf(false) }
 
     Row(
         horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
@@ -116,7 +124,7 @@ fun LocationDetailRankFilter(
         Box {
             FilterChip(
                 selected = true,
-                onClick = { typeMenuExpanded = true },
+                onClick = { rankMenuExpanded = true },
                 label = {
                     Text(
                         text = stringResource(
@@ -141,8 +149,8 @@ fun LocationDetailRankFilter(
             )
 
             DropdownMenu(
-                expanded = typeMenuExpanded,
-                onDismissRequest = { typeMenuExpanded = false }
+                expanded = rankMenuExpanded,
+                onDismissRequest = { rankMenuExpanded = false }
             ) {
                 availableRanks.forEach { rank ->
                     DropdownMenuItem(
@@ -162,7 +170,61 @@ fun LocationDetailRankFilter(
                         },
                         onClick = {
                             onChangeRank(rank)
-                            typeMenuExpanded = false
+                            rankMenuExpanded = false
+                        }
+                    )
+                }
+            }
+        }
+
+        Box {
+            FilterChip(
+                selected = true,
+                onClick = { areaMenuExpanded = true },
+                label = {
+                    selectedArea?.let { area ->
+                        Text(
+                            text = stringResource(
+                                when (area) {
+                                    -1 -> R.string.location_secret_area
+                                    0 -> R.string.location_base_camp
+                                    else -> R.string.location_area
+                                },
+                                area
+                            )
+                        )
+                    }
+                },
+                trailingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.ArrowDropDown,
+                        contentDescription = null,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+            )
+
+            DropdownMenu(
+                expanded = areaMenuExpanded,
+                onDismissRequest = { areaMenuExpanded = false }
+            ) {
+                availableAreas.forEach { area ->
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                text = stringResource(
+                                    when (area) {
+                                        -1 -> R.string.location_secret_area
+                                        0 -> R.string.location_base_camp
+                                        else -> R.string.location_area
+                                    },
+                                    area
+                                )
+                            )
+                        },
+                        onClick = {
+                            onChangeArea(area)
+                            areaMenuExpanded = false
                         }
                     )
                 }

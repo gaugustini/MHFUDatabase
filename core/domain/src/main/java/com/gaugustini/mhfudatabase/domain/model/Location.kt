@@ -22,6 +22,10 @@ data class Location(
 data class GatheringPoint(
     val rank: Rank,
     val area: Int,
+    val node: Int,
     val type: GatherType,
+    val min: Int,
+    val max: Int,
     val item: Item,
+    val percentage: Int,
 )

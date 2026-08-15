@@ -54,6 +54,7 @@ object DatabaseMigration {
         fromAsset(context, startVersion = 10, endVersion = 11),
         fromAsset(context, startVersion = 11, endVersion = 12),
         fromAsset(context, startVersion = 12, endVersion = 13),
+        fromAsset(context, startVersion = 13, endVersion = 14),
     )
 
 }

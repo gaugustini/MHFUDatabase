@@ -22,7 +22,9 @@ import javax.inject.Inject
 
 data class LocationDetailState(
     val rank: Rank? = null,
+    val area: Int? = null,
     val availableRanks: List<Rank> = emptyList(),
+    val availableAreas: List<Int> = emptyList(),
     val location: Location? = null,
     val gatheringPoints: List<GatheringPoint> = emptyList(),
 )
@@ -55,16 +57,24 @@ class LocationDetailViewModel @Inject constructor(
     private fun loadLocationDetails(language: Language) {
         viewModelScope.launch {
             val location = locationRepository.getLocation(locationId, language.code)
+
             val availableRanks = location.gatheringPoints?.keys?.toList() ?: emptyList()
             val firstRank = availableRanks.minByOrNull { it.ordinal }
             val firstRankGatheringPoints = location.gatheringPoints?.get(firstRank) ?: emptyList()
 
+            val availableAreas = firstRankGatheringPoints.map { it.area }.distinct()
+            val firstArea = availableAreas.minOrNull()
+
+            val gatheringPoints = firstRankGatheringPoints.filter { it.area == firstArea }
+
             _uiState.update { state ->
                 state.copy(
                     rank = firstRank,
+                    area = firstArea,
                     availableRanks = availableRanks.sortedBy { it.ordinal },
+                    availableAreas = availableAreas.sorted(),
                     location = location,
-                    gatheringPoints = firstRankGatheringPoints,
+                    gatheringPoints = gatheringPoints,
                 )
             }
         }
@@ -72,9 +82,28 @@ class LocationDetailViewModel @Inject constructor(
 
     fun onChangeRank(rank: Rank) {
         _uiState.update { state ->
+            val rankGatheringPoints = state.location?.gatheringPoints?.get(rank) ?: emptyList()
+            val availableAreas = rankGatheringPoints.map { it.area }.distinct()
+            val area = if (state.area in availableAreas) state.area else availableAreas.minOrNull()
+            val gatheringPoints = rankGatheringPoints.filter { it.area == area }
+
             state.copy(
                 rank = rank,
-                gatheringPoints = state.location?.gatheringPoints?.get(rank) ?: emptyList(),
+                area = area,
+                availableAreas = availableAreas.sorted(),
+                gatheringPoints = gatheringPoints,
+            )
+        }
+    }
+
+    fun onChangeArea(area: Int) {
+        _uiState.update { state ->
+            val rankGatheringPoints = state.location?.gatheringPoints?.get(state.rank) ?: emptyList()
+            val gatheringPoints = rankGatheringPoints.filter { it.area == area }
+
+            state.copy(
+                area = area,
+                gatheringPoints = gatheringPoints,
             )
         }
     }
