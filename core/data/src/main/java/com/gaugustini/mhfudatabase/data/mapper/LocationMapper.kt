@@ -30,7 +30,7 @@ object LocationMapper {
         return GatheringPoint(
             rank = Rank.fromString(item.locationItem.rank),
             area = item.locationItem.area,
-            type = GatherType.fromString(item.locationItem.gatherType),
+            type = GatherType.fromString(item.locationItem.type),
             item = ItemMapper.toModel(ItemWithText(item.item, item.itemText)),
         )
     }

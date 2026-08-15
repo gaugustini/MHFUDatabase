@@ -87,7 +87,7 @@ object ItemMapper {
             GatheringSource(
                 location = LocationMapper.toModel(LocationWithText(it.location, it.locationText)),
                 rank = Rank.fromString(it.locationItem.rank),
-                type = GatherType.fromString(it.locationItem.gatherType),
+                type = GatherType.fromString(it.locationItem.type),
                 area = it.locationItem.area,
             )
         }

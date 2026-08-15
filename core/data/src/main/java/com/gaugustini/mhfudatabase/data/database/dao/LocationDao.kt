@@ -41,8 +41,8 @@ interface LocationDao {
 
     @Query(
         """
-        SELECT DISTINCT
-            li.location_id AS li_location_id, li.item_id AS li_item_id, li.rank AS li_rank, li.gather_type AS li_gather_type, li.area AS li_area,
+        SELECT
+            li.location_id AS li_location_id, li.rank AS li_rank, li.area AS li_area, li.node AS li_node, li.type AS li_type, li.min AS li_min, li.max AS li_max, li.item_id AS li_item_id, li.percentage AS li_percentage,
             item.*,
             item_text.*
         FROM location_item li
@@ -52,7 +52,7 @@ interface LocationDao {
             ON item.id = item_text.item_id
             AND item_text.language = :language
         WHERE li.location_id = :locationId
-        ORDER BY li.area ASC, li.gather_type ASC, item_text.name ASC
+        ORDER BY li.rank ASC, li.area ASC, li.node ASC, li.percentage DESC
         """
     )
     suspend fun getLocationItemsByLocationId(
