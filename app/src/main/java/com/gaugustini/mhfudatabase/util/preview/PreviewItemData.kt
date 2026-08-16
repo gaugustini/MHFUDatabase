@@ -77,8 +77,12 @@ object PreviewItemData {
     val gatheringSource = GatheringSource(
         location = PreviewLocationData.location,
         rank = Rank.LOW,
-        type = GatherType.COLLECT,
         area = 1,
+        node = 1,
+        type = GatherType.COLLECT,
+        min = 1,
+        max = 1,
+        percentage = 100,
     )
 
     val gatheringSourceList = listOf(

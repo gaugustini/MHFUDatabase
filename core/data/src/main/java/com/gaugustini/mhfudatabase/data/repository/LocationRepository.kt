@@ -24,6 +24,7 @@ class LocationRepository @Inject constructor(
         return LocationMapper.toModel(
             location = locationDao.getLocation(locationId, language),
             items = locationDao.getLocationItemsByLocationId(locationId, language),
+            quests = locationDao.getQuestListByLocationId(locationId, language),
         )
     }
 

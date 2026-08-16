@@ -1,30 +1,24 @@
 package com.gaugustini.mhfudatabase.ui.features.location.detail
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.GatherType
-import com.gaugustini.mhfudatabase.domain.enums.Rank
 import com.gaugustini.mhfudatabase.domain.model.GatheringPoint
 import com.gaugustini.mhfudatabase.ui.components.AppHDivider
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
@@ -32,109 +26,90 @@ import com.gaugustini.mhfudatabase.ui.features.location.components.GatheringPoin
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
-import com.gaugustini.mhfudatabase.util.animateItemExpandCollapse
 import com.gaugustini.mhfudatabase.util.preview.PreviewLocationData
 
 @Composable
 fun LocationDetailRankContent(
     gatheringPoints: List<GatheringPoint>,
     modifier: Modifier = Modifier,
-    rank: Rank? = null,
     onItemClick: (itemId: Int) -> Unit = {},
+    onChangePage: (LocationDetailPage) -> Unit = {},
 ) {
-    val itemsPerArea = gatheringPoints.groupBy { it.area }
-    var expandedAreas by rememberSaveable(rank) {
-        mutableStateOf(itemsPerArea.keys.toSet())
+    val itemsPerNode = gatheringPoints.groupBy { it.node }
+
+    BackHandler {
+        onChangePage(LocationDetailPage.LOCATION_SUMMARY)
     }
 
     LazyColumn(
         contentPadding = PaddingValues(Dimension.Padding.medium),
         modifier = modifier.fillMaxSize()
     ) {
-        itemsPerArea.forEach { (area, items) ->
-            val isAreaExpanded = area in expandedAreas
+        itemsPerNode.forEach { (node, items) ->
+            val firstItem = items.first()
+
+            val nodeType = when (firstItem.type) {
+                GatherType.COLLECT -> R.string.location_gather_collect
+                GatherType.MINE -> R.string.location_gather_mine
+                GatherType.BUG -> R.string.location_gather_bug
+                GatherType.FISH -> R.string.location_gather_fish
+            }
+
+            val nodeMinMax = when (firstItem.min) {
+                -1 -> "∞"
+                firstItem.max -> "${firstItem.min}"
+                else -> "${firstItem.min}~${firstItem.max}"
+            }
 
             item {
                 SectionHeader(
-                    title = when (area) {
-                        -1 -> stringResource(R.string.location_secret_area)
-                        0 -> stringResource(R.string.location_base_camp)
-                        else -> stringResource(R.string.location_area, area)
-                    },
-                    isExpandable = true,
-                    expanded = isAreaExpanded,
+                    title = stringResource(
+                        R.string.location_node,
+                        node,
+                        stringResource(nodeType),
+                        nodeMinMax
+                    ),
                     modifier = Modifier
-                        .padding(bottom = if (isAreaExpanded) 0.dp else Dimension.Padding.medium)
                         .clip(
                             RoundedCornerShape(
                                 topStart = Dimension.Radius.medium,
                                 topEnd = Dimension.Radius.medium,
-                                bottomStart = if (isAreaExpanded) 0.dp else Dimension.Radius.medium,
-                                bottomEnd = if (isAreaExpanded) 0.dp else Dimension.Radius.medium,
+                                bottomStart = 0.dp,
+                                bottomEnd = 0.dp
                             )
                         )
-                        .clickable {
-                            expandedAreas =
-                                if (isAreaExpanded) expandedAreas - area else expandedAreas + area
-                        }
                 )
             }
 
-            if (isAreaExpanded) {
-                val itemsPerType = items.groupBy { it.type }
+            itemsIndexed(
+                items = items,
+                key = { _, point ->
+                    "point_${point.rank}_${point.area}_${point.node}_${point.item.id}"
+                }
+            ) { index, point ->
+                val isLastItem = index == items.lastIndex
 
-                itemsPerType.forEach { (type, items) ->
-                    item {
-                        SectionHeader(
-                            title = stringResource(
-                                when (type) {
-                                    GatherType.COLLECT -> R.string.location_gather_collect
-                                    GatherType.MINE -> R.string.location_gather_mine
-                                    GatherType.BUG -> R.string.location_gather_bug
-                                    GatherType.FISH -> R.string.location_gather_fish
-                                }
-                            ),
-                            titleColor = MaterialTheme.colorScheme.primary,
-                            backgroundColor = MaterialTheme.colorScheme.surface,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .animateItemExpandCollapse(this)
-                        )
-                    }
-                    itemsIndexed(
-                        items = items,
-                        key = { _, point ->
-                            "point_${point.rank}_${point.area}_${point.type}_${point.item.id}"
-                        }
-                    ) { index, point ->
-                        val isLastType = type == itemsPerType.keys.last()
-                        val isLastItemInType = index == items.lastIndex
-                        val isLastItemInArea = isLastItemInType && isLastType
-
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clip(
-                                    RoundedCornerShape(
-                                        bottomStart = if (isLastItemInArea) Dimension.Radius.medium else 0.dp,
-                                        bottomEnd = if (isLastItemInArea) Dimension.Radius.medium else 0.dp,
-                                    )
-                                )
-                                .background(MaterialTheme.colorScheme.surface)
-                                .animateItemExpandCollapse(this)
-                        ) {
-                            GatheringPointListItem(
-                                gatheringPoint = point,
-                                onItemClick = onItemClick,
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(
+                            RoundedCornerShape(
+                                bottomStart = if (isLastItem) Dimension.Radius.medium else 0.dp,
+                                bottomEnd = if (isLastItem) Dimension.Radius.medium else 0.dp,
                             )
-                            if (!isLastItemInArea) {
-                                AppHDivider()
-                            }
-                        }
-                        if (isLastItemInArea) {
-                            Spacer(modifier = Modifier.height(Dimension.Spacing.medium))
-                        }
+                        )
+                        .background(MaterialTheme.colorScheme.surface)
+                ) {
+                    GatheringPointListItem(
+                        gatheringPoint = point,
+                        onItemClick = onItemClick,
+                    )
+                    if (!isLastItem) {
+                        AppHDivider()
                     }
+                }
+                if (isLastItem) {
+                    Spacer(modifier = Modifier.height(Dimension.Spacing.medium))
                 }
             }
         }

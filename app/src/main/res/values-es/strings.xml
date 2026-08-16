@@ -239,10 +239,13 @@
     <string name="location_secret_area">Área Secreta</string>
     <string name="location_base_camp">Campamento Base</string>
     <string name="location_area">Área %1$d</string>
+    <string name="location_node">Punto %1$d: %2$s (%3$s)</string>
     <string name="location_gather_collect">Recolectar</string>
     <string name="location_gather_mine">Minería</string>
     <string name="location_gather_bug">Red de bichos</string>
     <string name="location_gather_fish">Pesca</string>
+    <string name="location_gathering_spots">Puntos de Recolección</string>
+    <string name="location_quest">Misiones</string>
 
     <!-- Monster -->
     <string name="monster_filter_size_all">Todos</string>

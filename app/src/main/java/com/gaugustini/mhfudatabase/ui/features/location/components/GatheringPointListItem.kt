@@ -36,11 +36,22 @@ fun GatheringPointListItem(
                 color = MaterialTheme.colorScheme.onSurface,
             )
         },
+        trailingContent = {
+            Text(
+                text = "${gatheringPoint.percentage}%",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+        },
         contentPadding = PaddingValues(
             horizontal = Dimension.Padding.large,
             vertical = Dimension.Padding.medium,
         ),
-        modifier = modifier.clickable { onItemClick(gatheringPoint.item.id) }
+        modifier = modifier.clickable {
+            if (gatheringPoint.item.id != 0) {
+                onItemClick(gatheringPoint.item.id)
+            }
+        }
     )
 }
 

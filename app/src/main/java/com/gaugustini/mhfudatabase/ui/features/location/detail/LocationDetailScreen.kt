@@ -1,5 +1,6 @@
 package com.gaugustini.mhfudatabase.ui.features.location.detail
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -24,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -33,16 +36,24 @@ import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.Rank
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TopBar
+import com.gaugustini.mhfudatabase.ui.features.location.components.LocationMapDialog
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewLocationData
+
+enum class LocationDetailPage {
+    LOCATION_SUMMARY,
+    LOCATION_GATHERING,
+    LOCATION_QUEST;
+}
 
 @Composable
 fun LocationDetailRoute(
     navigateBack: () -> Unit,
     openSearch: () -> Unit,
     onItemClick: (itemId: Int) -> Unit,
+    onQuestClick: (questId: Int) -> Unit,
     viewModel: LocationDetailViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -51,8 +62,11 @@ fun LocationDetailRoute(
         uiState = uiState,
         navigateBack = navigateBack,
         openSearch = openSearch,
+        onChangePage = viewModel::onChangePage,
         onChangeRank = viewModel::onChangeRank,
+        onChangeArea = viewModel::onChangeArea,
         onItemClick = onItemClick,
+        onQuestClick = onQuestClick,
     )
 }
 
@@ -61,51 +75,110 @@ fun LocationDetailScreen(
     uiState: LocationDetailState = LocationDetailState(),
     navigateBack: () -> Unit = {},
     openSearch: () -> Unit = {},
+    onChangePage: (LocationDetailPage) -> Unit = {},
     onChangeRank: (rank: Rank) -> Unit = {},
+    onChangeArea: (area: Int) -> Unit = {},
     onItemClick: (itemId: Int) -> Unit = {},
+    onQuestClick: (questId: Int) -> Unit = {},
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+    var showMapDialog by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
             TopBar(
                 title = uiState.location?.name ?: stringResource(R.string.screen_location_detail),
                 navigationType = NavigationType.BACK,
-                navigation = navigateBack,
+                navigation = {
+                    if (uiState.page == LocationDetailPage.LOCATION_SUMMARY)
+                        navigateBack()
+                    else
+                        onChangePage(LocationDetailPage.LOCATION_SUMMARY)
+                },
                 openSearch = openSearch,
                 scrollBehavior = scrollBehavior,
+                actions = {
+                    if (uiState.page == LocationDetailPage.LOCATION_GATHERING) {
+                        IconButton(
+                            onClick = { showMapDialog = true }
+                        ) {
+                            Image(
+                                painter = painterResource(R.drawable.ic_item_map),
+                                contentDescription = null,
+                                modifier = Modifier.size(Dimension.Size.extraSmall)
+                            )
+                        }
+                    }
+                },
                 bottomContent = {
-                    LocationDetailRankFilter(
-                        selectedRank = uiState.rank,
-                        availableRanks = uiState.availableRanks,
-                        onChangeRank = onChangeRank,
-                    )
+                    if (uiState.page == LocationDetailPage.LOCATION_GATHERING) {
+                        LocationDetailRankFilter(
+                            selectedRank = uiState.rank,
+                            selectedArea = uiState.area,
+                            availableRanks = uiState.availableRanks,
+                            availableAreas = uiState.availableAreas,
+                            onChangeRank = onChangeRank,
+                            onChangeArea = onChangeArea,
+                        )
+                    }
                 }
             )
         },
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
     ) { innerPadding ->
         if (uiState.location != null) {
-            LocationDetailRankContent(
-                rank = uiState.rank,
-                gatheringPoints = uiState.gatheringPoints,
-                onItemClick = onItemClick,
-                modifier = Modifier.padding(innerPadding),
-            )
+            when (uiState.page) {
+                LocationDetailPage.LOCATION_SUMMARY -> {
+                    LocationSummaryContent(
+                        location = uiState.location,
+                        onChangePage = onChangePage,
+                        modifier = Modifier.padding(innerPadding),
+                    )
+                }
+
+                LocationDetailPage.LOCATION_GATHERING -> {
+                    LocationDetailRankContent(
+                        gatheringPoints = uiState.gatheringPoints,
+                        onItemClick = onItemClick,
+                        onChangePage = onChangePage,
+                        modifier = Modifier.padding(innerPadding),
+                    )
+                }
+
+                LocationDetailPage.LOCATION_QUEST -> {
+                    LocationDetailQuestContent(
+                        quests = uiState.quests,
+                        onQuestClick = onQuestClick,
+                        onChangePage = onChangePage,
+                        modifier = Modifier.padding(innerPadding),
+                    )
+                }
+            }
         }
+    }
+
+    if (uiState.location != null && showMapDialog) {
+        LocationMapDialog(
+            locationId = uiState.location.id,
+            onDismiss = { showMapDialog = false }
+        )
     }
 }
 
 @Composable
 fun LocationDetailRankFilter(
     selectedRank: Rank?,
+    selectedArea: Int?,
     availableRanks: List<Rank>,
+    availableAreas: List<Int>,
     modifier: Modifier = Modifier,
     onChangeRank: (rank: Rank) -> Unit = {},
+    onChangeArea: (area: Int) -> Unit = {},
 ) {
     if (availableRanks.isEmpty() || selectedRank == null) return
 
-    var typeMenuExpanded by remember { mutableStateOf(false) }
+    var rankMenuExpanded by remember { mutableStateOf(false) }
+    var areaMenuExpanded by remember { mutableStateOf(false) }
 
     Row(
         horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
@@ -116,7 +189,7 @@ fun LocationDetailRankFilter(
         Box {
             FilterChip(
                 selected = true,
-                onClick = { typeMenuExpanded = true },
+                onClick = { rankMenuExpanded = true },
                 label = {
                     Text(
                         text = stringResource(
@@ -141,8 +214,8 @@ fun LocationDetailRankFilter(
             )
 
             DropdownMenu(
-                expanded = typeMenuExpanded,
-                onDismissRequest = { typeMenuExpanded = false }
+                expanded = rankMenuExpanded,
+                onDismissRequest = { rankMenuExpanded = false }
             ) {
                 availableRanks.forEach { rank ->
                     DropdownMenuItem(
@@ -162,7 +235,61 @@ fun LocationDetailRankFilter(
                         },
                         onClick = {
                             onChangeRank(rank)
-                            typeMenuExpanded = false
+                            rankMenuExpanded = false
+                        }
+                    )
+                }
+            }
+        }
+
+        Box {
+            FilterChip(
+                selected = true,
+                onClick = { areaMenuExpanded = true },
+                label = {
+                    selectedArea?.let { area ->
+                        Text(
+                            text = stringResource(
+                                when (area) {
+                                    -1 -> R.string.location_secret_area
+                                    0 -> R.string.location_base_camp
+                                    else -> R.string.location_area
+                                },
+                                area
+                            )
+                        )
+                    }
+                },
+                trailingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.ArrowDropDown,
+                        contentDescription = null,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+            )
+
+            DropdownMenu(
+                expanded = areaMenuExpanded,
+                onDismissRequest = { areaMenuExpanded = false }
+            ) {
+                availableAreas.forEach { area ->
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                text = stringResource(
+                                    when (area) {
+                                        -1 -> R.string.location_secret_area
+                                        0 -> R.string.location_base_camp
+                                        else -> R.string.location_area
+                                    },
+                                    area
+                                )
+                            )
+                        },
+                        onClick = {
+                            onChangeArea(area)
+                            areaMenuExpanded = false
                         }
                     )
                 }
