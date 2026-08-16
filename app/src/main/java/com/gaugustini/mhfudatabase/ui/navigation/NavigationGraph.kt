@@ -254,6 +254,7 @@ fun NavigationGraph(
                 navigateBack = navigationActions.navigateBack,
                 openSearch = navigationActions.navigateToSearch,
                 onItemClick = navigationActions.navigateToItemDetail,
+                onQuestClick = navigationActions.navigateToQuestDetail,
             )
         }
         composable(

@@ -246,6 +246,7 @@
     <string name="location_gather_bug">Bugnet</string>
     <string name="location_gather_fish">Fishing</string>
     <string name="location_gathering_spots">Gathering Nodes</string>
+    <string name="location_quest">Quests</string>
 
     <!-- Monster -->
     <string name="monster_filter_size_all">All</string>

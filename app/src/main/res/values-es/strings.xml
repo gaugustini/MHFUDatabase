@@ -246,6 +246,7 @@
     <string name="location_gather_bug">Red de bichos</string>
     <string name="location_gather_fish">Pesca</string>
     <string name="location_gathering_spots">Puntos de Recolección</string>
+    <string name="location_quest">Misiones</string>
 
     <!-- Monster -->
     <string name="monster_filter_size_all">Todos</string>
