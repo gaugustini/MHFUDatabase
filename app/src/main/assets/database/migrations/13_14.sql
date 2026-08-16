@@ -6,8 +6,8 @@ INSERT INTO `item_text` VALUES ('0','en','Nothing','Nothing','Nothing');
 INSERT INTO `item_text` VALUES ('0','es','Nada','Nada','Nada');
 
 -- Map names
-UPDATE `location_text` SET `name` = 'Forest and Hills' WHERE `id` = '10' AND `language` = 'en';
-UPDATE `location_text` SET `name` = 'Snowy Mountains Peak' WHERE `id` = '19' AND `language` = 'en';
+UPDATE `location_text` SET `name` = 'Forest and Hills' WHERE `location_id` = '10' AND `language` = 'en';
+UPDATE `location_text` SET `name` = 'Snowy Mountains Peak' WHERE `location_id` = '19' AND `language` = 'en';
 
 -- Location Item (Gathering)
 DROP TABLE `location_item`;

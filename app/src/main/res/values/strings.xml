@@ -13,8 +13,10 @@
     <!-- What's New -->
     <string name="whats_new_title">What\'s New?</string>
     <string name="whats_new_text">
-        Version 1.2.0-beta02\n\n
+        Version 1.2.0-beta03\n\n
         • Fixed monster reward values (Shiny Drops, Captures and Breakable Parts)\n
+        • Fixed location gathering values\n
+        • Added maps for all locations\n
         • Added maximum defense values for armors\n
         • Fix monster item effectiveness values\n
         • Updated the user interface style\n
