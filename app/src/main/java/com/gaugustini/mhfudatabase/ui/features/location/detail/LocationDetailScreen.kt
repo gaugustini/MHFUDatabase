@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -34,6 +35,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.Rank
+import com.gaugustini.mhfudatabase.ui.components.AnimatedPageContent
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.features.location.components.LocationMapDialog
@@ -43,9 +45,9 @@ import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewLocationData
 
 enum class LocationDetailPage {
-    LOCATION_SUMMARY,
-    LOCATION_GATHERING,
-    LOCATION_QUEST;
+    SUMMARY,
+    GATHERING,
+    QUEST;
 }
 
 @Composable
@@ -84,21 +86,29 @@ fun LocationDetailScreen(
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     var showMapDialog by remember { mutableStateOf(false) }
 
+    val handlePageChange: (LocationDetailPage) -> Unit = { newPage ->
+        if (uiState.page != newPage) {
+            scrollBehavior.state.heightOffset = 0f
+            scrollBehavior.state.contentOffset = 0f
+            onChangePage(newPage)
+        }
+    }
+
     Scaffold(
         topBar = {
             TopBar(
                 title = uiState.location?.name ?: stringResource(R.string.screen_location_detail),
                 navigationType = NavigationType.BACK,
                 navigation = {
-                    if (uiState.page == LocationDetailPage.LOCATION_SUMMARY)
+                    if (uiState.page == LocationDetailPage.SUMMARY)
                         navigateBack()
                     else
-                        onChangePage(LocationDetailPage.LOCATION_SUMMARY)
+                        handlePageChange(LocationDetailPage.SUMMARY)
                 },
                 openSearch = openSearch,
                 scrollBehavior = scrollBehavior,
                 actions = {
-                    if (uiState.page == LocationDetailPage.LOCATION_GATHERING) {
+                    if (uiState.page == LocationDetailPage.GATHERING) {
                         IconButton(
                             onClick = { showMapDialog = true }
                         ) {
@@ -111,7 +121,7 @@ fun LocationDetailScreen(
                     }
                 },
                 bottomContent = {
-                    if (uiState.page == LocationDetailPage.LOCATION_GATHERING) {
+                    if (uiState.page == LocationDetailPage.GATHERING) {
                         LocationDetailRankFilter(
                             selectedRank = uiState.rank,
                             selectedArea = uiState.area,
@@ -127,31 +137,37 @@ fun LocationDetailScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
     ) { innerPadding ->
         if (uiState.location != null) {
-            when (uiState.page) {
-                LocationDetailPage.LOCATION_SUMMARY -> {
-                    LocationSummaryContent(
-                        location = uiState.location,
-                        onChangePage = onChangePage,
-                        modifier = Modifier.padding(innerPadding),
-                    )
-                }
+            AnimatedPageContent(
+                targetState = uiState.page,
+                indexMapper = { it.ordinal },
+                modifier = Modifier.fillMaxSize()
+            ) { targetPage ->
+                when (targetPage) {
+                    LocationDetailPage.SUMMARY -> {
+                        LocationSummaryContent(
+                            location = uiState.location,
+                            onChangePage = handlePageChange,
+                            modifier = Modifier.padding(innerPadding),
+                        )
+                    }
 
-                LocationDetailPage.LOCATION_GATHERING -> {
-                    LocationDetailRankContent(
-                        gatheringPoints = uiState.gatheringPoints,
-                        onItemClick = onItemClick,
-                        onChangePage = onChangePage,
-                        modifier = Modifier.padding(innerPadding),
-                    )
-                }
+                    LocationDetailPage.GATHERING -> {
+                        LocationDetailRankContent(
+                            gatheringPoints = uiState.gatheringPoints,
+                            onItemClick = onItemClick,
+                            onChangePage = handlePageChange,
+                            modifier = Modifier.padding(innerPadding),
+                        )
+                    }
 
-                LocationDetailPage.LOCATION_QUEST -> {
-                    LocationDetailQuestContent(
-                        quests = uiState.quests,
-                        onQuestClick = onQuestClick,
-                        onChangePage = onChangePage,
-                        modifier = Modifier.padding(innerPadding),
-                    )
+                    LocationDetailPage.QUEST -> {
+                        LocationDetailQuestContent(
+                            quests = uiState.quests,
+                            onQuestClick = onQuestClick,
+                            onChangePage = handlePageChange,
+                            modifier = Modifier.padding(innerPadding),
+                        )
+                    }
                 }
             }
         }

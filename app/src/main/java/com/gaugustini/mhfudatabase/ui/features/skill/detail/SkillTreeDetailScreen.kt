@@ -1,5 +1,6 @@
 package com.gaugustini.mhfudatabase.ui.features.skill.detail
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
@@ -14,6 +15,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
+import com.gaugustini.mhfudatabase.ui.components.AnimatedPageContent
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.theme.Theme
@@ -58,6 +60,14 @@ fun SkillTreeDetailScreen(
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
+    val handlePageChange: (SkillTreeDetailPage) -> Unit = { newPage ->
+        if (uiState.page != newPage) {
+            scrollBehavior.state.heightOffset = 0f
+            scrollBehavior.state.contentOffset = 0f
+            onChangePage(newPage)
+        }
+    }
+
     Scaffold(
         topBar = {
             TopBar(
@@ -67,7 +77,7 @@ fun SkillTreeDetailScreen(
                     if (uiState.page == SkillTreeDetailPage.SUMMARY)
                         navigateBack()
                     else
-                        onChangePage(SkillTreeDetailPage.SUMMARY)
+                        handlePageChange(SkillTreeDetailPage.SUMMARY)
                 },
                 openSearch = openSearch,
                 scrollBehavior = scrollBehavior,
@@ -76,24 +86,30 @@ fun SkillTreeDetailScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
     ) { innerPadding ->
         if (uiState.skillTree != null) {
-            when (uiState.page) {
-                SkillTreeDetailPage.SUMMARY -> {
-                    SkillTreeSummaryContent(
-                        skillTree = uiState.skillTree,
-                        onChangePage = onChangePage,
-                        modifier = Modifier.padding(innerPadding),
-                    )
-                }
+            AnimatedPageContent(
+                targetState = uiState.page,
+                indexMapper = { it.ordinal },
+                modifier = Modifier.fillMaxSize()
+            ) { targetPage ->
+                when (targetPage) {
+                    SkillTreeDetailPage.SUMMARY -> {
+                        SkillTreeSummaryContent(
+                            skillTree = uiState.skillTree,
+                            onChangePage = handlePageChange,
+                            modifier = Modifier.padding(innerPadding),
+                        )
+                    }
 
-                SkillTreeDetailPage.EQUIPMENT -> {
-                    SkillTreeEquipmentContent(
-                        decorations = uiState.decorations,
-                        armors = uiState.armors,
-                        onChangePage = onChangePage,
-                        onArmorClick = onArmorClick,
-                        onDecorationClick = onDecorationClick,
-                        modifier = Modifier.padding(innerPadding),
-                    )
+                    SkillTreeDetailPage.EQUIPMENT -> {
+                        SkillTreeEquipmentContent(
+                            decorations = uiState.decorations,
+                            armors = uiState.armors,
+                            onChangePage = handlePageChange,
+                            onArmorClick = onArmorClick,
+                            onDecorationClick = onDecorationClick,
+                            modifier = Modifier.padding(innerPadding),
+                        )
+                    }
                 }
             }
         }

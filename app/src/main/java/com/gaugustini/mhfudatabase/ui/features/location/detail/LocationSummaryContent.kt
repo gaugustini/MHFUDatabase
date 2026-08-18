@@ -56,7 +56,7 @@ fun LocationSummaryContent(
         if (location.gatheringPoints?.isEmpty() == false) {
             ButtonPage(
                 title = stringResource(R.string.location_gathering_spots),
-                onButtonClick = { onChangePage(LocationDetailPage.LOCATION_GATHERING) },
+                onButtonClick = { onChangePage(LocationDetailPage.GATHERING) },
                 modifier = Modifier.padding(horizontal = Dimension.Padding.medium)
             )
         }
@@ -64,7 +64,7 @@ fun LocationSummaryContent(
         if (location.quests?.isEmpty() == false) {
             ButtonPage(
                 title = stringResource(R.string.location_quest),
-                onButtonClick = { onChangePage(LocationDetailPage.LOCATION_QUEST) },
+                onButtonClick = { onChangePage(LocationDetailPage.QUEST) },
                 modifier = Modifier.padding(horizontal = Dimension.Padding.medium)
             )
         }

@@ -64,7 +64,7 @@ fun ItemSummaryContent(
         if (item.usages?.isEmpty() == false) {
             ButtonPage(
                 title = stringResource(R.string.item_usages),
-                onButtonClick = { onChangePage(ItemDetailPage.ITEM_USAGES) },
+                onButtonClick = { onChangePage(ItemDetailPage.USAGES) },
                 modifier = Modifier.padding(horizontal = Dimension.Padding.medium)
             )
         }
@@ -72,7 +72,7 @@ fun ItemSummaryContent(
         if (item.sources?.isEmpty() == false) {
             ButtonPage(
                 title = stringResource(R.string.item_sources),
-                onButtonClick = { onChangePage(ItemDetailPage.ITEM_SOURCES) },
+                onButtonClick = { onChangePage(ItemDetailPage.SOURCES) },
                 modifier = Modifier.padding(horizontal = Dimension.Padding.medium)
             )
         }
