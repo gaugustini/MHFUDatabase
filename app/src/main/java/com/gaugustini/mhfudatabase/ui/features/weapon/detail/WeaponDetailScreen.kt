@@ -1,5 +1,7 @@
 package com.gaugustini.mhfudatabase.ui.features.weapon.detail
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -7,6 +9,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
@@ -21,6 +24,7 @@ import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewWeaponData
+import kotlinx.coroutines.launch
 
 enum class WeaponDetailPage {
     SUMMARY,
@@ -57,11 +61,18 @@ fun WeaponDetailScreen(
     onWeaponClick: (weaponId: Int) -> Unit = {},
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+    val scope = rememberCoroutineScope()
 
     val handlePageChange: (WeaponDetailPage) -> Unit = { newPage ->
         if (uiState.page != newPage) {
-            scrollBehavior.state.heightOffset = 0f
-            scrollBehavior.state.contentOffset = 0f
+            if (scrollBehavior.state.heightOffset < 0f) {
+                scope.launch {
+                    val anim = Animatable(scrollBehavior.state.heightOffset)
+                    anim.animateTo(0f, animationSpec = tween(durationMillis = 400)) {
+                        scrollBehavior.state.heightOffset = this.value
+                    }
+                }
+            }
             onChangePage(newPage)
         }
     }

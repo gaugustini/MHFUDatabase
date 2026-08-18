@@ -1,5 +1,8 @@
 package com.gaugustini.mhfudatabase.ui.features.monster.detail
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -22,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -39,6 +43,7 @@ import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
+import kotlinx.coroutines.launch
 
 enum class MonsterDetailPage {
     SUMMARY,
@@ -79,11 +84,18 @@ fun MonsterDetailScreen(
     onQuestClick: (questId: Int) -> Unit = {},
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+    val scope = rememberCoroutineScope()
 
     val handlePageChange: (MonsterDetailPage) -> Unit = { newPage ->
         if (uiState.page != newPage) {
-            scrollBehavior.state.heightOffset = 0f
-            scrollBehavior.state.contentOffset = 0f
+            if (scrollBehavior.state.heightOffset < 0f) {
+                scope.launch {
+                    val anim = Animatable(scrollBehavior.state.heightOffset)
+                    anim.animateTo(0f, animationSpec = tween(durationMillis = 400)) {
+                        scrollBehavior.state.heightOffset = this.value
+                    }
+                }
+            }
             onChangePage(newPage)
         }
     }
@@ -102,7 +114,9 @@ fun MonsterDetailScreen(
                 openSearch = openSearch,
                 scrollBehavior = scrollBehavior,
                 bottomContent = {
-                    if (uiState.page == MonsterDetailPage.REWARD) {
+                    AnimatedVisibility(
+                        visible = uiState.page == MonsterDetailPage.REWARD,
+                    ) {
                         MonsterDetailRankFilter(
                             selectedRank = uiState.rewardRank,
                             availableRanks = uiState.availableRewardRanks,
