@@ -4,6 +4,7 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
@@ -65,6 +66,7 @@ fun QuestDetailScreen(
     onMonsterClick: (monsterId: Int) -> Unit = {},
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+    val summaryScrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
 
     val handlePageChange: (QuestDetailPage) -> Unit = { newPage ->
@@ -108,6 +110,7 @@ fun QuestDetailScreen(
                     QuestDetailPage.SUMMARY -> {
                         QuestDetailSummaryContent(
                             quest = uiState.quest,
+                            scrollState = summaryScrollState,
                             onChangePage = handlePageChange,
                             onLocationClick = onLocationClick,
                             onMonsterClick = onMonsterClick,

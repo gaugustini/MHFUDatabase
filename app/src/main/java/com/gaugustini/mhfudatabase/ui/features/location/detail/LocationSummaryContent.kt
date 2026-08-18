@@ -1,6 +1,7 @@
 package com.gaugustini.mhfudatabase.ui.features.location.detail
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -36,13 +37,14 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewLocationData
 fun LocationSummaryContent(
     location: Location,
     modifier: Modifier = Modifier,
+    scrollState: ScrollState = rememberScrollState(),
     onChangePage: (LocationDetailPage) -> Unit = {},
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(Dimension.Padding.medium),
         modifier = modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(scrollState)
             .padding(bottom = Dimension.Padding.endContent)
     ) {
         LocationMap(

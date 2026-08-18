@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.DropdownMenu
@@ -84,6 +85,7 @@ fun MonsterDetailScreen(
     onQuestClick: (questId: Int) -> Unit = {},
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+    val summaryScrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
 
     val handlePageChange: (MonsterDetailPage) -> Unit = { newPage ->
@@ -138,6 +140,7 @@ fun MonsterDetailScreen(
                     MonsterDetailPage.SUMMARY -> {
                         MonsterDetailSummaryContent(
                             monster = uiState.monster,
+                            scrollState = summaryScrollState,
                             onChangePage = handlePageChange,
                             modifier = Modifier.padding(innerPadding),
                         )

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.DropdownMenu
@@ -89,6 +90,7 @@ fun LocationDetailScreen(
     onQuestClick: (questId: Int) -> Unit = {},
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+    val summaryScrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
     var showMapDialog by remember { mutableStateOf(false) }
 
@@ -160,6 +162,7 @@ fun LocationDetailScreen(
                     LocationDetailPage.SUMMARY -> {
                         LocationSummaryContent(
                             location = uiState.location,
+                            scrollState = summaryScrollState,
                             onChangePage = handlePageChange,
                             modifier = Modifier.padding(innerPadding),
                         )

@@ -4,6 +4,7 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
@@ -77,6 +78,7 @@ fun ItemDetailScreen(
     onWeaponClick: (weaponId: Int) -> Unit = {},
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+    val summaryScrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
 
     val handlePageChange: (ItemDetailPage) -> Unit = { newPage ->
@@ -120,6 +122,7 @@ fun ItemDetailScreen(
                     ItemDetailPage.SUMMARY -> {
                         ItemSummaryContent(
                             item = uiState.item,
+                            scrollState = summaryScrollState,
                             onChangePage = handlePageChange,
                             modifier = Modifier.padding(innerPadding),
                         )

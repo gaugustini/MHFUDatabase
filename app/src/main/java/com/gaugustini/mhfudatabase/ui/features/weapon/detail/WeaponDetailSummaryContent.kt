@@ -1,6 +1,7 @@
 package com.gaugustini.mhfudatabase.ui.features.weapon.detail
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -40,6 +41,7 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewWeaponData
 fun WeaponDetailSummaryContent(
     weapon: Weapon,
     modifier: Modifier = Modifier,
+    scrollState: ScrollState = rememberScrollState(),
     onChangePage: (WeaponDetailPage) -> Unit = {},
     onItemClick: (itemId: Int) -> Unit = {},
 ) {
@@ -53,7 +55,7 @@ fun WeaponDetailSummaryContent(
         verticalArrangement = Arrangement.spacedBy(Dimension.Padding.medium),
         modifier = modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(scrollState)
             .padding(bottom = Dimension.Padding.endContent)
     ) {
         DetailHeader(
