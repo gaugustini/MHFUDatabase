@@ -1,5 +1,6 @@
 package com.gaugustini.mhfudatabase.ui.features.quest.detail
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -36,6 +37,7 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewQuestData
 fun QuestDetailSummaryContent(
     quest: Quest,
     modifier: Modifier = Modifier,
+    scrollState: ScrollState = rememberScrollState(),
     onChangePage: (QuestDetailPage) -> Unit = {},
     onLocationClick: (locationId: Int) -> Unit = {},
     onMonsterClick: (monsterId: Int) -> Unit = {},
@@ -76,7 +78,7 @@ fun QuestDetailSummaryContent(
         verticalArrangement = Arrangement.spacedBy(Dimension.Padding.medium),
         modifier = modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(scrollState)
             .padding(bottom = Dimension.Padding.endContent)
     ) {
         Column(

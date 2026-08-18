@@ -55,7 +55,7 @@ fun ItemUsagesContent(
     var weaponExpanded by rememberSaveable { mutableStateOf(true) }
 
     BackHandler {
-        onChangePage(ItemDetailPage.ITEM_SUMMARY)
+        onChangePage(ItemDetailPage.SUMMARY)
     }
 
     LazyColumn(

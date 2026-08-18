@@ -1,5 +1,6 @@
 package com.gaugustini.mhfudatabase.ui.features.item.detail
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,13 +30,14 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewItemData
 fun ItemSummaryContent(
     item: Item,
     modifier: Modifier = Modifier,
+    scrollState: ScrollState = rememberScrollState(),
     onChangePage: (ItemDetailPage) -> Unit = {},
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(Dimension.Padding.medium),
         modifier = modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(scrollState)
             .padding(bottom = Dimension.Padding.endContent)
     ) {
         Column(
@@ -64,7 +66,7 @@ fun ItemSummaryContent(
         if (item.usages?.isEmpty() == false) {
             ButtonPage(
                 title = stringResource(R.string.item_usages),
-                onButtonClick = { onChangePage(ItemDetailPage.ITEM_USAGES) },
+                onButtonClick = { onChangePage(ItemDetailPage.USAGES) },
                 modifier = Modifier.padding(horizontal = Dimension.Padding.medium)
             )
         }
@@ -72,7 +74,7 @@ fun ItemSummaryContent(
         if (item.sources?.isEmpty() == false) {
             ButtonPage(
                 title = stringResource(R.string.item_sources),
-                onButtonClick = { onChangePage(ItemDetailPage.ITEM_SOURCES) },
+                onButtonClick = { onChangePage(ItemDetailPage.SOURCES) },
                 modifier = Modifier.padding(horizontal = Dimension.Padding.medium)
             )
         }

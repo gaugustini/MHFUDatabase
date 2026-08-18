@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class ItemDetailState(
-    val page: ItemDetailPage = ItemDetailPage.ITEM_SUMMARY,
+    val page: ItemDetailPage = ItemDetailPage.SUMMARY,
     val item: Item? = null,
 )
 

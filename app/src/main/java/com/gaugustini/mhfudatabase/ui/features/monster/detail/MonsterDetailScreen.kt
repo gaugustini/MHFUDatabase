@@ -1,11 +1,16 @@
 package com.gaugustini.mhfudatabase.ui.features.monster.detail
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.DropdownMenu
@@ -21,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -31,12 +37,14 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.Rank
+import com.gaugustini.mhfudatabase.ui.components.AnimatedPageContent
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
+import kotlinx.coroutines.launch
 
 enum class MonsterDetailPage {
     SUMMARY,
@@ -77,6 +85,22 @@ fun MonsterDetailScreen(
     onQuestClick: (questId: Int) -> Unit = {},
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+    val summaryScrollState = rememberScrollState()
+    val scope = rememberCoroutineScope()
+
+    val handlePageChange: (MonsterDetailPage) -> Unit = { newPage ->
+        if (uiState.page != newPage) {
+            if (scrollBehavior.state.heightOffset < 0f) {
+                scope.launch {
+                    val anim = Animatable(scrollBehavior.state.heightOffset)
+                    anim.animateTo(0f, animationSpec = tween(durationMillis = 400)) {
+                        scrollBehavior.state.heightOffset = this.value
+                    }
+                }
+            }
+            onChangePage(newPage)
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -87,12 +111,14 @@ fun MonsterDetailScreen(
                     if (uiState.page == MonsterDetailPage.SUMMARY)
                         navigateBack()
                     else
-                        onChangePage(MonsterDetailPage.SUMMARY)
+                        handlePageChange(MonsterDetailPage.SUMMARY)
                 },
                 openSearch = openSearch,
                 scrollBehavior = scrollBehavior,
                 bottomContent = {
-                    if (uiState.page == MonsterDetailPage.REWARD) {
+                    AnimatedVisibility(
+                        visible = uiState.page == MonsterDetailPage.REWARD,
+                    ) {
                         MonsterDetailRankFilter(
                             selectedRank = uiState.rewardRank,
                             availableRanks = uiState.availableRewardRanks,
@@ -105,41 +131,48 @@ fun MonsterDetailScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
     ) { innerPadding ->
         if (uiState.monster != null) {
-            when (uiState.page) {
-                MonsterDetailPage.SUMMARY -> {
-                    MonsterDetailSummaryContent(
-                        monster = uiState.monster,
-                        onChangePage = onChangePage,
-                        modifier = Modifier.padding(innerPadding),
-                    )
-                }
+            AnimatedPageContent(
+                targetState = uiState.page,
+                indexMapper = { it.ordinal },
+                modifier = Modifier.fillMaxSize()
+            ) { targetPage ->
+                when (targetPage) {
+                    MonsterDetailPage.SUMMARY -> {
+                        MonsterDetailSummaryContent(
+                            monster = uiState.monster,
+                            scrollState = summaryScrollState,
+                            onChangePage = handlePageChange,
+                            modifier = Modifier.padding(innerPadding),
+                        )
+                    }
 
-                MonsterDetailPage.DAMAGE -> {
-                    MonsterDetailDamageContent(
-                        damage = uiState.monster.damageStats ?: emptyList(),
-                        ailments = uiState.monster.ailmentStats ?: emptyList(),
-                        onChangePage = onChangePage,
-                        modifier = Modifier.padding(innerPadding),
-                    )
-                }
+                    MonsterDetailPage.DAMAGE -> {
+                        MonsterDetailDamageContent(
+                            damage = uiState.monster.damageStats ?: emptyList(),
+                            ailments = uiState.monster.ailmentStats ?: emptyList(),
+                            onChangePage = handlePageChange,
+                            modifier = Modifier.padding(innerPadding),
+                        )
+                    }
 
-                MonsterDetailPage.REWARD -> {
-                    MonsterDetailRewardContent(
-                        rank = uiState.rewardRank,
-                        rewards = uiState.rewards,
-                        onItemClick = onItemClick,
-                        onChangePage = onChangePage,
-                        modifier = Modifier.padding(innerPadding),
-                    )
-                }
+                    MonsterDetailPage.REWARD -> {
+                        MonsterDetailRewardContent(
+                            rank = uiState.rewardRank,
+                            rewards = uiState.rewards,
+                            onItemClick = onItemClick,
+                            onChangePage = handlePageChange,
+                            modifier = Modifier.padding(innerPadding),
+                        )
+                    }
 
-                MonsterDetailPage.QUEST -> {
-                    MonsterDetailQuestContent(
-                        quests = uiState.monster.quests ?: emptyList(),
-                        onQuestClick = onQuestClick,
-                        onChangePage = onChangePage,
-                        modifier = Modifier.padding(innerPadding),
-                    )
+                    MonsterDetailPage.QUEST -> {
+                        MonsterDetailQuestContent(
+                            quests = uiState.monster.quests ?: emptyList(),
+                            onQuestClick = onQuestClick,
+                            onChangePage = handlePageChange,
+                            modifier = Modifier.padding(innerPadding),
+                        )
+                    }
                 }
             }
         }

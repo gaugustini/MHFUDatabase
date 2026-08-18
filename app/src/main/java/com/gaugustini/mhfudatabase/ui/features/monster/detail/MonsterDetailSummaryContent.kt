@@ -1,5 +1,6 @@
 package com.gaugustini.mhfudatabase.ui.features.monster.detail
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,13 +29,14 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
 fun MonsterDetailSummaryContent(
     monster: Monster,
     modifier: Modifier = Modifier,
+    scrollState: ScrollState = rememberScrollState(),
     onChangePage: (MonsterDetailPage) -> Unit = {},
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(Dimension.Padding.medium),
         modifier = modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(scrollState)
             .padding(bottom = Dimension.Padding.endContent)
     ) {
         Column(

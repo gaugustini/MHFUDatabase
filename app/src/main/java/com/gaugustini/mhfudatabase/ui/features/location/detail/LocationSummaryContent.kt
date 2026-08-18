@@ -1,6 +1,7 @@
 package com.gaugustini.mhfudatabase.ui.features.location.detail
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -36,13 +37,14 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewLocationData
 fun LocationSummaryContent(
     location: Location,
     modifier: Modifier = Modifier,
+    scrollState: ScrollState = rememberScrollState(),
     onChangePage: (LocationDetailPage) -> Unit = {},
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(Dimension.Padding.medium),
         modifier = modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(scrollState)
             .padding(bottom = Dimension.Padding.endContent)
     ) {
         LocationMap(
@@ -56,7 +58,7 @@ fun LocationSummaryContent(
         if (location.gatheringPoints?.isEmpty() == false) {
             ButtonPage(
                 title = stringResource(R.string.location_gathering_spots),
-                onButtonClick = { onChangePage(LocationDetailPage.LOCATION_GATHERING) },
+                onButtonClick = { onChangePage(LocationDetailPage.GATHERING) },
                 modifier = Modifier.padding(horizontal = Dimension.Padding.medium)
             )
         }
@@ -64,7 +66,7 @@ fun LocationSummaryContent(
         if (location.quests?.isEmpty() == false) {
             ButtonPage(
                 title = stringResource(R.string.location_quest),
-                onButtonClick = { onChangePage(LocationDetailPage.LOCATION_QUEST) },
+                onButtonClick = { onChangePage(LocationDetailPage.QUEST) },
                 modifier = Modifier.padding(horizontal = Dimension.Padding.medium)
             )
         }
