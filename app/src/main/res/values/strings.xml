@@ -247,6 +247,28 @@
     <string name="location_gather_fish">Fishing</string>
     <string name="location_gathering_spots">Gathering Nodes</string>
     <string name="location_quest">Quests</string>
+    <string name="location_gathering_info_title">Gathering Info</string>
+    <string name="location_gathering_info_content">
+        &lt;b>Rank Categories:&lt;/b>&lt;br>
+            &lt;li> &lt;b>Low Rank:&lt;/b> Includes all Guild 1★ to Guild 5★ quests, and Village 1★ to Village 6★ quests.
+            &lt;li> &lt;b>High Rank:&lt;/b> Includes all Guild 6★ to Guild 8★ quests, and Village 7★ to Village 9★ quests.
+            &lt;li> &lt;b>G Rank:&lt;/b> Includes all Guild G1★ to Guild G3★ quests.
+            &lt;li> &lt;b>Treasure:&lt;/b> Includes all Treasure Hunt quests.
+            &lt;li> &lt;b>Training:&lt;/b> Includes all Training School quests.&lt;br>&lt;br>
+
+            &lt;b>Note:&lt;/b>&lt;br>
+                Since Beginner and Low Rank share the exact same gathering data, Low Rank represents both categories in this section.&lt;br>&lt;br>
+
+        &lt;b>Gathering Node Types:&lt;/b>&lt;br>
+            &lt;li> &lt;b>Gather:&lt;/b> Action of collecting items from the environment, such as plants, bones, etc.
+            &lt;li> &lt;b>Mining:&lt;/b> Action of using a Pickaxe to mine ores and stones.
+            &lt;li> &lt;b>Bugnet:&lt;/b> Action of using a Bug Net to catch insects.
+            &lt;li> &lt;b>Fishing:&lt;/b> Action of using Fishing Baits to catch fish.&lt;br>&lt;br>
+
+        &lt;b>Values and Probabilities:&lt;/b>&lt;br>
+            &lt;li> The numbers after the action type indicate the minimum and maximum gathering attempts available at that node (&lt;b>∞&lt;/b> means unlimited gathers).
+            &lt;li> Percentages (%%) show the exact chance of obtaining each item per attempt.
+    </string>
 
     <!-- Monster -->
     <string name="monster_filter_size_all">All</string>
@@ -333,9 +355,9 @@
             &lt;li> &lt;b>Breakables:&lt;/b> Extra rewards given for breaking specific monster parts (horns, tail, wings, etc.).
             &lt;li> &lt;b>Drop Rates:&lt;/b> Percentages (%%) show the exact chance of receiving each item.&lt;br>&lt;br>
 
-        &lt;b>Note:&lt;/b>&lt;br>
-            Capture and part-break rewards are delivered at the end of the quest.
-            They occupy the last two lines of the rewards screen, while the top two lines are reserved for quest rewards.
+            &lt;b>Note:&lt;/b>&lt;br>
+                Capture and part-break rewards are delivered at the end of the quest.
+                They occupy the last two lines of the rewards screen, while the top two lines are reserved for quest rewards.
     </string>
 
     <!-- Quest -->
