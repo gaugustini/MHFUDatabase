@@ -341,7 +341,7 @@
     <string name="monster_reward_info_title">Info. de Recompensas</string>
     <string name="monster_reward_info_content">
         &lt;b>Categorías de Rango:&lt;/b>&lt;br>
-            &lt;li> &lt;b>Principiante:&lt;/b> Incluye todas las misiones del Gremio 1★ y Gremio 2★, además de (Nombre de la Misión) (Aldea 1★) y (Nombre de la Misión) (Aldea 2★).
+            &lt;li> &lt;b>Principiante:&lt;/b> Incluye todas las misiones del Gremio 1★ y Gremio 2★, además de "Sensación de ansiedad" (Aldea 1★) y "¡El tabú de la negligencia!" (Aldea 2★).
             &lt;li> &lt;b>Rango Bajo:&lt;/b> Incluye todas las misiones del Gremio 3★ al Gremio 5★, y de la Aldea 1★ a la Aldea 6★ (excluyendo las misiones de Principiante).
             &lt;li> &lt;b>Rango Alto:&lt;/b> Incluye todas las misiones del Gremio 6★ al Gremio 8★, y de la Aldea 7★ a la Aldea 9★.
             &lt;li> &lt;b>Rango G:&lt;/b> Incluye todas las misiones del Gremio G1★ al G3★.

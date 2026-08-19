@@ -341,7 +341,7 @@
     <string name="monster_reward_info_title">Reward Info</string>
     <string name="monster_reward_info_content">
         &lt;b>Rank Categories:&lt;/b>&lt;br>
-            &lt;li> &lt;b>Beginner:&lt;/b> Includes all Guild 1★ and Guild 2★ quests, plus (Quest Name) (Village 1★) and (Quest Name) (Village 2★).
+            &lt;li> &lt;b>Beginner:&lt;/b> Includes all Guild 1★ and Guild 2★ quests, plus "Sinking Feeling" (Village 1★) and "The Taboo of Negligence!" (Village 2★).
             &lt;li> &lt;b>Low Rank:&lt;/b> Includes all Guild 3★ to Guild 5★ quests, and Village 1★ to Village 6★ quests (excluding Beginner quests).
             &lt;li> &lt;b>High Rank:&lt;/b> Includes all Guild 6★ to Guild 8★ quests, and Village 7★ to Village 9★ quests.
             &lt;li> &lt;b>G Rank:&lt;/b> Includes all Guild G1★ to Guild G3★ quests.
