@@ -148,6 +148,7 @@ fun QuestDetailSummaryContent(
             quest.location?.let { location ->
                 LocationListItem(
                     location = location,
+                    daytime = quest.daytime,
                     onLocationClick = onLocationClick,
                 )
             }

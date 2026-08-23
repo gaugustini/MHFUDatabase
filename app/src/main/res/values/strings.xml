@@ -231,6 +231,8 @@
     <string name="combination_alchemy">Alchemy</string>
 
     <!-- Location -->
+    <string name="location_daytime_day">Day</string>
+    <string name="location_daytime_night">Night</string>
     <string name="location_filter_rank_unranked">Beginner</string>
     <string name="location_filter_rank_low">Low Rank</string>
     <string name="location_filter_rank_high">High Rank</string>

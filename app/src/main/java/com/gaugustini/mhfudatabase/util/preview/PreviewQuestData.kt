@@ -27,6 +27,7 @@ object PreviewQuestData {
         fee = 1,
         timeLimit = 1,
         location = PreviewLocationData.location,
+        daytime = null,
         monsters = PreviewMonsterData.monsterList,
         rewards = null,
         supplies = null,
