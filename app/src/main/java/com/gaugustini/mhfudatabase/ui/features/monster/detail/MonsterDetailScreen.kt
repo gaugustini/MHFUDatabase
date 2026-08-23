@@ -5,21 +5,28 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.HelpOutline
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
@@ -43,6 +50,7 @@ import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
+import com.gaugustini.mhfudatabase.util.annotatedStringResource
 import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
 import kotlinx.coroutines.launch
 
@@ -87,6 +95,7 @@ fun MonsterDetailScreen(
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     val summaryScrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
+    var showInfoRewardDialog by remember { mutableStateOf(false) }
 
     val handlePageChange: (MonsterDetailPage) -> Unit = { newPage ->
         if (uiState.page != newPage) {
@@ -115,6 +124,18 @@ fun MonsterDetailScreen(
                 },
                 openSearch = openSearch,
                 scrollBehavior = scrollBehavior,
+                actions = {
+                    if (uiState.page == MonsterDetailPage.REWARD) {
+                        IconButton(
+                            onClick = { showInfoRewardDialog = true }
+                        ) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.HelpOutline,
+                                contentDescription = null,
+                            )
+                        }
+                    }
+                },
                 bottomContent = {
                     AnimatedVisibility(
                         visible = uiState.page == MonsterDetailPage.REWARD,
@@ -177,6 +198,44 @@ fun MonsterDetailScreen(
             }
         }
     }
+
+    if (uiState.monster != null && showInfoRewardDialog) {
+        MonsterDetailRewardInfoDialog(
+            onDismiss = { showInfoRewardDialog = false }
+        )
+    }
+}
+
+@Composable
+fun MonsterDetailRewardInfoDialog(
+    modifier: Modifier = Modifier,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        title = {
+            Text(
+                text = stringResource(R.string.monster_reward_info_title),
+                style = MaterialTheme.typography.titleLarge
+            )
+        },
+        text = {
+            Column(
+                modifier = Modifier.verticalScroll(rememberScrollState())
+            ) {
+                Text(
+                    text = annotatedStringResource(R.string.monster_reward_info_content),
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text(text = stringResource(id = android.R.string.ok))
+            }
+        },
+        onDismissRequest = onDismiss,
+        modifier = modifier,
+    )
 }
 
 @Composable

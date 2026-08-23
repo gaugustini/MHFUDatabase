@@ -186,7 +186,7 @@
     <string name="item_weapon">Arma</string>
     <string name="item_location">Localización</string>
     <string name="item_monster">Monstruo</string>
-    <string name="item_rank_unranked">Gremio 1★~2★</string>
+    <string name="item_rank_unranked">Principiante</string>
     <string name="item_rank_low">Rango Bajo</string>
     <string name="item_rank_high">Rango Alto</string>
     <string name="item_rank_g">Rango G</string>
@@ -247,12 +247,37 @@
     <string name="location_gather_fish">Pesca</string>
     <string name="location_gathering_spots">Puntos de Recolección</string>
     <string name="location_quest">Misiones</string>
+    <string name="location_gathering_info_title">Info. de Recolección</string>
+    <string name="location_gathering_info_content">
+        &lt;b>Categorías de Rango:&lt;/b>&lt;br>
+            &lt;li> &lt;b>Rango Bajo:&lt;/b> Incluye todas las misiones del Gremio 1★ al Gremio 5★, y de la Aldea 1★ a la Aldea 6★.
+            &lt;li> &lt;b>Rango Alto:&lt;/b> Incluye todas las misiones del Gremio 6★ al Gremio 8★, y de la Aldea 7★ a la Aldea 9★.
+            &lt;li> &lt;b>Rango G:&lt;/b> Incluye todas las misiones del Gremio G1★ al G3★.
+            &lt;li> &lt;b>Tesoros:&lt;/b> Incluye todas las misiones de Cazatesoros.
+            &lt;li> &lt;b>Entrenamiento:&lt;/b> Incluye todas las misiones de la Escuela de Entrenamiento.&lt;br>&lt;br>
+
+            &lt;b>Nota:&lt;/b>&lt;br>
+                Dado que Principiante y Rango Bajo comparten los mismos datos de recolección, Rango Bajo representa a ambas categorías en esta sección.&lt;br>&lt;br>
+
+        &lt;b>Tipos de Puntos de Recolección:&lt;/b>&lt;br>
+            &lt;li> &lt;b>Recolectar:&lt;/b> Acción de recoger objetos del entorno, como plantas, huesos, etc.
+            &lt;li> &lt;b>Minería:&lt;/b> Acción de usar un Pico para extraer minerales y piedras.
+            &lt;li> &lt;b>Red de bichos:&lt;/b> Acción de usar una Red de bichos para atrapar insectos.
+            &lt;li> &lt;b>Pesca:&lt;/b> Acción de usar Cebos de Pesca para atrapar peces.&lt;br>&lt;br>
+
+        &lt;b>Valores y Probabilidades:&lt;/b>&lt;br>
+            &lt;li> Los números junto al tipo indican la cantidad mínima y máxima de intentos de recolección en ese punto (&lt;b>∞&lt;/b> indica recolección ilimitada).
+            &lt;li> Los porcentajes (%%) muestran la probabilidad exacta de obtener cada objeto por intento.&lt;br>&lt;br>
+
+        &lt;b>Nota Adicional:&lt;/b>&lt;br>
+            Algunas misiones pueden usar configuraciones de recolección especiales, especialmente las misiones de entrega de objetos específicos (ej. &lt;i>Hierbas de montaña&lt;/i>, &lt;i>Setas especiales&lt;/i>, &lt;i>Carbón&lt;/i>, etc.).
+    </string>
 
     <!-- Monster -->
     <string name="monster_filter_size_all">Todos</string>
     <string name="monster_filter_size_small">Pequeño</string>
     <string name="monster_filter_size_large">Grande</string>
-    <string name="monster_reward_filter_rank_unranked">Gremio 1★~2★</string>
+    <string name="monster_reward_filter_rank_unranked">Principiante</string>
     <string name="monster_reward_filter_rank_low">Rango Bajo</string>
     <string name="monster_reward_filter_rank_high">Rango Alto</string>
     <string name="monster_reward_filter_rank_g">Rango G</string>
@@ -316,6 +341,27 @@
     <string name="monster_quest_group_training_g">Entren.</string>
     <string name="monster_quest_group_group_practice">Entren.</string>
     <string name="monster_quest_group_group_challenge">Desafio</string>
+    <string name="monster_reward_info_title">Info. de Recompensas</string>
+    <string name="monster_reward_info_content">
+        &lt;b>Categorías de Rango:&lt;/b>&lt;br>
+            &lt;li> &lt;b>Principiante:&lt;/b> Incluye todas las misiones del Gremio 1★ y Gremio 2★, además de &lt;i>Sensación de ansiedad&lt;/i> (Aldea 1★) y &lt;i>¡El tabú de la negligencia!&lt;/i> (Aldea 2★).
+            &lt;li> &lt;b>Rango Bajo:&lt;/b> Incluye todas las misiones del Gremio 3★ al Gremio 5★, y de la Aldea 1★ a la Aldea 6★ (excluyendo las misiones de Principiante).
+            &lt;li> &lt;b>Rango Alto:&lt;/b> Incluye todas las misiones del Gremio 6★ al Gremio 8★, y de la Aldea 7★ a la Aldea 9★.
+            &lt;li> &lt;b>Rango G:&lt;/b> Incluye todas las misiones del Gremio G1★ al G3★.
+            &lt;li> &lt;b>Tesoros:&lt;/b> Incluye todas las misiones de Cazatesoros.
+            &lt;li> &lt;b>Entrenamiento:&lt;/b> Incluye todas las misiones de la Escuela de Entrenamiento.&lt;br>&lt;br>
+
+        &lt;b>Recompensas:&lt;/b>&lt;br>
+            &lt;li> &lt;b>Brillo:&lt;/b> Objetos que el monstruo deja caer al suelo durante la batalla.
+            &lt;li> &lt;b>Carveo:&lt;/b> Objetos obtenidos al cortar el cuerpo o la cola de un monstruo derrotado.
+            &lt;li> &lt;b>Captura:&lt;/b> Recompensas extra al capturar a un monstruo vivo usando trampas y bombas tranquilizantes.
+            &lt;li> &lt;b>Partes Rompibles:&lt;/b> Recompensas extra al romper partes específicas del monstruo (cuernos, cola, alas, etc.).
+            &lt;li> &lt;b>Probabilidad de obtención:&lt;/b> Los porcentajes (%%) muestran la probabilidad exacta de recibir cada objeto.&lt;br>&lt;br>
+
+            &lt;b>Nota:&lt;/b>&lt;br>
+                Las recompensas por captura y rotura de partes se entregan al final de la misión.
+                Ocupan las dos últimas filas de la pantalla de recompensas, mientras que las dos primeras filas están reservadas para las recompensas de la misión.
+    </string>
 
     <!-- Quest -->
     <string name="quest_filter_hub_all">Todos</string>

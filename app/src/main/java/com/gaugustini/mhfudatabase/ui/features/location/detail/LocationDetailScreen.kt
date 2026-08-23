@@ -6,22 +6,28 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.HelpOutline
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
@@ -48,6 +54,7 @@ import com.gaugustini.mhfudatabase.ui.features.location.components.LocationMapDi
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
+import com.gaugustini.mhfudatabase.util.annotatedStringResource
 import com.gaugustini.mhfudatabase.util.preview.PreviewLocationData
 import kotlinx.coroutines.launch
 
@@ -92,9 +99,11 @@ fun LocationDetailScreen(
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     val summaryScrollState = rememberScrollState()
-    val scope = rememberCoroutineScope()
-    var showMapDialog by rememberSaveable { mutableStateOf(false) }
 
+    var showMapDialog by rememberSaveable { mutableStateOf(false) }
+    var showInfoGatheringDialog by remember { mutableStateOf(false) }
+
+    val scope = rememberCoroutineScope()
     val handlePageChange: (LocationDetailPage) -> Unit = { newPage ->
         if (uiState.page != newPage) {
             if (scrollBehavior.state.heightOffset < 0f) {
@@ -131,6 +140,14 @@ fun LocationDetailScreen(
                                 painter = painterResource(R.drawable.ic_item_map),
                                 contentDescription = null,
                                 modifier = Modifier.size(Dimension.Size.extraSmall)
+                            )
+                        }
+                        IconButton(
+                            onClick = { showInfoGatheringDialog = true }
+                        ) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.HelpOutline,
+                                contentDescription = null,
                             )
                         }
                     }
@@ -198,6 +215,44 @@ fun LocationDetailScreen(
             onDismiss = { showMapDialog = false }
         )
     }
+
+    if (uiState.location != null && showInfoGatheringDialog) {
+        LocationDetailGatheringInfoDialog(
+            onDismiss = { showInfoGatheringDialog = false }
+        )
+    }
+}
+
+@Composable
+fun LocationDetailGatheringInfoDialog(
+    modifier: Modifier = Modifier,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        title = {
+            Text(
+                text = stringResource(R.string.location_gathering_info_title),
+                style = MaterialTheme.typography.titleLarge
+            )
+        },
+        text = {
+            Column(
+                modifier = Modifier.verticalScroll(rememberScrollState())
+            ) {
+                Text(
+                    text = annotatedStringResource(R.string.location_gathering_info_content),
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text(text = stringResource(id = android.R.string.ok))
+            }
+        },
+        onDismissRequest = onDismiss,
+        modifier = modifier,
+    )
 }
 
 @Composable
