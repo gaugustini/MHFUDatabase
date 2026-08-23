@@ -267,7 +267,10 @@
 
         &lt;b>Valores y Probabilidades:&lt;/b>&lt;br>
             &lt;li> Los números junto al tipo indican la cantidad mínima y máxima de intentos de recolección en ese punto (&lt;b>∞&lt;/b> indica recolección ilimitada).
-            &lt;li> Los porcentajes (%%) muestran la probabilidad exacta de obtener cada objeto por intento.
+            &lt;li> Los porcentajes (%%) muestran la probabilidad exacta de obtener cada objeto por intento.&lt;br>&lt;br>
+
+        &lt;b>Nota Adicional:&lt;/b>&lt;br>
+            Algunas misiones pueden usar configuraciones de recolección especiales, especialmente las misiones de entrega de objetos específicos (ej. &lt;i>Hierbas de montaña&lt;/i>, &lt;i>Setas especiales&lt;/i>, &lt;i>Carbón&lt;/i>, etc.).
     </string>
 
     <!-- Monster -->
@@ -341,7 +344,7 @@
     <string name="monster_reward_info_title">Info. de Recompensas</string>
     <string name="monster_reward_info_content">
         &lt;b>Categorías de Rango:&lt;/b>&lt;br>
-            &lt;li> &lt;b>Principiante:&lt;/b> Incluye todas las misiones del Gremio 1★ y Gremio 2★, además de "Sensación de ansiedad" (Aldea 1★) y "¡El tabú de la negligencia!" (Aldea 2★).
+            &lt;li> &lt;b>Principiante:&lt;/b> Incluye todas las misiones del Gremio 1★ y Gremio 2★, además de &lt;i>Sensación de ansiedad&lt;/i> (Aldea 1★) y &lt;i>¡El tabú de la negligencia!&lt;/i> (Aldea 2★).
             &lt;li> &lt;b>Rango Bajo:&lt;/b> Incluye todas las misiones del Gremio 3★ al Gremio 5★, y de la Aldea 1★ a la Aldea 6★ (excluyendo las misiones de Principiante).
             &lt;li> &lt;b>Rango Alto:&lt;/b> Incluye todas las misiones del Gremio 6★ al Gremio 8★, y de la Aldea 7★ a la Aldea 9★.
             &lt;li> &lt;b>Rango G:&lt;/b> Incluye todas las misiones del Gremio G1★ al G3★.

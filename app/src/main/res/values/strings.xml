@@ -267,7 +267,10 @@
 
         &lt;b>Values and Probabilities:&lt;/b>&lt;br>
             &lt;li> The numbers after the action type indicate the minimum and maximum gathering attempts available at that node (&lt;b>∞&lt;/b> means unlimited gathers).
-            &lt;li> Percentages (%%) show the exact chance of obtaining each item per attempt.
+            &lt;li> Percentages (%%) show the exact chance of obtaining each item per attempt.&lt;br>&lt;br>
+
+        &lt;b>Additional Note:&lt;/b>&lt;br>
+            Certain quests may use customized gathering, especially account item delivery quests (e.g., &lt;i>Mountain Herbs&lt;/i>, &lt;i>Special Mushrooms&lt;/i>, &lt;i>Coal&lt;/i>, etc.).
     </string>
 
     <!-- Monster -->
@@ -341,7 +344,7 @@
     <string name="monster_reward_info_title">Reward Info</string>
     <string name="monster_reward_info_content">
         &lt;b>Rank Categories:&lt;/b>&lt;br>
-            &lt;li> &lt;b>Beginner:&lt;/b> Includes all Guild 1★ and Guild 2★ quests, plus "Sinking Feeling" (Village 1★) and "The Taboo of Negligence!" (Village 2★).
+        &lt;li> &lt;b>Beginner:&lt;/b> Includes all Guild 1★ and Guild 2★ quests, plus &lt;i>Sinking Feeling&lt;/i> (Village 1★) and &lt;i>The Taboo of Negligence!&lt;/i> (Village 2★).
             &lt;li> &lt;b>Low Rank:&lt;/b> Includes all Guild 3★ to Guild 5★ quests, and Village 1★ to Village 6★ quests (excluding Beginner quests).
             &lt;li> &lt;b>High Rank:&lt;/b> Includes all Guild 6★ to Guild 8★ quests, and Village 7★ to Village 9★ quests.
             &lt;li> &lt;b>G Rank:&lt;/b> Includes all Guild G1★ to Guild G3★ quests.
