@@ -134,6 +134,30 @@ object MHFUIcons {
         22 to R.drawable.map_great_arena,
     )
 
+    val location_maps_with_nodes: Map<Int, Int> = mapOf(
+        1 to R.drawable.map_node_snowy_mountains,
+        2 to R.drawable.map_node_jungle,
+        3 to R.drawable.map_node_old_jungle,
+        4 to R.drawable.map_node_desert,
+        5 to R.drawable.map_node_old_desert,
+        6 to R.drawable.map_node_swamp,
+        7 to R.drawable.map_node_old_swamp,
+        8 to R.drawable.map_node_volcano,
+        9 to R.drawable.map_node_old_volcano,
+        10 to R.drawable.map_node_forest_and_hills,
+        11 to R.drawable.map_node_great_forest,
+        12 to R.drawable.map_node_tower_1,
+        13 to R.drawable.map_node_tower_2,
+        14 to R.drawable.map_node_tower_3,
+        15 to R.drawable.map_node_fortress,
+        16 to R.drawable.map_node_town,
+        17 to R.drawable.map_node_castle_schrade,
+        18 to R.drawable.map_node_battleground,
+        19 to R.drawable.map_node_snowy_mountains_peak,
+        21 to R.drawable.map_node_moat_arena,
+        22 to R.drawable.map_node_great_arena,
+    )
+
     val monsters: Map<Int, Int> = mapOf(
         1 to R.drawable.ic_monster_felyne,
         2 to R.drawable.ic_monster_melynx,
