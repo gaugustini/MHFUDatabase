@@ -13,8 +13,8 @@ android {
         applicationId = "com.gaugustini.mhfudatabase"
         minSdk = 23
         targetSdk = 36
-        versionCode = 19
-        versionName = "1.2.0-beta03"
+        versionCode = 20
+        versionName = "1.2.0-beta04"
     }
     buildTypes {
         release {
