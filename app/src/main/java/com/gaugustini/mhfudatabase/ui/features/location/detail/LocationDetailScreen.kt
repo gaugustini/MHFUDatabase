@@ -35,6 +35,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -98,10 +99,11 @@ fun LocationDetailScreen(
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     val summaryScrollState = rememberScrollState()
-    val scope = rememberCoroutineScope()
-    var showMapDialog by remember { mutableStateOf(false) }
+
+    var showMapDialog by rememberSaveable { mutableStateOf(false) }
     var showInfoGatheringDialog by remember { mutableStateOf(false) }
 
+    val scope = rememberCoroutineScope()
     val handlePageChange: (LocationDetailPage) -> Unit = { newPage ->
         if (uiState.page != newPage) {
             if (scrollBehavior.state.heightOffset < 0f) {
@@ -209,6 +211,7 @@ fun LocationDetailScreen(
     if (uiState.location != null && showMapDialog) {
         LocationMapDialog(
             locationId = uiState.location.id,
+            initialVisibilityNodes = uiState.page == LocationDetailPage.GATHERING,
             onDismiss = { showMapDialog = false }
         )
     }
