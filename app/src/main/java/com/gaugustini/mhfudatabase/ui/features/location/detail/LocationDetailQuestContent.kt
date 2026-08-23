@@ -34,7 +34,7 @@ fun LocationDetailQuestContent(
     onChangePage: (LocationDetailPage) -> Unit = {},
 ) {
     BackHandler {
-        onChangePage(LocationDetailPage.LOCATION_SUMMARY)
+        onChangePage(LocationDetailPage.SUMMARY)
     }
 
     LazyColumn(

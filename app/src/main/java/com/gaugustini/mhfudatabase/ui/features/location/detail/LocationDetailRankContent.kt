@@ -38,7 +38,7 @@ fun LocationDetailRankContent(
     val itemsPerNode = gatheringPoints.groupBy { it.node }
 
     BackHandler {
-        onChangePage(LocationDetailPage.LOCATION_SUMMARY)
+        onChangePage(LocationDetailPage.SUMMARY)
     }
 
     LazyColumn(

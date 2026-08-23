@@ -57,7 +57,7 @@ fun ItemSourcesContent(
     var veggieExpanded by rememberSaveable { mutableStateOf(true) }
 
     BackHandler {
-        onChangePage(ItemDetailPage.ITEM_SUMMARY)
+        onChangePage(ItemDetailPage.SUMMARY)
     }
 
     LazyColumn(

@@ -1,6 +1,7 @@
 package com.gaugustini.mhfudatabase.domain.model
 
 import com.gaugustini.mhfudatabase.domain.enums.HubType
+import com.gaugustini.mhfudatabase.domain.enums.LocationDaytime
 import com.gaugustini.mhfudatabase.domain.enums.QuestGoal
 import com.gaugustini.mhfudatabase.domain.enums.QuestGroup
 import com.gaugustini.mhfudatabase.domain.enums.QuestType
@@ -22,6 +23,7 @@ import com.gaugustini.mhfudatabase.domain.enums.QuestType
  * @property fee The fee to undertake the quest.
  * @property timeLimit The time limit for the quest in minutes.
  * @property location The location where the quest takes place.
+ * @property daytime The daytime of the quest (Day or Night).
  * @property monsters A list of monsters that appear in the quest.
  * @property rewards A list of rewards the player can receive after completing the quest.
  * @property supplies A list of items in the quest's supply box.
@@ -42,6 +44,7 @@ data class Quest(
     val fee: Int,
     val timeLimit: Int,
     val location: Location?,
+    val daytime: LocationDaytime?,
     val monsters: List<Monster>?,
     val rewards: List<QuestReward>?,
     val supplies: List<QuestSupply>?,

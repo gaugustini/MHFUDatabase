@@ -1,5 +1,6 @@
 package com.gaugustini.mhfudatabase.util
 
+import androidx.annotation.StringRes
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -9,8 +10,23 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.fromHtml
 import com.gaugustini.mhfudatabase.ui.components.AppHDivider
+
+/**
+ * Creates an [AnnotatedString] from an HTML string.
+ */
+@Composable
+fun annotatedStringResource(@StringRes id: Int, vararg formatArgs: Any): AnnotatedString {
+    val text = stringResource(id, *formatArgs)
+    return remember(text) {
+        AnnotatedString.fromHtml(text)
+    }
+}
 
 /**
  * Iterates through a list and executes a [content] block for each item,

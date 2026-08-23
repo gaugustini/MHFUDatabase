@@ -1,28 +1,41 @@
 package com.gaugustini.mhfudatabase.ui.features.location.detail
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.HelpOutline
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -34,18 +47,21 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.Rank
+import com.gaugustini.mhfudatabase.ui.components.AnimatedPageContent
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.features.location.components.LocationMapDialog
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
+import com.gaugustini.mhfudatabase.util.annotatedStringResource
 import com.gaugustini.mhfudatabase.util.preview.PreviewLocationData
+import kotlinx.coroutines.launch
 
 enum class LocationDetailPage {
-    LOCATION_SUMMARY,
-    LOCATION_GATHERING,
-    LOCATION_QUEST;
+    SUMMARY,
+    GATHERING,
+    QUEST;
 }
 
 @Composable
@@ -82,7 +98,25 @@ fun LocationDetailScreen(
     onQuestClick: (questId: Int) -> Unit = {},
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
-    var showMapDialog by remember { mutableStateOf(false) }
+    val summaryScrollState = rememberScrollState()
+
+    var showMapDialog by rememberSaveable { mutableStateOf(false) }
+    var showInfoGatheringDialog by remember { mutableStateOf(false) }
+
+    val scope = rememberCoroutineScope()
+    val handlePageChange: (LocationDetailPage) -> Unit = { newPage ->
+        if (uiState.page != newPage) {
+            if (scrollBehavior.state.heightOffset < 0f) {
+                scope.launch {
+                    val anim = Animatable(scrollBehavior.state.heightOffset)
+                    anim.animateTo(0f, animationSpec = tween(durationMillis = 400)) {
+                        scrollBehavior.state.heightOffset = this.value
+                    }
+                }
+            }
+            onChangePage(newPage)
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -90,15 +124,15 @@ fun LocationDetailScreen(
                 title = uiState.location?.name ?: stringResource(R.string.screen_location_detail),
                 navigationType = NavigationType.BACK,
                 navigation = {
-                    if (uiState.page == LocationDetailPage.LOCATION_SUMMARY)
+                    if (uiState.page == LocationDetailPage.SUMMARY)
                         navigateBack()
                     else
-                        onChangePage(LocationDetailPage.LOCATION_SUMMARY)
+                        handlePageChange(LocationDetailPage.SUMMARY)
                 },
                 openSearch = openSearch,
                 scrollBehavior = scrollBehavior,
                 actions = {
-                    if (uiState.page == LocationDetailPage.LOCATION_GATHERING) {
+                    if (uiState.page == LocationDetailPage.GATHERING) {
                         IconButton(
                             onClick = { showMapDialog = true }
                         ) {
@@ -108,10 +142,20 @@ fun LocationDetailScreen(
                                 modifier = Modifier.size(Dimension.Size.extraSmall)
                             )
                         }
+                        IconButton(
+                            onClick = { showInfoGatheringDialog = true }
+                        ) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.HelpOutline,
+                                contentDescription = null,
+                            )
+                        }
                     }
                 },
                 bottomContent = {
-                    if (uiState.page == LocationDetailPage.LOCATION_GATHERING) {
+                    AnimatedVisibility(
+                        visible = uiState.page == LocationDetailPage.GATHERING,
+                    ) {
                         LocationDetailRankFilter(
                             selectedRank = uiState.rank,
                             selectedArea = uiState.area,
@@ -127,31 +171,38 @@ fun LocationDetailScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
     ) { innerPadding ->
         if (uiState.location != null) {
-            when (uiState.page) {
-                LocationDetailPage.LOCATION_SUMMARY -> {
-                    LocationSummaryContent(
-                        location = uiState.location,
-                        onChangePage = onChangePage,
-                        modifier = Modifier.padding(innerPadding),
-                    )
-                }
+            AnimatedPageContent(
+                targetState = uiState.page,
+                indexMapper = { it.ordinal },
+                modifier = Modifier.fillMaxSize()
+            ) { targetPage ->
+                when (targetPage) {
+                    LocationDetailPage.SUMMARY -> {
+                        LocationSummaryContent(
+                            location = uiState.location,
+                            scrollState = summaryScrollState,
+                            onChangePage = handlePageChange,
+                            modifier = Modifier.padding(innerPadding),
+                        )
+                    }
 
-                LocationDetailPage.LOCATION_GATHERING -> {
-                    LocationDetailRankContent(
-                        gatheringPoints = uiState.gatheringPoints,
-                        onItemClick = onItemClick,
-                        onChangePage = onChangePage,
-                        modifier = Modifier.padding(innerPadding),
-                    )
-                }
+                    LocationDetailPage.GATHERING -> {
+                        LocationDetailRankContent(
+                            gatheringPoints = uiState.gatheringPoints,
+                            onItemClick = onItemClick,
+                            onChangePage = handlePageChange,
+                            modifier = Modifier.padding(innerPadding),
+                        )
+                    }
 
-                LocationDetailPage.LOCATION_QUEST -> {
-                    LocationDetailQuestContent(
-                        quests = uiState.quests,
-                        onQuestClick = onQuestClick,
-                        onChangePage = onChangePage,
-                        modifier = Modifier.padding(innerPadding),
-                    )
+                    LocationDetailPage.QUEST -> {
+                        LocationDetailQuestContent(
+                            quests = uiState.quests,
+                            onQuestClick = onQuestClick,
+                            onChangePage = handlePageChange,
+                            modifier = Modifier.padding(innerPadding),
+                        )
+                    }
                 }
             }
         }
@@ -160,9 +211,48 @@ fun LocationDetailScreen(
     if (uiState.location != null && showMapDialog) {
         LocationMapDialog(
             locationId = uiState.location.id,
+            initialVisibilityNodes = uiState.page == LocationDetailPage.GATHERING,
             onDismiss = { showMapDialog = false }
         )
     }
+
+    if (uiState.location != null && showInfoGatheringDialog) {
+        LocationDetailGatheringInfoDialog(
+            onDismiss = { showInfoGatheringDialog = false }
+        )
+    }
+}
+
+@Composable
+fun LocationDetailGatheringInfoDialog(
+    modifier: Modifier = Modifier,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        title = {
+            Text(
+                text = stringResource(R.string.location_gathering_info_title),
+                style = MaterialTheme.typography.titleLarge
+            )
+        },
+        text = {
+            Column(
+                modifier = Modifier.verticalScroll(rememberScrollState())
+            ) {
+                Text(
+                    text = annotatedStringResource(R.string.location_gathering_info_content),
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text(text = stringResource(id = android.R.string.ok))
+            }
+        },
+        onDismissRequest = onDismiss,
+        modifier = modifier,
+    )
 }
 
 @Composable

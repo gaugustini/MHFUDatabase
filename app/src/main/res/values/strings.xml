@@ -187,7 +187,7 @@
     <string name="item_weapon">Weapon</string>
     <string name="item_location">Location</string>
     <string name="item_monster">Monster</string>
-    <string name="item_rank_unranked">Guild 1★~2★</string>
+    <string name="item_rank_unranked">Beginner</string>
     <string name="item_rank_low">Low Rank</string>
     <string name="item_rank_high">High Rank</string>
     <string name="item_rank_g">G Rank</string>
@@ -232,6 +232,8 @@
     <string name="combination_alchemy">Alchemy</string>
 
     <!-- Location -->
+    <string name="location_daytime_day">Day</string>
+    <string name="location_daytime_night">Night</string>
     <string name="location_filter_rank_unranked">Beginner</string>
     <string name="location_filter_rank_low">Low Rank</string>
     <string name="location_filter_rank_high">High Rank</string>
@@ -248,12 +250,37 @@
     <string name="location_gather_fish">Fishing</string>
     <string name="location_gathering_spots">Gathering Nodes</string>
     <string name="location_quest">Quests</string>
+    <string name="location_gathering_info_title">Gathering Info</string>
+    <string name="location_gathering_info_content">
+        &lt;b>Rank Categories:&lt;/b>&lt;br>
+            &lt;li> &lt;b>Low Rank:&lt;/b> Includes all Guild 1★ to Guild 5★ quests, and Village 1★ to Village 6★ quests.
+            &lt;li> &lt;b>High Rank:&lt;/b> Includes all Guild 6★ to Guild 8★ quests, and Village 7★ to Village 9★ quests.
+            &lt;li> &lt;b>G Rank:&lt;/b> Includes all Guild G1★ to Guild G3★ quests.
+            &lt;li> &lt;b>Treasure:&lt;/b> Includes all Treasure Hunt quests.
+            &lt;li> &lt;b>Training:&lt;/b> Includes all Training School quests.&lt;br>&lt;br>
+
+            &lt;b>Note:&lt;/b>&lt;br>
+                Since Beginner and Low Rank share the exact same gathering data, Low Rank represents both categories in this section.&lt;br>&lt;br>
+
+        &lt;b>Gathering Node Types:&lt;/b>&lt;br>
+            &lt;li> &lt;b>Gather:&lt;/b> Action of collecting items from the environment, such as plants, bones, etc.
+            &lt;li> &lt;b>Mining:&lt;/b> Action of using a Pickaxe to mine ores and stones.
+            &lt;li> &lt;b>Bugnet:&lt;/b> Action of using a Bug Net to catch insects.
+            &lt;li> &lt;b>Fishing:&lt;/b> Action of using Fishing Baits to catch fish.&lt;br>&lt;br>
+
+        &lt;b>Values and Probabilities:&lt;/b>&lt;br>
+            &lt;li> The numbers after the action type indicate the minimum and maximum gathering attempts available at that node (&lt;b>∞&lt;/b> means unlimited gathers).
+            &lt;li> Percentages (%%) show the exact chance of obtaining each item per attempt.&lt;br>&lt;br>
+
+        &lt;b>Additional Note:&lt;/b>&lt;br>
+            Certain quests may use customized gathering, especially account item delivery quests (e.g., &lt;i>Mountain Herbs&lt;/i>, &lt;i>Special Mushrooms&lt;/i>, &lt;i>Coal&lt;/i>, etc.).
+    </string>
 
     <!-- Monster -->
     <string name="monster_filter_size_all">All</string>
     <string name="monster_filter_size_small">Small</string>
     <string name="monster_filter_size_large">Large</string>
-    <string name="monster_reward_filter_rank_unranked">Guild 1★~2★</string>
+    <string name="monster_reward_filter_rank_unranked">Beginner</string>
     <string name="monster_reward_filter_rank_low">Low Rank</string>
     <string name="monster_reward_filter_rank_high">High Rank</string>
     <string name="monster_reward_filter_rank_g">G Rank</string>
@@ -317,6 +344,27 @@
     <string name="monster_quest_group_training_g">Training</string>
     <string name="monster_quest_group_group_practice">Training</string>
     <string name="monster_quest_group_group_challenge">Challenge</string>
+    <string name="monster_reward_info_title">Reward Info</string>
+    <string name="monster_reward_info_content">
+        &lt;b>Rank Categories:&lt;/b>&lt;br>
+        &lt;li> &lt;b>Beginner:&lt;/b> Includes all Guild 1★ and Guild 2★ quests, plus &lt;i>Sinking Feeling&lt;/i> (Village 1★) and &lt;i>The Taboo of Negligence!&lt;/i> (Village 2★).
+            &lt;li> &lt;b>Low Rank:&lt;/b> Includes all Guild 3★ to Guild 5★ quests, and Village 1★ to Village 6★ quests (excluding Beginner quests).
+            &lt;li> &lt;b>High Rank:&lt;/b> Includes all Guild 6★ to Guild 8★ quests, and Village 7★ to Village 9★ quests.
+            &lt;li> &lt;b>G Rank:&lt;/b> Includes all Guild G1★ to Guild G3★ quests.
+            &lt;li> &lt;b>Treasure:&lt;/b> Includes all Treasure Hunt quests.
+            &lt;li> &lt;b>Training:&lt;/b> Includes all Training School quests.&lt;br>&lt;br>
+
+        &lt;b>Rewards:&lt;/b>&lt;br>
+            &lt;li> &lt;b>Shiny Drop:&lt;/b> Items dropped on the ground by the monster during battle.
+            &lt;li> &lt;b>Carving:&lt;/b> Items obtained by carving the body or the tail of a defeated monster.
+            &lt;li> &lt;b>Capture:&lt;/b> Extra rewards given for capturing a monster alive using traps and tranq bombs.
+            &lt;li> &lt;b>Breakables:&lt;/b> Extra rewards given for breaking specific monster parts (horns, tail, wings, etc.).
+            &lt;li> &lt;b>Drop Rates:&lt;/b> Percentages (%%) show the exact chance of receiving each item.&lt;br>&lt;br>
+
+            &lt;b>Note:&lt;/b>&lt;br>
+                Capture and part-break rewards are delivered at the end of the quest.
+                They occupy the last two lines of the rewards screen, while the top two lines are reserved for quest rewards.
+    </string>
 
     <!-- Quest -->
     <string name="quest_filter_hub_all">All</string>

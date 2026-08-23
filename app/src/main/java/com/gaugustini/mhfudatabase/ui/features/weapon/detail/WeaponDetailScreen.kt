@@ -1,11 +1,16 @@
 package com.gaugustini.mhfudatabase.ui.features.weapon.detail
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
@@ -14,11 +19,13 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
+import com.gaugustini.mhfudatabase.ui.components.AnimatedPageContent
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewWeaponData
+import kotlinx.coroutines.launch
 
 enum class WeaponDetailPage {
     SUMMARY,
@@ -55,6 +62,22 @@ fun WeaponDetailScreen(
     onWeaponClick: (weaponId: Int) -> Unit = {},
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+    val summaryScrollState = rememberScrollState()
+    val scope = rememberCoroutineScope()
+
+    val handlePageChange: (WeaponDetailPage) -> Unit = { newPage ->
+        if (uiState.page != newPage) {
+            if (scrollBehavior.state.heightOffset < 0f) {
+                scope.launch {
+                    val anim = Animatable(scrollBehavior.state.heightOffset)
+                    anim.animateTo(0f, animationSpec = tween(durationMillis = 400)) {
+                        scrollBehavior.state.heightOffset = this.value
+                    }
+                }
+            }
+            onChangePage(newPage)
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -65,7 +88,7 @@ fun WeaponDetailScreen(
                     if (uiState.page == WeaponDetailPage.SUMMARY)
                         navigateBack()
                     else
-                        onChangePage(WeaponDetailPage.SUMMARY)
+                        handlePageChange(WeaponDetailPage.SUMMARY)
                 },
                 openSearch = openSearch,
                 scrollBehavior = scrollBehavior,
@@ -74,25 +97,32 @@ fun WeaponDetailScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
     ) { innerPadding ->
         if (uiState.weapon != null) {
-            when (uiState.page) {
-                WeaponDetailPage.SUMMARY -> {
-                    WeaponDetailSummaryContent(
-                        weapon = uiState.weapon,
-                        onChangePage = onChangePage,
-                        onItemClick = onItemClick,
-                        modifier = Modifier.padding(innerPadding),
-                    )
-                }
+            AnimatedPageContent(
+                targetState = uiState.page,
+                indexMapper = { it.ordinal },
+                modifier = Modifier.fillMaxSize()
+            ) { targetPage ->
+                when (targetPage) {
+                    WeaponDetailPage.SUMMARY -> {
+                        WeaponDetailSummaryContent(
+                            weapon = uiState.weapon,
+                            scrollState = summaryScrollState,
+                            onChangePage = handlePageChange,
+                            onItemClick = onItemClick,
+                            modifier = Modifier.padding(innerPadding),
+                        )
+                    }
 
-                WeaponDetailPage.PATHS -> {
-                    WeaponDetailPathsContent(
-                        paths = uiState.weapon.paths ?: emptyList(),
-                        upgrades = uiState.weapon.upgrades ?: emptyList(),
-                        finals = uiState.weapon.finals ?: emptyList(),
-                        onChangePage = onChangePage,
-                        onWeaponClick = onWeaponClick,
-                        modifier = Modifier.padding(innerPadding),
-                    )
+                    WeaponDetailPage.PATHS -> {
+                        WeaponDetailPathsContent(
+                            paths = uiState.weapon.paths ?: emptyList(),
+                            upgrades = uiState.weapon.upgrades ?: emptyList(),
+                            finals = uiState.weapon.finals ?: emptyList(),
+                            onChangePage = handlePageChange,
+                            onWeaponClick = onWeaponClick,
+                            modifier = Modifier.padding(innerPadding),
+                        )
+                    }
                 }
             }
         }

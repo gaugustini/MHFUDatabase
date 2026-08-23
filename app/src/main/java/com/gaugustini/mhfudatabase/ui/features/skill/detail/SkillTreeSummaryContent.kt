@@ -1,5 +1,6 @@
 package com.gaugustini.mhfudatabase.ui.features.skill.detail
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,13 +31,14 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewSkillData
 fun SkillTreeSummaryContent(
     skillTree: SkillTree,
     modifier: Modifier = Modifier,
+    scrollState: ScrollState = rememberScrollState(),
     onChangePage: (SkillTreeDetailPage) -> Unit = {},
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(Dimension.Padding.medium),
         modifier = modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(scrollState)
             .padding(bottom = Dimension.Padding.endContent)
     ) {
         Column(
