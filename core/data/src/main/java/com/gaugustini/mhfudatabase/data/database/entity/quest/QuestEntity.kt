@@ -23,6 +23,7 @@ import com.gaugustini.mhfudatabase.data.database.entity.location.LocationEntity
 data class QuestEntity(
     @ColumnInfo(name = "id") val id: Int,
     @ColumnInfo(name = "location_id") val locationId: Int,
+    @ColumnInfo(name = "daytime") val daytime: String?,
     @ColumnInfo(name = "group") val group: String,
     @ColumnInfo(name = "hub_type") val hubType: String,
     @ColumnInfo(name = "stars") val stars: Int,
