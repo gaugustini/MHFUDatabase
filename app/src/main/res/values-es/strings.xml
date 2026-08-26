@@ -13,12 +13,11 @@
     <!-- What's New -->
     <string name="whats_new_title">¿Qué hay de nuevo?</string>
     <string name="whats_new_text">
-        Versión 1.2.0-beta04\n\n
+        Versión 1.2.0\n\n
         • Corrección en los valores de recompensa de monstruos (brillos, capturas y roturas)\n
+        • Corrección en los valores de efectividad de los objetos de monstruos\n
         • Corrección en los valores de recolección de zonas\n
         • Mapas añadidos para todas las zonas\n
-        • Añadidos los valores de defensa máxima para armaduras\n
-        • Corrección en los valores de efectividad de los objetos de monstruos\n
         • Actualización del estilo de la interfaz de usuario\n
         • Mejoras menores y corrección de errores\n
      </string>
@@ -578,9 +577,7 @@
         para Monster Hunter Freedom Unite (MHFU). Basada en las aplicaciones desarrolladas por
         Gathering Hall Studios, proporciona datos sobre monstruos, armas, armaduras, objetos y misiones.
     </string>
-    <string name="about_visit_project">Para problemas, ideas o sugerencias, visita el proyecto en
-        GitHub y únete a la sección de Discusiones.
-    </string>
+    <string name="about_visit_project">Para problemas, ideas o sugerencias, visita el proyecto en GitHub.</string>
     <string name="about_version">Versión %1$s</string>
     <string name="about_credit_resources">Créditos y Recursos</string>
 
