@@ -1,9 +1,42 @@
 package com.gaugustini.mhfudatabase.ui.features.monster.detail
 
-import androidx.annotation.StringRes
-import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.HelpOutline
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -11,21 +44,21 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.Rank
-import com.gaugustini.mhfudatabase.ui.components.EmptyContent
+import com.gaugustini.mhfudatabase.ui.components.AnimatedPageContent
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
-import com.gaugustini.mhfudatabase.ui.components.TabbedLayout
 import com.gaugustini.mhfudatabase.ui.components.TopBar
+import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
+import com.gaugustini.mhfudatabase.util.annotatedStringResource
 import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
+import kotlinx.coroutines.launch
 
-enum class MonsterDetailTab(@get:StringRes val title: Int) {
-    SUMMARY(R.string.tab_monster_detail_summary),
-    DAMAGE(R.string.tab_monster_detail_damage),
-    LOW_RANK(R.string.tab_monster_detail_low_rank),
-    HIGH_RANK(R.string.tab_monster_detail_high_rank),
-    G_RANK(R.string.tab_monster_detail_g_rank),
-    QUEST(R.string.tab_monster_detail_quest);
+enum class MonsterDetailPage {
+    SUMMARY,
+    DAMAGE,
+    REWARD,
+    QUEST;
 }
 
 @Composable
@@ -42,6 +75,8 @@ fun MonsterDetailRoute(
         uiState = uiState,
         navigateBack = navigateBack,
         openSearch = openSearch,
+        onChangePage = viewModel::onChangePage,
+        onChangeRank = viewModel::onChangeRank,
         onItemClick = onItemClick,
         onQuestClick = onQuestClick,
     )
@@ -52,91 +87,226 @@ fun MonsterDetailScreen(
     uiState: MonsterDetailState = MonsterDetailState(),
     navigateBack: () -> Unit = {},
     openSearch: () -> Unit = {},
+    onChangePage: (MonsterDetailPage) -> Unit = {},
+    onChangeRank: (rank: Rank) -> Unit = {},
     onItemClick: (itemId: Int) -> Unit = {},
     onQuestClick: (questId: Int) -> Unit = {},
 ) {
-    val pagerState = rememberPagerState(
-        initialPage = uiState.initialTab.ordinal,
-        pageCount = { MonsterDetailTab.entries.size },
-    )
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+    val summaryScrollState = rememberScrollState()
+    val scope = rememberCoroutineScope()
+    var showInfoRewardDialog by remember { mutableStateOf(false) }
 
-    TabbedLayout(
-        pagerState = pagerState,
-        tabTitles = MonsterDetailTab.entries.map { stringResource(it.title) },
+    val handlePageChange: (MonsterDetailPage) -> Unit = { newPage ->
+        if (uiState.page != newPage) {
+            if (scrollBehavior.state.heightOffset < 0f) {
+                scope.launch {
+                    val anim = Animatable(scrollBehavior.state.heightOffset)
+                    anim.animateTo(0f, animationSpec = tween(durationMillis = 400)) {
+                        scrollBehavior.state.heightOffset = this.value
+                    }
+                }
+            }
+            onChangePage(newPage)
+        }
+    }
+
+    Scaffold(
         topBar = {
             TopBar(
                 title = uiState.monster?.name ?: stringResource(R.string.screen_monster_detail),
                 navigationType = NavigationType.BACK,
-                navigation = navigateBack,
+                navigation = {
+                    if (uiState.page == MonsterDetailPage.SUMMARY)
+                        navigateBack()
+                    else
+                        handlePageChange(MonsterDetailPage.SUMMARY)
+                },
                 openSearch = openSearch,
+                scrollBehavior = scrollBehavior,
+                actions = {
+                    if (uiState.page == MonsterDetailPage.REWARD) {
+                        IconButton(
+                            onClick = { showInfoRewardDialog = true }
+                        ) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.HelpOutline,
+                                contentDescription = null,
+                            )
+                        }
+                    }
+                },
+                bottomContent = {
+                    AnimatedVisibility(
+                        visible = uiState.page == MonsterDetailPage.REWARD,
+                    ) {
+                        MonsterDetailRankFilter(
+                            selectedRank = uiState.rewardRank,
+                            availableRanks = uiState.availableRewardRanks,
+                            onChangeRank = onChangeRank,
+                        )
+                    }
+                }
             )
         },
-    ) { tabIndex ->
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+    ) { innerPadding ->
         if (uiState.monster != null) {
-            when (MonsterDetailTab.entries[tabIndex]) {
-                MonsterDetailTab.SUMMARY -> {
-                    MonsterDetailSummaryContent(
-                        monster = uiState.monster,
+            AnimatedPageContent(
+                targetState = uiState.page,
+                indexMapper = { it.ordinal },
+                modifier = Modifier.fillMaxSize()
+            ) { targetPage ->
+                when (targetPage) {
+                    MonsterDetailPage.SUMMARY -> {
+                        MonsterDetailSummaryContent(
+                            monster = uiState.monster,
+                            scrollState = summaryScrollState,
+                            onChangePage = handlePageChange,
+                            modifier = Modifier.padding(innerPadding),
+                        )
+                    }
+
+                    MonsterDetailPage.DAMAGE -> {
+                        MonsterDetailDamageContent(
+                            damage = uiState.monster.damageStats ?: emptyList(),
+                            ailments = uiState.monster.ailmentStats ?: emptyList(),
+                            onChangePage = handlePageChange,
+                            modifier = Modifier.padding(innerPadding),
+                        )
+                    }
+
+                    MonsterDetailPage.REWARD -> {
+                        MonsterDetailRewardContent(
+                            rank = uiState.rewardRank,
+                            rewards = uiState.rewards,
+                            onItemClick = onItemClick,
+                            onChangePage = handlePageChange,
+                            modifier = Modifier.padding(innerPadding),
+                        )
+                    }
+
+                    MonsterDetailPage.QUEST -> {
+                        MonsterDetailQuestContent(
+                            quests = uiState.monster.quests ?: emptyList(),
+                            onQuestClick = onQuestClick,
+                            onChangePage = handlePageChange,
+                            modifier = Modifier.padding(innerPadding),
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    if (uiState.monster != null && showInfoRewardDialog) {
+        MonsterDetailRewardInfoDialog(
+            onDismiss = { showInfoRewardDialog = false }
+        )
+    }
+}
+
+@Composable
+fun MonsterDetailRewardInfoDialog(
+    modifier: Modifier = Modifier,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        title = {
+            Text(
+                text = stringResource(R.string.monster_reward_info_title),
+                style = MaterialTheme.typography.titleLarge
+            )
+        },
+        text = {
+            Column(
+                modifier = Modifier.verticalScroll(rememberScrollState())
+            ) {
+                Text(
+                    text = annotatedStringResource(R.string.monster_reward_info_content),
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text(text = stringResource(id = android.R.string.ok))
+            }
+        },
+        onDismissRequest = onDismiss,
+        modifier = modifier,
+    )
+}
+
+@Composable
+fun MonsterDetailRankFilter(
+    selectedRank: Rank?,
+    availableRanks: List<Rank>,
+    modifier: Modifier = Modifier,
+    onChangeRank: (rank: Rank) -> Unit = {},
+) {
+    if (availableRanks.isEmpty() || selectedRank == null) return
+
+    var typeMenuExpanded by remember { mutableStateOf(false) }
+
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = Dimension.Padding.medium),
+    ) {
+        Box {
+            FilterChip(
+                selected = true,
+                onClick = { typeMenuExpanded = true },
+                label = {
+                    Text(
+                        text = stringResource(
+                            when (selectedRank) {
+                                Rank.UNRANKED -> R.string.monster_reward_filter_rank_unranked
+                                Rank.LOW -> R.string.monster_reward_filter_rank_low
+                                Rank.HIGH -> R.string.monster_reward_filter_rank_high
+                                Rank.G -> R.string.monster_reward_filter_rank_g
+                                Rank.TREASURE -> R.string.monster_reward_filter_rank_treasure
+                                Rank.TRAINING -> R.string.monster_reward_filter_rank_training
+                            }
+                        )
                     )
-                }
-
-                MonsterDetailTab.DAMAGE -> {
-                    MonsterDetailDamageContent(
-                        damage = uiState.monster.damageStats ?: emptyList(),
-                        ailments = uiState.monster.ailmentStats ?: emptyList(),
+                },
+                trailingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.ArrowDropDown,
+                        contentDescription = null,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
-                }
+                },
+            )
 
-                MonsterDetailTab.LOW_RANK -> {
-                    uiState.monster.rewards?.get(Rank.LOW).let { rewards ->
-                        if (rewards?.isEmpty() ?: true) {
-                            EmptyContent()
-                        } else {
-                            MonsterDetailRankContent(
-                                rewards = rewards,
-                                onItemClick = onItemClick,
+            DropdownMenu(
+                expanded = typeMenuExpanded,
+                onDismissRequest = { typeMenuExpanded = false }
+            ) {
+                availableRanks.forEach { rank ->
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                text = stringResource(
+                                    when (rank) {
+                                        Rank.UNRANKED -> R.string.monster_reward_filter_rank_unranked
+                                        Rank.LOW -> R.string.monster_reward_filter_rank_low
+                                        Rank.HIGH -> R.string.monster_reward_filter_rank_high
+                                        Rank.G -> R.string.monster_reward_filter_rank_g
+                                        Rank.TREASURE -> R.string.monster_reward_filter_rank_treasure
+                                        Rank.TRAINING -> R.string.monster_reward_filter_rank_training
+                                    }
+                                )
                             )
+                        },
+                        onClick = {
+                            onChangeRank(rank)
+                            typeMenuExpanded = false
                         }
-                    }
-                }
-
-                MonsterDetailTab.HIGH_RANK -> {
-                    uiState.monster.rewards?.get(Rank.HIGH).let { rewards ->
-                        if (rewards?.isEmpty() ?: true) {
-                            EmptyContent()
-                        } else {
-                            MonsterDetailRankContent(
-                                rewards = rewards,
-                                onItemClick = onItemClick,
-                            )
-                        }
-                    }
-                }
-
-                MonsterDetailTab.G_RANK -> {
-                    uiState.monster.rewards?.get(Rank.G).let { rewards ->
-                        if (rewards?.isEmpty() ?: true) {
-                            EmptyContent()
-                        } else {
-                            MonsterDetailRankContent(
-                                rewards = rewards,
-                                onItemClick = onItemClick,
-                            )
-                        }
-                    }
-                }
-
-                MonsterDetailTab.QUEST -> {
-                    uiState.monster.quests.let { quests ->
-                        if (quests?.isEmpty() ?: true) {
-                            EmptyContent()
-                        } else {
-                            MonsterDetailQuestContent(
-                                quests = quests,
-                                onQuestClick = onQuestClick,
-                            )
-                        }
-                    }
+                    )
                 }
             }
         }
@@ -157,19 +327,19 @@ private class MonsterDetailScreenPreviewParameter : PreviewParameterProvider<Mon
 
     override val values: Sequence<MonsterDetailState> = sequenceOf(
         MonsterDetailState(
-            initialTab = MonsterDetailTab.SUMMARY,
+            page = MonsterDetailPage.SUMMARY,
             monster = PreviewMonsterData.monster,
         ),
         MonsterDetailState(
-            initialTab = MonsterDetailTab.DAMAGE,
+            page = MonsterDetailPage.DAMAGE,
             monster = PreviewMonsterData.monster,
         ),
         MonsterDetailState(
-            initialTab = MonsterDetailTab.LOW_RANK,
+            page = MonsterDetailPage.REWARD,
             monster = PreviewMonsterData.monster,
         ),
         MonsterDetailState(
-            initialTab = MonsterDetailTab.QUEST,
+            page = MonsterDetailPage.QUEST,
             monster = PreviewMonsterData.monster,
         ),
     )

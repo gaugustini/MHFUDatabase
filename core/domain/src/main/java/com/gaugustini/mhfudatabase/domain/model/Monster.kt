@@ -1,7 +1,6 @@
 package com.gaugustini.mhfudatabase.domain.model
 
 import com.gaugustini.mhfudatabase.domain.enums.MonsterAilment
-import com.gaugustini.mhfudatabase.domain.enums.MonsterState
 import com.gaugustini.mhfudatabase.domain.enums.MonsterType
 import com.gaugustini.mhfudatabase.domain.enums.Rank
 
@@ -35,7 +34,7 @@ data class Monster(
     val sizeLargestMax: Int?,
     val damageStats: List<MonsterDamageStats>?,
     val ailmentStats: List<MonsterAilmentStats>?,
-    val itemEffectiveness: List<MonsterItemEffectiveness>?,
+    val itemEffectiveness: MonsterItemEffectiveness?,
     val rewards: Map<Rank, List<MonsterReward>>?,
     val quests: List<Quest>?,
 )
@@ -92,23 +91,35 @@ data class MonsterAilmentStats(
  * Represents the effectiveness of certain items on a monster in different states.
  *
  * @property monsterId The unique identifier of the monster.
- * @property monsterState The state of the monster (e.g., Normal, Enraged).
- * @property canUsePitfallTrap Whether a pitfall trap can be used.
- * @property canUseShockTrap Whether a shock trap can be used.
- * @property canUseFlashBomb Whether a flash bomb can be used.
- * @property canUseSonicBomb Whether a sonic bomb can be used.
+ * @property flashBomb Whether a flash bomb can be used.
+ * @property timeFlashBomb The time the flash bomb lasts.
+ * @property sonicBombNormal Whether a sonic bomb can be used.
+ * @property sonicBombEnraged Whether a sonic bomb can be used in enraged state.
+ * @property shockTrap Whether a shock trap can be used.
+ * @property timeShockTrap The time the shock trap lasts.
+ * @property pitfallTrapNormal Whether a pitfall trap can be used.
+ * @property pitfallTrapEnraged Whether a pitfall trap can be used in enraged state.
+ * @property timePitfallTrapUnseen The time the pitfall trap lasts in unseen state.
+ * @property timePitfallTrapNormal The time the pitfall trap lasts.
+ * @property timePitfallTrapEnraged The time the pitfall trap lasts in enraged state.
+ * @property canUseMeat Whether a meat can be used.
  * @property canUseDungBomb Whether a dung bomb can be used.
- * @property canUseMeat Whether meat can be used.
  */
 data class MonsterItemEffectiveness(
     val monsterId: Int,
-    val monsterState: MonsterState,
-    val canUsePitfallTrap: Boolean,
-    val canUseShockTrap: Boolean,
-    val canUseFlashBomb: Boolean,
-    val canUseSonicBomb: Boolean,
-    val canUseDungBomb: Boolean,
+    val flashBomb: Boolean,
+    val timeFlashBomb: Int?,
+    val sonicBombNormal: Boolean,
+    val sonicBombEnraged: Boolean,
+    val shockTrap: Boolean,
+    val timeShockTrap: Int?,
+    val pitfallTrapNormal: Boolean,
+    val pitfallTrapEnraged: Boolean,
+    val timePitfallTrapUnseen: Int?,
+    val timePitfallTrapNormal: Int?,
+    val timePitfallTrapEnraged: Int?,
     val canUseMeat: Boolean,
+    val canUseDungBomb: Boolean,
 )
 
 /**
@@ -117,13 +128,13 @@ data class MonsterItemEffectiveness(
  * @property item The item rewarded.
  * @property condition The condition required to receive the reward (e.g., "Break Wings").
  * @property rank The rank of the monster required to receive the reward.
- * @property stackSize The number of items in a stack reward.
+ * @property quantity The quantity of the item rewarded.
  * @property percentage The percentage chance of receiving the reward.
  */
 data class MonsterReward(
     val item: Item,
     val condition: String,
     val rank: Rank,
-    val stackSize: Int,
+    val quantity: Int,
     val percentage: Int?,
 )

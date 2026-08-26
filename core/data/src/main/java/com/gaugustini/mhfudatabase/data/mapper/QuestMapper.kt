@@ -7,6 +7,7 @@ import com.gaugustini.mhfudatabase.data.database.relation.QuestRewardWithItem
 import com.gaugustini.mhfudatabase.data.database.relation.QuestSupplyWithItem
 import com.gaugustini.mhfudatabase.data.database.relation.QuestWithText
 import com.gaugustini.mhfudatabase.domain.enums.HubType
+import com.gaugustini.mhfudatabase.domain.enums.LocationDaytime
 import com.gaugustini.mhfudatabase.domain.enums.QuestGoal
 import com.gaugustini.mhfudatabase.domain.enums.QuestGroup
 import com.gaugustini.mhfudatabase.domain.enums.QuestType
@@ -41,6 +42,7 @@ object QuestMapper {
             fee = quest.quest.fee,
             timeLimit = quest.quest.timeLimit,
             location = location?.let { LocationMapper.toModel(it) },
+            daytime = quest.quest.daytime?.let { LocationDaytime.fromString(it) },
             monsters = monsters?.map { MonsterMapper.toModel(it) },
             rewards = rewards?.map { toQuestReward(it) },
             supplies = supplies?.map { toQuestSupply(it) },

@@ -13,6 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.gaugustini.mhfudatabase.ui.features.about.AboutRoute
 import com.gaugustini.mhfudatabase.ui.features.armor.detail.ArmorDetailRoute
+import com.gaugustini.mhfudatabase.ui.features.armor.detail.ArmorSetDetailRoute
 import com.gaugustini.mhfudatabase.ui.features.armor.list.ArmorSetListRoute
 import com.gaugustini.mhfudatabase.ui.features.decoration.detail.DecorationDetailRoute
 import com.gaugustini.mhfudatabase.ui.features.decoration.list.DecorationListRoute
@@ -96,6 +97,7 @@ fun NavigationGraph(
                 openDrawer = openDrawer,
                 openSearch = navigationActions.navigateToSearch,
                 onArmorClick = navigationActions.navigateToArmorDetail,
+                onArmorSetClick = navigationActions.navigateToArmorSetDetail,
             )
         }
         composable(Destinations.DECORATION_LIST) {
@@ -192,6 +194,20 @@ fun NavigationGraph(
             ArmorDetailRoute(
                 navigateBack = navigationActions.navigateBack,
                 openSearch = navigationActions.navigateToSearch,
+                onArmorSetClick = navigationActions.navigateToArmorSetDetail,
+                onSkillClick = navigationActions.navigateToSkillTreeDetail,
+                onItemClick = navigationActions.navigateToItemDetail,
+            )
+        }
+        composable(
+            route = Destinations.ARMOR_SET_DETAIL,
+            arguments = listOf(
+                navArgument("armorSetId") { type = NavType.IntType },
+            ),
+        ) {
+            ArmorSetDetailRoute(
+                navigateBack = navigationActions.navigateBack,
+                openSearch = navigationActions.navigateToSearch,
                 onArmorClick = navigationActions.navigateToArmorDetail,
                 onSkillClick = navigationActions.navigateToSkillTreeDetail,
                 onItemClick = navigationActions.navigateToItemDetail,
@@ -238,6 +254,7 @@ fun NavigationGraph(
                 navigateBack = navigationActions.navigateBack,
                 openSearch = navigationActions.navigateToSearch,
                 onItemClick = navigationActions.navigateToItemDetail,
+                onQuestClick = navigationActions.navigateToQuestDetail,
             )
         }
         composable(

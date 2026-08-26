@@ -23,4 +23,17 @@ data class SearchResults(
     val skillTrees: List<SkillTree> = emptyList(),
     val skills: List<Skill> = emptyList(),
     val weapons: List<Weapon> = emptyList(),
-)
+) {
+
+    val isEmpty: Boolean
+        get() = armors.isEmpty() &&
+                decorations.isEmpty() &&
+                items.isEmpty() &&
+                locations.isEmpty() &&
+                monsters.isEmpty() &&
+                quests.isEmpty() &&
+                skillTrees.isEmpty() &&
+                skills.isEmpty() &&
+                weapons.isEmpty()
+
+}

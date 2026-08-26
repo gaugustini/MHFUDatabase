@@ -42,10 +42,11 @@ interface ItemDao {
             ON item.id = item_text.item_id
             AND item_text.language = :language
         WHERE
-            (:name IS NULL OR (item_text.name LIKE '%' || :name || '%' OR item_text.full_name LIKE '%' || :name || '%'))
+            item.id != 0
+            AND (:name IS NULL OR (item_text.name LIKE '%' || :name || '%' OR item_text.full_name LIKE '%' || :name || '%'))
             AND (:hasRarityFilter = 0 OR item.rarity IN (:rarity))
-            AND (:hasIconFilter = 0 OR item.icon_type IN (:icons)
-            AND (:hasIconColorFilter = 0 OR item.icon_color IN (:iconColors)))
+            AND (:hasIconFilter = 0 OR item.icon_type IN (:icons))
+            AND (:hasIconColorFilter = 0 OR item.icon_color IN (:iconColors))
         """
     )
     suspend fun getItemList(
@@ -94,8 +95,8 @@ interface ItemDao {
 
     @Query(
         """
-        SELECT 
-            li.location_id AS li_location_id, li.item_id AS li_item_id, li.rank AS li_rank, li.gather_type AS li_gather_type, li.area AS li_area,
+        SELECT
+            li.location_id AS li_location_id, li.rank AS li_rank, li.area AS li_area, li.node AS li_node, li.type AS li_type, li.min AS li_min, li.max AS li_max, li.item_id AS li_item_id, li.percentage AS li_percentage,
             location.*,
             location_text.*
         FROM location_item li
@@ -105,7 +106,7 @@ interface ItemDao {
             ON location.id = location_text.location_id
             AND location_text.language = :language
         WHERE li.item_id = :itemId
-        ORDER BY location_text.name ASC, li.area ASC, li.gather_type ASC
+        ORDER BY location_text.name ASC, li.rank ASC, li.area ASC, li.node ASC, li.percentage DESC
         """
     )
     suspend fun getLocationSources(itemId: Int, language: String): List<LocationItemWithLocation>
@@ -113,8 +114,8 @@ interface ItemDao {
     @Query(
         """
         SELECT
-            mr.monster_id AS mr_monster_id, mr.reward_condition_id AS mr_reward_condition_id, mr.item_id AS mr_item_id, mr.rank AS mr_rank, mr.stack_size AS mr_stack_size, mr.percentage AS mr_percentage,
-            rctxt.reward_condition_id AS rctxt_reward_condition_id, rctxt.language AS rctxt_language, rctxt.name AS rctxt_name,
+            mr.monster_id AS mr_monster_id, mr.reward_condition_id AS mr_reward_condition_id, mr.item_id AS mr_item_id, mr.rank AS mr_rank, mr.quantity AS mr_quantity, mr.percentage AS mr_percentage,
+            rctxt.reward_condition_id AS rctxt_reward_condition_id, rctxt.language AS rctxt_language, rctxt.name AS rctxt_name, rctxt.description AS rctxt_description,
             monster.*,
             monster_text.*
         FROM monster_reward mr
@@ -136,7 +137,7 @@ interface ItemDao {
         """
         SELECT
             qr.quest_id AS qr_quest_id, qr.reward_condition_id AS qr_reward_condition_id, qr.item_id AS qr_item_id, qr.quantity AS qr_quantity, qr.percentage AS qr_percentage,
-            rctxt.reward_condition_id AS rctxt_reward_condition_id, rctxt.language AS rctxt_language, rctxt.name AS rctxt_name,
+            rctxt.reward_condition_id AS rctxt_reward_condition_id, rctxt.language AS rctxt_language, rctxt.name AS rctxt_name, rctxt.description AS rctxt_description,
             quest.*,
             quest_text.*
         FROM quest_reward qr
@@ -187,7 +188,7 @@ interface ItemDao {
 
     @Query(
         """
-        SELECT 
+        SELECT DISTINCT
             armor.*,
             armor_text.*,
             armor_recipe.quantity
@@ -205,7 +206,7 @@ interface ItemDao {
 
     @Query(
         """
-        SELECT
+        SELECT DISTINCT
             decoration.id AS dec_id, decoration.shop_order AS dec_shop_order, decoration.required_slots AS dec_required_slots,
             item.*,
             item_text.*,
@@ -244,7 +245,7 @@ interface ItemDao {
 
     @Query(
         """
-        SELECT
+        SELECT DISTINCT
             weapon.*,
             weapon_text.*,
             weapon_recipe.quantity

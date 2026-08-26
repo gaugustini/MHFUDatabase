@@ -1,15 +1,11 @@
 package com.gaugustini.mhfudatabase.ui.features.userset.components
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.model.UserEquipmentSet
@@ -26,35 +22,22 @@ fun UserSetListItem(
     modifier: Modifier = Modifier,
     onEquipmentSetClick: (setId: Int) -> Unit = {},
 ) {
-    Card(
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainer,
-        ),
-        modifier = modifier
-            .padding(
-                start = Dimension.Padding.large,
-                end = Dimension.Padding.large,
-                top = Dimension.Padding.medium,
+    ListItemLayout(
+        leadingContent = {
+            ArmorSetIcon(
+                rarity = 0,
+                modifier = Modifier.size(Dimension.Size.large)
             )
-            .clickable { onEquipmentSetClick(equipmentSet.id) }
-    ) {
-        ListItemLayout(
-            leadingContent = {
-                ArmorSetIcon(
-                    rarity = 0,
-                    modifier = Modifier.size(Dimension.Size.large)
-                )
-            },
-            headlineContent = {
-                Text(
-                    text = equipmentSet.name.ifBlank { stringResource(R.string.user_set_new) },
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-            },
-            backgroundColor = Color.Transparent,
-        )
-    }
+        },
+        headlineContent = {
+            Text(
+                text = equipmentSet.name.ifBlank { stringResource(R.string.user_set_new) },
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+        },
+        modifier = modifier.clickable { onEquipmentSetClick(equipmentSet.id) }
+    )
 }
 
 @DevicePreviews

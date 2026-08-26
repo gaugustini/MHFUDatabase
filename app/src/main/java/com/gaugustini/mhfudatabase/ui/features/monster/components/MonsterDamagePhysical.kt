@@ -2,6 +2,7 @@ package com.gaugustini.mhfudatabase.ui.features.monster.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,7 +10,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Text
+import androidx.compose.material3.TooltipAnchorPosition
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
+import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,7 +27,9 @@ import com.gaugustini.mhfudatabase.domain.model.MonsterDamageStats
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
+import com.gaugustini.mhfudatabase.util.ForEachWithDivider
 import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
+import kotlinx.coroutines.launch
 
 @Composable
 fun MonsterDamagePhysical(
@@ -33,7 +41,7 @@ fun MonsterDamagePhysical(
     ) {
         DamagePhysicalHeader()
 
-        damage.forEach { hitzone ->
+        damage.ForEachWithDivider { hitzone ->
             DamagePhysicalListItem(
                 hitzoneName = hitzone.name,
                 cutDamage = hitzone.cut,
@@ -48,6 +56,13 @@ fun MonsterDamagePhysical(
 fun DamagePhysicalHeader(
     modifier: Modifier = Modifier,
 ) {
+    val scope = androidx.compose.runtime.rememberCoroutineScope()
+    val damageTypes = listOf(
+        R.drawable.ic_weapon_great_sword to R.string.monster_cut_damage,
+        R.drawable.ic_weapon_hammer to R.string.monster_impact_damage,
+        R.drawable.ic_item_shell to R.string.monster_shot_damage
+    )
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
@@ -61,35 +76,39 @@ fun DamagePhysicalHeader(
             color = MaterialTheme.colorScheme.onSecondaryContainer,
             modifier = Modifier.weight(5f)
         )
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.weight(1f)
-        ) {
-            Image(
-                painter = painterResource(R.drawable.ic_weapon_great_sword),
-                contentDescription = null,
-                modifier = Modifier.size(Dimension.Size.extraSmall)
-            )
-        }
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.weight(1f)
-        ) {
-            Image(
-                painter = painterResource(R.drawable.ic_weapon_hammer),
-                contentDescription = null,
-                modifier = Modifier.size(Dimension.Size.extraSmall)
-            )
-        }
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.weight(1f)
-        ) {
-            Image(
-                painter = painterResource(R.drawable.ic_item_shell),
-                contentDescription = null,
-                modifier = Modifier.size(Dimension.Size.extraSmall)
-            )
+
+        damageTypes.forEach { (iconRes, stringRes) ->
+            val tooltipState = rememberTooltipState()
+
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .weight(1f)
+                    .clickable(
+                        interactionSource = null,
+                        indication = null
+                    ) {
+                        scope.launch { tooltipState.show() }
+                    }
+            ) {
+                TooltipBox(
+                    positionProvider = TooltipDefaults.rememberTooltipPositionProvider(
+                        TooltipAnchorPosition.Above
+                    ),
+                    tooltip = {
+                        PlainTooltip {
+                            Text(stringResource(stringRes))
+                        }
+                    },
+                    state = tooltipState
+                ) {
+                    Image(
+                        painter = painterResource(iconRes),
+                        contentDescription = null,
+                        modifier = Modifier.size(Dimension.Size.extraSmall)
+                    )
+                }
+            }
         }
     }
 }
@@ -102,6 +121,12 @@ fun DamagePhysicalListItem(
     shotDamage: Int,
     modifier: Modifier = Modifier,
 ) {
+    val values = listOf(
+        cutDamage,
+        impactDamage,
+        shotDamage
+    )
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
@@ -109,7 +134,7 @@ fun DamagePhysicalListItem(
             .background(MaterialTheme.colorScheme.surface)
             .padding(
                 horizontal = Dimension.Padding.large,
-                vertical = Dimension.Padding.small
+                vertical = Dimension.Padding.medium
             )
     ) {
         Text(
@@ -118,27 +143,16 @@ fun DamagePhysicalListItem(
             color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.weight(5f)
         )
-        Text(
-            text = cutDamage.toString(),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.weight(1f)
-        )
-        Text(
-            text = impactDamage.toString(),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.weight(1f)
-        )
-        Text(
-            text = shotDamage.toString(),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.weight(1f)
-        )
+
+        values.forEach { value ->
+            Text(
+                text = value.toString(),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.weight(1f)
+            )
+        }
     }
 }
 

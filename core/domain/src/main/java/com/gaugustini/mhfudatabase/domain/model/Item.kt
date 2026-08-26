@@ -52,14 +52,22 @@ sealed interface ItemSource
  *
  * @property location The location where the item can be obtained.
  * @property rank The rank where it is possible to obtain the item.
- * @property type The gathering type to obtain the item (e.g., Gather, Mining,...).
  * @property area The area number of the location.
+ * @property node The node number in the area.
+ * @property type The gathering type to obtain the item (e.g., Gather, Mining,...).
+ * @property min The minimum number of times the node can be gathered.
+ * @property max The maximum number of times the node can be gathered.
+ * @property percentage The percentage chance of obtaining the item.
  */
 data class GatheringSource(
     val location: Location,
     val rank: Rank,
-    val type: GatherType,
     val area: Int,
+    val node: Int,
+    val type: GatherType,
+    val min: Int,
+    val max: Int,
+    val percentage: Int,
 ) : ItemSource
 
 /**
@@ -68,15 +76,15 @@ data class GatheringSource(
  * @property monster The monster that drops the item.
  * @property condition The condition required to receive the reward (e.g., "Break Wings").
  * @property rank The rank of the monster required to receive the reward.
- * @property stackSize The number of items in a stack reward.
+ * @property quantity The quantity of the item rewarded.
  * @property percentage The percentage chance of receiving the reward.
  */
 data class MonsterSource(
     val monster: Monster,
     val condition: String,
     val rank: Rank,
-    val stackSize: Int,
-    val percentage: Int?,
+    val quantity: Int,
+    val percentage: Int,
 ) : ItemSource
 
 /**

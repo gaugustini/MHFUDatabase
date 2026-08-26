@@ -7,18 +7,22 @@
   <a href="https://github.com/gaugustini"><img alt="Profile" src="https://img.shields.io/badge/-gaugustini-blue?logo=github"/></a>
 </p>
 
-**MHFU Database** is an Android reference app for **Monster Hunter Freedom Unite (MHFU)**.
-Easily browse detailed information on armors, weapons, items, skills, quests, and more — all available offline for fast access.
+**MHFU Database** is an offline Android reference tool for **Monster Hunter Freedom Unite (MHFU)**.
+Access a complete database of armors, weapons, items, skills, quests, and monsters — all with
+detailed stats, drop rates, and descriptions.
 
 This project is inspired by the apps developed by [Gathering Hall Studios](https://github.com/gatheringhallstudios), with most of the data sourced from [MHFU-DB](https://github.com/Kolyn090/mhfu-db) by Kolyn090.
 
 ## Features
 
-Access game data efficiently with fast navigation, offline support, and clear cross-references between related entities.
+Access game data with fast navigation, offline support, and clear cross-references between related
+entities.
 
-- **Comprehensive database** – Detailed info on armors, weapons, items, skills, quests, and locations.
-- **Advanced search & filters** – Quickly find items or equipment by name or category.
-- **Smart cross-references** – Navigate relationships between materials, monsters, weapons, and quests.
+- **Comprehensive Game data**  – Detailed info on weapons, armors, items, skills, quests, gathering
+  points, and monster drops.
+- **Search & filters** – Quickly find items or equipment by name or category.
+- **Smart cross-references** – Navigate the relationships between materials, monsters, weapons, and
+  quests.
 - **Offline access** – All content is stored locally for reliable use without an internet connection.
 
 ## Download
@@ -71,7 +75,6 @@ Whether you want to improve features, fix bugs, enhance documentation, or share 
 You can start by:
 - Opening an issue to report a bug or suggest an improvement
 - Submitting a pull request with your changes
-- Sharing your ideas and suggestions in the [Discussions](../../discussions) section
 
 ### How to contribute
 

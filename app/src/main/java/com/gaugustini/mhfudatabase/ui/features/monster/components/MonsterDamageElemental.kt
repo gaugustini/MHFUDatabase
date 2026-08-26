@@ -1,6 +1,7 @@
 package com.gaugustini.mhfudatabase.ui.features.monster.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,7 +9,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Text
+import androidx.compose.material3.TooltipAnchorPosition
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
+import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,7 +27,9 @@ import com.gaugustini.mhfudatabase.ui.components.icons.ElementIcon
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
+import com.gaugustini.mhfudatabase.util.ForEachWithDivider
 import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
+import kotlinx.coroutines.launch
 
 @Composable
 fun MonsterDamageElemental(
@@ -33,7 +41,7 @@ fun MonsterDamageElemental(
     ) {
         DamageElementalHeader()
 
-        damage.forEach { hitzone ->
+        damage.ForEachWithDivider { hitzone ->
             DamageElementalListItem(
                 hitzoneName = hitzone.name,
                 fireDamage = hitzone.fire,
@@ -50,6 +58,15 @@ fun MonsterDamageElemental(
 fun DamageElementalHeader(
     modifier: Modifier = Modifier,
 ) {
+    val scope = androidx.compose.runtime.rememberCoroutineScope()
+    val elements = listOf(
+        WeaponElement.FIRE to R.string.monster_fire_damage,
+        WeaponElement.WATER to R.string.monster_water_damage,
+        WeaponElement.THUNDER to R.string.monster_thunder_damage,
+        WeaponElement.ICE to R.string.monster_ice_damage,
+        WeaponElement.DRAGON to R.string.monster_dragon_damage
+    )
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
@@ -63,50 +80,38 @@ fun DamageElementalHeader(
             color = MaterialTheme.colorScheme.onSecondaryContainer,
             modifier = Modifier.weight(5f)
         )
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.weight(1f)
-        ) {
-            ElementIcon(
-                element = WeaponElement.FIRE,
-                modifier = Modifier.size(Dimension.Size.extraSmall)
-            )
-        }
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.weight(1f)
-        ) {
-            ElementIcon(
-                element = WeaponElement.WATER,
-                modifier = Modifier.size(Dimension.Size.extraSmall)
-            )
-        }
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.weight(1f)
-        ) {
-            ElementIcon(
-                element = WeaponElement.THUNDER,
-                modifier = Modifier.size(Dimension.Size.extraSmall)
-            )
-        }
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.weight(1f)
-        ) {
-            ElementIcon(
-                element = WeaponElement.ICE,
-                modifier = Modifier.size(Dimension.Size.extraSmall)
-            )
-        }
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.weight(1f)
-        ) {
-            ElementIcon(
-                element = WeaponElement.DRAGON,
-                modifier = Modifier.size(Dimension.Size.extraSmall)
-            )
+
+        elements.forEach { (element, stringRes) ->
+            val tooltipState = rememberTooltipState()
+
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .weight(1f)
+                    .clickable(
+                        interactionSource = null,
+                        indication = null
+                    ) {
+                        scope.launch { tooltipState.show() }
+                    }
+            ) {
+                TooltipBox(
+                    positionProvider = TooltipDefaults.rememberTooltipPositionProvider(
+                        TooltipAnchorPosition.Above
+                    ),
+                    tooltip = {
+                        PlainTooltip {
+                            Text(stringResource(stringRes))
+                        }
+                    },
+                    state = tooltipState
+                ) {
+                    ElementIcon(
+                        element = element,
+                        modifier = Modifier.size(Dimension.Size.extraSmall)
+                    )
+                }
+            }
         }
     }
 }
@@ -121,6 +126,14 @@ fun DamageElementalListItem(
     dragonDamage: Int,
     modifier: Modifier = Modifier,
 ) {
+    val values = listOf(
+        fireDamage,
+        waterDamage,
+        thunderDamage,
+        iceDamage,
+        dragonDamage
+    )
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
@@ -128,7 +141,7 @@ fun DamageElementalListItem(
             .background(MaterialTheme.colorScheme.surface)
             .padding(
                 horizontal = Dimension.Padding.large,
-                vertical = Dimension.Padding.small
+                vertical = Dimension.Padding.medium
             )
     ) {
         Text(
@@ -137,41 +150,16 @@ fun DamageElementalListItem(
             color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.weight(5f)
         )
-        Text(
-            text = if (fireDamage == 0) "-" else fireDamage.toString(),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.weight(1f)
-        )
-        Text(
-            text = if (waterDamage == 0) "-" else waterDamage.toString(),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.weight(1f)
-        )
-        Text(
-            text = if (thunderDamage == 0) "-" else thunderDamage.toString(),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.weight(1f)
-        )
-        Text(
-            text = if (iceDamage == 0) "-" else iceDamage.toString(),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.weight(1f)
-        )
-        Text(
-            text = if (dragonDamage == 0) "-" else dragonDamage.toString(),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.weight(1f)
-        )
+
+        values.forEach { value ->
+            Text(
+                text = if (value == 0) "-" else value.toString(),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.weight(1f)
+            )
+        }
     }
 }
 

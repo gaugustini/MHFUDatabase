@@ -1,19 +1,34 @@
 package com.gaugustini.mhfudatabase.ui.features.userset.detail
 
-import androidx.annotation.StringRes
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ListAlt
+import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarDefaults
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -21,7 +36,6 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
-import com.gaugustini.mhfudatabase.ui.components.TabbedLayout
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.features.userset.components.ArmorSelection
 import com.gaugustini.mhfudatabase.ui.features.userset.components.DecorationSelection
@@ -33,10 +47,11 @@ import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
 import com.gaugustini.mhfudatabase.util.preview.PreviewUserEquipmentSet
+import kotlin.math.roundToInt
 
-enum class UserSetDetailTab(@get:StringRes val title: Int) {
-    EQUIPMENT(R.string.tab_user_set_detail_equipment),
-    SUMMARY(R.string.tab_user_set_detail_summary);
+enum class UserSetDetailPage {
+    EQUIPMENT,
+    SUMMARY;
 }
 
 @Composable
@@ -74,24 +89,19 @@ fun UserSetDetailScreen(
     onItemClick: (itemId: Int) -> Unit = {},
     onSkillClick: (skillTreeId: Int) -> Unit = {},
 ) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     var showRenameDialog by rememberSaveable { mutableStateOf(false) }
     var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
 
     if (!uiState.openEquipmentSelection && !uiState.openSkillSelection) {
-        val pagerState = rememberPagerState(
-            initialPage = uiState.initialTab.ordinal,
-            pageCount = { UserSetDetailTab.entries.size },
-        )
-
-        TabbedLayout(
-            pagerState = pagerState,
-            tabTitles = UserSetDetailTab.entries.map { stringResource(it.title) },
+        Scaffold(
             topBar = {
                 TopBar(
                     title = uiState.equipmentSet.name.ifBlank { stringResource(R.string.user_set_new) },
                     navigationType = NavigationType.BACK,
                     navigation = navigateBack,
                     openSearch = openSearch,
+                    scrollBehavior = scrollBehavior,
                     actions = {
                         IconButton(
                             onClick = { showRenameDialog = true },
@@ -114,9 +124,48 @@ fun UserSetDetailScreen(
                     }
                 )
             },
-        ) { tabIndex ->
-            when (UserSetDetailTab.entries[tabIndex]) {
-                UserSetDetailTab.EQUIPMENT -> {
+            bottomBar = {
+                ScrollingBottomBar(
+                    scrollBehavior = scrollBehavior,
+                ) {
+                    NavigationBarItem(
+                        selected = uiState.page == UserSetDetailPage.EQUIPMENT,
+                        onClick = { onEvent(UserSetEvent.ChangePage(UserSetDetailPage.EQUIPMENT)) },
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Default.Build,
+                                contentDescription = null,
+                                modifier = Modifier.size(Dimension.Size.extraSmall)
+                            )
+                        },
+                        label = {
+                            Text(
+                                text = stringResource(R.string.user_set_equipment),
+                            )
+                        }
+                    )
+                    NavigationBarItem(
+                        selected = uiState.page == UserSetDetailPage.SUMMARY,
+                        onClick = { onEvent(UserSetEvent.ChangePage(UserSetDetailPage.SUMMARY)) },
+                        icon = {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ListAlt,
+                                contentDescription = null,
+                                modifier = Modifier.size(Dimension.Size.extraSmall)
+                            )
+                        },
+                        label = {
+                            Text(
+                                text = stringResource(R.string.user_set_summary),
+                            )
+                        }
+                    )
+                }
+            },
+            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        ) { innerPadding ->
+            when (uiState.page) {
+                UserSetDetailPage.EQUIPMENT -> {
                     UserSetDetailEquipmentContent(
                         equipmentSet = uiState.equipmentSet,
                         openWeaponSelection = {
@@ -137,16 +186,18 @@ fun UserSetDetailScreen(
                         onRemoveDecoration = { decorationId, equipmentType ->
                             onEvent(UserSetEvent.RemoveDecoration(decorationId, equipmentType))
                         },
+                        modifier = Modifier.padding(innerPadding)
                     )
                 }
 
-                UserSetDetailTab.SUMMARY -> {
+                UserSetDetailPage.SUMMARY -> {
                     UserSetDetailSummaryContent(
                         equipmentSet = uiState.equipmentSet,
                         onArmorClick = onArmorClick,
                         onDecorationClick = onDecorationClick,
                         onItemClick = onItemClick,
                         onSkillClick = onSkillClick,
+                        modifier = Modifier.padding(innerPadding)
                     )
                 }
             }
@@ -236,6 +287,36 @@ fun UserSetDetailScreen(
     }
 }
 
+@Composable
+fun ScrollingBottomBar(
+    scrollBehavior: TopAppBarScrollBehavior,
+    modifier: Modifier = Modifier,
+    content: @Composable RowScope.() -> Unit
+) {
+    Layout(
+        modifier = modifier.background(MaterialTheme.colorScheme.surface),
+        measurePolicy = { measurables, constraints ->
+            val placeable = measurables.first().measure(constraints.copy(minHeight = 0))
+            val totalHeight = placeable.height
+
+            val currentHeight =
+                (totalHeight + (scrollBehavior.state.collapsedFraction * -totalHeight)).roundToInt()
+                    .coerceAtLeast(0)
+
+            layout(constraints.maxWidth, currentHeight) {
+                placeable.place(0, (scrollBehavior.state.collapsedFraction * totalHeight).roundToInt())
+            }
+        },
+        content = {
+            NavigationBar(
+                containerColor = Color.Transparent,
+                windowInsets = NavigationBarDefaults.windowInsets,
+                content = content
+            )
+        }
+    )
+}
+
 @DevicePreviews
 @Composable
 fun UserSetDetailScreenPreview(
@@ -250,11 +331,11 @@ private class UserSetDetailScreenPreviewParamProvider : PreviewParameterProvider
 
     override val values: Sequence<UserSetDetailState> = sequenceOf(
         UserSetDetailState(
-            initialTab = UserSetDetailTab.EQUIPMENT,
+            page = UserSetDetailPage.EQUIPMENT,
             equipmentSet = PreviewUserEquipmentSet.userSet,
         ),
         UserSetDetailState(
-            initialTab = UserSetDetailTab.SUMMARY,
+            page = UserSetDetailPage.SUMMARY,
             equipmentSet = PreviewUserEquipmentSet.userSet,
         ),
     )

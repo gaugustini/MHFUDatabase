@@ -1,18 +1,26 @@
 package com.gaugustini.mhfudatabase.ui.features.location.detail
 
+import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.GatherType
 import com.gaugustini.mhfudatabase.domain.model.GatheringPoint
+import com.gaugustini.mhfudatabase.ui.components.AppHDivider
 import com.gaugustini.mhfudatabase.ui.components.SectionHeader
 import com.gaugustini.mhfudatabase.ui.features.location.components.GatheringPointListItem
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
@@ -25,54 +33,84 @@ fun LocationDetailRankContent(
     gatheringPoints: List<GatheringPoint>,
     modifier: Modifier = Modifier,
     onItemClick: (itemId: Int) -> Unit = {},
+    onChangePage: (LocationDetailPage) -> Unit = {},
 ) {
-    val itemsPerArea = gatheringPoints.groupBy { it.area }
+    val itemsPerNode = gatheringPoints.groupBy { it.node }
+
+    BackHandler {
+        onChangePage(LocationDetailPage.SUMMARY)
+    }
 
     LazyColumn(
-        modifier = modifier
+        contentPadding = PaddingValues(Dimension.Padding.medium),
+        modifier = modifier.fillMaxSize()
     ) {
-        itemsPerArea.forEach { (area, items) ->
-            stickyHeader {
+        itemsPerNode.forEach { (node, items) ->
+            val firstItem = items.first()
+
+            val nodeType = when (firstItem.type) {
+                GatherType.COLLECT -> R.string.location_gather_collect
+                GatherType.MINE -> R.string.location_gather_mine
+                GatherType.BUG -> R.string.location_gather_bug
+                GatherType.FISH -> R.string.location_gather_fish
+            }
+
+            val nodeMinMax = when (firstItem.min) {
+                -1 -> "∞"
+                firstItem.max -> "${firstItem.min}"
+                else -> "${firstItem.min}~${firstItem.max}"
+            }
+
+            item {
                 SectionHeader(
-                    title = when (area) {
-                        -1 -> stringResource(R.string.location_secret_area)
-                        0 -> stringResource(R.string.location_base_camp)
-                        else -> stringResource(R.string.location_area, area)
-                    },
+                    title = stringResource(
+                        R.string.location_node,
+                        node,
+                        stringResource(nodeType),
+                        nodeMinMax
+                    ),
+                    modifier = Modifier
+                        .clip(
+                            RoundedCornerShape(
+                                topStart = Dimension.Radius.medium,
+                                topEnd = Dimension.Radius.medium,
+                                bottomStart = 0.dp,
+                                bottomEnd = 0.dp
+                            )
+                        )
                 )
             }
 
-            val itemsPerType = items.groupBy { it.type }
-
-            itemsPerType.forEach { (type, items) ->
-                item {
-                    SectionHeader(
-                        title = stringResource(
-                            when (type) {
-                                GatherType.COLLECT -> R.string.location_gather_collect
-                                GatherType.MINE -> R.string.location_gather_mine
-                                GatherType.BUG -> R.string.location_gather_bug
-                                GatherType.FISH -> R.string.location_gather_fish
-                            }
-                        ),
-                        titleColor = MaterialTheme.colorScheme.primary,
-                        backgroundColor = MaterialTheme.colorScheme.surface,
-                        modifier = Modifier.padding(start = Dimension.Padding.large)
-                    )
+            itemsIndexed(
+                items = items,
+                key = { _, point ->
+                    "point_${point.rank}_${point.area}_${point.node}_${point.item.id}"
                 }
-                itemsIndexed(items) { index, point ->
+            ) { index, point ->
+                val isLastItem = index == items.lastIndex
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(
+                            RoundedCornerShape(
+                                bottomStart = if (isLastItem) Dimension.Radius.medium else 0.dp,
+                                bottomEnd = if (isLastItem) Dimension.Radius.medium else 0.dp,
+                            )
+                        )
+                        .background(MaterialTheme.colorScheme.surface)
+                ) {
                     GatheringPointListItem(
                         gatheringPoint = point,
                         onItemClick = onItemClick,
                     )
-                    if (index != items.lastIndex) {
-                        HorizontalDivider()
+                    if (!isLastItem) {
+                        AppHDivider()
                     }
                 }
-            }
-
-            item {
-                Spacer(Modifier.height(Dimension.Spacing.large))
+                if (isLastItem) {
+                    Spacer(modifier = Modifier.height(Dimension.Spacing.medium))
+                }
             }
         }
     }

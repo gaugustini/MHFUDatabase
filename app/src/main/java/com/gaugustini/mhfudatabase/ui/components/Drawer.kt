@@ -2,10 +2,15 @@ package com.gaugustini.mhfudatabase.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
@@ -13,10 +18,12 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.gaugustini.mhfudatabase.R
@@ -124,6 +131,7 @@ fun Drawer(
 
     ModalDrawerSheet(
         drawerState = drawerState,
+        windowInsets = WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal),
         modifier = modifier
     ) {
         Column(
@@ -142,20 +150,30 @@ fun Drawer(
             mainRoutes.forEach { item ->
                 NavigationDrawerItem(
                     icon = {
+                        val isSelected = currentRoute == item.route
                         Image(
                             painter = painterResource(item.icon),
                             contentDescription = null,
+                            colorFilter = if (isSelected) {
+                                ColorFilter.tint(
+                                    color = MaterialTheme.colorScheme.primaryContainer,
+                                    blendMode = BlendMode.Modulate
+                                )
+                            } else null,
                             modifier = Modifier.size(Dimension.Size.extraSmall),
                         )
                     },
                     label = {
                         Text(
                             text = item.label,
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.titleSmall,
+                            modifier = Modifier.padding(
+                                start = Dimension.Padding.large,
+                            )
                         )
                     },
                     selected = currentRoute == item.route,
-                    shape = RectangleShape,
+                    shape = RoundedCornerShape(Dimension.Radius.large),
                     onClick = {
                         when (item.route) {
                             Destinations.ARMOR_SET_LIST -> navigateToArmorSetList()
@@ -172,6 +190,7 @@ fun Drawer(
                         }
                         closeDrawer()
                     },
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )
             }
 
@@ -183,21 +202,31 @@ fun Drawer(
 
             otherRoutes.forEach { item ->
                 NavigationDrawerItem(
-                    label = {
-                        Text(
-                            text = item.label,
-                            style = MaterialTheme.typography.titleMedium,
-                        )
-                    },
                     icon = {
+                        val isSelected = currentRoute == item.route
                         Image(
                             painter = painterResource(item.icon),
                             contentDescription = null,
+                            colorFilter = if (isSelected) {
+                                ColorFilter.tint(
+                                    color = MaterialTheme.colorScheme.primaryContainer,
+                                    blendMode = BlendMode.Modulate
+                                )
+                            } else null,
                             modifier = Modifier.size(Dimension.Size.extraSmall),
                         )
                     },
+                    label = {
+                        Text(
+                            text = item.label,
+                            style = MaterialTheme.typography.titleSmall,
+                            modifier = Modifier.padding(
+                                start = Dimension.Padding.large,
+                            )
+                        )
+                    },
                     selected = currentRoute == item.route,
-                    shape = RectangleShape,
+//                    shape = RectangleShape,
                     onClick = {
                         when (item.route) {
                             Destinations.SETTINGS -> navigateToSettings()
@@ -205,6 +234,7 @@ fun Drawer(
                         }
                         closeDrawer()
                     },
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )
             }
         }

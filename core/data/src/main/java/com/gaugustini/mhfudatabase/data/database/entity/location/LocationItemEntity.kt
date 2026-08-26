@@ -8,7 +8,7 @@ import com.gaugustini.mhfudatabase.data.database.entity.item.ItemEntity
 
 @Entity(
     tableName = "location_item",
-    primaryKeys = ["location_id", "item_id", "rank", "gather_type", "area"],
+    primaryKeys = ["location_id", "rank", "area", "node", "item_id"],
     foreignKeys = [
         ForeignKey(
             entity = ItemEntity::class,
@@ -22,8 +22,12 @@ import com.gaugustini.mhfudatabase.data.database.entity.item.ItemEntity
 )
 data class LocationItemEntity(
     @ColumnInfo(name = "location_id") val locationId: Int,
-    @ColumnInfo(name = "item_id") val itemId: Int,
     @ColumnInfo(name = "rank") val rank: String,
-    @ColumnInfo(name = "gather_type") val gatherType: String,
     @ColumnInfo(name = "area") val area: Int,
+    @ColumnInfo(name = "node") val node: Int,
+    @ColumnInfo(name = "type") val type: String,
+    @ColumnInfo(name = "min") val min: Int,
+    @ColumnInfo(name = "max") val max: Int,
+    @ColumnInfo(name = "item_id") val itemId: Int,
+    @ColumnInfo(name = "percentage") val percentage: Int,
 )

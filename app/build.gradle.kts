@@ -13,8 +13,8 @@ android {
         applicationId = "com.gaugustini.mhfudatabase"
         minSdk = 23
         targetSdk = 36
-        versionCode = 16
-        versionName = "1.1.0"
+        versionCode = 21
+        versionName = "1.2.0"
     }
     buildTypes {
         release {
@@ -36,6 +36,13 @@ android {
     }
 }
 
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-opt-in=androidx.compose.material3.ExperimentalMaterial3Api")
+        freeCompilerArgs.add("-opt-in=androidx.compose.foundation.ExperimentalFoundationApi")
+    }
+}
+
 dependencies {
 
     implementation(project(":core:data"))
@@ -52,6 +59,7 @@ dependencies {
     implementation("androidx.compose.material:material-icons-core:1.7.8")
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
     implementation("androidx.compose.ui:ui:1.10.6")
+    implementation("androidx.compose.foundation:foundation:1.11.4")
     implementation("androidx.compose.ui:ui-tooling-preview:1.10.6")
     debugImplementation("androidx.compose.ui:ui-tooling:1.10.6")
     implementation("androidx.activity:activity-compose:1.13.0")

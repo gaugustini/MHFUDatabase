@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class ItemDetailState(
-    val initialTab: ItemDetailTab = ItemDetailTab.ITEM_SUMMARY,
+    val page: ItemDetailPage = ItemDetailPage.SUMMARY,
     val item: Item? = null,
 )
 
@@ -55,6 +55,14 @@ class ItemDetailViewModel @Inject constructor(
                     item = itemRepository.getItem(itemId, language.code),
                 )
             }
+        }
+    }
+
+    fun onChangePage(page: ItemDetailPage) {
+        _uiState.update { state ->
+            state.copy(
+                page = page,
+            )
         }
     }
 

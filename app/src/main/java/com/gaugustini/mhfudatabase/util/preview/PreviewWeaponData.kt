@@ -1,7 +1,5 @@
 package com.gaugustini.mhfudatabase.util.preview
 
-import com.gaugustini.mhfudatabase.data.database.entity.weapon.WeaponParentEntity
-import com.gaugustini.mhfudatabase.data.repository.WeaponGraph
 import com.gaugustini.mhfudatabase.domain.enums.WeaponAmmo
 import com.gaugustini.mhfudatabase.domain.enums.WeaponElement
 import com.gaugustini.mhfudatabase.domain.enums.WeaponRecoil
@@ -10,6 +8,7 @@ import com.gaugustini.mhfudatabase.domain.enums.WeaponShelling
 import com.gaugustini.mhfudatabase.domain.enums.WeaponType
 import com.gaugustini.mhfudatabase.domain.model.AmmoBow
 import com.gaugustini.mhfudatabase.domain.model.AmmoBowgun
+import com.gaugustini.mhfudatabase.domain.model.FlattenedWeaponNode
 import com.gaugustini.mhfudatabase.domain.model.Weapon
 
 object PreviewWeaponData {
@@ -267,24 +266,30 @@ object PreviewWeaponData {
 
     // Weapon Tree
 
-    private val weaponTreeData = listOf(
-        weaponGS,
-        weaponGS.copy(id = 2),
-        weaponGS.copy(id = 3),
-        weaponGS.copy(id = 4),
-        weaponGS.copy(id = 5),
-        weaponGS.copy(id = 6),
+    val weaponNode = FlattenedWeaponNode(
+        uniqueId = 1,
+        weapon = weaponGS.copy(id = 1, name = "Weapon 1"),
+        depth = 0,
+        hasChildren = true,
+        isLastInGroup = false
     )
 
-    val weaponNodeList = WeaponGraph(
-        weapons = weaponTreeData,
-        relations = listOf(
-            WeaponParentEntity(2, 1),
-            WeaponParentEntity(3, 2),
-            WeaponParentEntity(4, 3),
-            WeaponParentEntity(5, 3),
-            WeaponParentEntity(6, 2),
-        )
-    ).buildGraphByType(WeaponType.GREAT_SWORD)
+    val weaponTree = listOf(
+        weaponNode,
+        weaponNode.copy(
+            uniqueId = 2,
+            weapon = weaponHH.copy(id = 2, name = "Weapon 2"),
+            depth = 1,
+            hasChildren = true,
+            isLastInGroup = false
+        ),
+        weaponNode.copy(
+            uniqueId = 3,
+            weapon = weaponGL.copy(id = 3, name = "Weapon 3"),
+            depth = 2,
+            hasChildren = false,
+            isLastInGroup = true
+        ),
+    )
 
 }

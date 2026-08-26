@@ -2,28 +2,29 @@ package com.gaugustini.mhfudatabase.ui.features.weapon.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.gaugustini.mhfudatabase.R
+import com.gaugustini.mhfudatabase.domain.enums.ItemIconColor
 import com.gaugustini.mhfudatabase.domain.model.AmmoBowgun
+import com.gaugustini.mhfudatabase.ui.components.AppHDivider
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
+import com.gaugustini.mhfudatabase.util.ForEachWithDivider
+import com.gaugustini.mhfudatabase.util.MHFUColors
 import com.gaugustini.mhfudatabase.util.preview.PreviewWeaponData
 
 @Composable
@@ -31,21 +32,76 @@ fun WeaponAmmoBowgunSummary(
     ammo: AmmoBowgun,
     modifier: Modifier = Modifier,
 ) {
+    val shots = listOf(
+        ammo.normal to (R.string.weapon_ammo_bowgun_normal to ItemIconColor.WHITE),
+        ammo.pierce to (R.string.weapon_ammo_bowgun_pierce to ItemIconColor.WHITE),
+        ammo.pellet to (R.string.weapon_ammo_bowgun_pellet to ItemIconColor.WHITE),
+        ammo.crag to (R.string.weapon_ammo_bowgun_crag to ItemIconColor.WHITE),
+        ammo.clust to (R.string.weapon_ammo_bowgun_clust to ItemIconColor.WHITE),
+        ammo.recovery to (R.string.weapon_ammo_bowgun_recovery to ItemIconColor.GREEN),
+        ammo.poison to (R.string.weapon_ammo_bowgun_poison to ItemIconColor.PURPLE),
+        ammo.paralysis to (R.string.weapon_ammo_bowgun_paralysis to ItemIconColor.YELLOW),
+        ammo.sleep to (R.string.weapon_ammo_bowgun_sleep to ItemIconColor.SKY),
+        ammo.flame to (R.string.weapon_ammo_bowgun_flame to ItemIconColor.RED),
+        ammo.water to (R.string.weapon_ammo_bowgun_water to ItemIconColor.SKY),
+        ammo.thunder to (R.string.weapon_ammo_bowgun_thunder to ItemIconColor.YELLOW),
+        ammo.freeze to (R.string.weapon_ammo_bowgun_freeze to ItemIconColor.BLUE),
+        ammo.dragon to (R.string.weapon_ammo_bowgun_dragon to ItemIconColor.RED),
+        ammo.tranq to (R.string.weapon_ammo_bowgun_tranq to ItemIconColor.RED),
+        ammo.paint to (R.string.weapon_ammo_bowgun_paint to ItemIconColor.PINK),
+        ammo.demon to (R.string.weapon_ammo_bowgun_demon to ItemIconColor.RED),
+        ammo.armor to (R.string.weapon_ammo_bowgun_armor to ItemIconColor.ORANGE),
+    )
+
     Column(
         modifier = modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surface)
     ) {
-        if (ammo.rapidFire != null) {
-            val shots = ammo.rapidFire!!.split("|")
+        shots.ForEachWithDivider { (ammo, res) ->
+            val (labelAmmo, iconColor) = res
 
             ListItemLayout(
                 leadingContent = {
                     Image(
-                        painterResource(R.drawable.ic_item_shell),
-                        null,
+                        painter = painterResource(R.drawable.ic_item_shell),
+                        contentDescription = null,
+                        colorFilter = ColorFilter.tint(
+                            color = MHFUColors.getItemColor(iconColor),
+                            blendMode = BlendMode.Modulate
+                        ),
                         modifier = Modifier.size(Dimension.Size.extraSmall)
                     )
+                },
+                headlineContent = {
+                    Text(
+                        text = stringResource(labelAmmo),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface,
+                    )
+                },
+                trailingContent = {
+                    Text(
+                        text = ammo.replace("-", " - "),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface,
+                    )
+                },
+                contentPadding = PaddingValues(
+                    horizontal = Dimension.Spacing.large,
+                    vertical = Dimension.Spacing.medium
+                ),
+            )
+        }
+
+        if (ammo.rapidFire != null) {
+            val shots = ammo.rapidFire!!.split("|")
+
+            AppHDivider()
+
+            ListItemLayout(
+                leadingContent = {
+                    Box(modifier = Modifier.size(Dimension.Size.extraSmall))
                 },
                 headlineContent = {
                     Text(
@@ -70,274 +126,6 @@ fun WeaponAmmoBowgunSummary(
                     vertical = Dimension.Spacing.medium
                 ),
             )
-            HorizontalDivider()
-        }
-
-        ListItemLayout(
-            leadingContent = {
-                Image(
-                    painterResource(R.drawable.ic_item_shell),
-                    null,
-                    modifier = Modifier.size(Dimension.Size.extraSmall)
-                )
-            },
-            headlineContent = {
-                Text(
-                    text = stringResource(R.string.weapon_ammo_bowgun),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-            },
-            contentPadding = PaddingValues(
-                horizontal = Dimension.Spacing.large,
-                vertical = Dimension.Spacing.medium
-            ),
-        )
-
-        Row(
-            modifier = Modifier.padding(
-                start = Dimension.Spacing.large * 3,
-                end = Dimension.Spacing.large,
-                bottom = Dimension.Spacing.large,
-            )
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.weight(2f)
-            ) {
-                Text(
-                    text = stringResource(R.string.weapon_ammo_bowgun_normal),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = stringResource(R.string.weapon_ammo_bowgun_pierce),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = stringResource(R.string.weapon_ammo_bowgun_pellet),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = stringResource(R.string.weapon_ammo_bowgun_crag),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = stringResource(R.string.weapon_ammo_bowgun_clust),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-            }
-
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(
-                    text = ammo.normal,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = ammo.pierce,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = ammo.pellet,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = ammo.crag,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = ammo.clust,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-            }
-
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.weight(2f)
-            ) {
-                Text(
-                    text = stringResource(R.string.weapon_ammo_bowgun_recovery),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = stringResource(R.string.weapon_ammo_bowgun_poison),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = stringResource(R.string.weapon_ammo_bowgun_paralysis),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = stringResource(R.string.weapon_ammo_bowgun_sleep),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-            }
-
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(
-                    text = ammo.recovery,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = ammo.poison,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = ammo.paralysis,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = ammo.sleep,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-            }
-        }
-
-        Spacer(Modifier.height(Dimension.Spacing.medium))
-
-        Row(
-            modifier = Modifier.padding(
-                start = Dimension.Spacing.large * 3,
-                end = Dimension.Spacing.large,
-                bottom = Dimension.Spacing.large,
-            )
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.weight(2f)
-            ) {
-                Text(
-                    text = stringResource(R.string.weapon_ammo_bowgun_flame),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = stringResource(R.string.weapon_ammo_bowgun_water),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = stringResource(R.string.weapon_ammo_bowgun_thunder),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = stringResource(R.string.weapon_ammo_bowgun_freeze),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = stringResource(R.string.weapon_ammo_bowgun_dragon),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-            }
-
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(
-                    text = ammo.flame,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = ammo.water,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = ammo.thunder,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = ammo.freeze,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = ammo.dragon,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-            }
-
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.weight(2f)
-            ) {
-                Text(
-                    text = stringResource(R.string.weapon_ammo_bowgun_tranq),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = stringResource(R.string.weapon_ammo_bowgun_paint),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = stringResource(R.string.weapon_ammo_bowgun_demon),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = stringResource(R.string.weapon_ammo_bowgun_armor),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-            }
-
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(
-                    text = ammo.tranq,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = ammo.paint,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = ammo.demon,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = ammo.armor,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-            }
         }
     }
 }

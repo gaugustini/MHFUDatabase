@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class QuestDetailState(
-    val initialTab: QuestDetailTab = QuestDetailTab.SUMMARY,
+    val page: QuestDetailPage = QuestDetailPage.SUMMARY,
     val quest: Quest? = null,
 )
 
@@ -55,6 +55,14 @@ class QuestDetailViewModel @Inject constructor(
                     quest = questRepository.getQuest(questId, language.code),
                 )
             }
+        }
+    }
+
+    fun onChangePage(page: QuestDetailPage) {
+        _uiState.update { state ->
+            state.copy(
+                page = page,
+            )
         }
     }
 

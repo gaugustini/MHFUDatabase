@@ -7,7 +7,6 @@ import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.ArmorRepository
 import com.gaugustini.mhfudatabase.domain.enums.Language
 import com.gaugustini.mhfudatabase.domain.model.Armor
-import com.gaugustini.mhfudatabase.domain.model.ArmorSet
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,9 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class ArmorDetailState(
-    val initialTab: ArmorDetailTab = ArmorDetailTab.ARMOR_DETAIL,
     val armor: Armor? = null,
-    val armorSet: ArmorSet? = null,
 )
 
 @HiltViewModel
@@ -52,13 +49,9 @@ class ArmorDetailViewModel @Inject constructor(
 
     private fun loadArmorDetails(language: Language) {
         viewModelScope.launch {
-            val armor = armorRepository.getArmor(armorId, language.code)
-            val armorSet = armorRepository.getArmorSet(armor.armorSetId, language.code)
-
             _uiState.update { state ->
                 state.copy(
-                    armor = armor,
-                    armorSet = armorSet,
+                    armor = armorRepository.getArmor(armorId, language.code),
                 )
             }
         }

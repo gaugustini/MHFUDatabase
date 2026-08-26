@@ -4,6 +4,7 @@ import com.gaugustini.mhfudatabase.data.database.dao.ArmorDao
 import com.gaugustini.mhfudatabase.data.database.dao.ArmorSetDao
 import com.gaugustini.mhfudatabase.data.mapper.ArmorMapper
 import com.gaugustini.mhfudatabase.data.mapper.ArmorSetMapper
+import com.gaugustini.mhfudatabase.domain.enums.HunterType
 import com.gaugustini.mhfudatabase.domain.filter.ArmorFilter
 import com.gaugustini.mhfudatabase.domain.filter.ArmorSetFilter
 import com.gaugustini.mhfudatabase.domain.model.Armor
@@ -94,7 +95,8 @@ class ArmorRepository @Inject constructor(
             rarity = filter.rarity,
             hasRarityFilter = !filter.rarity.isNullOrEmpty(),
             rank = filter.rank?.name,
-            hunterType = filter.hunterType?.name,
+            hunterType = filter.hunterType?.let { listOf(it.name, HunterType.BOTH.name) },
+            hasHunterTypeFilter = filter.hunterType != null,
             gender = filter.gender?.name,
             skills = filter.skills?.map { it.id },
             hasSkillFilter = !filter.skills.isNullOrEmpty(),

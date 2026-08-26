@@ -2,24 +2,25 @@ package com.gaugustini.mhfudatabase.ui.features.userset.detail
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -28,6 +29,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
@@ -63,9 +65,14 @@ fun UserSetDetailEquipmentContent(
     onRemoveDecoration: (decorationId: Int, equipmentType: EquipmentType) -> Unit = { _, _ -> },
 ) {
     Column(
+        verticalArrangement = Arrangement.spacedBy(Dimension.Padding.small),
         modifier = modifier
+            .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(bottom = Dimension.Padding.endContent)
+            .padding(
+                top = Dimension.Padding.medium,
+                bottom = Dimension.Padding.endContent
+            )
     ) {
         EquipmentWeaponListItem(
             weapon = equipmentSet.weapon,
@@ -138,130 +145,123 @@ fun EquipmentListItem(
     val availableSlots = numberOfSlots - totalDecorationSlots
     val expanded = rememberSaveable { mutableStateOf(false) }
 
-    Card(
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainer,
-        ),
+    Column(
         modifier = modifier
-            .padding(
-                start = Dimension.Padding.large,
-                end = Dimension.Padding.large,
-                top = Dimension.Padding.medium,
-            )
+            .padding(horizontal = Dimension.Padding.medium)
+            .clip(RoundedCornerShape(Dimension.Radius.medium))
+            .background(MaterialTheme.colorScheme.surface)
     ) {
-        Column {
-            ListItemLayout(
-                leadingContent = icon,
-                headlineContent = {
-                    Text(
-                        text = name ?: stringResource(R.string.user_set_nothing_equipped),
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onSurface,
-                    )
-                },
-                trailingContent = {
-                    if (name != null) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                                .size(
-                                    height = Dimension.Size.tiny,
-                                    width = Dimension.Size.tiny * 3,
-                                )
-                        ) {
-                            // Add decoration first
-                            decorations.forEach { decoration ->
-                                repeat(decoration.decoration.requiredSlots * decoration.quantity) {
-                                    SlotIcon(
-                                        filled = true,
-                                        color = if (!LocalIsDarkTheme.current
-                                            && decoration.decoration.color == ItemIconColor.WHITE
-                                        ) {
-                                            Color.Gray
-                                        } else {
-                                            MHFUColors.getItemColor(decoration.decoration.color)
-                                        },
-                                        modifier = Modifier
-                                            .weight(1f)
-                                            .aspectRatio(1f)
-                                    )
-                                }
-                            }
-
-                            // Add available slots after decorations
-                            if (totalDecorationSlots < numberOfSlots) {
-                                repeat(availableSlots) {
-                                    SlotIcon(
-                                        modifier = Modifier
-                                            .weight(1f)
-                                            .aspectRatio(1f)
-                                    )
-                                }
-                            }
-
-                            // Add no slot
-                            repeat(3 - numberOfSlots) {
-                                NoSlotIcon(
+        ListItemLayout(
+            leadingContent = icon,
+            headlineContent = {
+                Text(
+                    text = name ?: stringResource(R.string.user_set_nothing_equipped),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+            },
+            trailingContent = {
+                if (name != null) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .size(
+                                height = Dimension.Size.tiny,
+                                width = Dimension.Size.tiny * 3,
+                            )
+                    ) {
+                        // Add decoration first
+                        decorations.forEach { decoration ->
+                            repeat(decoration.decoration.requiredSlots * decoration.quantity) {
+                                SlotIcon(
+                                    filled = true,
+                                    color = if (!LocalIsDarkTheme.current
+                                        && decoration.decoration.color == ItemIconColor.WHITE
+                                    ) {
+                                        Color.Gray
+                                    } else {
+                                        MHFUColors.getItemColor(decoration.decoration.color)
+                                    },
                                     modifier = Modifier
                                         .weight(1f)
                                         .aspectRatio(1f)
                                 )
                             }
                         }
-                    }
-                },
-                backgroundColor = Color.Transparent,
-                contentPadding = if (numberOfSlots == 0) {
-                    PaddingValues(all = Dimension.Padding.large)
-                } else {
-                    PaddingValues(
-                        start = Dimension.Padding.large,
-                        end = Dimension.Padding.large,
-                        top = Dimension.Padding.large,
-                        bottom = Dimension.Padding.medium,
-                    )
-                },
-                modifier = Modifier.clickable { onEquipmentClick() }
-            )
-            if (numberOfSlots > 0) {
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            if (totalDecorationSlots == 0) {
-                                onAddDecoration(availableSlots)
-                            } else {
-                                expanded.value = !expanded.value
+
+                        // Add available slots after decorations
+                        if (totalDecorationSlots < numberOfSlots) {
+                            repeat(availableSlots) {
+                                SlotIcon(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .aspectRatio(1f)
+                                )
                             }
                         }
-                ) {
-                    Icon(
-                        imageVector = if (totalDecorationSlots == 0) {
-                            Icons.Default.Add
-                        } else {
-                            if (expanded.value) {
-                                Icons.Default.KeyboardArrowUp
-                            } else {
-                                Icons.Default.KeyboardArrowDown
-                            }
-                        },
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.size(Dimension.Size.extraSmall)
-                    )
+
+                        // Add no slot
+                        repeat(3 - numberOfSlots) {
+                            NoSlotIcon(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .aspectRatio(1f)
+                            )
+                        }
+                    }
                 }
-            }
-            AnimatedVisibility(
-                visible = expanded.value && totalDecorationSlots > 0,
+            },
+            backgroundColor = Color.Transparent,
+            contentPadding = if (numberOfSlots == 0) {
+                PaddingValues(all = Dimension.Padding.large)
+            } else {
+                PaddingValues(
+                    start = Dimension.Padding.large,
+                    end = Dimension.Padding.large,
+                    top = Dimension.Padding.large,
+                    bottom = Dimension.Padding.medium,
+                )
+            },
+            modifier = Modifier.clickable { onEquipmentClick() }
+        )
+        if (numberOfSlots > 0) {
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        if (totalDecorationSlots == 0) {
+                            onAddDecoration(availableSlots)
+                        } else {
+                            expanded.value = !expanded.value
+                        }
+                    }
             ) {
-                EquipmentDecorationList(
-                    availableSlots = availableSlots,
-                    decorations = decorations,
-                    onAddDecoration = { onAddDecoration(availableSlots) },
-                    onRemoveDecoration = onRemoveDecoration,
+                Icon(
+                    imageVector = if (totalDecorationSlots == 0) {
+                        Icons.Default.Add
+                    } else {
+                        if (expanded.value) {
+                            Icons.Default.KeyboardArrowUp
+                        } else {
+                            Icons.Default.KeyboardArrowDown
+                        }
+                    },
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.size(Dimension.Size.extraSmall)
                 )
             }
+        }
+        AnimatedVisibility(
+            visible = expanded.value && totalDecorationSlots > 0,
+        ) {
+            EquipmentDecorationList(
+                availableSlots = availableSlots,
+                decorations = decorations,
+                onAddDecoration = { onAddDecoration(availableSlots) },
+                onRemoveDecoration = onRemoveDecoration,
+            )
         }
     }
 }

@@ -5,12 +5,14 @@ import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.MonsterRepository
 import com.gaugustini.mhfudatabase.domain.enums.Language
+import com.gaugustini.mhfudatabase.domain.filter.MonsterFilter
 import com.gaugustini.mhfudatabase.domain.model.Monster
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
@@ -18,7 +20,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class MonsterListState(
-    val initialTab: MonsterListTab = MonsterListTab.LARGE,
+    val filter: MonsterFilter = MonsterFilter(),
     val monsters: List<Monster> = emptyList(),
 )
 
@@ -49,6 +51,18 @@ class MonsterListViewModel @Inject constructor(
             _uiState.update { state ->
                 state.copy(
                     monsters = monsterRepository.getMonsterList(language.code),
+                )
+            }
+        }
+    }
+
+    fun onFilterChange(filter: MonsterFilter) {
+        viewModelScope.launch {
+            val language = userPreferences.getLanguage().first()
+            _uiState.update { state ->
+                state.copy(
+                    monsters = monsterRepository.getMonsterList(language.code, filter),
+                    filter = filter
                 )
             }
         }

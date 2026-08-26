@@ -40,6 +40,7 @@ fun MonsterSourceListItem(
         },
         supportingContent = {
             val rank = when (source.rank) {
+                Rank.UNRANKED -> stringResource(R.string.item_rank_unranked)
                 Rank.LOW -> stringResource(R.string.item_rank_low)
                 Rank.HIGH -> stringResource(R.string.item_rank_high)
                 Rank.G -> stringResource(R.string.item_rank_g)
@@ -49,18 +50,16 @@ fun MonsterSourceListItem(
 
             Text(
                 text = "${source.condition} ($rank)",
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurface,
             )
         },
         trailingContent = {
-            if (source.percentage != null) {
-                Text(
-                    text = "${source.percentage}%",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
+            Text(
+                text = "${source.percentage}%",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         },
         contentPadding = PaddingValues(
             horizontal = Dimension.Padding.large,

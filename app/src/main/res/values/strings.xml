@@ -13,17 +13,17 @@
     <!-- What's New -->
     <string name="whats_new_title">What\'s New?</string>
     <string name="whats_new_text">
-        Version 1.1.0\n\n
-        • NEW: Quest rewards\n
-        • NEW: Quest supplies\n
-        • NEW: Veggie Elder trades\n
-        • Added missing quests\n
-        • Quest fixes\n
+        Version 1.2.0\n\n
+        • Fixed monster reward values (Shiny Drops, Captures and Breakable Parts)\n
+        • Fixed monster item effectiveness values\n
+        • Fixed location gathering values\n
+        • Added maps for all locations\n
+        • Updated the user interface style\n
         • Minor improvements and bug fixes\n
     </string>
 
     <!-- Screen Title: Main Routes -->
-    <string name="screen_armor_set_list">Armor Sets</string>
+    <string name="screen_armor_set_list">Armors</string>
     <string name="screen_decoration_list">Decorations</string>
     <string name="screen_item_list">Items</string>
     <string name="screen_item_combination_list">Combinations</string>
@@ -39,6 +39,7 @@
 
     <!-- Screen Title: Detail Routes -->
     <string name="screen_armor_detail">Armor Detail</string>
+    <string name="screen_armor_set_detail">Armor Set Detail</string>
     <string name="screen_decoration_detail">Decoration Detail</string>
     <string name="screen_item_detail">Item Detail</string>
     <string name="screen_item_combination_detail">Combination Detail</string>
@@ -120,12 +121,15 @@
     <!-- List Header -->
     <string name="list_armors">Armor Pieces</string>
     <string name="list_decorations">Decorations</string>
+    <string name="list_equipment_stats">Equipment Stats</string>
     <string name="list_active_skills">Active Skills</string>
     <string name="list_skills">Skills</string>
     <string name="list_recipe">Required Materials</string>
     <string name="list_recipe_a">Required Materials (A)</string>
     <string name="list_recipe_b">Required Materials (B)</string>
     <string name="list_recipe_create">Required Materials (Create)</string>
+    <string name="list_recipe_create_a">Required Materials (Create) (A)</string>
+    <string name="list_recipe_create_b">Required Materials (Create) (B)</string>
     <string name="list_recipe_upgrade">Required Materials (Upgrade)</string>
 
     <!-- Search -->
@@ -149,8 +153,12 @@
     <string name="search_weapon">Weapon</string>
 
     <!-- Armor -->
+    <string name="armor_set_filter_hunter_all">All</string>
+    <string name="armor_set_filter_hunter_blade">Blademaster</string>
+    <string name="armor_set_filter_hunter_gunner">Gunner</string>
+    <string name="armor_set_details">Armor Set</string>
     <string name="armor_rarity">Rarity %1$d</string>
-    <string name="armor_defense">Defense</string>
+    <string name="armor_defense">Defense (Max.)</string>
     <string name="armor_number_of_slots">Slots</string>
     <string name="armor_fire_resistance">Fire Resistance</string>
     <string name="armor_water_resistance">Water Resistance</string>
@@ -165,6 +173,8 @@
     <string name="decoration_required_slots">Required Slots</string>
 
     <!-- Item -->
+    <string name="item_usages">Usages</string>
+    <string name="item_sources">Obtaining</string>
     <string name="item_rarity">Rarity %1$d</string>
     <string name="item_carry_max">Carry Max</string>
     <string name="item_buy_price">Buy Price</string>
@@ -176,9 +186,10 @@
     <string name="item_weapon">Weapon</string>
     <string name="item_location">Location</string>
     <string name="item_monster">Monster</string>
-    <string name="item_rank_low">LR</string>
-    <string name="item_rank_high">HR</string>
-    <string name="item_rank_g">G</string>
+    <string name="item_rank_unranked">Beginner</string>
+    <string name="item_rank_low">Low Rank</string>
+    <string name="item_rank_high">High Rank</string>
+    <string name="item_rank_g">G Rank</string>
     <string name="item_rank_treasure">Treasure</string>
     <string name="item_rank_training">Training</string>
     <string name="item_quest">Quest</string>
@@ -220,21 +231,83 @@
     <string name="combination_alchemy">Alchemy</string>
 
     <!-- Location -->
+    <string name="location_daytime_day">Day</string>
+    <string name="location_daytime_night">Night</string>
+    <string name="location_filter_rank_unranked">Beginner</string>
+    <string name="location_filter_rank_low">Low Rank</string>
+    <string name="location_filter_rank_high">High Rank</string>
+    <string name="location_filter_rank_g">G Rank</string>
+    <string name="location_filter_rank_treasure">Treasure</string>
+    <string name="location_filter_rank_training">Training</string>
     <string name="location_secret_area">Secret Area</string>
     <string name="location_base_camp">Base Camp</string>
     <string name="location_area">Area %1$d</string>
+    <string name="location_node">Node %1$d: %2$s (%3$s)</string>
     <string name="location_gather_collect">Gather</string>
     <string name="location_gather_mine">Mining</string>
     <string name="location_gather_bug">Bugnet</string>
     <string name="location_gather_fish">Fishing</string>
+    <string name="location_gathering_spots">Gathering Nodes</string>
+    <string name="location_quest">Quests</string>
+    <string name="location_gathering_info_title">Gathering Info</string>
+    <string name="location_gathering_info_content">
+        &lt;b>Rank Categories:&lt;/b>&lt;br>
+            &lt;li> &lt;b>Low Rank:&lt;/b> Includes all Guild 1★ to Guild 5★ quests, and Village 1★ to Village 6★ quests.
+            &lt;li> &lt;b>High Rank:&lt;/b> Includes all Guild 6★ to Guild 8★ quests, and Village 7★ to Village 9★ quests.
+            &lt;li> &lt;b>G Rank:&lt;/b> Includes all Guild G1★ to Guild G3★ quests.
+            &lt;li> &lt;b>Treasure:&lt;/b> Includes all Treasure Hunt quests.
+            &lt;li> &lt;b>Training:&lt;/b> Includes all Training School quests.&lt;br>&lt;br>
+
+            &lt;b>Note:&lt;/b>&lt;br>
+                Since Beginner and Low Rank share the exact same gathering data, Low Rank represents both categories in this section.&lt;br>&lt;br>
+
+        &lt;b>Gathering Node Types:&lt;/b>&lt;br>
+            &lt;li> &lt;b>Gather:&lt;/b> Action of collecting items from the environment, such as plants, bones, etc.
+            &lt;li> &lt;b>Mining:&lt;/b> Action of using a Pickaxe to mine ores and stones.
+            &lt;li> &lt;b>Bugnet:&lt;/b> Action of using a Bug Net to catch insects.
+            &lt;li> &lt;b>Fishing:&lt;/b> Action of using Fishing Baits to catch fish.&lt;br>&lt;br>
+
+        &lt;b>Values and Probabilities:&lt;/b>&lt;br>
+            &lt;li> The numbers after the action type indicate the minimum and maximum gathering attempts available at that node (&lt;b>∞&lt;/b> means unlimited gathers).
+            &lt;li> Percentages (%%) show the exact chance of obtaining each item per attempt.&lt;br>&lt;br>
+
+        &lt;b>Additional Note:&lt;/b>&lt;br>
+            Certain quests may use customized gathering, especially account item delivery quests (e.g., &lt;i>Mountain Herbs&lt;/i>, &lt;i>Special Mushrooms&lt;/i>, &lt;i>Coal&lt;/i>, etc.).
+    </string>
 
     <!-- Monster -->
+    <string name="monster_filter_size_all">All</string>
+    <string name="monster_filter_size_small">Small</string>
+    <string name="monster_filter_size_large">Large</string>
+    <string name="monster_reward_filter_rank_unranked">Beginner</string>
+    <string name="monster_reward_filter_rank_low">Low Rank</string>
+    <string name="monster_reward_filter_rank_high">High Rank</string>
+    <string name="monster_reward_filter_rank_g">G Rank</string>
+    <string name="monster_reward_filter_rank_treasure">Treasure</string>
+    <string name="monster_reward_filter_rank_training">Training</string>
+    <string name="monster_damage_stats">Damage Stats</string>
+    <string name="monster_reward">Rewards (Shiny/Capture/Breakable Parts)</string>
+    <string name="monster_quest">Quests</string>
     <string name="monster_item_effectiveness">Items Effectiveness</string>
-    <string name="monster_item_effectiveness_none">None</string>
-    <string name="monster_state_normal">Normal</string>
-    <string name="monster_state_enraged">Enraged</string>
+    <string name="monster_item_flash_time">Flash Bomb: %1$ds</string>
+    <string name="monster_item_shock_time">Shock Trap: %1$ds</string>
+    <string name="monster_item_pitfall_time">Pitfall Trap: %1$ds</string>
+    <string name="monster_item_pitfall_enraged_time">Pitfall Trap (Enraged): %1$ds</string>
+    <string name="monster_item_pitfall_undetected_time">Pitfall Trap (Undetected): %1$ds</string>
+    <string name="monster_item_sonic_only_normal">Sonic Bomb: Only when not enraged</string>
+    <string name="monster_item_sonic_only_enraged">Sonic Bomb: Only when enraged</string>
+    <string name="monster_item_pitfall_only_normal">Pitfall Trap: Only when not enraged</string>
+    <string name="monster_item_pitfall_only_enraged">Pitfall Trap: Only when enraged</string>
     <string name="monster_physical_damage">Physical</string>
+    <string name="monster_cut_damage">Cutting damage</string>
+    <string name="monster_impact_damage">Impact damage</string>
+    <string name="monster_shot_damage">Shot damage</string>
     <string name="monster_elemental_damage">Elemental</string>
+    <string name="monster_fire_damage">Fire</string>
+    <string name="monster_water_damage">Water</string>
+    <string name="monster_thunder_damage">Thunder</string>
+    <string name="monster_ice_damage">Ice</string>
+    <string name="monster_dragon_damage">Dragon</string>
     <string name="monster_ailment_status">Status</string>
     <string name="monster_ailment_initial">Initial</string>
     <string name="monster_ailment_increase">Increase</string>
@@ -270,14 +343,40 @@
     <string name="monster_quest_group_training_g">Training</string>
     <string name="monster_quest_group_group_practice">Training</string>
     <string name="monster_quest_group_group_challenge">Challenge</string>
+    <string name="monster_reward_info_title">Reward Info</string>
+    <string name="monster_reward_info_content">
+        &lt;b>Rank Categories:&lt;/b>&lt;br>
+        &lt;li> &lt;b>Beginner:&lt;/b> Includes all Guild 1★ and Guild 2★ quests, plus &lt;i>Sinking Feeling&lt;/i> (Village 1★) and &lt;i>The Taboo of Negligence!&lt;/i> (Village 2★).
+            &lt;li> &lt;b>Low Rank:&lt;/b> Includes all Guild 3★ to Guild 5★ quests, and Village 1★ to Village 6★ quests (excluding Beginner quests).
+            &lt;li> &lt;b>High Rank:&lt;/b> Includes all Guild 6★ to Guild 8★ quests, and Village 7★ to Village 9★ quests.
+            &lt;li> &lt;b>G Rank:&lt;/b> Includes all Guild G1★ to Guild G3★ quests.
+            &lt;li> &lt;b>Treasure:&lt;/b> Includes all Treasure Hunt quests.
+            &lt;li> &lt;b>Training:&lt;/b> Includes all Training School quests.&lt;br>&lt;br>
+
+        &lt;b>Rewards:&lt;/b>&lt;br>
+            &lt;li> &lt;b>Shiny Drop:&lt;/b> Items dropped on the ground by the monster during battle.
+            &lt;li> &lt;b>Carving:&lt;/b> Items obtained by carving the body or the tail of a defeated monster.
+            &lt;li> &lt;b>Capture:&lt;/b> Extra rewards given for capturing a monster alive using traps and tranq bombs.
+            &lt;li> &lt;b>Breakables:&lt;/b> Extra rewards given for breaking specific monster parts (horns, tail, wings, etc.).
+            &lt;li> &lt;b>Drop Rates:&lt;/b> Percentages (%%) show the exact chance of receiving each item.&lt;br>&lt;br>
+
+            &lt;b>Note:&lt;/b>&lt;br>
+                Capture and part-break rewards are delivered at the end of the quest.
+                They occupy the last two lines of the rewards screen, while the top two lines are reserved for quest rewards.
+    </string>
 
     <!-- Quest -->
+    <string name="quest_filter_hub_all">All</string>
+    <string name="quest_filter_hub_village">Village</string>
+    <string name="quest_filter_hub_guild">Guild</string>
+    <string name="quest_filter_hub_training">Training</string>
     <string name="quest_type_key">Key</string>
     <string name="quest_type_urgent">Urgent</string>
     <string name="quest_village_stars">Village %1$d ★</string>
     <string name="quest_guild_stars">Guild %1$d ★</string>
     <string name="quest_training_stars">Training %1$d ★</string>
     <string name="quest_reward">Reward</string>
+    <string name="quest_rewards">Rewards</string>
     <string name="quest_fee">Fee</string>
     <string name="quest_time_limit">Time Limit</string>
     <string name="quest_location">Location</string>
@@ -345,6 +444,7 @@
     <string name="detail_quest_group_group_challenge">Challenge</string>
 
     <!-- Skill Tree -->
+    <string name="skill_tree_equipment">Equipments</string>
     <string name="skill_empty_list">None</string>
     <string name="skill_decoration_list">Decoration</string>
     <string name="skill_armor_list">Armor</string>
@@ -361,9 +461,10 @@
     <string name="weapon_light_bowgun">Light Bowgun</string>
     <string name="weapon_heavy_bowgun">Heavy Bowgun</string>
     <string name="weapon_bow">Bow</string>
+    <string name="weapon_paths">Paths and Upgrades</string>
     <string name="weapon_rarity">Rarity %1$d</string>
     <string name="weapon_attack">Attack</string>
-    <string name="weapon_max_attack">Max Attack</string>
+    <string name="weapon_max_attack">Attack (Max.)</string>
     <string name="weapon_affinity">Affinity</string>
     <string name="weapon_slots">Slots</string>
     <string name="weapon_defense">Defense</string>
@@ -389,15 +490,15 @@
     <string name="weapon_recoil_light">Light</string>
     <string name="weapon_recoil_moderate">Moderate</string>
     <string name="weapon_ammo_bowgun">Ammo</string>
-    <string name="weapon_ammo_bowgun_normal">Normal</string>
-    <string name="weapon_ammo_bowgun_pierce">Pierce</string>
-    <string name="weapon_ammo_bowgun_pellet">Pellet</string>
-    <string name="weapon_ammo_bowgun_crag">Crag</string>
-    <string name="weapon_ammo_bowgun_clust">Clust</string>
-    <string name="weapon_ammo_bowgun_recovery">Recovery</string>
-    <string name="weapon_ammo_bowgun_poison">Poison</string>
-    <string name="weapon_ammo_bowgun_paralysis">Para</string>
-    <string name="weapon_ammo_bowgun_sleep">Sleep</string>
+    <string name="weapon_ammo_bowgun_normal">Normal (Lv 1, 2, 3)</string>
+    <string name="weapon_ammo_bowgun_pierce">Pierce (Lv 1, 2, 3)</string>
+    <string name="weapon_ammo_bowgun_pellet">Pellet (Lv 1, 2, 3)</string>
+    <string name="weapon_ammo_bowgun_crag">Crag (Lv 1, 2, 3)</string>
+    <string name="weapon_ammo_bowgun_clust">Clust (Lv 1, 2, 3)</string>
+    <string name="weapon_ammo_bowgun_recovery">Recovery (Lv 1, 2)</string>
+    <string name="weapon_ammo_bowgun_poison">Poison (Lv 1, 2)</string>
+    <string name="weapon_ammo_bowgun_paralysis">Para (Lv 1, 2)</string>
+    <string name="weapon_ammo_bowgun_sleep">Sleep (Lv 1, 2)</string>
     <string name="weapon_ammo_bowgun_flame">Flame</string>
     <string name="weapon_ammo_bowgun_water">Water</string>
     <string name="weapon_ammo_bowgun_thunder">Thunder</string>
@@ -425,7 +526,10 @@
     <string name="weapon_finals">Finals</string>
 
     <!-- User Equipment Set -->
+    <string name="user_set_empty_list">Tap \'New Set\' to get started.</string>
     <string name="user_set_new">New Set</string>
+    <string name="user_set_equipment">Equipment</string>
+    <string name="user_set_summary">Summary</string>
     <string name="user_set_nothing_equipped">Nothing Equipped</string>
     <string name="user_set_none">None</string>
     <string name="user_set_dialog_new_set_title">New Set</string>
@@ -473,9 +577,7 @@
         Freedom Unite (MHFU). Based on the apps developed by Gathering Hall Studios, it provides
         data about monsters, weapons, armors, items, and quests.
     </string>
-    <string name="about_visit_project">For issues, ideas or suggestions visit the project on
-        GitHub and join the Discussions section.
-    </string>
+    <string name="about_visit_project">For issues, ideas or suggestions visit the project on GitHub.</string>
     <string name="about_version">Version %1$s</string>
     <string name="about_credit_resources">Credits and Resources</string>
 

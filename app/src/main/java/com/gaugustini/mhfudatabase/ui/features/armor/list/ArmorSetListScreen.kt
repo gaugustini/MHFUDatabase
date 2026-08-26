@@ -1,13 +1,36 @@
 package com.gaugustini.mhfudatabase.ui.features.armor.list
 
-import androidx.annotation.StringRes
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -15,25 +38,22 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.HunterType
-import com.gaugustini.mhfudatabase.domain.model.ArmorSet
+import com.gaugustini.mhfudatabase.domain.filter.ArmorSetFilter
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
-import com.gaugustini.mhfudatabase.ui.components.TabbedLayout
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.features.armor.components.ArmorSetListItem
+import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
+import com.gaugustini.mhfudatabase.util.itemsWithDivider
 import com.gaugustini.mhfudatabase.util.preview.PreviewArmorData
-
-enum class ArmorSetListTab(@get:StringRes val title: Int) {
-    BLADEMASTER(R.string.tab_armor_blademaster),
-    GUNNER(R.string.tab_armor_gunner);
-}
 
 @Composable
 fun ArmorSetListRoute(
     openDrawer: () -> Unit,
     openSearch: () -> Unit,
     onArmorClick: (armorId: Int) -> Unit,
+    onArmorSetClick: (armorSetId: Int) -> Unit,
     viewModel: ArmorSetListViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -42,8 +62,10 @@ fun ArmorSetListRoute(
         uiState = uiState,
         openDrawer = openDrawer,
         openSearch = openSearch,
-        onToggleExpand = viewModel::toggleExpansion,
+        onToggleExpand = viewModel::onToggleExpansion,
+        onFilterChange = viewModel::onFilterChange,
         onArmorClick = onArmorClick,
+        onArmorSetClick = onArmorSetClick,
     )
 }
 
@@ -52,42 +74,50 @@ fun ArmorSetListScreen(
     uiState: ArmorSetListState = ArmorSetListState(),
     openDrawer: () -> Unit = {},
     openSearch: () -> Unit = {},
-    onToggleExpand: (armorSetId: Int, HunterType) -> Unit = { _, _ -> },
+    onToggleExpand: (armorSetId: Int) -> Unit = {},
+    onFilterChange: (filter: ArmorSetFilter) -> Unit = {},
     onArmorClick: (armorId: Int) -> Unit = {},
+    onArmorSetClick: (armorSetId: Int) -> Unit = {},
 ) {
-    val pagerState = rememberPagerState(
-        initialPage = uiState.initialTab.ordinal,
-        pageCount = { ArmorSetListTab.entries.size },
-    )
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
-    TabbedLayout(
-        pagerState = pagerState,
-        tabTitles = ArmorSetListTab.entries.map { stringResource(it.title) },
+    Scaffold(
         topBar = {
             TopBar(
                 title = stringResource(R.string.screen_armor_set_list),
                 navigationType = NavigationType.MENU,
                 navigation = openDrawer,
                 openSearch = openSearch,
+                scrollBehavior = scrollBehavior,
+                bottomContent = {
+                    ArmorSetListFilter(
+                        filter = uiState.filter,
+                        onFilterChange = onFilterChange,
+                    )
+                }
             )
         },
-    ) { tabIndex ->
-        when (ArmorSetListTab.entries[tabIndex]) {
-            ArmorSetListTab.BLADEMASTER -> {
-                ArmorSetList(
-                    armorSets = uiState.armorSetsBlade,
-                    expandedArmorSets = uiState.expandedArmorSetsBlade,
-                    onToggleExpand = { onToggleExpand(it, HunterType.BLADE) },
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+    ) { innerPadding ->
+        LazyColumn(
+            contentPadding = PaddingValues(Dimension.Padding.medium),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            itemsWithDivider(
+                items = uiState.armorSets,
+                key = { it.id }
+            ) { armorSet ->
+                ArmorSetListItem(
+                    armorSet = armorSet,
+                    expanded = armorSet.id in uiState.expandedArmorSets,
+                    onToggleExpand = { onToggleExpand(armorSet.id) },
                     onArmorClick = onArmorClick,
-                )
-            }
-
-            ArmorSetListTab.GUNNER -> {
-                ArmorSetList(
-                    armorSets = uiState.armorSetsGunner,
-                    expandedArmorSets = uiState.expandedArmorSetsGunner,
-                    onToggleExpand = { onToggleExpand(it, HunterType.GUNNER) },
-                    onArmorClick = onArmorClick,
+                    onArmorSetClick = onArmorSetClick,
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(Dimension.Radius.small))
+                        .background(MaterialTheme.colorScheme.surface)
                 )
             }
         }
@@ -95,24 +125,69 @@ fun ArmorSetListScreen(
 }
 
 @Composable
-fun ArmorSetList(
-    armorSets: List<ArmorSet>,
-    expandedArmorSets: Set<Int>,
+fun ArmorSetListFilter(
+    filter: ArmorSetFilter,
     modifier: Modifier = Modifier,
-    onToggleExpand: (armorSetId: Int) -> Unit = {},
-    onArmorClick: (armorId: Int) -> Unit = {},
+    onFilterChange: (filter: ArmorSetFilter) -> Unit = {},
 ) {
-    LazyColumn(
+    var typeMenuExpanded by remember { mutableStateOf(false) }
+
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
         modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = Dimension.Padding.medium),
     ) {
-        items(armorSets) { armorSet ->
-            ArmorSetListItem(
-                armorSet = armorSet,
-                expanded = armorSet.id in expandedArmorSets,
-                onToggleExpand = { onToggleExpand(armorSet.id) },
-                onArmorClick = onArmorClick,
+        Box {
+            FilterChip(
+                selected = filter.hunterType != null && filter.hunterType != HunterType.BOTH,
+                onClick = { typeMenuExpanded = true },
+                label = {
+                    Text(
+                        text = stringResource(
+                            when (filter.hunterType) {
+                                HunterType.BLADE -> R.string.armor_set_filter_hunter_blade
+                                HunterType.GUNNER -> R.string.armor_set_filter_hunter_gunner
+                                else -> R.string.armor_set_filter_hunter_all
+                            }
+                        )
+                    )
+                },
+                trailingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.ArrowDropDown,
+                        contentDescription = null,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
             )
-            HorizontalDivider()
+
+            DropdownMenu(
+                expanded = typeMenuExpanded,
+                onDismissRequest = { typeMenuExpanded = false }
+            ) {
+                HunterType.entries.forEach { type ->
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                text = stringResource(
+                                    when (type) {
+                                        HunterType.BOTH -> R.string.armor_set_filter_hunter_all
+                                        HunterType.BLADE -> R.string.armor_set_filter_hunter_blade
+                                        HunterType.GUNNER -> R.string.armor_set_filter_hunter_gunner
+                                    }
+                                )
+                            )
+                        },
+                        onClick = {
+                            onFilterChange(
+                                filter.copy(hunterType = if (type == HunterType.BOTH) null else type)
+                            )
+                            typeMenuExpanded = false
+                        }
+                    )
+                }
+            }
         }
     }
 }
@@ -131,9 +206,8 @@ private class ArmorSetListScreenPreviewParamProvider : PreviewParameterProvider<
 
     override val values: Sequence<ArmorSetListState> = sequenceOf(
         ArmorSetListState(
-            initialTab = ArmorSetListTab.BLADEMASTER,
-            armorSetsBlade = PreviewArmorData.armorSetList,
-            expandedArmorSetsBlade = setOf(1),
+            armorSets = PreviewArmorData.armorSetList,
+            expandedArmorSets = setOf(1),
         ),
     )
 

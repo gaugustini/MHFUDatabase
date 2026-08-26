@@ -19,4 +19,5 @@ data class RewardConditionTextEntity(
     @ColumnInfo(name = "reward_condition_id") val rewardConditionId: Int,
     @ColumnInfo(name = "language") val language: String,
     @ColumnInfo(name = "name") val name: String,
+    @ColumnInfo(name = "description") val description: String?,
 )

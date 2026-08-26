@@ -87,8 +87,12 @@ object ItemMapper {
             GatheringSource(
                 location = LocationMapper.toModel(LocationWithText(it.location, it.locationText)),
                 rank = Rank.fromString(it.locationItem.rank),
-                type = GatherType.fromString(it.locationItem.gatherType),
                 area = it.locationItem.area,
+                node = it.locationItem.node,
+                type = GatherType.fromString(it.locationItem.type),
+                min = it.locationItem.min,
+                max = it.locationItem.max,
+                percentage = it.locationItem.percentage,
             )
         }
         val monsterSources = monsterRewards.map {
@@ -96,7 +100,7 @@ object ItemMapper {
                 monster = MonsterMapper.toModel(MonsterWithText(it.monster, it.monsterText)),
                 condition = it.rewardConditionText.name,
                 rank = Rank.fromString(it.monsterReward.rank),
-                stackSize = it.monsterReward.stackSize,
+                quantity = it.monsterReward.quantity,
                 percentage = it.monsterReward.percentage,
             )
         }

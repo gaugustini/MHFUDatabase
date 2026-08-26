@@ -7,6 +7,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.gaugustini.mhfudatabase.R
+import com.gaugustini.mhfudatabase.domain.enums.LocationDaytime
 import com.gaugustini.mhfudatabase.domain.model.Location
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.LocationIcon
@@ -19,6 +22,7 @@ import com.gaugustini.mhfudatabase.util.preview.PreviewLocationData
 fun LocationListItem(
     location: Location,
     modifier: Modifier = Modifier,
+    daytime: LocationDaytime? = null,
     onLocationClick: (locationId: Int) -> Unit = {},
 ) {
     ListItemLayout(
@@ -34,6 +38,20 @@ fun LocationListItem(
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface,
             )
+        },
+        supportingContent = {
+            if (daytime != null) {
+                Text(
+                    text = stringResource(
+                        when (daytime) {
+                            LocationDaytime.DAY -> R.string.location_daytime_day
+                            LocationDaytime.NIGHT -> R.string.location_daytime_night
+                        }
+                    ),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+            }
         },
         contentPadding = PaddingValues(
             horizontal = Dimension.Padding.large,

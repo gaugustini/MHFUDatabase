@@ -1,13 +1,36 @@
 package com.gaugustini.mhfudatabase.ui.features.monster.list
 
-import androidx.annotation.StringRes
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -15,19 +38,15 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.MonsterType
-import com.gaugustini.mhfudatabase.domain.model.Monster
+import com.gaugustini.mhfudatabase.domain.filter.MonsterFilter
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
-import com.gaugustini.mhfudatabase.ui.components.TabbedLayout
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.features.monster.components.MonsterListItem
+import com.gaugustini.mhfudatabase.ui.theme.Dimension
 import com.gaugustini.mhfudatabase.ui.theme.Theme
 import com.gaugustini.mhfudatabase.util.DevicePreviews
+import com.gaugustini.mhfudatabase.util.itemsWithDivider
 import com.gaugustini.mhfudatabase.util.preview.PreviewMonsterData
-
-enum class MonsterListTab(@get:StringRes val title: Int) {
-    LARGE(R.string.tab_monster_large),
-    SMALL(R.string.tab_monster_small);
-}
 
 @Composable
 fun MonsterListRoute(
@@ -42,6 +61,7 @@ fun MonsterListRoute(
         uiState = uiState,
         openDrawer = openDrawer,
         openSearch = openSearch,
+        onFilterChange = viewModel::onFilterChange,
         onMonsterClick = onMonsterClick,
     )
 }
@@ -51,36 +71,45 @@ fun MonsterListScreen(
     uiState: MonsterListState = MonsterListState(),
     openDrawer: () -> Unit = {},
     openSearch: () -> Unit = {},
+    onFilterChange: (filter: MonsterFilter) -> Unit = {},
     onMonsterClick: (monsterId: Int) -> Unit = {},
 ) {
-    val pagerState = rememberPagerState(
-        initialPage = uiState.initialTab.ordinal,
-        pageCount = { MonsterListTab.entries.size },
-    )
-    TabbedLayout(
-        pagerState = pagerState,
-        tabTitles = MonsterListTab.entries.map { stringResource(it.title) },
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+
+    Scaffold(
         topBar = {
             TopBar(
                 title = stringResource(R.string.screen_monster_list),
                 navigationType = NavigationType.MENU,
                 navigation = openDrawer,
                 openSearch = openSearch,
+                scrollBehavior = scrollBehavior,
+                bottomContent = {
+                    MonsterListFilter(
+                        filter = uiState.filter,
+                        onFilterChange = onFilterChange,
+                    )
+                }
             )
         },
-    ) { tabIndex ->
-        when (MonsterListTab.entries[tabIndex]) {
-            MonsterListTab.LARGE -> {
-                MonsterList(
-                    monsters = uiState.monsters.filter { it.type == MonsterType.LARGE },
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+    ) { innerPadding ->
+        LazyColumn(
+            contentPadding = PaddingValues(Dimension.Padding.medium),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            itemsWithDivider(
+                items = uiState.monsters,
+                key = { it.id }
+            ) { monster ->
+                MonsterListItem(
+                    monster = monster,
                     onMonsterClick = onMonsterClick,
-                )
-            }
-
-            MonsterListTab.SMALL -> {
-                MonsterList(
-                    monsters = uiState.monsters.filter { it.type == MonsterType.SMALL },
-                    onMonsterClick = onMonsterClick,
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(Dimension.Radius.small))
+                        .background(MaterialTheme.colorScheme.surface)
                 )
             }
         }
@@ -88,20 +117,77 @@ fun MonsterListScreen(
 }
 
 @Composable
-fun MonsterList(
-    monsters: List<Monster>,
+fun MonsterListFilter(
+    filter: MonsterFilter,
     modifier: Modifier = Modifier,
-    onMonsterClick: (monsterId: Int) -> Unit = {},
+    onFilterChange: (filter: MonsterFilter) -> Unit = {},
 ) {
-    LazyColumn(
+    var typeMenuExpanded by remember { mutableStateOf(false) }
+
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
         modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = Dimension.Padding.medium),
     ) {
-        items(monsters) { monster ->
-            MonsterListItem(
-                monster = monster,
-                onMonsterClick = onMonsterClick,
+        Box {
+            FilterChip(
+                selected = filter.type != null,
+                onClick = { typeMenuExpanded = true },
+                label = {
+                    Text(
+                        text = stringResource(
+                            when (filter.type) {
+                                MonsterType.SMALL -> R.string.monster_filter_size_small
+                                MonsterType.LARGE -> R.string.monster_filter_size_large
+                                else -> R.string.monster_filter_size_all
+                            }
+                        )
+                    )
+                },
+                trailingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.ArrowDropDown,
+                        contentDescription = null,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
             )
-            HorizontalDivider()
+
+            DropdownMenu(
+                expanded = typeMenuExpanded,
+                onDismissRequest = { typeMenuExpanded = false }
+            ) {
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = stringResource(R.string.monster_filter_size_all),
+                        )
+                    },
+                    onClick = {
+                        onFilterChange(filter.copy(type = null))
+                        typeMenuExpanded = false
+                    }
+                )
+                MonsterType.entries.forEach { type ->
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                text = stringResource(
+                                    when (type) {
+                                        MonsterType.SMALL -> R.string.monster_filter_size_small
+                                        MonsterType.LARGE -> R.string.monster_filter_size_large
+                                    }
+                                )
+                            )
+                        },
+                        onClick = {
+                            onFilterChange(filter.copy(type = type))
+                            typeMenuExpanded = false
+                        }
+                    )
+                }
+            }
         }
     }
 }
@@ -120,7 +206,6 @@ private class MonsterListScreenPreviewParamProvider : PreviewParameterProvider<M
 
     override val values: Sequence<MonsterListState> = sequenceOf(
         MonsterListState(
-            initialTab = MonsterListTab.LARGE,
             monsters = PreviewMonsterData.monsterList,
         ),
     )

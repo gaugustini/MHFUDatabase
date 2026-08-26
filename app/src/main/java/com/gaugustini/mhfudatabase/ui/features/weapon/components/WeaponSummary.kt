@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +25,7 @@ import com.gaugustini.mhfudatabase.domain.enums.WeaponRecoil
 import com.gaugustini.mhfudatabase.domain.enums.WeaponReloadSpeed
 import com.gaugustini.mhfudatabase.domain.enums.WeaponShelling
 import com.gaugustini.mhfudatabase.domain.model.Weapon
+import com.gaugustini.mhfudatabase.ui.components.AppHDivider
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.icons.ElementIcon
 import com.gaugustini.mhfudatabase.ui.components.icons.SharpnessIcon
@@ -57,7 +57,13 @@ fun WeaponSummary(
             },
             headlineContent = {
                 Text(
-                    text = stringResource(R.string.weapon_attack),
+                    text = stringResource(
+                        if (weapon.maxAttack != null) {
+                            R.string.weapon_max_attack
+                        } else {
+                            R.string.weapon_attack
+                        }
+                    ),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
@@ -78,7 +84,7 @@ fun WeaponSummary(
                 vertical = Dimension.Spacing.medium
             ),
         )
-        HorizontalDivider()
+        AppHDivider()
 
         ListItemLayout(
             leadingContent = {
@@ -107,7 +113,7 @@ fun WeaponSummary(
                 vertical = Dimension.Spacing.medium
             ),
         )
-        HorizontalDivider()
+        AppHDivider()
 
         ListItemLayout(
             leadingContent = {
@@ -142,7 +148,7 @@ fun WeaponSummary(
                 vertical = Dimension.Spacing.medium
             ),
         )
-        HorizontalDivider()
+        AppHDivider()
 
         ListItemLayout(
             leadingContent = {
@@ -171,9 +177,9 @@ fun WeaponSummary(
                 vertical = Dimension.Spacing.medium
             ),
         )
-        HorizontalDivider()
 
         if (weapon.element1 != null) {
+            AppHDivider()
             ListItemLayout(
                 leadingContent = {
                     Image(
@@ -222,10 +228,10 @@ fun WeaponSummary(
                     vertical = Dimension.Spacing.medium
                 ),
             )
-            HorizontalDivider()
         }
 
         if (weapon.sharpness != null && weapon.sharpnessPlus != null) {
+            AppHDivider()
             ListItemLayout(
                 leadingContent = {
                     Image(
@@ -252,8 +258,8 @@ fun WeaponSummary(
                     ) {
                         SharpnessIcon(
                             sharpness = weapon.sharpness!!,
-                            height = 14.dp,
-                            width = 168.dp
+                            height = 11.dp,
+                            width = 132.dp
                         )
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.small),
@@ -266,8 +272,8 @@ fun WeaponSummary(
                             )
                             SharpnessIcon(
                                 sharpness = weapon.sharpnessPlus!!,
-                                height = 14.dp,
-                                width = 168.dp
+                                height = 11.dp,
+                                width = 132.dp
                             )
                         }
                     }
@@ -277,10 +283,10 @@ fun WeaponSummary(
                     vertical = Dimension.Spacing.medium
                 ),
             )
-            HorizontalDivider()
         }
 
         if (weapon.songNotes != null) {
+            AppHDivider()
             ListItemLayout(
                 leadingContent = {
                     Image(
@@ -310,10 +316,10 @@ fun WeaponSummary(
                     vertical = Dimension.Spacing.medium
                 ),
             )
-            HorizontalDivider()
         }
 
         if (weapon.shellingType != null && weapon.shellingLevel != null) {
+            AppHDivider()
             ListItemLayout(
                 leadingContent = {
                     Image(
@@ -349,10 +355,10 @@ fun WeaponSummary(
                     vertical = Dimension.Spacing.medium
                 ),
             )
-            HorizontalDivider()
         }
 
         if (weapon.reloadSpeed != null) {
+            AppHDivider()
             ListItemLayout(
                 leadingContent = {
                     Image(
@@ -389,10 +395,10 @@ fun WeaponSummary(
                     vertical = Dimension.Spacing.medium
                 ),
             )
-            HorizontalDivider()
         }
 
         if (weapon.recoil != null) {
+            AppHDivider()
             ListItemLayout(
                 leadingContent = {
                     Image(
@@ -428,7 +434,6 @@ fun WeaponSummary(
                     vertical = Dimension.Spacing.medium
                 ),
             )
-            HorizontalDivider()
         }
     }
 }

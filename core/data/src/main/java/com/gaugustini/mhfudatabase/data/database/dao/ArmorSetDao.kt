@@ -58,7 +58,7 @@ interface ArmorSetDao {
             (:name IS NULL OR armor_set_text.name LIKE '%' || :name || '%')
             AND (:hasRarityFilter = 0 OR armor_set.rarity IN (:rarity))
             AND (:rank IS NULL OR armor_set.rank = :rank)
-            AND (:hunterType IS NULL OR armor_set.hunter_type = :hunterType)
+            AND (:hasHunterTypeFilter = 0 OR armor_set.hunter_type IN (:hunterType))
             AND (:gender IS NULL OR armor_set.gender = :gender)
             AND (:hasSkillFilter = 0 OR EXISTS (
                 SELECT 1 FROM armor_skill
@@ -75,7 +75,8 @@ interface ArmorSetDao {
         rarity: List<Int>?,
         hasRarityFilter: Boolean,
         rank: String?,
-        hunterType: String?,
+        hunterType: List<String>?,
+        hasHunterTypeFilter: Boolean,
         gender: String?,
         skills: List<Int>?,
         hasSkillFilter: Boolean,
