@@ -65,7 +65,7 @@ fun UserSetDetailEquipmentContent(
     onRemoveDecoration: (decorationId: Int, equipmentType: EquipmentType) -> Unit = { _, _ -> },
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(Dimension.Padding.medium),
+        verticalArrangement = Arrangement.spacedBy(Dimension.Padding.small),
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
@@ -156,7 +156,7 @@ fun EquipmentListItem(
             headlineContent = {
                 Text(
                     text = name ?: stringResource(R.string.user_set_nothing_equipped),
-                    style = MaterialTheme.typography.bodyLarge,
+                    style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
             },

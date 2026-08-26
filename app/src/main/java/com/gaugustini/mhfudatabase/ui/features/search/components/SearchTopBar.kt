@@ -167,10 +167,7 @@ fun SearchInputText(
         ),
         modifier = modifier
             .focusRequester(focusRequester)
-            .padding(
-                horizontal = Dimension.Padding.large,
-                vertical = Dimension.Padding.medium,
-            )
+            .padding(Dimension.Padding.medium)
     )
 }
 

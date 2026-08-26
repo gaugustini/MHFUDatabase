@@ -169,9 +169,6 @@ fun SelectionInputText(
             focusedTextColor = MaterialTheme.colorScheme.onSurface,
             unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
         ),
-        modifier = modifier.padding(
-            horizontal = Dimension.Padding.large,
-            vertical = Dimension.Padding.medium,
-        )
+        modifier = modifier.padding(Dimension.Padding.medium)
     )
 }
