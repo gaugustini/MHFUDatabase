@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.gaugustini.mhfudatabase.data"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         minSdk = 23
@@ -41,8 +41,8 @@ dependencies {
     ksp("androidx.room:room-compiler:2.8.4")
 
     // Hilt
-    implementation("com.google.dagger:hilt-android:2.59.2")
-    ksp("com.google.dagger:hilt-android-compiler:2.59.2")
+    implementation("com.google.dagger:hilt-android:2.60.1")
+    ksp("com.google.dagger:hilt-android-compiler:2.60.1")
 
 }
 
