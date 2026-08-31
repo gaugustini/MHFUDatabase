@@ -3,7 +3,6 @@ package com.gaugustini.mhfudatabase.ui.features.quest.list
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -17,14 +16,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.twotone.Star
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -33,9 +27,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,6 +43,7 @@ import com.gaugustini.mhfudatabase.domain.enums.QuestGroup
 import com.gaugustini.mhfudatabase.domain.filter.QuestFilter
 import com.gaugustini.mhfudatabase.domain.model.Quest
 import com.gaugustini.mhfudatabase.ui.components.AppHDivider
+import com.gaugustini.mhfudatabase.ui.components.FilterChipDropdown
 import com.gaugustini.mhfudatabase.ui.components.ListItemLayout
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TopBar
@@ -126,75 +118,30 @@ fun QuestListFilter(
     modifier: Modifier = Modifier,
     onFilterChange: (filter: QuestFilter) -> Unit = {},
 ) {
-    var typeMenuExpanded by remember { mutableStateOf(false) }
-
     Row(
         horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = Dimension.Padding.medium),
     ) {
-        Box {
-            FilterChip(
-                selected = filter.hub != null,
-                onClick = { typeMenuExpanded = true },
-                label = {
-                    Text(
-                        text = stringResource(
-                            when (filter.hub) {
-                                HubType.VILLAGE -> R.string.quest_filter_hub_village
-                                HubType.GUILD -> R.string.quest_filter_hub_guild
-                                HubType.TRAINING -> R.string.quest_filter_hub_training
-                                else -> R.string.quest_filter_hub_all
-                            }
-                        )
-                    )
-                },
-                trailingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.ArrowDropDown,
-                        contentDescription = null,
-                        modifier = Modifier.size(FilterChipDefaults.IconSize)
-                    )
-                },
-            )
-
-            DropdownMenu(
-                expanded = typeMenuExpanded,
-                onDismissRequest = { typeMenuExpanded = false }
-            ) {
-                DropdownMenuItem(
-                    text = {
-                        Text(
-                            text = stringResource(R.string.quest_filter_hub_all),
-                        )
-                    },
-                    onClick = {
-                        onFilterChange(filter.copy(hub = null))
-                        typeMenuExpanded = false
+        FilterChipDropdown(
+            selected = filter.hub != null,
+            selectedItem = filter.hub,
+            items = listOf(null) + HubType.entries,
+            onItemSelected = { selectedHub ->
+                onFilterChange(filter.copy(hub = selectedHub))
+            },
+            labelProvider = { hub ->
+                stringResource(
+                    when (hub) {
+                        HubType.VILLAGE -> R.string.quest_filter_hub_village
+                        HubType.GUILD -> R.string.quest_filter_hub_guild
+                        HubType.TRAINING -> R.string.quest_filter_hub_training
+                        else -> R.string.quest_filter_hub_all
                     }
                 )
-                HubType.entries.forEach { type ->
-                    DropdownMenuItem(
-                        text = {
-                            Text(
-                                text = stringResource(
-                                    when (type) {
-                                        HubType.VILLAGE -> R.string.quest_filter_hub_village
-                                        HubType.GUILD -> R.string.quest_filter_hub_guild
-                                        HubType.TRAINING -> R.string.quest_filter_hub_training
-                                    }
-                                )
-                            )
-                        },
-                        onClick = {
-                            onFilterChange(filter.copy(hub = type))
-                            typeMenuExpanded = false
-                        }
-                    )
-                }
             }
-        }
+        )
     }
 }
 
