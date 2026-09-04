@@ -59,7 +59,7 @@ interface ArmorSetDao {
             AND (:hasRarityFilter = 0 OR armor_set.rarity IN (:rarity))
             AND (:rank IS NULL OR armor_set.rank = :rank)
             AND (:hasHunterTypeFilter = 0 OR armor_set.hunter_type IN (:hunterType))
-            AND (:gender IS NULL OR armor_set.gender = :gender)
+            AND (:hasGenderFilter = 0 OR armor_set.gender IN (:gender))
             AND (:hasSkillFilter = 0 OR EXISTS (
                 SELECT 1 FROM armor_skill
                 JOIN armor ON armor.id = armor_skill.armor_id
@@ -77,7 +77,8 @@ interface ArmorSetDao {
         rank: String?,
         hunterType: List<String>?,
         hasHunterTypeFilter: Boolean,
-        gender: String?,
+        gender: List<String>?,
+        hasGenderFilter: Boolean,
         skills: List<Int>?,
         hasSkillFilter: Boolean,
     ): List<ArmorSetWithText>

@@ -153,9 +153,15 @@
     <string name="search_weapon">Weapon</string>
 
     <!-- Armor -->
-    <string name="armor_set_filter_hunter_all">All</string>
+    <string name="armor_set_filter_hunter_type">Hunter Type</string>
+    <string name="armor_set_filter_hunter_both">All</string>
     <string name="armor_set_filter_hunter_blade">Blademaster</string>
     <string name="armor_set_filter_hunter_gunner">Gunner</string>
+    <string name="armor_set_filter_gender">Gender</string>
+    <string name="armor_set_filter_gender_both">All</string>
+    <string name="armor_set_filter_gender_male">Male</string>
+    <string name="armor_set_filter_gender_female">Female</string>
+    <string name="armor_set_filter_rarity">Rarity</string>
     <string name="armor_set_details">Armor Set</string>
     <string name="armor_rarity">Rarity %1$d</string>
     <string name="armor_defense">Defense (Max.)</string>

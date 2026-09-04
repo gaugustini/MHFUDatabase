@@ -153,9 +153,15 @@
     <string name="search_weapon">Arma</string>
 
     <!-- Armor -->
-    <string name="armor_set_filter_hunter_all">Todos</string>
+    <string name="armor_set_filter_hunter_type">Tipo Cazador</string>
+    <string name="armor_set_filter_hunter_both">Todos</string>
     <string name="armor_set_filter_hunter_blade">Maestro Espada</string>
     <string name="armor_set_filter_hunter_gunner">Artillero</string>
+    <string name="armor_set_filter_gender">Género</string>
+    <string name="armor_set_filter_gender_both">Todos</string>
+    <string name="armor_set_filter_gender_male">Hombre</string>
+    <string name="armor_set_filter_gender_female">Mujer</string>
+    <string name="armor_set_filter_rarity">Rareza</string>
     <string name="armor_set_details">Conjunto de armadura</string>
     <string name="armor_rarity">Rareza %1$d</string>
     <string name="armor_defense">Defensa (Max.)</string>
