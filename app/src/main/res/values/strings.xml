@@ -179,6 +179,9 @@
     <string name="decoration_required_slots">Required Slots</string>
 
     <!-- Item -->
+    <string name="item_filter_rarity">Rarity</string>
+    <string name="item_filter_icon">Icon</string>
+    <string name="item_filter_color">Color</string>
     <string name="item_usages">Usages</string>
     <string name="item_sources">Obtaining</string>
     <string name="item_rarity">Rarity %1$d</string>

@@ -179,6 +179,9 @@
     <string name="decoration_required_slots">Ranuras Requeridas</string>
 
     <!-- Item -->
+    <string name="item_filter_rarity">Rareza</string>
+    <string name="item_filter_icon">Icono</string>
+    <string name="item_filter_color">Color</string>
     <string name="item_usages">Usos</string>
     <string name="item_sources">Obtención</string>
     <string name="item_rarity">Rareza %1$d</string>

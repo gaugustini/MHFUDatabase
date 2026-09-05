@@ -12,5 +12,5 @@ data class ItemFilter(
     val rarity: List<Int>? = null,
     //val category: ItemCategory, TODO: Add category when implemented
     val icons: List<ItemIconType>? = null,
-    val iconColors: List<ItemIconColor>? = null,
+    val colors: List<ItemIconColor>? = null,
 )

@@ -53,8 +53,8 @@ class ItemRepository @Inject constructor(
             hasRarityFilter = !filter.rarity.isNullOrEmpty(),
             icons = filter.icons?.map { it.name },
             hasIconFilter = !filter.icons.isNullOrEmpty(),
-            iconColors = filter.iconColors?.map { it.name },
-            hasIconColorFilter = !filter.iconColors.isNullOrEmpty(),
+            iconColors = filter.colors?.map { it.name },
+            hasIconColorFilter = !filter.colors.isNullOrEmpty(),
         ).map { ItemMapper.toModel(it) }
     }
 

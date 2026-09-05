@@ -21,10 +21,10 @@ fun <T> FilterSheet(
     items: List<T>,
     selectedItems: List<T>?,
     onItemsSelected: (List<T>) -> Unit,
-    labelProvider: @Composable (T) -> String,
     modifier: Modifier = Modifier,
     sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
     onDismissRequest: () -> Unit,
+    itemContent: @Composable (item: T, isSelected: Boolean, onClick: () -> Unit) -> Unit,
 ) {
     ModalBottomSheet(
         sheetState = sheetState,
@@ -55,25 +55,51 @@ fun <T> FilterSheet(
                     val currentSelected = selectedItems ?: emptyList()
                     val isSelected = item in currentSelected
 
-                    FilterChip(
-                        selected = isSelected,
-                        onClick = {
-                            val updatedSelection = if (isSelected) {
-                                currentSelected - item
-                            } else {
-                                currentSelected + item
-                            }
-                            onItemsSelected(updatedSelection)
-                        },
-                        label = {
-                            Text(
-                                text = labelProvider(item),
-                                style = MaterialTheme.typography.bodyLarge
-                            )
-                        },
-                    )
+                    itemContent(
+                        item,
+                        isSelected,
+                    ) {
+                        val updatedSelection = if (isSelected) {
+                            currentSelected - item
+                        } else {
+                            currentSelected + item
+                        }
+                        onItemsSelected(updatedSelection)
+                    }
                 }
             }
         }
     }
+}
+
+@Composable
+fun <T> FilterSheet(
+    title: String,
+    items: List<T>,
+    selectedItems: List<T>?,
+    onItemsSelected: (List<T>) -> Unit,
+    labelProvider: @Composable (T) -> String,
+    modifier: Modifier = Modifier,
+    onDismissRequest: () -> Unit,
+) {
+    FilterSheet(
+        title = title,
+        items = items,
+        selectedItems = selectedItems,
+        onItemsSelected = onItemsSelected,
+        modifier = modifier,
+        onDismissRequest = onDismissRequest,
+        itemContent = { item, isSelected, onClick ->
+            FilterChip(
+                selected = isSelected,
+                onClick = onClick,
+                label = {
+                    Text(
+                        text = labelProvider(item),
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+            )
+        }
+    )
 }
