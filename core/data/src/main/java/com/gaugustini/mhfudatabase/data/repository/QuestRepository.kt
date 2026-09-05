@@ -2,6 +2,7 @@ package com.gaugustini.mhfudatabase.data.repository
 
 import com.gaugustini.mhfudatabase.data.database.dao.QuestDao
 import com.gaugustini.mhfudatabase.data.mapper.QuestMapper
+import com.gaugustini.mhfudatabase.data.util.normalizeForSearch
 import com.gaugustini.mhfudatabase.domain.filter.QuestFilter
 import com.gaugustini.mhfudatabase.domain.model.Quest
 import javax.inject.Inject
@@ -41,7 +42,7 @@ class QuestRepository @Inject constructor(
     ): List<Quest> {
         return questDao.getQuestList(
             language = language,
-            name = filter.name,
+            name = filter.name?.normalizeForSearch(),
             hub = filter.hub?.name,
             stars = filter.stars,
             hasStarFilter = !filter.stars.isNullOrEmpty(),

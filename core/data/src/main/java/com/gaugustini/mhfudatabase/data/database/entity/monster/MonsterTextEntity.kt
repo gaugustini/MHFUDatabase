@@ -18,7 +18,8 @@ import androidx.room.ForeignKey
 data class MonsterTextEntity(
     @ColumnInfo(name = "monster_id") val monsterId: Int,
     @ColumnInfo(name = "language") val language: String,
-    @ColumnInfo(name = "name") val name: String,
+    @ColumnInfo(name = "name", collate = ColumnInfo.LOCALIZED) val name: String,
     @ColumnInfo(name = "ecology") val ecology: String,
     @ColumnInfo(name = "description") val description: String,
+    @ColumnInfo(name = "name_normalized", defaultValue = "''") val nameNormalized: String,
 )

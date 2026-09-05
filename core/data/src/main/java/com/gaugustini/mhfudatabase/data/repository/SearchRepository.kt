@@ -10,6 +10,7 @@ import com.gaugustini.mhfudatabase.data.mapper.QuestMapper
 import com.gaugustini.mhfudatabase.data.mapper.SkillMapper
 import com.gaugustini.mhfudatabase.data.mapper.SkillTreeMapper
 import com.gaugustini.mhfudatabase.data.mapper.WeaponMapper
+import com.gaugustini.mhfudatabase.data.util.normalizeForSearch
 import com.gaugustini.mhfudatabase.domain.model.SearchResults
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -29,17 +30,18 @@ class SearchRepository @Inject constructor(
         query: String,
         language: String
     ): SearchResults {
+        val normalizedQuery = query.normalizeForSearch()
         return SearchResults(
-            armors = searchDao.searchArmor(query, language).map { ArmorMapper.toModel(it) },
-            decorations = searchDao.searchDecoration(query, language)
+            armors = searchDao.searchArmor(normalizedQuery, language).map { ArmorMapper.toModel(it) },
+            decorations = searchDao.searchDecoration(normalizedQuery, language)
                 .map { DecorationMapper.toModel(it) },
-            items = searchDao.searchItem(query, language).map { ItemMapper.toModel(it) },
-            locations = searchDao.searchLocation(query, language).map { LocationMapper.toModel(it) },
-            monsters = searchDao.searchMonster(query, language).map { MonsterMapper.toModel(it) },
-            quests = searchDao.searchQuest(query, language).map { QuestMapper.toModel(it) },
-            skillTrees = searchDao.searchSkillTree(query, language).map { SkillTreeMapper.toModel(it) },
-            skills = searchDao.searchSkill(query, language).map { SkillMapper.toModel(it) },
-            weapons = searchDao.searchWeapon(query, language).map { WeaponMapper.toModel(it) }
+            items = searchDao.searchItem(normalizedQuery, language).map { ItemMapper.toModel(it) },
+            locations = searchDao.searchLocation(normalizedQuery, language).map { LocationMapper.toModel(it) },
+            monsters = searchDao.searchMonster(normalizedQuery, language).map { MonsterMapper.toModel(it) },
+            quests = searchDao.searchQuest(normalizedQuery, language).map { QuestMapper.toModel(it) },
+            skillTrees = searchDao.searchSkillTree(normalizedQuery, language).map { SkillTreeMapper.toModel(it) },
+            skills = searchDao.searchSkill(normalizedQuery, language).map { SkillMapper.toModel(it) },
+            weapons = searchDao.searchWeapon(normalizedQuery, language).map { WeaponMapper.toModel(it) }
         )
     }
 

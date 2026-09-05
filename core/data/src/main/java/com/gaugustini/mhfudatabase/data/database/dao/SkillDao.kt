@@ -37,12 +37,12 @@ interface SkillDao {
             ON skill_tree.id = skill_tree_text.skill_tree_id
             AND skill_tree_text.language = :language
         WHERE
-            (:name IS NULL OR (skill_tree_text.name LIKE '%' || :name || '%' OR skill_tree_text.full_name LIKE '%' || :name || '%')
+            (:name IS NULL OR (skill_tree_text.name_normalized LIKE '%' || :name || '%' OR skill_tree_text.full_name_normalized LIKE '%' || :name || '%')
                 OR EXISTS (
                     SELECT 1 FROM skill 
                     JOIN skill_text ON skill.id = skill_text.skill_id AND skill_text.language = :language
                     WHERE skill.skill_tree_id = skill_tree.id 
-                      AND (skill_text.name LIKE '%' || :name || '%' OR skill_text.full_name LIKE '%' || :name || '%')
+                      AND (skill_text.name_normalized LIKE '%' || :name || '%' OR skill_text.full_name_normalized LIKE '%' || :name || '%')
                 )
             )
             AND (:category IS NULL OR skill_tree.category = :category)
@@ -99,6 +99,7 @@ interface SkillDao {
             armor_text.*,
             sk.id AS sk_id, sk.category AS sk_category,
             sktxt.skill_tree_id AS sktxt_skill_tree_id, sktxt.language AS sktxt_language, sktxt.name AS sktxt_name, sktxt.full_name AS sktxt_full_name,
+            sktxt.name_normalized AS sktxt_name_normalized, sktxt.full_name_normalized AS sktxt_full_name_normalized,
             armor_skill.point_value AS points
         FROM armor
         JOIN armor_text
@@ -125,6 +126,7 @@ interface SkillDao {
             item_text.*,
             sk.id AS sk_id, sk.category AS sk_category,
             sktxt.skill_tree_id AS sktxt_skill_tree_id, sktxt.language AS sktxt_language, sktxt.name AS sktxt_name, sktxt.full_name AS sktxt_full_name,
+            sktxt.name_normalized AS sktxt_name_normalized, sktxt.full_name_normalized AS sktxt_full_name_normalized,
             decoration_skill.point_value AS points
         FROM decoration
         JOIN item

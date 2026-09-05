@@ -2,6 +2,7 @@ package com.gaugustini.mhfudatabase.data.repository
 
 import com.gaugustini.mhfudatabase.data.database.dao.MonsterDao
 import com.gaugustini.mhfudatabase.data.mapper.MonsterMapper
+import com.gaugustini.mhfudatabase.data.util.normalizeForSearch
 import com.gaugustini.mhfudatabase.domain.filter.MonsterFilter
 import com.gaugustini.mhfudatabase.domain.model.Monster
 import javax.inject.Inject
@@ -42,7 +43,7 @@ class MonsterRepository @Inject constructor(
     ): List<Monster> {
         return monsterDao.getMonsterList(
             language = language,
-            name = filter.name,
+            name = filter.name?.normalizeForSearch(),
             ecology = filter.ecology,
             type = filter.type?.name
         ).map { MonsterMapper.toModel(it) }

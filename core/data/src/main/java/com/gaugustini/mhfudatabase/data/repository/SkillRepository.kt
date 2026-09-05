@@ -7,6 +7,7 @@ import com.gaugustini.mhfudatabase.data.database.relation.EquipmentSkillTreePoin
 import com.gaugustini.mhfudatabase.data.mapper.ArmorMapper
 import com.gaugustini.mhfudatabase.data.mapper.DecorationMapper
 import com.gaugustini.mhfudatabase.data.mapper.SkillTreeMapper
+import com.gaugustini.mhfudatabase.data.util.normalizeForSearch
 import com.gaugustini.mhfudatabase.domain.filter.SkillTreeFilter
 import com.gaugustini.mhfudatabase.domain.model.Armor
 import com.gaugustini.mhfudatabase.domain.model.Decoration
@@ -45,7 +46,7 @@ class SkillRepository @Inject constructor(
     ): List<SkillTree> {
         return skillDao.getSkillTreeList(
             language = language,
-            name = filter.name,
+            name = filter.name?.normalizeForSearch(),
             category = filter.category?.name,
         ).map { SkillTreeMapper.toModel(it) }
     }

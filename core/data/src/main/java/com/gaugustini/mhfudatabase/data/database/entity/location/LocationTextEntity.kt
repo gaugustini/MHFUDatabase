@@ -18,5 +18,6 @@ import androidx.room.ForeignKey
 data class LocationTextEntity(
     @ColumnInfo(name = "location_id") val id: Int,
     @ColumnInfo(name = "language") val language: String,
-    @ColumnInfo(name = "name") val name: String,
+    @ColumnInfo(name = "name", collate = ColumnInfo.LOCALIZED) val name: String,
+    @ColumnInfo(name = "name_normalized", defaultValue = "''") val nameNormalized: String,
 )
