@@ -41,7 +41,7 @@ interface QuestDao {
             (:name IS NULL OR (quest_text.name LIKE '%' || :name || '%'))
             AND (:hub IS NULL OR quest.hub_type = :hub)
             AND (:hasStarFilter = 0 OR quest.stars IN (:stars))
-            AND (:type IS NULL OR quest.quest_type = :type)
+            AND (:hasTypeFilter = 0 OR quest.quest_type IN (:type))
             AND (:goal IS NULL OR quest.goal_type = :goal)
             AND (:hasLocationFilter = 0 OR quest.location_id IN (:locations))
         """
@@ -52,7 +52,8 @@ interface QuestDao {
         hub: String?,
         stars: List<Int>?,
         hasStarFilter: Boolean,
-        type: String?,
+        type: List<String>?,
+        hasTypeFilter: Boolean,
         goal: String?,
         locations: List<Int>?,
         hasLocationFilter: Boolean,

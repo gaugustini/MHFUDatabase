@@ -2,6 +2,7 @@ package com.gaugustini.mhfudatabase.ui.features.quest.list
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,11 +15,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.twotone.Star
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -40,6 +43,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
 import com.gaugustini.mhfudatabase.domain.enums.HubType
 import com.gaugustini.mhfudatabase.domain.enums.QuestGroup
+import com.gaugustini.mhfudatabase.domain.enums.QuestType
 import com.gaugustini.mhfudatabase.domain.filter.QuestFilter
 import com.gaugustini.mhfudatabase.domain.model.Quest
 import com.gaugustini.mhfudatabase.ui.components.AppHDivider
@@ -122,6 +126,7 @@ fun QuestListFilter(
         horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
         modifier = modifier
             .fillMaxWidth()
+            .horizontalScroll(rememberScrollState())
             .padding(horizontal = Dimension.Padding.medium),
     ) {
         FilterChipDropdown(
@@ -129,7 +134,9 @@ fun QuestListFilter(
             selectedItem = filter.hub,
             items = listOf(null) + HubType.entries,
             onItemSelected = { selectedHub ->
-                onFilterChange(filter.copy(hub = selectedHub))
+                if (selectedHub != filter.hub) {
+                    onFilterChange(filter.copy(hub = selectedHub, type = null))
+                }
             },
             labelProvider = { hub ->
                 stringResource(
@@ -142,6 +149,23 @@ fun QuestListFilter(
                 )
             }
         )
+
+        if (filter.hub != HubType.TRAINING) {
+            FilterChip(
+                selected = filter.type != null,
+                onClick = {
+                    onFilterChange(
+                        filter.copy(
+                            type = if (filter.type != null) null
+                            else listOf(QuestType.KEY, QuestType.URGENT),
+                        )
+                    )
+                },
+                label = {
+                    Text(text = stringResource(R.string.quest_filter_only_key_urgent))
+                }
+            )
+        }
     }
 }
 

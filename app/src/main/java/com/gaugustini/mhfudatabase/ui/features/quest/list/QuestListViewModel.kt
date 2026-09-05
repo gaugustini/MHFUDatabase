@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.QuestRepository
-import com.gaugustini.mhfudatabase.domain.enums.HubType
 import com.gaugustini.mhfudatabase.domain.enums.Language
 import com.gaugustini.mhfudatabase.domain.enums.QuestGroup
 import com.gaugustini.mhfudatabase.domain.filter.QuestFilter
@@ -22,7 +21,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class QuestListState(
-    val filter: QuestFilter = QuestFilter().copy(hub = HubType.VILLAGE),
+    val filter: QuestFilter = QuestFilter(),
     val quests: List<Quest> = emptyList(),
     val expandedQuestGroup: Set<QuestGroup> = emptySet(),
 )

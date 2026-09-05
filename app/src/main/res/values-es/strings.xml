@@ -376,6 +376,7 @@
     <string name="quest_filter_hub_village">Aldea</string>
     <string name="quest_filter_hub_guild">Gremio</string>
     <string name="quest_filter_hub_training">Entrenamiento</string>
+    <string name="quest_filter_only_key_urgent">Solo Clave/Urgente</string>
     <string name="quest_type_key">Clave</string>
     <string name="quest_type_urgent">Urgente</string>
     <string name="quest_village_stars">Aldea %1$d ★</string>

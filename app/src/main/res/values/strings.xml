@@ -376,6 +376,7 @@
     <string name="quest_filter_hub_village">Village</string>
     <string name="quest_filter_hub_guild">Guild</string>
     <string name="quest_filter_hub_training">Training</string>
+    <string name="quest_filter_only_key_urgent">Only Key/Urgent</string>
     <string name="quest_type_key">Key</string>
     <string name="quest_type_urgent">Urgent</string>
     <string name="quest_village_stars">Village %1$d ★</string>

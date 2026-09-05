@@ -13,7 +13,7 @@ data class QuestFilter(
     val hub: HubType? = null,
     //val rank: Rank? = null, TODO: Add rank when implemented
     val stars: List<Int>? = null,
-    val type: QuestType? = null,
+    val type: List<QuestType>? = null,
     val goal: QuestGoal? = null,
     val locations: List<Int>? = null,
 )
