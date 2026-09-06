@@ -3,6 +3,7 @@ package com.gaugustini.mhfudatabase.data.repository
 import com.gaugustini.mhfudatabase.data.database.dao.WeaponDao
 import com.gaugustini.mhfudatabase.data.database.entity.weapon.WeaponParentEntity
 import com.gaugustini.mhfudatabase.data.mapper.WeaponMapper
+import com.gaugustini.mhfudatabase.data.util.normalizeForSearch
 import com.gaugustini.mhfudatabase.domain.enums.WeaponType
 import com.gaugustini.mhfudatabase.domain.filter.WeaponFilter
 import com.gaugustini.mhfudatabase.domain.model.FlattenedWeaponNode
@@ -56,7 +57,7 @@ class WeaponRepository @Inject constructor(
     ): List<Weapon> {
         return weaponDao.getWeaponList(
             language = language,
-            name = filter.name,
+            name = filter.name?.normalizeForSearch(),
             weaponType = if (filter.weaponType.isNullOrEmpty()) {
                 filter.hunterType?.let { WeaponType.forHunterType(it) }?.map { it.name }
             } else {

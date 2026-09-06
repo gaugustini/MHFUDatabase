@@ -2,6 +2,7 @@ package com.gaugustini.mhfudatabase.data.repository
 
 import com.gaugustini.mhfudatabase.data.database.dao.DecorationDao
 import com.gaugustini.mhfudatabase.data.mapper.DecorationMapper
+import com.gaugustini.mhfudatabase.data.util.normalizeForSearch
 import com.gaugustini.mhfudatabase.domain.filter.DecorationFilter
 import com.gaugustini.mhfudatabase.domain.model.Decoration
 import javax.inject.Inject
@@ -40,7 +41,7 @@ class DecorationRepository @Inject constructor(
     ): List<Decoration> {
         val decorationsWithText = decorationDao.getDecorationList(
             language = language,
-            name = filter.name,
+            name = filter.name?.normalizeForSearch(),
             maxAvailableSlots = filter.maxAvailableSlots,
             numberOfSlots = filter.numberOfSlots,
             hasSlotFilter = !filter.numberOfSlots.isNullOrEmpty(),

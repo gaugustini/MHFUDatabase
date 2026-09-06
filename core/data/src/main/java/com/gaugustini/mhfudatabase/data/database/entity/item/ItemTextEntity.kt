@@ -18,7 +18,9 @@ import androidx.room.ForeignKey
 data class ItemTextEntity(
     @ColumnInfo(name = "item_id") val itemId: Int,
     @ColumnInfo(name = "language") val language: String,
-    @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "full_name") val fullName: String,
+    @ColumnInfo(name = "name", collate = ColumnInfo.LOCALIZED) val name: String,
+    @ColumnInfo(name = "full_name", collate = ColumnInfo.LOCALIZED) val fullName: String,
     @ColumnInfo(name = "description") val description: String,
+    @ColumnInfo(name = "name_normalized", defaultValue = "''") val nameNormalized: String,
+    @ColumnInfo(name = "full_name_normalized", defaultValue = "''") val fullNameNormalized: String,
 )

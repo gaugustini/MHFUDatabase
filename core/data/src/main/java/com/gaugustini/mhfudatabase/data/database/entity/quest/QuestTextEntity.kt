@@ -18,8 +18,9 @@ import androidx.room.ForeignKey
 data class QuestTextEntity(
     @ColumnInfo(name = "quest_id") val questId: Int,
     @ColumnInfo(name = "language") val language: String,
-    @ColumnInfo(name = "name") val name: String,
+    @ColumnInfo(name = "name", collate = ColumnInfo.LOCALIZED) val name: String,
     @ColumnInfo(name = "goal") val goal: String,
     @ColumnInfo(name = "client") val client: String,
     @ColumnInfo(name = "description") val description: String,
+    @ColumnInfo(name = "name_normalized", defaultValue = "''") val nameNormalized: String,
 )

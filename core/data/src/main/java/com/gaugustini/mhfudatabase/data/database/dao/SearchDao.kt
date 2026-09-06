@@ -28,8 +28,8 @@ interface SearchDao {
             ON armor.id = armor_text.armor_id
             AND armor_text.language = :language
         WHERE
-            armor_text.name LIKE '%' || :query || '%'
-            OR armor_text.full_name LIKE '%' || :query || '%'
+            armor_text.name_normalized LIKE '%' || :query || '%'
+            OR armor_text.full_name_normalized LIKE '%' || :query || '%'
         """
     )
     suspend fun searchArmor(query: String, language: String): List<ArmorWithText>
@@ -47,8 +47,8 @@ interface SearchDao {
             ON item.id = item_text.item_id
             AND item_text.language = :language
         WHERE
-            item_text.name LIKE '%' || :query || '%'
-            OR item_text.full_name LIKE '%' || :query || '%'
+            item_text.name_normalized LIKE '%' || :query || '%'
+            OR item_text.full_name_normalized LIKE '%' || :query || '%'
         """
     )
     suspend fun searchDecoration(query: String, language: String): List<DecorationWithText>
@@ -64,8 +64,8 @@ interface SearchDao {
             AND item_text.language = :language
         WHERE
             item.id != 0 AND
-            (item_text.name LIKE '%' || :query || '%'
-            OR item_text.full_name LIKE '%' || :query || '%')
+            (item_text.name_normalized LIKE '%' || :query || '%'
+            OR item_text.full_name_normalized LIKE '%' || :query || '%')
         """
     )
     suspend fun searchItem(query: String, language: String): List<ItemWithText>
@@ -79,7 +79,7 @@ interface SearchDao {
         JOIN location_text
             ON location.id = location_text.location_id
             AND location_text.language = :language
-        WHERE location_text.name LIKE '%' || :query || '%'
+        WHERE location_text.name_normalized LIKE '%' || :query || '%'
         """
     )
     suspend fun searchLocation(query: String, language: String): List<LocationWithText>
@@ -93,7 +93,7 @@ interface SearchDao {
         JOIN monster_text
             ON monster.id = monster_text.monster_id
             AND monster_text.language = :language
-        WHERE monster_text.name LIKE '%' || :query || '%'
+        WHERE monster_text.name_normalized LIKE '%' || :query || '%'
         """
     )
     suspend fun searchMonster(query: String, language: String): List<MonsterWithText>
@@ -107,7 +107,7 @@ interface SearchDao {
         JOIN quest_text
             ON quest.id = quest_text.quest_id
             AND quest_text.language = :language
-        WHERE quest_text.name LIKE '%' || :query || '%'
+        WHERE quest_text.name_normalized LIKE '%' || :query || '%'
         """
     )
     suspend fun searchQuest(query: String, language: String): List<QuestWithText>
@@ -122,8 +122,8 @@ interface SearchDao {
             ON skill_tree.id = skill_tree_text.skill_tree_id
             AND skill_tree_text.language = :language
         WHERE
-            skill_tree_text.name LIKE '%' || :query || '%'
-            OR skill_tree_text.full_name LIKE '%' || :query || '%'
+            skill_tree_text.name_normalized LIKE '%' || :query || '%'
+            OR skill_tree_text.full_name_normalized LIKE '%' || :query || '%'
         """
     )
     suspend fun searchSkillTree(query: String, language: String): List<SkillTreeWithText>
@@ -138,8 +138,8 @@ interface SearchDao {
             ON skill.id = skill_text.skill_id
             AND skill_text.language = :language
         WHERE
-            skill_text.name LIKE '%' || :query || '%'
-            OR skill_text.full_name LIKE '%' || :query || '%'
+            skill_text.name_normalized LIKE '%' || :query || '%'
+            OR skill_text.full_name_normalized LIKE '%' || :query || '%'
         """
     )
     suspend fun searchSkill(query: String, language: String): List<SkillWithText>
@@ -154,8 +154,8 @@ interface SearchDao {
             ON weapon.id = weapon_text.weapon_id
             AND weapon_text.language = :language
         WHERE
-            weapon_text.name LIKE '%' || :query || '%'
-            OR weapon_text.full_name LIKE '%' || :query || '%'
+            weapon_text.name_normalized LIKE '%' || :query || '%'
+            OR weapon_text.full_name_normalized LIKE '%' || :query || '%'
         """
     )
     suspend fun searchWeapon(query: String, language: String): List<WeaponWithText>

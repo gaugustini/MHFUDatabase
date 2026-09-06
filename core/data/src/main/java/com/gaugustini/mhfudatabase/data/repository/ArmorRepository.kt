@@ -5,6 +5,7 @@ import com.gaugustini.mhfudatabase.data.database.dao.ArmorSetDao
 import com.gaugustini.mhfudatabase.data.mapper.ArmorMapper
 import com.gaugustini.mhfudatabase.data.mapper.ArmorSetMapper
 import com.gaugustini.mhfudatabase.domain.enums.Gender
+import com.gaugustini.mhfudatabase.data.util.normalizeForSearch
 import com.gaugustini.mhfudatabase.domain.enums.HunterType
 import com.gaugustini.mhfudatabase.domain.filter.ArmorFilter
 import com.gaugustini.mhfudatabase.domain.filter.ArmorSetFilter
@@ -61,7 +62,7 @@ class ArmorRepository @Inject constructor(
     ): List<Armor> {
         val armorsWithText = armorDao.getArmorList(
             language = language,
-            name = filter.name,
+            name = filter.name?.normalizeForSearch(),
             equipmentType = filter.type?.toString(),
             numberOfSlots = filter.numberOfSlots,
             hasSlotFilter = !filter.numberOfSlots.isNullOrEmpty(),
@@ -92,7 +93,7 @@ class ArmorRepository @Inject constructor(
     ): List<ArmorSet> {
         val armorSetsWithText = armorSetDao.getArmorSetList(
             language = language,
-            name = filter.name,
+            name = filter.name?.normalizeForSearch(),
             rarity = filter.rarity,
             hasRarityFilter = !filter.rarity.isNullOrEmpty(),
             rank = filter.rank?.name,

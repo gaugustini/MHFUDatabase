@@ -38,7 +38,7 @@ interface WeaponDao {
             ON weapon.id = weapon_text.weapon_id
             AND weapon_text.language = :language
         WHERE
-            (:name IS NULL OR (weapon_text.name LIKE '%' || :name || '%' OR weapon_text.full_name LIKE '%' || :name || '%'))
+            (:name IS NULL OR (weapon_text.name_normalized LIKE '%' || :name || '%' OR weapon_text.full_name_normalized LIKE '%' || :name || '%'))
             AND (:hasWeaponTypeFilter = 0 OR weapon.weapon_type IN (:weaponType))
             AND (:hasSlotFilter = 0 OR weapon.num_slots IN (:numberOfSlots))
             AND (:hasRarityFilter = 0 OR weapon.rarity IN (:rarity))

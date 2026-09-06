@@ -7,6 +7,7 @@ import com.gaugustini.mhfudatabase.data.mapper.ItemCombinationMapper
 import com.gaugustini.mhfudatabase.data.mapper.ItemMapper
 import com.gaugustini.mhfudatabase.data.mapper.VeggieMapper
 import com.gaugustini.mhfudatabase.domain.enums.ItemCombinationType
+import com.gaugustini.mhfudatabase.data.util.normalizeForSearch
 import com.gaugustini.mhfudatabase.domain.filter.ItemFilter
 import com.gaugustini.mhfudatabase.domain.model.Item
 import com.gaugustini.mhfudatabase.domain.model.ItemCombination
@@ -49,7 +50,7 @@ class ItemRepository @Inject constructor(
     ): List<Item> {
         return itemDao.getItemList(
             language = language,
-            name = filter.name,
+            name = filter.name?.normalizeForSearch(),
             rarity = filter.rarity,
             hasRarityFilter = !filter.rarity.isNullOrEmpty(),
             icons = filter.icons?.map { it.name },

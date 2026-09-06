@@ -38,7 +38,7 @@ interface QuestDao {
             ON quest.id = quest_text.quest_id
             AND quest_text.language = :language
         WHERE
-            (:name IS NULL OR (quest_text.name LIKE '%' || :name || '%'))
+            (:name IS NULL OR (quest_text.name_normalized LIKE '%' || :name || '%'))
             AND (:hub IS NULL OR quest.hub_type = :hub)
             AND (:hasStarFilter = 0 OR quest.stars IN (:stars))
             AND (:hasTypeFilter = 0 OR quest.quest_type IN (:type))
