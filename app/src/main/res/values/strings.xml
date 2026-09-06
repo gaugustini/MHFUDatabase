@@ -236,6 +236,10 @@
     <string name="item_quest_group_group_challenge">Chall.</string>
 
     <!-- Item Combination-->
+    <string name="combination_filter_type_all">All</string>
+    <string name="combination_filter_type_normal">Normal</string>
+    <string name="combination_filter_type_treasure">Treasure</string>
+    <string name="combination_filter_type_alchemy">Alchemy</string>
     <string name="combination_treasure">Treasure</string>
     <string name="combination_alchemy">Alchemy</string>
 

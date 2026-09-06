@@ -236,6 +236,10 @@
     <string name="item_quest_group_group_challenge">Desafio</string>
 
     <!-- Item Combination-->
+    <string name="combination_filter_type_all">Todos</string>
+    <string name="combination_filter_type_normal">Normal</string>
+    <string name="combination_filter_type_treasure">Tesoro</string>
+    <string name="combination_filter_type_alchemy">Alquimia</string>
     <string name="combination_treasure">Tesoro</string>
     <string name="combination_alchemy">Alquimia</string>
 

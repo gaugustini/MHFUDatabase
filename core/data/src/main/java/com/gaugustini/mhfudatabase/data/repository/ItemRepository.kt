@@ -6,6 +6,7 @@ import com.gaugustini.mhfudatabase.data.database.relation.VeggieTradeWithLocatio
 import com.gaugustini.mhfudatabase.data.mapper.ItemCombinationMapper
 import com.gaugustini.mhfudatabase.data.mapper.ItemMapper
 import com.gaugustini.mhfudatabase.data.mapper.VeggieMapper
+import com.gaugustini.mhfudatabase.domain.enums.ItemCombinationType
 import com.gaugustini.mhfudatabase.domain.filter.ItemFilter
 import com.gaugustini.mhfudatabase.domain.model.Item
 import com.gaugustini.mhfudatabase.domain.model.ItemCombination
@@ -64,8 +65,11 @@ class ItemRepository @Inject constructor(
      */
     suspend fun getItemCombinationList(
         language: String,
+        filter: ItemCombinationType? = null,
     ): List<ItemCombination> {
-        val entities = itemDao.getItemCombinationList()
+        val entities = itemDao.getItemCombinationList(
+            combinationType = filter?.name
+        )
         return mapCombinationEntities(entities, language)
     }
 

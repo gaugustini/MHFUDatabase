@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.ItemRepository
+import com.gaugustini.mhfudatabase.domain.enums.ItemCombinationType
 import com.gaugustini.mhfudatabase.domain.enums.Language
 import com.gaugustini.mhfudatabase.domain.model.ItemCombination
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
@@ -18,6 +20,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class ItemCombinationListState(
+    val type: ItemCombinationType? = null,
     val itemCombinations: List<ItemCombination> = emptyList(),
 )
 
@@ -48,6 +51,18 @@ class ItemCombinationListViewModel @Inject constructor(
             _uiState.update { state ->
                 state.copy(
                     itemCombinations = itemRepository.getItemCombinationList(language.code),
+                )
+            }
+        }
+    }
+
+    fun onFilterChange(type: ItemCombinationType?) {
+        viewModelScope.launch {
+            val language = userPreferences.getLanguage().first()
+            _uiState.update { state ->
+                state.copy(
+                    itemCombinations = itemRepository.getItemCombinationList(language.code, type),
+                    type = type
                 )
             }
         }
