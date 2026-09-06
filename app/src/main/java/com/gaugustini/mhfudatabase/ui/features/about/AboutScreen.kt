@@ -84,7 +84,9 @@ fun AboutScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             AppDescription()
-            CreditsAndResourcesList()
+            CreditsAndResourcesList(
+                modifier = Modifier.padding(bottom = Dimension.Padding.endContent)
+            )
         }
     }
 }
@@ -204,6 +206,11 @@ fun CreditsAndResourcesList(
             title = "Monster Hunter DB",
             uri = "https://github.com/CrimsonNynja/monster-hunter-DB",
             author = "CrimsonNynja",
+        ),
+        AboutItem(
+            icon = if (isDarkTheme) R.drawable.ic_github_white else R.drawable.ic_github_black,
+            title = "zeedif (Zeedif)",
+            uri = "https://github.com/zeedif",
         )
     )
 

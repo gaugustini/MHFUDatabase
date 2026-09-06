@@ -2,9 +2,11 @@ package com.gaugustini.mhfudatabase.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
@@ -226,7 +228,7 @@ fun Drawer(
                         )
                     },
                     selected = currentRoute == item.route,
-//                    shape = RectangleShape,
+                    shape = RoundedCornerShape(Dimension.Radius.large),
                     onClick = {
                         when (item.route) {
                             Destinations.SETTINGS -> navigateToSettings()
@@ -237,6 +239,10 @@ fun Drawer(
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )
             }
+
+            Spacer(
+                modifier = Modifier.height(Dimension.Spacing.large)
+            )
         }
     }
 }

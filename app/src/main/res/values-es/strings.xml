@@ -13,12 +13,13 @@
     <!-- What's New -->
     <string name="whats_new_title">¿Qué hay de nuevo?</string>
     <string name="whats_new_text">
-        Versión 1.2.0\n\n
+        Versión 1.2.1\n\n
         • Corrección en los valores de recompensa de monstruos (brillos, capturas y roturas)\n
         • Corrección en los valores de efectividad de los objetos de monstruos\n
         • Corrección en los valores de recolección de zonas\n
         • Mapas añadidos para todas las zonas\n
         • Actualización del estilo de la interfaz de usuario\n
+        • Mejoras en la función de búsqueda\n
         • Mejoras menores y corrección de errores\n
      </string>
 
