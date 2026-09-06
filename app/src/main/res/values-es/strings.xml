@@ -153,9 +153,15 @@
     <string name="search_weapon">Arma</string>
 
     <!-- Armor -->
-    <string name="armor_set_filter_hunter_all">Todos</string>
+    <string name="armor_set_filter_hunter_type">Tipo Cazador</string>
+    <string name="armor_set_filter_hunter_both">Todos</string>
     <string name="armor_set_filter_hunter_blade">Maestro Espada</string>
     <string name="armor_set_filter_hunter_gunner">Artillero</string>
+    <string name="armor_set_filter_gender">Género</string>
+    <string name="armor_set_filter_gender_both">Todos</string>
+    <string name="armor_set_filter_gender_male">Hombre</string>
+    <string name="armor_set_filter_gender_female">Mujer</string>
+    <string name="armor_set_filter_rarity">Rareza</string>
     <string name="armor_set_details">Conjunto de armadura</string>
     <string name="armor_rarity">Rareza %1$d</string>
     <string name="armor_defense">Defensa (Max.)</string>
@@ -173,6 +179,9 @@
     <string name="decoration_required_slots">Ranuras Requeridas</string>
 
     <!-- Item -->
+    <string name="item_filter_rarity">Rareza</string>
+    <string name="item_filter_icon">Icono</string>
+    <string name="item_filter_color">Color</string>
     <string name="item_usages">Usos</string>
     <string name="item_sources">Obtención</string>
     <string name="item_rarity">Rareza %1$d</string>
@@ -227,6 +236,10 @@
     <string name="item_quest_group_group_challenge">Desafio</string>
 
     <!-- Item Combination-->
+    <string name="combination_filter_type_all">Todos</string>
+    <string name="combination_filter_type_normal">Normal</string>
+    <string name="combination_filter_type_treasure">Tesoro</string>
+    <string name="combination_filter_type_alchemy">Alquimia</string>
     <string name="combination_treasure">Tesoro</string>
     <string name="combination_alchemy">Alquimia</string>
 
@@ -370,6 +383,7 @@
     <string name="quest_filter_hub_village">Aldea</string>
     <string name="quest_filter_hub_guild">Gremio</string>
     <string name="quest_filter_hub_training">Entrenamiento</string>
+    <string name="quest_filter_only_key_urgent">Solo Clave/Urgente</string>
     <string name="quest_type_key">Clave</string>
     <string name="quest_type_urgent">Urgente</string>
     <string name="quest_village_stars">Aldea %1$d ★</string>

@@ -6,6 +6,7 @@ import com.gaugustini.mhfudatabase.data.database.relation.VeggieTradeWithLocatio
 import com.gaugustini.mhfudatabase.data.mapper.ItemCombinationMapper
 import com.gaugustini.mhfudatabase.data.mapper.ItemMapper
 import com.gaugustini.mhfudatabase.data.mapper.VeggieMapper
+import com.gaugustini.mhfudatabase.domain.enums.ItemCombinationType
 import com.gaugustini.mhfudatabase.data.util.normalizeForSearch
 import com.gaugustini.mhfudatabase.domain.filter.ItemFilter
 import com.gaugustini.mhfudatabase.domain.model.Item
@@ -54,8 +55,8 @@ class ItemRepository @Inject constructor(
             hasRarityFilter = !filter.rarity.isNullOrEmpty(),
             icons = filter.icons?.map { it.name },
             hasIconFilter = !filter.icons.isNullOrEmpty(),
-            iconColors = filter.iconColors?.map { it.name },
-            hasIconColorFilter = !filter.iconColors.isNullOrEmpty(),
+            iconColors = filter.colors?.map { it.name },
+            hasIconColorFilter = !filter.colors.isNullOrEmpty(),
         ).map { ItemMapper.toModel(it) }
     }
 
@@ -65,8 +66,11 @@ class ItemRepository @Inject constructor(
      */
     suspend fun getItemCombinationList(
         language: String,
+        filter: ItemCombinationType? = null,
     ): List<ItemCombination> {
-        val entities = itemDao.getItemCombinationList()
+        val entities = itemDao.getItemCombinationList(
+            combinationType = filter?.name
+        )
         return mapCombinationEntities(entities, language)
     }
 

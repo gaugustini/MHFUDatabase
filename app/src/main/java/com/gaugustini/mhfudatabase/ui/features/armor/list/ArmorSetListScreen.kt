@@ -1,8 +1,8 @@
 package com.gaugustini.mhfudatabase.ui.features.armor.list
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,11 +10,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
@@ -37,8 +36,11 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
+import com.gaugustini.mhfudatabase.domain.enums.Gender
 import com.gaugustini.mhfudatabase.domain.enums.HunterType
 import com.gaugustini.mhfudatabase.domain.filter.ArmorSetFilter
+import com.gaugustini.mhfudatabase.ui.components.FilterChipDropdown
+import com.gaugustini.mhfudatabase.ui.components.FilterSheet
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.features.armor.components.ArmorSetListItem
@@ -130,65 +132,84 @@ fun ArmorSetListFilter(
     modifier: Modifier = Modifier,
     onFilterChange: (filter: ArmorSetFilter) -> Unit = {},
 ) {
-    var typeMenuExpanded by remember { mutableStateOf(false) }
+    var showRarityFilterSheet by remember { mutableStateOf(false) }
 
     Row(
         horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
         modifier = modifier
             .fillMaxWidth()
+            .horizontalScroll(rememberScrollState())
             .padding(horizontal = Dimension.Padding.medium),
     ) {
-        Box {
-            FilterChip(
-                selected = filter.hunterType != null && filter.hunterType != HunterType.BOTH,
-                onClick = { typeMenuExpanded = true },
-                label = {
-                    Text(
-                        text = stringResource(
-                            when (filter.hunterType) {
-                                HunterType.BLADE -> R.string.armor_set_filter_hunter_blade
-                                HunterType.GUNNER -> R.string.armor_set_filter_hunter_gunner
-                                else -> R.string.armor_set_filter_hunter_all
-                            }
-                        )
-                    )
-                },
-                trailingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.ArrowDropDown,
-                        contentDescription = null,
-                        modifier = Modifier.size(FilterChipDefaults.IconSize)
-                    )
-                },
-            )
-
-            DropdownMenu(
-                expanded = typeMenuExpanded,
-                onDismissRequest = { typeMenuExpanded = false }
-            ) {
-                HunterType.entries.forEach { type ->
-                    DropdownMenuItem(
-                        text = {
-                            Text(
-                                text = stringResource(
-                                    when (type) {
-                                        HunterType.BOTH -> R.string.armor_set_filter_hunter_all
-                                        HunterType.BLADE -> R.string.armor_set_filter_hunter_blade
-                                        HunterType.GUNNER -> R.string.armor_set_filter_hunter_gunner
-                                    }
-                                )
-                            )
-                        },
-                        onClick = {
-                            onFilterChange(
-                                filter.copy(hunterType = if (type == HunterType.BOTH) null else type)
-                            )
-                            typeMenuExpanded = false
-                        }
-                    )
-                }
+        FilterChipDropdown(
+            selected = filter.hunterType != null && filter.hunterType != HunterType.BOTH,
+            selectedItem = filter.hunterType,
+            items = HunterType.entries,
+            onItemSelected = { selectedType ->
+                onFilterChange(
+                    filter.copy(hunterType = if (selectedType == HunterType.BOTH) null else selectedType)
+                )
+            },
+            labelProvider = { type ->
+                stringResource(
+                    when (type) {
+                        HunterType.BOTH -> R.string.armor_set_filter_hunter_both
+                        HunterType.BLADE -> R.string.armor_set_filter_hunter_blade
+                        HunterType.GUNNER -> R.string.armor_set_filter_hunter_gunner
+                        else -> R.string.armor_set_filter_hunter_type
+                    }
+                )
             }
-        }
+        )
+
+        FilterChipDropdown(
+            selected = filter.gender != null && filter.gender != Gender.BOTH,
+            selectedItem = filter.gender,
+            items = Gender.entries,
+            onItemSelected = { selectedGender ->
+                onFilterChange(
+                    filter.copy(gender = if (selectedGender == Gender.BOTH) null else selectedGender)
+                )
+            },
+            labelProvider = { gender ->
+                stringResource(
+                    when (gender) {
+                        Gender.BOTH -> R.string.armor_set_filter_gender_both
+                        Gender.MALE -> R.string.armor_set_filter_gender_male
+                        Gender.FEMALE -> R.string.armor_set_filter_gender_female
+                        else -> R.string.armor_set_filter_gender
+                    }
+                )
+            }
+        )
+
+        FilterChip(
+            selected = !filter.rarity.isNullOrEmpty(),
+            onClick = { showRarityFilterSheet = true },
+            label = {
+                Text(text = stringResource(R.string.armor_set_filter_rarity))
+            },
+            trailingIcon = {
+                Icon(
+                    imageVector = Icons.Default.ArrowDropDown,
+                    contentDescription = null,
+                    modifier = Modifier.size(FilterChipDefaults.IconSize)
+                )
+            }
+        )
+    }
+
+    if (showRarityFilterSheet) {
+        FilterSheet(
+            title = stringResource(R.string.armor_set_filter_rarity),
+            items = (1..10).toList(),
+            selectedItems = filter.rarity,
+            onItemsSelected = { updatedRarities ->
+                onFilterChange(filter.copy(rarity = updatedRarities))
+            },
+            labelProvider = { rarity -> rarity.toString() },
+            onDismissRequest = { showRarityFilterSheet = false }
+        )
     }
 }
 

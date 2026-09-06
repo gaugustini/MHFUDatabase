@@ -1,8 +1,11 @@
 package com.gaugustini.mhfudatabase.ui.features.itemcombination.list
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,6 +24,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gaugustini.mhfudatabase.R
+import com.gaugustini.mhfudatabase.domain.enums.ItemCombinationType
+import com.gaugustini.mhfudatabase.ui.components.FilterChipDropdown
 import com.gaugustini.mhfudatabase.ui.components.NavigationType
 import com.gaugustini.mhfudatabase.ui.components.TopBar
 import com.gaugustini.mhfudatabase.ui.features.itemcombination.components.ItemCombinationListItem
@@ -43,6 +48,7 @@ fun ItemCombinationListRoute(
         uiState = uiState,
         openDrawer = openDrawer,
         openSearch = openSearch,
+        onFilterChange = viewModel::onFilterChange,
         onItemClick = onItemClick,
     )
 }
@@ -52,6 +58,7 @@ fun ItemCombinationListScreen(
     uiState: ItemCombinationListState = ItemCombinationListState(),
     openDrawer: () -> Unit = {},
     openSearch: () -> Unit = {},
+    onFilterChange: (type: ItemCombinationType?) -> Unit = {},
     onItemClick: (itemId: Int) -> Unit = {},
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
@@ -64,6 +71,12 @@ fun ItemCombinationListScreen(
                 navigation = openDrawer,
                 openSearch = openSearch,
                 scrollBehavior = scrollBehavior,
+                bottomContent = {
+                    ItemCombinationListFilter(
+                        type = uiState.type,
+                        onFilterChange = onFilterChange,
+                    )
+                }
             )
         },
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -89,6 +102,37 @@ fun ItemCombinationListScreen(
                 )
             }
         }
+    }
+}
+
+@Composable
+fun ItemCombinationListFilter(
+    type: ItemCombinationType?,
+    modifier: Modifier = Modifier,
+    onFilterChange: (type: ItemCombinationType?) -> Unit
+) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.medium),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = Dimension.Padding.medium),
+    ) {
+        FilterChipDropdown(
+            selected = type != null,
+            selectedItem = type,
+            items = listOf(null) + ItemCombinationType.entries,
+            onItemSelected = onFilterChange,
+            labelProvider = { type ->
+                stringResource(
+                    when (type) {
+                        ItemCombinationType.NORMAL -> R.string.combination_filter_type_normal
+                        ItemCombinationType.TREASURE -> R.string.combination_filter_type_treasure
+                        ItemCombinationType.ALCHEMY -> R.string.combination_filter_type_alchemy
+                        else -> R.string.combination_filter_type_all
+                    }
+                )
+            }
+        )
     }
 }
 

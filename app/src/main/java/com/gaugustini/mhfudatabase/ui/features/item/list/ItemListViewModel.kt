@@ -5,12 +5,14 @@ import androidx.lifecycle.viewModelScope
 import com.gaugustini.mhfudatabase.data.preferences.UserPreferences
 import com.gaugustini.mhfudatabase.data.repository.ItemRepository
 import com.gaugustini.mhfudatabase.domain.enums.Language
+import com.gaugustini.mhfudatabase.domain.filter.ItemFilter
 import com.gaugustini.mhfudatabase.domain.model.Item
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
@@ -18,6 +20,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class ItemListState(
+    val filter: ItemFilter = ItemFilter(),
     val items: List<Item> = emptyList(),
 )
 
@@ -48,6 +51,18 @@ class ItemListViewModel @Inject constructor(
             _uiState.update { state ->
                 state.copy(
                     items = itemRepository.getItemList(language.code),
+                )
+            }
+        }
+    }
+
+    fun onFilterChange(filter: ItemFilter) {
+        viewModelScope.launch {
+            val language = userPreferences.getLanguage().first()
+            _uiState.update { state ->
+                state.copy(
+                    items = itemRepository.getItemList(language.code, filter),
+                    filter = filter
                 )
             }
         }

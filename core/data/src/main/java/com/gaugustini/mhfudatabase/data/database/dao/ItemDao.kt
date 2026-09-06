@@ -79,9 +79,11 @@ interface ItemDao {
         SELECT
             item_combination.*
         FROM item_combination
+        WHERE
+            (:combinationType IS NULL OR item_combination.combination_type = :combinationType)
         """
     )
-    suspend fun getItemCombinationList(): List<ItemCombinationEntity>
+    suspend fun getItemCombinationList(combinationType: String?): List<ItemCombinationEntity>
 
     @Query(
         """
