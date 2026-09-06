@@ -186,6 +186,7 @@
     <string name="item_sources">Obtención</string>
     <string name="item_rarity">Rareza %1$d</string>
     <string name="item_carry_max">Máx. para llevar</string>
+    <string name="item_carry_max_unlimited">Ilimitado</string>
     <string name="item_buy_price">Precio de Compra</string>
     <string name="item_sell_price">Precio de Venta</string>
     <string name="item_crafting">Fabricación</string>

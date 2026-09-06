@@ -39,7 +39,7 @@ fun ItemSummary(
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text = item.carryMax.toString(),
+                text = if (item.carryMax > 0) item.carryMax.toString() else stringResource(R.string.item_carry_max_unlimited),
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurface,
@@ -53,7 +53,7 @@ fun ItemSummary(
                 modifier = Modifier.weight(1f)
             )
             Text(
-                text = "${item.sellPrice}z",
+                text = item.sellPrice.toString(),
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurface,
