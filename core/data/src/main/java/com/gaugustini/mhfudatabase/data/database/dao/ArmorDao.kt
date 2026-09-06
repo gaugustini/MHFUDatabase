@@ -36,7 +36,7 @@ interface ArmorDao {
             ON armor.id = armor_text.armor_id
             AND armor_text.language = :language
         WHERE
-            (:name IS NULL OR (armor_text.name LIKE '%' || :name || '%' OR armor_text.full_name LIKE '%' || :name || '%'))
+            (:name IS NULL OR (armor_text.name_normalized LIKE '%' || :name || '%' OR armor_text.full_name_normalized LIKE '%' || :name || '%'))
             AND (:equipmentType IS NULL OR armor.armor_type = :equipmentType)
             AND (:hasSlotFilter = 0 OR armor.num_slots IN (:numberOfSlots))
             AND (:hasRarityFilter = 0 OR armor.rarity IN (:rarity))

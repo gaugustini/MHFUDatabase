@@ -42,7 +42,7 @@ interface DecorationDao {
             ON item.id = item_text.item_id
             AND item_text.language = :language
         WHERE
-            (:name IS NULL OR (item_text.name LIKE '%' || :name || '%' OR item_text.full_name LIKE '%' || :name || '%'))
+            (:name IS NULL OR (item_text.name_normalized LIKE '%' || :name || '%' OR item_text.full_name_normalized LIKE '%' || :name || '%'))
             AND (:maxAvailableSlots IS NULL OR decoration.required_slots <= :maxAvailableSlots)
             AND (:hasSlotFilter = 0 OR decoration.required_slots IN (:numberOfSlots))
             AND (:hasSkillFilter = 0 OR EXISTS (

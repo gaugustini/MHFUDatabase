@@ -18,6 +18,8 @@ import androidx.room.ForeignKey
 data class SkillTreeTextEntity(
     @ColumnInfo(name = "skill_tree_id") val skillTreeId: Int,
     @ColumnInfo(name = "language") val language: String,
-    @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "full_name") val fullName: String,
+    @ColumnInfo(name = "name", collate = ColumnInfo.LOCALIZED) val name: String,
+    @ColumnInfo(name = "full_name", collate = ColumnInfo.LOCALIZED) val fullName: String,
+    @ColumnInfo(name = "name_normalized", defaultValue = "''") val nameNormalized: String,
+    @ColumnInfo(name = "full_name_normalized", defaultValue = "''") val fullNameNormalized: String,
 )

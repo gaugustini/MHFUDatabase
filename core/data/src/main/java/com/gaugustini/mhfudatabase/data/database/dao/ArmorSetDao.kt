@@ -55,7 +55,7 @@ interface ArmorSetDao {
         JOIN armor
             ON armor_set.id = armor.armor_set_id
         WHERE
-            (:name IS NULL OR armor_set_text.name LIKE '%' || :name || '%')
+            (:name IS NULL OR armor_set_text.name_normalized LIKE '%' || :name || '%')
             AND (:hasRarityFilter = 0 OR armor_set.rarity IN (:rarity))
             AND (:rank IS NULL OR armor_set.rank = :rank)
             AND (:hasHunterTypeFilter = 0 OR armor_set.hunter_type IN (:hunterType))
