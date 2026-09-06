@@ -186,6 +186,7 @@
     <string name="item_sources">Obtaining</string>
     <string name="item_rarity">Rarity %1$d</string>
     <string name="item_carry_max">Carry Max</string>
+    <string name="item_carry_max_unlimited">Unlimited</string>
     <string name="item_buy_price">Buy Price</string>
     <string name="item_sell_price">Sell Price</string>
     <string name="item_crafting">Crafting</string>
