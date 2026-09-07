@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=MHFU Database
+Comment=Offline reference app for Monster Hunter Freedom Unite (MHFU): armors, weapons, items, skills, quests, and monsters.
+Exec=mhfudatabase
+Icon=com.gaugustini.mhfudatabase
+Terminal=false
+Categories=Game;Utility;

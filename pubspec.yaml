@@ -1,0 +1,56 @@
+name: mhfudatabase
+description: "Offline reference app for Monster Hunter Freedom Unite (MHFU): armors, weapons, items, skills, quests, and monsters."
+publish_to: 'none'
+version: 1.2.1+22
+
+environment:
+  sdk: ^3.13.2
+
+dependencies:
+  drift: ^2.34.4
+  drift_flutter: ^0.3.1
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  go_router: ^18.0.1
+  intl: ^0.20.3
+  package_info_plus: ^10.2.1
+  path: ^1.9.1
+  path_provider: ^2.1.6
+  shared_preferences: ^2.5.5
+  sqlite3: ^3.5.2
+  url_launcher: ^6.3.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  drift_dev: ^2.34.6
+  build_runner: ^2.16.1
+  flutter_launcher_icons: ^0.14.4
+
+flutter:
+  uses-material-design: true
+  generate: true
+  assets:
+    - assets/images/
+    - assets/database/
+
+flutter_launcher_icons:
+  image_path: "store/ic_launcher-playstore.png"
+  # Android already has its own adaptive icon (a foreground/background
+  # split); regenerating it here would only add flat mipmap PNGs that
+  # collide with those resource names.
+  android: false
+  ios: true
+  remove_alpha_ios: true
+  background_color_ios: "#3B6939"
+  web:
+    generate: true
+    background_color: "#3B6939"
+    theme_color: "#3B6939"
+  windows:
+    generate: true
+  macos:
+    generate: true

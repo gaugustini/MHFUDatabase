@@ -1,0 +1,4828 @@
+{
+  "_meta": {
+    "description": "This file contains a serialized version of schema entities for drift.",
+    "version": "1.3.0"
+  },
+  "options": {
+    "store_date_time_values_as_text": false
+  },
+  "entities": [
+    {
+      "id": 0,
+      "references": [],
+      "type": "table",
+      "data": {
+        "name": "armor_set",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "rarity",
+            "getter_name": "rarity",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "rank",
+            "getter_name": "rank",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "hunter_type",
+            "getter_name": "hunterType",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "gender",
+            "getter_name": "gender",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(id)"
+        ],
+        "explicit_pk": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "references": [
+        0
+      ],
+      "type": "table",
+      "data": {
+        "name": "armor",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "armor_set_id",
+            "getter_name": "armorSetId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "armor_type",
+            "getter_name": "armorType",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "hunter_type",
+            "getter_name": "hunterType",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "gender",
+            "getter_name": "gender",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "rarity",
+            "getter_name": "rarity",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "price",
+            "getter_name": "price",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "num_slots",
+            "getter_name": "numSlots",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "defense",
+            "getter_name": "defense",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "max_defense",
+            "getter_name": "maxDefense",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "fire_res",
+            "getter_name": "fireRes",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "water_res",
+            "getter_name": "waterRes",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "thunder_res",
+            "getter_name": "thunderRes",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "ice_res",
+            "getter_name": "iceRes",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "dragon_res",
+            "getter_name": "dragonRes",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(id)",
+          "FOREIGN KEY(armor_set_id)REFERENCES armor_set(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "references": [
+        1
+      ],
+      "type": "index",
+      "data": {
+        "on": 1,
+        "name": "index_armor_armor_set_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_armor_armor_set_id\" ON \"armor\" (\"armor_set_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 3,
+      "references": [
+        1
+      ],
+      "type": "table",
+      "data": {
+        "name": "armor_text",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "armor_id",
+            "getter_name": "armorId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "language",
+            "getter_name": "language",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "name",
+            "getter_name": "name",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL COLLATE LOCALIZED",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "full_name",
+            "getter_name": "fullName",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL COLLATE LOCALIZED",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "description",
+            "getter_name": "description",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "name_normalized",
+            "getter_name": "nameNormalized",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL DEFAULT ''",
+            "default_dart": "const CustomExpression('\\'\\'')",
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "full_name_normalized",
+            "getter_name": "fullNameNormalized",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL DEFAULT ''",
+            "default_dart": "const CustomExpression('\\'\\'')",
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(armor_id, language)",
+          "FOREIGN KEY(armor_id)REFERENCES armor(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "armor_id",
+          "language"
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "references": [],
+      "type": "table",
+      "data": {
+        "name": "skill_tree",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "category",
+            "getter_name": "category",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(id)"
+        ],
+        "explicit_pk": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "references": [
+        1,
+        4
+      ],
+      "type": "table",
+      "data": {
+        "name": "armor_skill",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "armor_id",
+            "getter_name": "armorId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "skill_tree_id",
+            "getter_name": "skillTreeId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "point_value",
+            "getter_name": "pointValue",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(armor_id, skill_tree_id)",
+          "FOREIGN KEY(armor_id)REFERENCES armor(id)ON UPDATE NO ACTION ON DELETE NO ACTION",
+          "FOREIGN KEY(skill_tree_id)REFERENCES skill_tree(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "armor_id",
+          "skill_tree_id"
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "references": [
+        5
+      ],
+      "type": "index",
+      "data": {
+        "on": 5,
+        "name": "index_armor_skill_skill_tree_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_armor_skill_skill_tree_id\" ON \"armor_skill\" (\"skill_tree_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 7,
+      "references": [],
+      "type": "table",
+      "data": {
+        "name": "item",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "rarity",
+            "getter_name": "rarity",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "buy_price",
+            "getter_name": "buyPrice",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "sell_price",
+            "getter_name": "sellPrice",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "carry_max",
+            "getter_name": "carryMax",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "category",
+            "getter_name": "category",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "icon_type",
+            "getter_name": "iconType",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "icon_color",
+            "getter_name": "iconColor",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(id)"
+        ],
+        "explicit_pk": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "references": [
+        1,
+        7
+      ],
+      "type": "table",
+      "data": {
+        "name": "armor_recipe",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "armor_id",
+            "getter_name": "armorId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "item_id",
+            "getter_name": "itemId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "quantity",
+            "getter_name": "quantity",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "recipe_variant",
+            "getter_name": "recipeVariant",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(armor_id, item_id, recipe_variant)",
+          "FOREIGN KEY(armor_id)REFERENCES armor(id)ON UPDATE NO ACTION ON DELETE NO ACTION",
+          "FOREIGN KEY(item_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "armor_id",
+          "item_id",
+          "recipe_variant"
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "references": [
+        8
+      ],
+      "type": "index",
+      "data": {
+        "on": 8,
+        "name": "index_armor_recipe_item_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_armor_recipe_item_id\" ON \"armor_recipe\" (\"item_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 10,
+      "references": [
+        0
+      ],
+      "type": "table",
+      "data": {
+        "name": "armor_set_text",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "armor_set_id",
+            "getter_name": "armorSetId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "language",
+            "getter_name": "language",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "name",
+            "getter_name": "name",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL COLLATE LOCALIZED",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "name_normalized",
+            "getter_name": "nameNormalized",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL DEFAULT ''",
+            "default_dart": "const CustomExpression('\\'\\'')",
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(armor_set_id, language)",
+          "FOREIGN KEY(armor_set_id)REFERENCES armor_set(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "armor_set_id",
+          "language"
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "references": [],
+      "type": "table",
+      "data": {
+        "name": "hitzone",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(id)"
+        ],
+        "explicit_pk": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "references": [
+        11
+      ],
+      "type": "table",
+      "data": {
+        "name": "hitzone_text",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "hitzone_id",
+            "getter_name": "hitzoneId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "language",
+            "getter_name": "language",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "name",
+            "getter_name": "name",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(hitzone_id, language)",
+          "FOREIGN KEY(hitzone_id)REFERENCES hitzone(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "hitzone_id",
+          "language"
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "references": [],
+      "type": "table",
+      "data": {
+        "name": "reward_condition",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(id)"
+        ],
+        "explicit_pk": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "references": [
+        13
+      ],
+      "type": "table",
+      "data": {
+        "name": "reward_condition_text",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "reward_condition_id",
+            "getter_name": "rewardConditionId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "language",
+            "getter_name": "language",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "name",
+            "getter_name": "name",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "description",
+            "getter_name": "description",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(reward_condition_id, language)",
+          "FOREIGN KEY(reward_condition_id)REFERENCES reward_condition(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "reward_condition_id",
+          "language"
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "references": [
+        7
+      ],
+      "type": "table",
+      "data": {
+        "name": "decoration",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "shop_order",
+            "getter_name": "shopOrder",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "required_slots",
+            "getter_name": "requiredSlots",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(id)",
+          "FOREIGN KEY(id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "references": [
+        15,
+        4
+      ],
+      "type": "table",
+      "data": {
+        "name": "decoration_skill",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "decoration_id",
+            "getter_name": "decorationId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "skill_tree_id",
+            "getter_name": "skillTreeId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "point_value",
+            "getter_name": "pointValue",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(decoration_id, skill_tree_id)",
+          "FOREIGN KEY(decoration_id)REFERENCES decoration(id)ON UPDATE NO ACTION ON DELETE NO ACTION",
+          "FOREIGN KEY(skill_tree_id)REFERENCES skill_tree(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "decoration_id",
+          "skill_tree_id"
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "references": [
+        16
+      ],
+      "type": "index",
+      "data": {
+        "on": 16,
+        "name": "index_decoration_skill_skill_tree_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_decoration_skill_skill_tree_id\" ON \"decoration_skill\" (\"skill_tree_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 18,
+      "references": [
+        15,
+        7
+      ],
+      "type": "table",
+      "data": {
+        "name": "decoration_recipe",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "decoration_id",
+            "getter_name": "decorationId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "item_id",
+            "getter_name": "itemId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "quantity",
+            "getter_name": "quantity",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "recipe_variant",
+            "getter_name": "recipeVariant",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(decoration_id, item_id, recipe_variant)",
+          "FOREIGN KEY(decoration_id)REFERENCES decoration(id)ON UPDATE NO ACTION ON DELETE NO ACTION",
+          "FOREIGN KEY(item_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "decoration_id",
+          "item_id",
+          "recipe_variant"
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "references": [
+        18
+      ],
+      "type": "index",
+      "data": {
+        "on": 18,
+        "name": "index_decoration_recipe_item_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_decoration_recipe_item_id\" ON \"decoration_recipe\" (\"item_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 20,
+      "references": [
+        7
+      ],
+      "type": "table",
+      "data": {
+        "name": "item_text",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "item_id",
+            "getter_name": "itemId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "language",
+            "getter_name": "language",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "name",
+            "getter_name": "name",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL COLLATE LOCALIZED",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "full_name",
+            "getter_name": "fullName",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL COLLATE LOCALIZED",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "description",
+            "getter_name": "description",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "name_normalized",
+            "getter_name": "nameNormalized",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL DEFAULT ''",
+            "default_dart": "const CustomExpression('\\'\\'')",
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "full_name_normalized",
+            "getter_name": "fullNameNormalized",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL DEFAULT ''",
+            "default_dart": "const CustomExpression('\\'\\'')",
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(item_id, language)",
+          "FOREIGN KEY(item_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "item_id",
+          "language"
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "references": [
+        7
+      ],
+      "type": "table",
+      "data": {
+        "name": "item_combination",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "item_created_id",
+            "getter_name": "itemCreatedId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "item_a_id",
+            "getter_name": "itemAId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "item_b_id",
+            "getter_name": "itemBId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "combination_type",
+            "getter_name": "combinationType",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "quantity_min",
+            "getter_name": "quantityMin",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "quantity_max",
+            "getter_name": "quantityMax",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "percentage",
+            "getter_name": "percentage",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(item_created_id, item_a_id, item_b_id)",
+          "FOREIGN KEY(item_created_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION",
+          "FOREIGN KEY(item_a_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION",
+          "FOREIGN KEY(item_b_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "item_created_id",
+          "item_a_id",
+          "item_b_id"
+        ]
+      }
+    },
+    {
+      "id": 22,
+      "references": [
+        21
+      ],
+      "type": "index",
+      "data": {
+        "on": 21,
+        "name": "index_item_combination_item_a_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_item_combination_item_a_id\" ON \"item_combination\" (\"item_a_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 23,
+      "references": [
+        21
+      ],
+      "type": "index",
+      "data": {
+        "on": 21,
+        "name": "index_item_combination_item_b_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_item_combination_item_b_id\" ON \"item_combination\" (\"item_b_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 24,
+      "references": [],
+      "type": "table",
+      "data": {
+        "name": "location",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(id)"
+        ],
+        "explicit_pk": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": 25,
+      "references": [
+        24
+      ],
+      "type": "table",
+      "data": {
+        "name": "location_text",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "location_id",
+            "getter_name": "locationId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "language",
+            "getter_name": "language",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "name",
+            "getter_name": "name",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL COLLATE LOCALIZED",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "name_normalized",
+            "getter_name": "nameNormalized",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL DEFAULT ''",
+            "default_dart": "const CustomExpression('\\'\\'')",
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(location_id, language)",
+          "FOREIGN KEY(location_id)REFERENCES location(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "location_id",
+          "language"
+        ]
+      }
+    },
+    {
+      "id": 26,
+      "references": [
+        7
+      ],
+      "type": "table",
+      "data": {
+        "name": "location_item",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "location_id",
+            "getter_name": "locationId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "rank",
+            "getter_name": "rank",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "area",
+            "getter_name": "area",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "node",
+            "getter_name": "node",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "type",
+            "getter_name": "type",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "min",
+            "getter_name": "min",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "max",
+            "getter_name": "max",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "item_id",
+            "getter_name": "itemId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "percentage",
+            "getter_name": "percentage",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(location_id, rank, area, node, item_id)",
+          "FOREIGN KEY(item_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "location_id",
+          "rank",
+          "area",
+          "node",
+          "item_id"
+        ]
+      }
+    },
+    {
+      "id": 27,
+      "references": [
+        26
+      ],
+      "type": "index",
+      "data": {
+        "on": 26,
+        "name": "index_location_item_item_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_location_item_item_id\" ON \"location_item\" (\"item_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 28,
+      "references": [],
+      "type": "table",
+      "data": {
+        "name": "monster",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "monster_type",
+            "getter_name": "monsterType",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "golden_smallest_min",
+            "getter_name": "goldenSmallestMin",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "golden_smallest_max",
+            "getter_name": "goldenSmallestMax",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "golden_largest_min",
+            "getter_name": "goldenLargestMin",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "golden_largest_max",
+            "getter_name": "goldenLargestMax",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(id)"
+        ],
+        "explicit_pk": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": 29,
+      "references": [
+        28
+      ],
+      "type": "table",
+      "data": {
+        "name": "monster_text",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "monster_id",
+            "getter_name": "monsterId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "language",
+            "getter_name": "language",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "name",
+            "getter_name": "name",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL COLLATE LOCALIZED",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "ecology",
+            "getter_name": "ecology",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "description",
+            "getter_name": "description",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "name_normalized",
+            "getter_name": "nameNormalized",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL DEFAULT ''",
+            "default_dart": "const CustomExpression('\\'\\'')",
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(monster_id, language)",
+          "FOREIGN KEY(monster_id)REFERENCES monster(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "monster_id",
+          "language"
+        ]
+      }
+    },
+    {
+      "id": 30,
+      "references": [
+        28,
+        11
+      ],
+      "type": "table",
+      "data": {
+        "name": "monster_hitzone",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "monster_id",
+            "getter_name": "monsterId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "hitzone_id",
+            "getter_name": "hitzoneId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "cut",
+            "getter_name": "cut",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "impact",
+            "getter_name": "impact",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "shot",
+            "getter_name": "shot",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "fire",
+            "getter_name": "fire",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "water",
+            "getter_name": "water",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "thunder",
+            "getter_name": "thunder",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "ice",
+            "getter_name": "ice",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "dragon",
+            "getter_name": "dragon",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(monster_id, hitzone_id)",
+          "FOREIGN KEY(monster_id)REFERENCES monster(id)ON UPDATE NO ACTION ON DELETE NO ACTION",
+          "FOREIGN KEY(hitzone_id)REFERENCES hitzone(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "monster_id",
+          "hitzone_id"
+        ]
+      }
+    },
+    {
+      "id": 31,
+      "references": [
+        30
+      ],
+      "type": "index",
+      "data": {
+        "on": 30,
+        "name": "index_monster_hitzone_hitzone_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_monster_hitzone_hitzone_id\" ON \"monster_hitzone\" (\"hitzone_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 32,
+      "references": [
+        28
+      ],
+      "type": "table",
+      "data": {
+        "name": "monster_status",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "monster_id",
+            "getter_name": "monsterId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "status",
+            "getter_name": "status",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "initial",
+            "getter_name": "initial",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "increase",
+            "getter_name": "increase",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "max",
+            "getter_name": "max",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "duration",
+            "getter_name": "duration",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "damage",
+            "getter_name": "damage",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(monster_id, status)",
+          "FOREIGN KEY(monster_id)REFERENCES monster(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "monster_id",
+          "status"
+        ]
+      }
+    },
+    {
+      "id": 33,
+      "references": [
+        28
+      ],
+      "type": "table",
+      "data": {
+        "name": "monster_item",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "monster_id",
+            "getter_name": "monsterId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "flash",
+            "getter_name": "flash",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "time_flash",
+            "getter_name": "timeFlash",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "sonic_normal",
+            "getter_name": "sonicNormal",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "sonic_enraged",
+            "getter_name": "sonicEnraged",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "shock",
+            "getter_name": "shock",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "time_shock",
+            "getter_name": "timeShock",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "pitfall_normal",
+            "getter_name": "pitfallNormal",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "pitfall_enraged",
+            "getter_name": "pitfallEnraged",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "time_pitfall_unseen",
+            "getter_name": "timePitfallUnseen",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "time_pitfall_normal",
+            "getter_name": "timePitfallNormal",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "time_pitfall_enraged",
+            "getter_name": "timePitfallEnraged",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "meat",
+            "getter_name": "meat",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "dung",
+            "getter_name": "dung",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(monster_id)",
+          "FOREIGN KEY(monster_id)REFERENCES monster(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "monster_id"
+        ]
+      }
+    },
+    {
+      "id": 34,
+      "references": [
+        28,
+        13,
+        7
+      ],
+      "type": "table",
+      "data": {
+        "name": "monster_reward",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "monster_id",
+            "getter_name": "monsterId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "reward_condition_id",
+            "getter_name": "rewardConditionId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "item_id",
+            "getter_name": "itemId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "rank",
+            "getter_name": "rank",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "quantity",
+            "getter_name": "quantity",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "percentage",
+            "getter_name": "percentage",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(monster_id, reward_condition_id, item_id, rank, quantity)",
+          "FOREIGN KEY(monster_id)REFERENCES monster(id)ON UPDATE NO ACTION ON DELETE NO ACTION",
+          "FOREIGN KEY(reward_condition_id)REFERENCES reward_condition(id)ON UPDATE NO ACTION ON DELETE NO ACTION",
+          "FOREIGN KEY(item_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "monster_id",
+          "reward_condition_id",
+          "item_id",
+          "rank",
+          "quantity"
+        ]
+      }
+    },
+    {
+      "id": 35,
+      "references": [
+        34
+      ],
+      "type": "index",
+      "data": {
+        "on": 34,
+        "name": "index_monster_reward_reward_condition_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_monster_reward_reward_condition_id\" ON \"monster_reward\" (\"reward_condition_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 36,
+      "references": [
+        34
+      ],
+      "type": "index",
+      "data": {
+        "on": 34,
+        "name": "index_monster_reward_item_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_monster_reward_item_id\" ON \"monster_reward\" (\"item_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 37,
+      "references": [
+        24
+      ],
+      "type": "table",
+      "data": {
+        "name": "quest",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "location_id",
+            "getter_name": "locationId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "daytime",
+            "getter_name": "daytime",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "group",
+            "getter_name": "group",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "hub_type",
+            "getter_name": "hubType",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "stars",
+            "getter_name": "stars",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "goal_type",
+            "getter_name": "goalType",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "quest_type",
+            "getter_name": "questType",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "reward",
+            "getter_name": "reward",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "fee",
+            "getter_name": "fee",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "time_limit",
+            "getter_name": "timeLimit",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(id)",
+          "FOREIGN KEY(location_id)REFERENCES location(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": 38,
+      "references": [
+        37
+      ],
+      "type": "index",
+      "data": {
+        "on": 37,
+        "name": "index_quest_location_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_quest_location_id\" ON \"quest\" (\"location_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 39,
+      "references": [
+        37
+      ],
+      "type": "table",
+      "data": {
+        "name": "quest_text",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "quest_id",
+            "getter_name": "questId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "language",
+            "getter_name": "language",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "name",
+            "getter_name": "name",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL COLLATE LOCALIZED",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "goal",
+            "getter_name": "goal",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "client",
+            "getter_name": "client",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "description",
+            "getter_name": "description",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "name_normalized",
+            "getter_name": "nameNormalized",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL DEFAULT ''",
+            "default_dart": "const CustomExpression('\\'\\'')",
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(quest_id, language)",
+          "FOREIGN KEY(quest_id)REFERENCES quest(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "quest_id",
+          "language"
+        ]
+      }
+    },
+    {
+      "id": 40,
+      "references": [
+        37,
+        28
+      ],
+      "type": "table",
+      "data": {
+        "name": "quest_monster",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "quest_id",
+            "getter_name": "questId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "monster_id",
+            "getter_name": "monsterId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(quest_id, monster_id)",
+          "FOREIGN KEY(quest_id)REFERENCES quest(id)ON UPDATE NO ACTION ON DELETE NO ACTION",
+          "FOREIGN KEY(monster_id)REFERENCES monster(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "quest_id",
+          "monster_id"
+        ]
+      }
+    },
+    {
+      "id": 41,
+      "references": [
+        40
+      ],
+      "type": "index",
+      "data": {
+        "on": 40,
+        "name": "index_quest_monster_monster_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_quest_monster_monster_id\" ON \"quest_monster\" (\"monster_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 42,
+      "references": [
+        37,
+        13,
+        7
+      ],
+      "type": "table",
+      "data": {
+        "name": "quest_reward",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "quest_id",
+            "getter_name": "questId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "reward_condition_id",
+            "getter_name": "rewardConditionId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "item_id",
+            "getter_name": "itemId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "quantity",
+            "getter_name": "quantity",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "percentage",
+            "getter_name": "percentage",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(quest_id, reward_condition_id, item_id, quantity)",
+          "FOREIGN KEY(quest_id)REFERENCES quest(id)ON UPDATE NO ACTION ON DELETE NO ACTION",
+          "FOREIGN KEY(reward_condition_id)REFERENCES reward_condition(id)ON UPDATE NO ACTION ON DELETE NO ACTION",
+          "FOREIGN KEY(item_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "quest_id",
+          "reward_condition_id",
+          "item_id",
+          "quantity"
+        ]
+      }
+    },
+    {
+      "id": 43,
+      "references": [
+        42
+      ],
+      "type": "index",
+      "data": {
+        "on": 42,
+        "name": "index_quest_reward_reward_condition_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_quest_reward_reward_condition_id\" ON \"quest_reward\" (\"reward_condition_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 44,
+      "references": [
+        42
+      ],
+      "type": "index",
+      "data": {
+        "on": 42,
+        "name": "index_quest_reward_item_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_quest_reward_item_id\" ON \"quest_reward\" (\"item_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 45,
+      "references": [
+        37,
+        7
+      ],
+      "type": "table",
+      "data": {
+        "name": "quest_supply",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "quest_id",
+            "getter_name": "questId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "item_id",
+            "getter_name": "itemId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "quantity",
+            "getter_name": "quantity",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "box_order",
+            "getter_name": "boxOrder",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(quest_id, item_id, box_order)",
+          "FOREIGN KEY(quest_id)REFERENCES quest(id)ON UPDATE NO ACTION ON DELETE NO ACTION",
+          "FOREIGN KEY(item_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "quest_id",
+          "item_id",
+          "box_order"
+        ]
+      }
+    },
+    {
+      "id": 46,
+      "references": [
+        45
+      ],
+      "type": "index",
+      "data": {
+        "on": 45,
+        "name": "index_quest_supply_item_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_quest_supply_item_id\" ON \"quest_supply\" (\"item_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 47,
+      "references": [
+        4
+      ],
+      "type": "table",
+      "data": {
+        "name": "skill_tree_text",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "skill_tree_id",
+            "getter_name": "skillTreeId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "language",
+            "getter_name": "language",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "name",
+            "getter_name": "name",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL COLLATE LOCALIZED",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "full_name",
+            "getter_name": "fullName",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL COLLATE LOCALIZED",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "name_normalized",
+            "getter_name": "nameNormalized",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL DEFAULT ''",
+            "default_dart": "const CustomExpression('\\'\\'')",
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "full_name_normalized",
+            "getter_name": "fullNameNormalized",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL DEFAULT ''",
+            "default_dart": "const CustomExpression('\\'\\'')",
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(skill_tree_id, language)",
+          "FOREIGN KEY(skill_tree_id)REFERENCES skill_tree(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "skill_tree_id",
+          "language"
+        ]
+      }
+    },
+    {
+      "id": 48,
+      "references": [
+        4
+      ],
+      "type": "table",
+      "data": {
+        "name": "skill",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "skill_tree_id",
+            "getter_name": "skillTreeId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "required_points",
+            "getter_name": "requiredPoints",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(id)",
+          "FOREIGN KEY(skill_tree_id)REFERENCES skill_tree(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": 49,
+      "references": [
+        48
+      ],
+      "type": "index",
+      "data": {
+        "on": 48,
+        "name": "index_skill_skill_tree_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_skill_skill_tree_id\" ON \"skill\" (\"skill_tree_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 50,
+      "references": [
+        48
+      ],
+      "type": "table",
+      "data": {
+        "name": "skill_text",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "skill_id",
+            "getter_name": "skillId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "language",
+            "getter_name": "language",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "name",
+            "getter_name": "name",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL COLLATE LOCALIZED",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "full_name",
+            "getter_name": "fullName",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL COLLATE LOCALIZED",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "description",
+            "getter_name": "description",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "name_normalized",
+            "getter_name": "nameNormalized",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL DEFAULT ''",
+            "default_dart": "const CustomExpression('\\'\\'')",
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "full_name_normalized",
+            "getter_name": "fullNameNormalized",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL DEFAULT ''",
+            "default_dart": "const CustomExpression('\\'\\'')",
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(skill_id, language)",
+          "FOREIGN KEY(skill_id)REFERENCES skill(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "skill_id",
+          "language"
+        ]
+      }
+    },
+    {
+      "id": 51,
+      "references": [],
+      "type": "table",
+      "data": {
+        "name": "weapon",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "weapon_type",
+            "getter_name": "weaponType",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "rarity",
+            "getter_name": "rarity",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "affinity",
+            "getter_name": "affinity",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "defense",
+            "getter_name": "defense",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "num_slots",
+            "getter_name": "numSlots",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "attack",
+            "getter_name": "attack",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "max_attack",
+            "getter_name": "maxAttack",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "price",
+            "getter_name": "price",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "element_1",
+            "getter_name": "element1",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "element_1_value",
+            "getter_name": "element1Value",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "element_2",
+            "getter_name": "element2",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "element_2_value",
+            "getter_name": "element2Value",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "sharpness",
+            "getter_name": "sharpness",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "sharpness_plus",
+            "getter_name": "sharpnessPlus",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "shelling_type",
+            "getter_name": "shellingType",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "shelling_level",
+            "getter_name": "shellingLevel",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "song_notes",
+            "getter_name": "songNotes",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "reload_speed",
+            "getter_name": "reloadSpeed",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "recoil",
+            "getter_name": "recoil",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "buildable",
+            "getter_name": "buildable",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(id)"
+        ],
+        "explicit_pk": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": 52,
+      "references": [
+        51
+      ],
+      "type": "table",
+      "data": {
+        "name": "user_set",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "PRIMARY KEY AUTOINCREMENT NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              "auto-increment"
+            ]
+          },
+          {
+            "name": "name",
+            "getter_name": "name",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "hunter_type",
+            "getter_name": "hunterType",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "gender",
+            "getter_name": "gender",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "weapon_id",
+            "getter_name": "weaponId",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "FOREIGN KEY(weapon_id)REFERENCES weapon(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ]
+      }
+    },
+    {
+      "id": 53,
+      "references": [
+        52
+      ],
+      "type": "index",
+      "data": {
+        "on": 52,
+        "name": "index_user_set_weapon_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_user_set_weapon_id\" ON \"user_set\" (\"weapon_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 54,
+      "references": [
+        52,
+        1
+      ],
+      "type": "table",
+      "data": {
+        "name": "user_set_armor",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "user_set_id",
+            "getter_name": "userSetId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "armor_id",
+            "getter_name": "armorId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(user_set_id, armor_id)",
+          "FOREIGN KEY(user_set_id)REFERENCES user_set(id)ON UPDATE NO ACTION ON DELETE CASCADE",
+          "FOREIGN KEY(armor_id)REFERENCES armor(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "user_set_id",
+          "armor_id"
+        ]
+      }
+    },
+    {
+      "id": 55,
+      "references": [
+        54
+      ],
+      "type": "index",
+      "data": {
+        "on": 54,
+        "name": "index_user_set_armor_armor_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_user_set_armor_armor_id\" ON \"user_set_armor\" (\"armor_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 56,
+      "references": [
+        52,
+        15
+      ],
+      "type": "table",
+      "data": {
+        "name": "user_set_decoration",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "user_set_id",
+            "getter_name": "userSetId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "decoration_id",
+            "getter_name": "decorationId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "equipment_type",
+            "getter_name": "equipmentType",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "quantity",
+            "getter_name": "quantity",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(user_set_id, decoration_id, equipment_type)",
+          "FOREIGN KEY(user_set_id)REFERENCES user_set(id)ON UPDATE NO ACTION ON DELETE CASCADE",
+          "FOREIGN KEY(decoration_id)REFERENCES decoration(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "user_set_id",
+          "decoration_id",
+          "equipment_type"
+        ]
+      }
+    },
+    {
+      "id": 57,
+      "references": [
+        56
+      ],
+      "type": "index",
+      "data": {
+        "on": 56,
+        "name": "index_user_set_decoration_decoration_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_user_set_decoration_decoration_id\" ON \"user_set_decoration\" (\"decoration_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 58,
+      "references": [
+        24
+      ],
+      "type": "table",
+      "data": {
+        "name": "veggie",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "location_id",
+            "getter_name": "locationId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "location_area",
+            "getter_name": "locationArea",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(id)",
+          "FOREIGN KEY(location_id)REFERENCES location(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": 59,
+      "references": [
+        58
+      ],
+      "type": "index",
+      "data": {
+        "on": 58,
+        "name": "index_veggie_location_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_veggie_location_id\" ON \"veggie\" (\"location_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 60,
+      "references": [
+        58,
+        7
+      ],
+      "type": "table",
+      "data": {
+        "name": "veggie_trade",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "veggie_id",
+            "getter_name": "veggieId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "item_traded_id",
+            "getter_name": "itemTradedId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "item_common_id",
+            "getter_name": "itemCommonId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "item_rare_id",
+            "getter_name": "itemRareId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(veggie_id, item_traded_id)",
+          "FOREIGN KEY(veggie_id)REFERENCES veggie(id)ON UPDATE NO ACTION ON DELETE NO ACTION",
+          "FOREIGN KEY(item_traded_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION",
+          "FOREIGN KEY(item_common_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION",
+          "FOREIGN KEY(item_rare_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "veggie_id",
+          "item_traded_id"
+        ]
+      }
+    },
+    {
+      "id": 61,
+      "references": [
+        60
+      ],
+      "type": "index",
+      "data": {
+        "on": 60,
+        "name": "index_veggie_trade_item_traded_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_veggie_trade_item_traded_id\" ON \"veggie_trade\" (\"item_traded_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 62,
+      "references": [
+        60
+      ],
+      "type": "index",
+      "data": {
+        "on": 60,
+        "name": "index_veggie_trade_item_common_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_veggie_trade_item_common_id\" ON \"veggie_trade\" (\"item_common_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 63,
+      "references": [
+        60
+      ],
+      "type": "index",
+      "data": {
+        "on": 60,
+        "name": "index_veggie_trade_item_rare_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_veggie_trade_item_rare_id\" ON \"veggie_trade\" (\"item_rare_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 64,
+      "references": [
+        51
+      ],
+      "type": "table",
+      "data": {
+        "name": "weapon_text",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "weapon_id",
+            "getter_name": "weaponId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "language",
+            "getter_name": "language",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "name",
+            "getter_name": "name",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL COLLATE LOCALIZED",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "full_name",
+            "getter_name": "fullName",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL COLLATE LOCALIZED",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "description",
+            "getter_name": "description",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "name_normalized",
+            "getter_name": "nameNormalized",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL DEFAULT ''",
+            "default_dart": "const CustomExpression('\\'\\'')",
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "full_name_normalized",
+            "getter_name": "fullNameNormalized",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL DEFAULT ''",
+            "default_dart": "const CustomExpression('\\'\\'')",
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(weapon_id, language)",
+          "FOREIGN KEY(weapon_id)REFERENCES weapon(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "weapon_id",
+          "language"
+        ]
+      }
+    },
+    {
+      "id": 65,
+      "references": [
+        51
+      ],
+      "type": "table",
+      "data": {
+        "name": "weapon_parent",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "weapon_id",
+            "getter_name": "weaponId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "parent_weapon_id",
+            "getter_name": "parentWeaponId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(weapon_id, parent_weapon_id)",
+          "FOREIGN KEY(weapon_id)REFERENCES weapon(id)ON UPDATE NO ACTION ON DELETE NO ACTION",
+          "FOREIGN KEY(parent_weapon_id)REFERENCES weapon(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "weapon_id",
+          "parent_weapon_id"
+        ]
+      }
+    },
+    {
+      "id": 66,
+      "references": [
+        65
+      ],
+      "type": "index",
+      "data": {
+        "on": 65,
+        "name": "index_weapon_parent_parent_weapon_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_weapon_parent_parent_weapon_id\" ON \"weapon_parent\" (\"parent_weapon_id\");",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 67,
+      "references": [
+        51
+      ],
+      "type": "table",
+      "data": {
+        "name": "weapon_ammo_bow",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "weapon_id",
+            "getter_name": "weaponId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "charge_1_type",
+            "getter_name": "charge1Type",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "charge_1_level",
+            "getter_name": "charge1Level",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "charge_2_type",
+            "getter_name": "charge2Type",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "charge_2_level",
+            "getter_name": "charge2Level",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "charge_3_type",
+            "getter_name": "charge3Type",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "charge_3_level",
+            "getter_name": "charge3Level",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "charge_4_type",
+            "getter_name": "charge4Type",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "charge_4_level",
+            "getter_name": "charge4Level",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "power",
+            "getter_name": "power",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "close",
+            "getter_name": "close",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "paint",
+            "getter_name": "paint",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "poison",
+            "getter_name": "poison",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "paralysis",
+            "getter_name": "paralysis",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "sleep",
+            "getter_name": "sleep",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(weapon_id)",
+          "FOREIGN KEY(weapon_id)REFERENCES weapon(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "weapon_id"
+        ]
+      }
+    },
+    {
+      "id": 68,
+      "references": [
+        51
+      ],
+      "type": "table",
+      "data": {
+        "name": "weapon_ammo_bowgun",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "weapon_id",
+            "getter_name": "weaponId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "normal",
+            "getter_name": "normal",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "pierce",
+            "getter_name": "pierce",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "pellet",
+            "getter_name": "pellet",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "crag",
+            "getter_name": "crag",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "clust",
+            "getter_name": "clust",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "recovery",
+            "getter_name": "recovery",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "poison",
+            "getter_name": "poison",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "paralysis",
+            "getter_name": "paralysis",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "sleep",
+            "getter_name": "sleep",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "flame",
+            "getter_name": "flame",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "water",
+            "getter_name": "water",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "thunder",
+            "getter_name": "thunder",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "freeze",
+            "getter_name": "freeze",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "dragon",
+            "getter_name": "dragon",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "tranq",
+            "getter_name": "tranq",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "paint",
+            "getter_name": "paint",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "demon",
+            "getter_name": "demon",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "armor",
+            "getter_name": "armor",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "rapid_fire",
+            "getter_name": "rapidFire",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(weapon_id)",
+          "FOREIGN KEY(weapon_id)REFERENCES weapon(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "weapon_id"
+        ]
+      }
+    },
+    {
+      "id": 69,
+      "references": [
+        51,
+        7
+      ],
+      "type": "table",
+      "data": {
+        "name": "weapon_recipe",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "weapon_id",
+            "getter_name": "weaponId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "item_id",
+            "getter_name": "itemId",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "quantity",
+            "getter_name": "quantity",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "recipe_type",
+            "getter_name": "recipeType",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "recipe_variant",
+            "getter_name": "recipeVariant",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "PRIMARY KEY(weapon_id, item_id, recipe_type, recipe_variant)",
+          "FOREIGN KEY(weapon_id)REFERENCES weapon(id)ON UPDATE NO ACTION ON DELETE NO ACTION",
+          "FOREIGN KEY(item_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION"
+        ],
+        "explicit_pk": [
+          "weapon_id",
+          "item_id",
+          "recipe_type",
+          "recipe_variant"
+        ]
+      }
+    },
+    {
+      "id": 70,
+      "references": [
+        69
+      ],
+      "type": "index",
+      "data": {
+        "on": 69,
+        "name": "index_weapon_recipe_item_id",
+        "sql": "CREATE INDEX IF NOT EXISTS \"index_weapon_recipe_item_id\" ON \"weapon_recipe\" (\"item_id\");",
+        "unique": false,
+        "columns": []
+      }
+    }
+  ],
+  "fixed_sql": [
+    {
+      "name": "armor_set",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"armor_set\" (\"id\" INTEGER NOT NULL, \"rarity\" INTEGER NOT NULL, \"rank\" TEXT NOT NULL, \"hunter_type\" TEXT NOT NULL, \"gender\" TEXT NOT NULL, PRIMARY KEY(id));"
+        }
+      ]
+    },
+    {
+      "name": "armor",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"armor\" (\"id\" INTEGER NOT NULL, \"armor_set_id\" INTEGER NOT NULL, \"armor_type\" TEXT NOT NULL, \"hunter_type\" TEXT NOT NULL, \"gender\" TEXT NOT NULL, \"rarity\" INTEGER NOT NULL, \"price\" INTEGER NOT NULL, \"num_slots\" INTEGER NOT NULL, \"defense\" INTEGER NOT NULL, \"max_defense\" INTEGER NOT NULL, \"fire_res\" INTEGER NOT NULL, \"water_res\" INTEGER NOT NULL, \"thunder_res\" INTEGER NOT NULL, \"ice_res\" INTEGER NOT NULL, \"dragon_res\" INTEGER NOT NULL, PRIMARY KEY(id), FOREIGN KEY(armor_set_id)REFERENCES armor_set(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "index_armor_armor_set_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_armor_armor_set_id ON armor (armor_set_id)"
+        }
+      ]
+    },
+    {
+      "name": "armor_text",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"armor_text\" (\"armor_id\" INTEGER NOT NULL, \"language\" TEXT NOT NULL, \"name\" TEXT NOT NULL COLLATE LOCALIZED, \"full_name\" TEXT NOT NULL COLLATE LOCALIZED, \"description\" TEXT NOT NULL, \"name_normalized\" TEXT NOT NULL DEFAULT '', \"full_name_normalized\" TEXT NOT NULL DEFAULT '', PRIMARY KEY(armor_id, language), FOREIGN KEY(armor_id)REFERENCES armor(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "skill_tree",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"skill_tree\" (\"id\" INTEGER NOT NULL, \"category\" TEXT NOT NULL, PRIMARY KEY(id));"
+        }
+      ]
+    },
+    {
+      "name": "armor_skill",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"armor_skill\" (\"armor_id\" INTEGER NOT NULL, \"skill_tree_id\" INTEGER NOT NULL, \"point_value\" INTEGER NOT NULL, PRIMARY KEY(armor_id, skill_tree_id), FOREIGN KEY(armor_id)REFERENCES armor(id)ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY(skill_tree_id)REFERENCES skill_tree(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "index_armor_skill_skill_tree_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_armor_skill_skill_tree_id ON armor_skill (skill_tree_id)"
+        }
+      ]
+    },
+    {
+      "name": "item",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"item\" (\"id\" INTEGER NOT NULL, \"rarity\" INTEGER NOT NULL, \"buy_price\" INTEGER, \"sell_price\" INTEGER NOT NULL, \"carry_max\" INTEGER NOT NULL, \"category\" TEXT NOT NULL, \"icon_type\" TEXT NOT NULL, \"icon_color\" TEXT NOT NULL, PRIMARY KEY(id));"
+        }
+      ]
+    },
+    {
+      "name": "armor_recipe",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"armor_recipe\" (\"armor_id\" INTEGER NOT NULL, \"item_id\" INTEGER NOT NULL, \"quantity\" INTEGER NOT NULL, \"recipe_variant\" INTEGER NOT NULL, PRIMARY KEY(armor_id, item_id, recipe_variant), FOREIGN KEY(armor_id)REFERENCES armor(id)ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY(item_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "index_armor_recipe_item_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_armor_recipe_item_id ON armor_recipe (item_id)"
+        }
+      ]
+    },
+    {
+      "name": "armor_set_text",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"armor_set_text\" (\"armor_set_id\" INTEGER NOT NULL, \"language\" TEXT NOT NULL, \"name\" TEXT NOT NULL COLLATE LOCALIZED, \"name_normalized\" TEXT NOT NULL DEFAULT '', PRIMARY KEY(armor_set_id, language), FOREIGN KEY(armor_set_id)REFERENCES armor_set(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "hitzone",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"hitzone\" (\"id\" INTEGER NOT NULL, PRIMARY KEY(id));"
+        }
+      ]
+    },
+    {
+      "name": "hitzone_text",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"hitzone_text\" (\"hitzone_id\" INTEGER NOT NULL, \"language\" TEXT NOT NULL, \"name\" TEXT NOT NULL, PRIMARY KEY(hitzone_id, language), FOREIGN KEY(hitzone_id)REFERENCES hitzone(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "reward_condition",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"reward_condition\" (\"id\" INTEGER NOT NULL, PRIMARY KEY(id));"
+        }
+      ]
+    },
+    {
+      "name": "reward_condition_text",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"reward_condition_text\" (\"reward_condition_id\" INTEGER NOT NULL, \"language\" TEXT NOT NULL, \"name\" TEXT NOT NULL, \"description\" TEXT, PRIMARY KEY(reward_condition_id, language), FOREIGN KEY(reward_condition_id)REFERENCES reward_condition(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "decoration",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"decoration\" (\"id\" INTEGER NOT NULL, \"shop_order\" INTEGER NOT NULL, \"required_slots\" INTEGER NOT NULL, PRIMARY KEY(id), FOREIGN KEY(id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "decoration_skill",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"decoration_skill\" (\"decoration_id\" INTEGER NOT NULL, \"skill_tree_id\" INTEGER NOT NULL, \"point_value\" INTEGER NOT NULL, PRIMARY KEY(decoration_id, skill_tree_id), FOREIGN KEY(decoration_id)REFERENCES decoration(id)ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY(skill_tree_id)REFERENCES skill_tree(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "index_decoration_skill_skill_tree_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_decoration_skill_skill_tree_id ON decoration_skill (skill_tree_id)"
+        }
+      ]
+    },
+    {
+      "name": "decoration_recipe",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"decoration_recipe\" (\"decoration_id\" INTEGER NOT NULL, \"item_id\" INTEGER NOT NULL, \"quantity\" INTEGER NOT NULL, \"recipe_variant\" INTEGER NOT NULL, PRIMARY KEY(decoration_id, item_id, recipe_variant), FOREIGN KEY(decoration_id)REFERENCES decoration(id)ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY(item_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "index_decoration_recipe_item_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_decoration_recipe_item_id ON decoration_recipe (item_id)"
+        }
+      ]
+    },
+    {
+      "name": "item_text",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"item_text\" (\"item_id\" INTEGER NOT NULL, \"language\" TEXT NOT NULL, \"name\" TEXT NOT NULL COLLATE LOCALIZED, \"full_name\" TEXT NOT NULL COLLATE LOCALIZED, \"description\" TEXT NOT NULL, \"name_normalized\" TEXT NOT NULL DEFAULT '', \"full_name_normalized\" TEXT NOT NULL DEFAULT '', PRIMARY KEY(item_id, language), FOREIGN KEY(item_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "item_combination",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"item_combination\" (\"item_created_id\" INTEGER NOT NULL, \"item_a_id\" INTEGER NOT NULL, \"item_b_id\" INTEGER NOT NULL, \"combination_type\" TEXT NOT NULL, \"quantity_min\" INTEGER NOT NULL, \"quantity_max\" INTEGER NOT NULL, \"percentage\" INTEGER NOT NULL, PRIMARY KEY(item_created_id, item_a_id, item_b_id), FOREIGN KEY(item_created_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY(item_a_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY(item_b_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "index_item_combination_item_a_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_item_combination_item_a_id ON item_combination (item_a_id)"
+        }
+      ]
+    },
+    {
+      "name": "index_item_combination_item_b_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_item_combination_item_b_id ON item_combination (item_b_id)"
+        }
+      ]
+    },
+    {
+      "name": "location",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"location\" (\"id\" INTEGER NOT NULL, PRIMARY KEY(id));"
+        }
+      ]
+    },
+    {
+      "name": "location_text",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"location_text\" (\"location_id\" INTEGER NOT NULL, \"language\" TEXT NOT NULL, \"name\" TEXT NOT NULL COLLATE LOCALIZED, \"name_normalized\" TEXT NOT NULL DEFAULT '', PRIMARY KEY(location_id, language), FOREIGN KEY(location_id)REFERENCES location(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "location_item",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"location_item\" (\"location_id\" INTEGER NOT NULL, \"rank\" TEXT NOT NULL, \"area\" INTEGER NOT NULL, \"node\" INTEGER NOT NULL, \"type\" TEXT NOT NULL, \"min\" INTEGER NOT NULL, \"max\" INTEGER NOT NULL, \"item_id\" INTEGER NOT NULL, \"percentage\" INTEGER NOT NULL, PRIMARY KEY(location_id, rank, area, node, item_id), FOREIGN KEY(item_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "index_location_item_item_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_location_item_item_id ON location_item (item_id)"
+        }
+      ]
+    },
+    {
+      "name": "monster",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"monster\" (\"id\" INTEGER NOT NULL, \"monster_type\" TEXT NOT NULL, \"golden_smallest_min\" INTEGER, \"golden_smallest_max\" INTEGER, \"golden_largest_min\" INTEGER, \"golden_largest_max\" INTEGER, PRIMARY KEY(id));"
+        }
+      ]
+    },
+    {
+      "name": "monster_text",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"monster_text\" (\"monster_id\" INTEGER NOT NULL, \"language\" TEXT NOT NULL, \"name\" TEXT NOT NULL COLLATE LOCALIZED, \"ecology\" TEXT NOT NULL, \"description\" TEXT NOT NULL, \"name_normalized\" TEXT NOT NULL DEFAULT '', PRIMARY KEY(monster_id, language), FOREIGN KEY(monster_id)REFERENCES monster(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "monster_hitzone",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"monster_hitzone\" (\"monster_id\" INTEGER NOT NULL, \"hitzone_id\" INTEGER NOT NULL, \"cut\" INTEGER NOT NULL, \"impact\" INTEGER NOT NULL, \"shot\" INTEGER NOT NULL, \"fire\" INTEGER NOT NULL, \"water\" INTEGER NOT NULL, \"thunder\" INTEGER NOT NULL, \"ice\" INTEGER NOT NULL, \"dragon\" INTEGER NOT NULL, PRIMARY KEY(monster_id, hitzone_id), FOREIGN KEY(monster_id)REFERENCES monster(id)ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY(hitzone_id)REFERENCES hitzone(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "index_monster_hitzone_hitzone_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_monster_hitzone_hitzone_id ON monster_hitzone (hitzone_id)"
+        }
+      ]
+    },
+    {
+      "name": "monster_status",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"monster_status\" (\"monster_id\" INTEGER NOT NULL, \"status\" TEXT NOT NULL, \"initial\" INTEGER NOT NULL, \"increase\" INTEGER NOT NULL, \"max\" INTEGER NOT NULL, \"duration\" INTEGER NOT NULL, \"damage\" INTEGER NOT NULL, PRIMARY KEY(monster_id, status), FOREIGN KEY(monster_id)REFERENCES monster(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "monster_item",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"monster_item\" (\"monster_id\" INTEGER NOT NULL, \"flash\" INTEGER NOT NULL, \"time_flash\" INTEGER, \"sonic_normal\" INTEGER NOT NULL, \"sonic_enraged\" INTEGER NOT NULL, \"shock\" INTEGER NOT NULL, \"time_shock\" INTEGER, \"pitfall_normal\" INTEGER NOT NULL, \"pitfall_enraged\" INTEGER NOT NULL, \"time_pitfall_unseen\" INTEGER, \"time_pitfall_normal\" INTEGER, \"time_pitfall_enraged\" INTEGER, \"meat\" INTEGER NOT NULL, \"dung\" INTEGER NOT NULL, PRIMARY KEY(monster_id), FOREIGN KEY(monster_id)REFERENCES monster(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "monster_reward",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"monster_reward\" (\"monster_id\" INTEGER NOT NULL, \"reward_condition_id\" INTEGER NOT NULL, \"item_id\" INTEGER NOT NULL, \"rank\" TEXT NOT NULL, \"quantity\" INTEGER NOT NULL, \"percentage\" INTEGER NOT NULL, PRIMARY KEY(monster_id, reward_condition_id, item_id, rank, quantity), FOREIGN KEY(monster_id)REFERENCES monster(id)ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY(reward_condition_id)REFERENCES reward_condition(id)ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY(item_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "index_monster_reward_reward_condition_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_monster_reward_reward_condition_id ON monster_reward (reward_condition_id)"
+        }
+      ]
+    },
+    {
+      "name": "index_monster_reward_item_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_monster_reward_item_id ON monster_reward (item_id)"
+        }
+      ]
+    },
+    {
+      "name": "quest",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"quest\" (\"id\" INTEGER NOT NULL, \"location_id\" INTEGER NOT NULL, \"daytime\" TEXT, \"group\" TEXT NOT NULL, \"hub_type\" TEXT NOT NULL, \"stars\" INTEGER NOT NULL, \"goal_type\" TEXT NOT NULL, \"quest_type\" TEXT NOT NULL, \"reward\" INTEGER NOT NULL, \"fee\" INTEGER NOT NULL, \"time_limit\" INTEGER NOT NULL, PRIMARY KEY(id), FOREIGN KEY(location_id)REFERENCES location(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "index_quest_location_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_quest_location_id ON quest (location_id)"
+        }
+      ]
+    },
+    {
+      "name": "quest_text",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"quest_text\" (\"quest_id\" INTEGER NOT NULL, \"language\" TEXT NOT NULL, \"name\" TEXT NOT NULL COLLATE LOCALIZED, \"goal\" TEXT NOT NULL, \"client\" TEXT NOT NULL, \"description\" TEXT NOT NULL, \"name_normalized\" TEXT NOT NULL DEFAULT '', PRIMARY KEY(quest_id, language), FOREIGN KEY(quest_id)REFERENCES quest(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "quest_monster",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"quest_monster\" (\"quest_id\" INTEGER NOT NULL, \"monster_id\" INTEGER NOT NULL, PRIMARY KEY(quest_id, monster_id), FOREIGN KEY(quest_id)REFERENCES quest(id)ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY(monster_id)REFERENCES monster(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "index_quest_monster_monster_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_quest_monster_monster_id ON quest_monster (monster_id)"
+        }
+      ]
+    },
+    {
+      "name": "quest_reward",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"quest_reward\" (\"quest_id\" INTEGER NOT NULL, \"reward_condition_id\" INTEGER NOT NULL, \"item_id\" INTEGER NOT NULL, \"quantity\" INTEGER NOT NULL, \"percentage\" INTEGER NOT NULL, PRIMARY KEY(quest_id, reward_condition_id, item_id, quantity), FOREIGN KEY(quest_id)REFERENCES quest(id)ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY(reward_condition_id)REFERENCES reward_condition(id)ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY(item_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "index_quest_reward_reward_condition_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_quest_reward_reward_condition_id ON quest_reward (reward_condition_id)"
+        }
+      ]
+    },
+    {
+      "name": "index_quest_reward_item_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_quest_reward_item_id ON quest_reward (item_id)"
+        }
+      ]
+    },
+    {
+      "name": "quest_supply",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"quest_supply\" (\"quest_id\" INTEGER NOT NULL, \"item_id\" INTEGER NOT NULL, \"quantity\" INTEGER NOT NULL, \"box_order\" INTEGER NOT NULL, PRIMARY KEY(quest_id, item_id, box_order), FOREIGN KEY(quest_id)REFERENCES quest(id)ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY(item_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "index_quest_supply_item_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_quest_supply_item_id ON quest_supply (item_id)"
+        }
+      ]
+    },
+    {
+      "name": "skill_tree_text",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"skill_tree_text\" (\"skill_tree_id\" INTEGER NOT NULL, \"language\" TEXT NOT NULL, \"name\" TEXT NOT NULL COLLATE LOCALIZED, \"full_name\" TEXT NOT NULL COLLATE LOCALIZED, \"name_normalized\" TEXT NOT NULL DEFAULT '', \"full_name_normalized\" TEXT NOT NULL DEFAULT '', PRIMARY KEY(skill_tree_id, language), FOREIGN KEY(skill_tree_id)REFERENCES skill_tree(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "skill",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"skill\" (\"id\" INTEGER NOT NULL, \"skill_tree_id\" INTEGER NOT NULL, \"required_points\" INTEGER NOT NULL, PRIMARY KEY(id), FOREIGN KEY(skill_tree_id)REFERENCES skill_tree(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "index_skill_skill_tree_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_skill_skill_tree_id ON skill (skill_tree_id)"
+        }
+      ]
+    },
+    {
+      "name": "skill_text",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"skill_text\" (\"skill_id\" INTEGER NOT NULL, \"language\" TEXT NOT NULL, \"name\" TEXT NOT NULL COLLATE LOCALIZED, \"full_name\" TEXT NOT NULL COLLATE LOCALIZED, \"description\" TEXT NOT NULL, \"name_normalized\" TEXT NOT NULL DEFAULT '', \"full_name_normalized\" TEXT NOT NULL DEFAULT '', PRIMARY KEY(skill_id, language), FOREIGN KEY(skill_id)REFERENCES skill(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "weapon",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"weapon\" (\"id\" INTEGER NOT NULL, \"weapon_type\" TEXT NOT NULL, \"rarity\" INTEGER NOT NULL, \"affinity\" INTEGER NOT NULL, \"defense\" INTEGER NOT NULL, \"num_slots\" INTEGER NOT NULL, \"attack\" INTEGER NOT NULL, \"max_attack\" INTEGER, \"price\" INTEGER NOT NULL, \"element_1\" TEXT, \"element_1_value\" INTEGER, \"element_2\" TEXT, \"element_2_value\" INTEGER, \"sharpness\" TEXT, \"sharpness_plus\" TEXT, \"shelling_type\" TEXT, \"shelling_level\" INTEGER, \"song_notes\" TEXT, \"reload_speed\" TEXT, \"recoil\" TEXT, \"buildable\" INTEGER NOT NULL, PRIMARY KEY(id));"
+        }
+      ]
+    },
+    {
+      "name": "user_set",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"user_set\" (\"id\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \"name\" TEXT NOT NULL, \"hunter_type\" TEXT NOT NULL, \"gender\" TEXT NOT NULL, \"weapon_id\" INTEGER, FOREIGN KEY(weapon_id)REFERENCES weapon(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "index_user_set_weapon_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_user_set_weapon_id ON user_set (weapon_id)"
+        }
+      ]
+    },
+    {
+      "name": "user_set_armor",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"user_set_armor\" (\"user_set_id\" INTEGER NOT NULL, \"armor_id\" INTEGER NOT NULL, PRIMARY KEY(user_set_id, armor_id), FOREIGN KEY(user_set_id)REFERENCES user_set(id)ON UPDATE NO ACTION ON DELETE CASCADE, FOREIGN KEY(armor_id)REFERENCES armor(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "index_user_set_armor_armor_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_user_set_armor_armor_id ON user_set_armor (armor_id)"
+        }
+      ]
+    },
+    {
+      "name": "user_set_decoration",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"user_set_decoration\" (\"user_set_id\" INTEGER NOT NULL, \"decoration_id\" INTEGER NOT NULL, \"equipment_type\" TEXT NOT NULL, \"quantity\" INTEGER NOT NULL, PRIMARY KEY(user_set_id, decoration_id, equipment_type), FOREIGN KEY(user_set_id)REFERENCES user_set(id)ON UPDATE NO ACTION ON DELETE CASCADE, FOREIGN KEY(decoration_id)REFERENCES decoration(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "index_user_set_decoration_decoration_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_user_set_decoration_decoration_id ON user_set_decoration (decoration_id)"
+        }
+      ]
+    },
+    {
+      "name": "veggie",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"veggie\" (\"id\" INTEGER NOT NULL, \"location_id\" INTEGER NOT NULL, \"location_area\" INTEGER NOT NULL, PRIMARY KEY(id), FOREIGN KEY(location_id)REFERENCES location(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "index_veggie_location_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_veggie_location_id ON veggie (location_id)"
+        }
+      ]
+    },
+    {
+      "name": "veggie_trade",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"veggie_trade\" (\"veggie_id\" INTEGER NOT NULL, \"item_traded_id\" INTEGER NOT NULL, \"item_common_id\" INTEGER NOT NULL, \"item_rare_id\" INTEGER NOT NULL, PRIMARY KEY(veggie_id, item_traded_id), FOREIGN KEY(veggie_id)REFERENCES veggie(id)ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY(item_traded_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY(item_common_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY(item_rare_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "index_veggie_trade_item_traded_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_veggie_trade_item_traded_id ON veggie_trade (item_traded_id)"
+        }
+      ]
+    },
+    {
+      "name": "index_veggie_trade_item_common_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_veggie_trade_item_common_id ON veggie_trade (item_common_id)"
+        }
+      ]
+    },
+    {
+      "name": "index_veggie_trade_item_rare_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_veggie_trade_item_rare_id ON veggie_trade (item_rare_id)"
+        }
+      ]
+    },
+    {
+      "name": "weapon_text",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"weapon_text\" (\"weapon_id\" INTEGER NOT NULL, \"language\" TEXT NOT NULL, \"name\" TEXT NOT NULL COLLATE LOCALIZED, \"full_name\" TEXT NOT NULL COLLATE LOCALIZED, \"description\" TEXT NOT NULL, \"name_normalized\" TEXT NOT NULL DEFAULT '', \"full_name_normalized\" TEXT NOT NULL DEFAULT '', PRIMARY KEY(weapon_id, language), FOREIGN KEY(weapon_id)REFERENCES weapon(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "weapon_parent",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"weapon_parent\" (\"weapon_id\" INTEGER NOT NULL, \"parent_weapon_id\" INTEGER NOT NULL, PRIMARY KEY(weapon_id, parent_weapon_id), FOREIGN KEY(weapon_id)REFERENCES weapon(id)ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY(parent_weapon_id)REFERENCES weapon(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "index_weapon_parent_parent_weapon_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_weapon_parent_parent_weapon_id ON weapon_parent (parent_weapon_id)"
+        }
+      ]
+    },
+    {
+      "name": "weapon_ammo_bow",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"weapon_ammo_bow\" (\"weapon_id\" INTEGER NOT NULL, \"charge_1_type\" TEXT NOT NULL, \"charge_1_level\" INTEGER NOT NULL, \"charge_2_type\" TEXT NOT NULL, \"charge_2_level\" INTEGER NOT NULL, \"charge_3_type\" TEXT NOT NULL, \"charge_3_level\" INTEGER NOT NULL, \"charge_4_type\" TEXT, \"charge_4_level\" INTEGER, \"power\" INTEGER NOT NULL, \"close\" INTEGER NOT NULL, \"paint\" INTEGER NOT NULL, \"poison\" INTEGER NOT NULL, \"paralysis\" INTEGER NOT NULL, \"sleep\" INTEGER NOT NULL, PRIMARY KEY(weapon_id), FOREIGN KEY(weapon_id)REFERENCES weapon(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "weapon_ammo_bowgun",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"weapon_ammo_bowgun\" (\"weapon_id\" INTEGER NOT NULL, \"normal\" TEXT NOT NULL, \"pierce\" TEXT NOT NULL, \"pellet\" TEXT NOT NULL, \"crag\" TEXT NOT NULL, \"clust\" TEXT NOT NULL, \"recovery\" TEXT NOT NULL, \"poison\" TEXT NOT NULL, \"paralysis\" TEXT NOT NULL, \"sleep\" TEXT NOT NULL, \"flame\" TEXT NOT NULL, \"water\" TEXT NOT NULL, \"thunder\" TEXT NOT NULL, \"freeze\" TEXT NOT NULL, \"dragon\" TEXT NOT NULL, \"tranq\" TEXT NOT NULL, \"paint\" TEXT NOT NULL, \"demon\" TEXT NOT NULL, \"armor\" TEXT NOT NULL, \"rapid_fire\" TEXT, PRIMARY KEY(weapon_id), FOREIGN KEY(weapon_id)REFERENCES weapon(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "weapon_recipe",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"weapon_recipe\" (\"weapon_id\" INTEGER NOT NULL, \"item_id\" INTEGER NOT NULL, \"quantity\" INTEGER NOT NULL, \"recipe_type\" TEXT NOT NULL, \"recipe_variant\" INTEGER NOT NULL, PRIMARY KEY(weapon_id, item_id, recipe_type, recipe_variant), FOREIGN KEY(weapon_id)REFERENCES weapon(id)ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY(item_id)REFERENCES item(id)ON UPDATE NO ACTION ON DELETE NO ACTION);"
+        }
+      ]
+    },
+    {
+      "name": "index_weapon_recipe_item_id",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX IF NOT EXISTS index_weapon_recipe_item_id ON weapon_recipe (item_id)"
+        }
+      ]
+    }
+  ]
+}
