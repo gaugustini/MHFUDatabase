@@ -7,7 +7,8 @@
   <a href="https://github.com/gaugustini"><img alt="Profile" src="https://img.shields.io/badge/-gaugustini-blue?logo=github"/></a>
 </p>
 
-**MHFU Database** is an offline Android reference tool for **Monster Hunter Freedom Unite (MHFU)**.
+**MHFU Database** is an offline reference tool for **Monster Hunter Freedom Unite (MHFU)**, available
+for Android, Windows, macOS, Linux, iOS, and the web.
 Access a complete database of armors, weapons, items, skills, quests, and monsters — all with
 detailed stats, drop rates, and descriptions.
 
@@ -29,24 +30,26 @@ entities.
 
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=com.gaugustini.mhfudatabase)
 
-Or download the latest APK from the [Releases](../../releases) page.
+Or download the latest build for your platform (Android, Windows, macOS, Linux, or iOS) from the
+[Releases](../../releases) page.
 
 ## Data
 
 The app uses a local SQLite database. A pre-populated database is bundled with the app and copied to
-the device on first launch.
+the device on first launch (on the web, it's loaded into the browser's persistent storage instead).
 
 Location of the database file:
 
-[app/src/main/assets/database/data.db](app/src/main/assets/database/data.db)
+[assets/database/data.db](assets/database/data.db)
 
 ## Development Setup
 
 ### Requirements
 
-- Android Studio (latest stable version recommended)
-- JDK 17 or newer
-- Android SDK
+- Flutter SDK 3.13 or newer
+- For Android: Android SDK and a JDK compatible with the Android Gradle Plugin (17 or newer)
+- For Windows, macOS, or Linux: that platform's [desktop build requirements](https://docs.flutter.dev/platform-integration/desktop)
+- For iOS: Xcode
 
 ### Building
 
@@ -56,16 +59,40 @@ Location of the database file:
 git clone https://github.com/gaugustini/MHFUDatabase.git
 ```
 
-2. Open the project in Android Studio
-3. Let Gradle sync and download the dependencies
-4. Run the app on:
-    - an Android emulator
-    - or a physical device
-
-To build the project from the command line:
+2. Get the dependencies:
 
 ```
-./gradlew build
+flutter pub get
+```
+
+   This also generates `lib/l10n/app_localizations*.dart` from the `.arb` files
+   in `lib/l10n/`; those generated files aren't checked into version control.
+
+3. Generate the database code:
+
+```
+dart run build_runner build
+```
+
+   This generates `lib/core/database/app_database.g.dart` from
+   `lib/core/database/tables.drift`; that generated file isn't checked into
+   version control.
+
+4. Run the app on an Android emulator, a physical device, a desktop platform, or in a browser:
+
+```
+flutter run
+```
+
+To build a release for a specific platform from the command line:
+
+```
+flutter build apk      # Android
+flutter build windows  # Windows
+flutter build macos    # macOS
+flutter build linux    # Linux
+flutter build ios      # iOS
+flutter build web      # Web
 ```
 
 ## Contributing
@@ -105,6 +132,7 @@ You can start by:
 - [Neoseeker](https://monsterhunter.neoseeker.com/wiki/Monster_Hunter_Freedom_Unite_(PSP))
 - [MHFU Texture Port](https://github.com/Monkbreh/MHFU-Texture-Port) - Item icons
 - [Monster Hunter DB](https://github.com/CrimsonNynja/monster-hunter-DB) - Monster icons
+- [zeedif](https://github.com/zeedif)
 
 ## License
 

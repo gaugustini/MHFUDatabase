@@ -1,0 +1,186 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Verify tag matches pubspec.yaml version
+        run: |
+          TAG="${GITHUB_REF#refs/tags/v}"
+          PUBSPEC_VERSION=$(grep '^version:' pubspec.yaml | sed -E 's/version: *([0-9]+\.[0-9]+\.[0-9]+).*/\1/')
+          if [ "$TAG" != "$PUBSPEC_VERSION" ]; then
+            echo "Tag v$TAG does not match pubspec.yaml version $PUBSPEC_VERSION"
+            exit 1
+          fi
+
+  build:
+    needs: check-version
+    if: always() && (needs.check-version.result == 'success' || needs.check-version.result == 'skipped')
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: android
+          - os: ubuntu-latest
+            target: linux
+          - os: ubuntu-latest
+            target: web
+          - os: macos-latest
+            target: macos
+          - os: macos-latest
+            target: ios
+          - os: windows-latest
+            target: windows
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install Linux build dependencies
+        if: matrix.target == 'linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build libgtk-3-dev
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Generate database code
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Determine version
+        id: version
+        shell: bash
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            echo "tag=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=dev-${GITHUB_SHA:0:7}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build Android APK
+        if: matrix.target == 'android'
+        run: flutter build apk --release
+
+      - name: Package Android artifact
+        if: matrix.target == 'android'
+        shell: bash
+        run: |
+          mkdir -p dist
+          cp build/app/outputs/flutter-apk/app-release.apk \
+            "dist/mhfudatabase-${{ steps.version.outputs.tag }}-android.apk"
+
+      - name: Build Linux bundle
+        if: matrix.target == 'linux'
+        run: flutter build linux --release
+
+      - name: Package Linux artifact
+        if: matrix.target == 'linux'
+        shell: bash
+        run: |
+          mkdir -p dist
+          (cd build/linux/x64/release/bundle && zip -r \
+            "../../../../../dist/mhfudatabase-${{ steps.version.outputs.tag }}-linux-x64.zip" .)
+
+      - name: Build Web bundle
+        if: matrix.target == 'web'
+        run: flutter build web --release
+
+      - name: Package Web artifact
+        if: matrix.target == 'web'
+        shell: bash
+        run: |
+          mkdir -p dist
+          (cd build/web && zip -r \
+            "../../dist/mhfudatabase-${{ steps.version.outputs.tag }}-web.zip" .)
+
+      - name: Build macOS bundle
+        if: matrix.target == 'macos'
+        run: flutter build macos --release
+
+      - name: Package macOS artifact
+        if: matrix.target == 'macos'
+        shell: bash
+        run: |
+          mkdir -p dist
+          cd build/macos/Build/Products/Release
+          APP_BUNDLE=$(find . -maxdepth 1 -name '*.app' -print -quit)
+          zip -r "../../../../../dist/mhfudatabase-${{ steps.version.outputs.tag }}-macos.zip" "$APP_BUNDLE"
+
+      - name: Build iOS bundle (unsigned)
+        if: matrix.target == 'ios'
+        run: flutter build ios --release --no-codesign
+
+      - name: Package iOS artifact
+        if: matrix.target == 'ios'
+        shell: bash
+        run: |
+          mkdir -p dist
+          (cd build/ios/iphoneos && zip -r \
+            "../../../dist/mhfudatabase-${{ steps.version.outputs.tag }}-ios-unsigned.zip" \
+            Runner.app)
+
+      - name: Build Windows bundle
+        if: matrix.target == 'windows'
+        run: flutter build windows --release
+
+      - name: Package Windows artifact
+        if: matrix.target == 'windows'
+        shell: bash
+        run: |
+          mkdir -p dist
+          (cd build/windows/x64/runner/Release && 7z a -r \
+            "../../../../../dist/mhfudatabase-${{ steps.version.outputs.tag }}-windows-x64.zip" .)
+
+      - name: Upload to draft release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v3
+        with:
+          files: dist/*
+          draft: true
+          tag_name: ${{ steps.version.outputs.tag }}
+
+      - name: Upload build artifact
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: mhfudatabase-${{ matrix.target }}
+          path: dist/*
+          retention-days: 7
+
+  publish:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - name: Publish release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ github.ref_name }}
+          draft: false
